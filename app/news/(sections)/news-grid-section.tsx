@@ -1,11 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import {
-  useNewsFilterStore,
-  matchesCategory,
-} from "@/store/use-news-filter-store";
 
 interface NewsItem {
   id: string;
@@ -17,6 +14,18 @@ interface NewsItem {
   imageAlt: string;
   href: string;
 }
+
+interface NewsGridSectionProps {
+  activeCategory: string;
+}
+
+// Map filter category IDs to news item category names
+const categoryMap: Record<string, string> = {
+  "press-releases": "Press Releases",
+  "company-milestones": "Company Milestones",
+  "corporate-events": "Corporate Events",
+  "industry-insights": "Industry Insights",
+};
 
 const newsItems: NewsItem[] = [
   {
@@ -93,24 +102,16 @@ const newsItems: NewsItem[] = [
   },
 ];
 
-export default function NewsGridSection() {
-  const selectedCategory = useNewsFilterStore(
-    (state) => state.selectedCategory
-  );
-
-  const filteredItems = newsItems.filter((item) =>
-    matchesCategory(item.category, selectedCategory)
-  );
-
-  if (filteredItems.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <p className="text-zinc-600 dark:text-zinc-400 text-lg">
-          No news items found for this category.
-        </p>
-      </div>
-    );
-  }
+export default function NewsGridSection({
+  activeCategory,
+}: NewsGridSectionProps) {
+  // Filter news items based on active category
+  const filteredItems =
+    activeCategory === "all"
+      ? newsItems
+      : newsItems.filter(
+          (item) => item.category === categoryMap[activeCategory]
+        );
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -119,12 +120,15 @@ export default function NewsGridSection() {
           key={item.id}
           className="flex flex-col gap-4 group cursor-pointer"
         >
-          <div
-            className="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105"
-            style={{ backgroundImage: `url("${item.imageUrl}")` }}
-            role="img"
-            aria-label={item.imageAlt}
-          />
+          <div className="w-full aspect-video rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105 relative">
+            <Image
+              src={item.imageUrl}
+              alt={item.imageAlt}
+              fill
+              className="object-cover"
+              unoptimized
+            />
+          </div>
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3 text-sm">
               <span className="text-primary font-semibold">
