@@ -1,0 +1,92 @@
+import Image from "next/image";
+
+interface ExportPortfolio {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  imageAlt: string;
+}
+
+const exportPortfolios: ExportPortfolio[] = [
+  {
+    id: "industrial-machinery",
+    title: "Industrial Machinery",
+    description: "Exported to European markets",
+    imageUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuAbFXTiOS7DAsaTQrOZAbCzHkbk3plyptB4ix5moJJzZGnDu2p_Xffj5DUW4_Ad49vwqTgqJNa3kKnGxa3X7cQp9Nkxah5M8suCp7Lj4a8IJgHJEtyYD07Gym1ECUHs7g2Y1PyD_5zz7r2chbIDF3JESN-DZzl1GOKvS4kESl8XwdsijQRbLvzJSjkwkMrThJdYHmXQFvgADqVdyBVV3OigPxtuzfaiLMivvzcNxoTCVC-85W_Bkz26j1OKOCI_2C4CALJAjAURe-tY",
+    imageAlt: "Industrial Machinery",
+  },
+  {
+    id: "packaged-consumer-goods",
+    title: "Packaged Consumer Goods",
+    description: "Available for North American distribution",
+    imageUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuAOsAVxx5yIYzxGyWLvmphxbr4hAnOJSLseCa0LoM4KP7I43cetWA5t1q3dUFlpwzUvN_VYUmxRBzyqFStFqeib7OyhoTNIme4n7gWtSQ7aXoVEgvu3UZZT5Ybdb2ZLTzKuqqcxcUi_4nMto-dME5085tMwhhnoO-O_CDk3xk0_oOf4x_brbNWiXANtoHPVYFcEpd_fRPRGVMCyhx1W9d1vqZ_kVRkVWK0st8glCTZHFYVq1ris66HDdavvDMdypJh1UtQMdLbh8RMn",
+    imageAlt: "Packaged Consumer Goods",
+  },
+  {
+    id: "agricultural-products",
+    title: "Agricultural Products",
+    description: "Shipped to Asia-Pacific partners",
+    imageUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuC38CVFBkA7qVBUXyLbsWYv5BMrKbYGG17ZlglsjxVx75EYqO2gx7ViPH57LLrqZVRzD3BYjBBMCn6-qcWhAgYwd1ai0EAv9kf6EOQHjX3PKuh7Wki38yH9JEqJ5hqNLZw6HY5yPIpEz0SiWApV-RZ4SmoqzIusDHdDPLJAhf98zzIneY3hUhVKIZaQQNI1EgSeYrnATbakcfPRzutl_jaqHdIzRQX7H6sU5MKhpxpc_jcn4LATw7TbJ0gQr4hbRnrLp_wApOOcIN8Q",
+    imageAlt: "Agricultural Products",
+  },
+  {
+    id: "textiles-garments",
+    title: "Textiles and Garments",
+    description: "Supplied to African trade networks",
+    imageUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuAeQI4cG741bELWK6pDvCPZ9Vocm3tQjaw9BZepYSxKRfXwMm5Kd9cAjfAY0rSzIQU8MG04xK8ssikDsRw6guW15wEoRAV27Rlf6Czb06hT0nv7kFSSu--pn8jAn59whUHFMadS6xaoYh0bDg86lC3Uz6xmSir13EKstvG9-Qzq67-k1t1Kp3GDyI1yHwzSAd7zsPPjyEcm_miS29Bua9CtaF88FgKmMLgxLyfkRnNxPbAJVgZkF3tjdzxwQIVPnV_Qv0cSFpv5NGyM",
+    imageAlt: "Textiles and Garments",
+  },
+  {
+    id: "electronics-components",
+    title: "Electronics & Components",
+    description: "Distributed across Middle Eastern markets",
+    imageUrl:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop",
+    imageAlt: "Electronics and Components",
+  },
+  {
+    id: "building-materials",
+    title: "Building Materials",
+    description: "Exported to South American regions",
+    imageUrl:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
+    imageAlt: "Building Materials",
+  },
+];
+
+export default function ExportPortfolioSection() {
+  return (
+    <section className="py-12">
+      <h2 className="text-[#181411] dark:text-white text-2xl sm:text-3xl font-bold leading-tight tracking-[-0.015em] px-4 pb-6">
+        Our Export Portfolio
+      </h2>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6 p-4">
+        {exportPortfolios.map((portfolio) => (
+          <div key={portfolio.id} className="flex flex-col gap-3 pb-3 group">
+            <div className="relative w-full aspect-video rounded-lg overflow-hidden">
+              <Image
+                src={portfolio.imageUrl}
+                alt={portfolio.imageAlt}
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <div>
+              <p className="text-[#181411] dark:text-white text-base font-medium leading-normal">
+                {portfolio.title}
+              </p>
+              <p className="text-[#6c757d] dark:text-gray-400 text-sm font-normal leading-normal">
+                {portfolio.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
