@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Gelila Manufacturing PLC - Exports",
+  title: "Gelila Manufacturing PLC - Engineering Ethiopia's Industrial Future",
   description:
-    "Your trusted partner in manufacturing and exporting premium goods worldwide. We are committed to excellence, from production to delivery.",
+    "Powering progress across key sectors with innovative manufacturing solutions and a commitment to national growth.",
 };
 
 export default function RootLayout({

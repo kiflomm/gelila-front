@@ -1,0 +1,37 @@
+{
+  "milestones": [
+    {
+      "year": "1998",
+      "title": "Company Founded",
+      "description": "Gelila Manufacturing PLC was established with a vision to catalyze industrial growth in Ethiopia."
+    },
+    {
+      "year": "2005",
+      "title": "First Bus Assembled",
+      "description": "A landmark achievement, rolling out the first locally assembled bus, transforming public transport."
+    },
+    {
+      "year": "2020",
+      "title": "ISO 9001 Certification",
+      "description": "Achieved international quality management standards, underscoring our commitment to excellence."
+    }
+  ],
+  "highlights": [
+    {
+      "icon": "insights",
+      "value": "$50M+",
+      "label": "Invested in Technology"
+    },
+    {
+      "icon": "groups",
+      "value": "5,000+",
+      "label": "Jobs Created"
+    },
+    {
+      "icon": "verified",
+      "value": "Certifications",
+      "label": "ISO 9001, Fair Trade"
+    }
+  ]
+}
+

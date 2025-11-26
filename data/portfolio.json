@@ -1,0 +1,40 @@
+{
+  "sectors": [
+    {
+      "id": 1,
+      "title": "Shoes & Sole",
+      "description": "Crafting quality footwear from sole to finish.",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCunK55Dy_mEJRUYxiUouX9-8a2_3EUBp4OCZOqFGS_uY9jgPMX8fomKkxlJVJ0fmFWecsh0P5Lj2Ka_ZixwCbys08VHjoIOJ3bE4N8NKIiPSbIfsGUJSLlJYM2aUiJ5kIAC466LsuzI1F1Ijamy0ESuej2550evf9JlhuvYBCxym5RfACNUHoLYEhAfFYgegis-4VZgfr8upIkmmLH1nPM7oQ6CCc-mNMagJso8Q_mwnWDXuDjx8bTjAyLQQSredlTGQU_4vm18yOP",
+      "alt": "Stylish leather shoes being stitched on a production line."
+    },
+    {
+      "id": 2,
+      "title": "Food Complex",
+      "description": "Nourishing the nation with high-standard food products.",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDHjsCKhyjvBodUWqaEoUxhoHbbY2XqyN4-OakIjLSSNhukfNlGQYYXSNKNDD7pGHD_5tKDHpva46EkPqp8B-HANc6_IcjVkQc4Jfv1t2bCsT3ix_NF21fZtMsfWngK9U6Oe6b3staGZHq-rRLqMxCE0VbYzmCVeSTTjDmRHV7OWzy1jRz897Br2Ebc9SUz_wFJreDtlfl_DNFGfSuBvYQOoqAKPgO082GnGjqw1B9GHaNKwWpJA86YtEXXcG85MRGUi5myDRVy9RMm",
+      "alt": "Freshly baked bread on a conveyor belt in a large food processing facility."
+    },
+    {
+      "id": 3,
+      "title": "Bus Assembly",
+      "description": "Assembling reliable and efficient transportation.",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDK-3SXrYMfOrKvO4qmo-7-ub_xmZnO1Qf40VFgNaf8TWAGWXudUfTSsqDJ4U34YnfZXYhXbugz4c4oq5JJ2r0KTIx633uUS0yqNAVaBo3Bp2d7gGIsPlKU5hmWBK5hciwXGy92I1k9243rRm3qraPw8GInyPnH2TkfadXVSZVZS8xB7sUOH7wTIdloqPcFMY4akyt51uffljK96-bsKooVwdLFCEEBazjAV40MFUY5wpONJDXUg5UIWNluG2kZel4NATVjgSbGLXCN",
+      "alt": "A modern city bus being assembled in a bright, clean factory."
+    },
+    {
+      "id": 4,
+      "title": "Textile & Apparel",
+      "description": "Weaving excellence into every thread and garment.",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC_qa4L0bGqSQV0EiNaD7ue7HqpptaC6ZO3jm3ZGCu1U6VbJ1ncSfuK7bW-AjUYtrYsCKyzhiswu4YgC_-a2BdQyNMgGxrLabXZ_XauKuq7YDqcTkxteOix8JU7WQYt8nIbJ7a56k-gtllsA19Jzky6MuvoloGT3le77G76YOqhaZnUjW_4QWfuMuGVyHye4wNYWJzmNWlrdc8Hqs0acJ6nZZjK5LElJjOTb9HX9lnEIs9BzV8mqATCEF__dpvtyxNrxZFdM9DP1zRV",
+      "alt": "Large spools of colorful thread in an industrial textile mill."
+    },
+    {
+      "id": 5,
+      "title": "Public Transport",
+      "description": "Connecting communities with dependable transit solutions.",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBlGVsRARnmst89JYsvTInO7pA8lE8nwi-n7AlBzZ7wS2MRUH_pv3s88b5n9H7HPWf3lm3hSZCPZpIlY5C-lIXfzZcoIz8EC8H6u0MyNNHnyGfWct9zNTm-Tljm-sgxVKOpt981kg4qGGN-p1Cd-YTAx-5JF5uMNcUNI5s7I5jCnkH1BxJD0c4UEJNLM7s5NODx8fznVbVZUXsbOinzpznuumWZyeCW6AQmBqSR8DUFjbqK7VUzrPPoCNFu2C0lTqs8MIb3qdmYW8SP",
+      "alt": "A fleet of city buses parked neatly in a depot at sunrise."
+    }
+  ]
+}
+
