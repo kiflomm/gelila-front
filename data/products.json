@@ -1,0 +1,138 @@
+{
+  "sectors": [
+    {
+      "id": "footwear",
+      "name": "Footwear",
+      "title": "Footwear Division",
+      "products": [
+        {
+          "id": 1,
+          "name": "Casual Shoes",
+          "description": "Capacity: 5,000 pairs/day",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAywF3uy2iYyctXMMeqK5gCvzcRvegH0L24W2AUkQYH_ueaUdnH46NtnXTZaxivz3d-HD-VnPySGIBOsys0PkjwJczx4_O1qPuSocyu1_pNNhcjKX5_dnIERBxnTlQimKg-g1rR1lf6loNAxwM0R10MnfbQdPtWP8yaSPjQc22Q1fkvDYZ2iZYqHFsqyEAPV89TUTzornfMENJp1Wh85USRHCHFW0sNVQfh6r5CD0-PraTGUIMAJeKm6pC4PswqfLfayCgKgiqDR-VQ",
+          "alt": "A pair of modern casual sneakers on a clean background"
+        },
+        {
+          "id": 2,
+          "name": "Industrial Safety Boots",
+          "description": "Capacity: 2,500 pairs/day",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC-8c7ljNs9IBbLN0tLRLrS8iRkt31t9yF7APJcCwHxjvYHSLgOmpC6RwvS4_4Y__sZziAfieDUdvwllSNmjiuw37_JV5W1aBDT0Ue5iCeIHJADJsseJzv9CraN1PoaOx8M71LEGy4DQDJZ6ILeK8wFLBUu7Q2qwCcHY_wtC_3RRdQ4e7hW6iocTQoQ2m1cFLJBE3oz9JE2d__WPw8fuD7RbvEtAJ5532dSQvKRMha9_p9-45sBgZEbP4BEvXcf_8YOMz6rPdRV_82q",
+          "alt": "Rugged industrial safety boots with steel toes"
+        },
+        {
+          "id": 3,
+          "name": "Formal Leather Shoes",
+          "description": "Capacity: 3,000 pairs/day",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuB0BotXUe09v_RKxWipBJToZPPLXZxFGlb0XLlyYA_OyQ6kHCxOP3ILb2F25ikgiWUfLuejvn9hGuu-BEuSfVOuQBhl2KaV7tnHrRQ3XY0WNC0LIFkMdMhUhNJBxcWV8tkCZbOdbJMUfvo7Fkf_FDJGe6cl8g8Q7BNYufgL3d-q371vPz1tWIStxlAro07mc3WJmTsf68HvAgUwYzkEfBLwJPOlU80__3WiTQ6KIzfaw6PEI13k1SJwmI-G5tF97RlTh1lKHuxBeULM",
+          "alt": "Elegant formal leather dress shoes for men"
+        },
+        {
+          "id": 4,
+          "name": "Export-Grade Footwear",
+          "description": "Capacity: 4,000 pairs/day",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBbV4RVP0V6Fh5kj6wfe7Md8Vz_tVU5KWUJc8HLuxmA_l6O-OR5l73YBDqQ-Zmk5QrBa49Q2vC3lyIomUJUslrXDXHXPUE2sjmyEnjpixDX-ixLZi_0lI8PqQIrMjQYqrA8qCPrJ-VgnRwifJJU6QkjLjoDvDWRMB1T8-Rxjqe-phNt6a-AdIFAC1hzPfZpvCppgvNWWAcmkRsVZyizXKvHeobmRmqqWo9p1j5ZeLG90KJ4GFNyHpakBGS8lO8r_ObK_sIquMZKhqaV",
+          "alt": "A collection of high-quality export-grade footwear"
+        }
+      ]
+    },
+    {
+      "id": "sole-component",
+      "name": "Sole & Component",
+      "title": "Sole & Component Manufacturing",
+      "products": [
+        {
+          "id": 5,
+          "name": "Rubber Soles",
+          "description": "High-grip, long-lasting",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuB_ZH_zDIJCIAI-V8f6aub8viDMeMsndjJCtsJlXlivJ1ms58nGeXIFFgk-4bIwhmIAUJYBuJXUt6oKjdKn3rW1-OHZR9CS6Ih-lrtTQfUNENsJst1K770c9kv9QfegO4_eIq5LN4tJWtvOEE6NoCoae0Mw8mbLh0kRaVYntXJsZulfrFfVSGZlZB6bQ3RQ-l6FmyUiWHlBtbp7bxnzdPvujFYKTdeXHk_Hi6XyLpFDYT7QenJwurCVmDI_oYJOI8yp5Hdl1ul6Ql6T",
+          "alt": "Stacks of durable rubber soles for shoes"
+        },
+        {
+          "id": 6,
+          "name": "Polyurethane (PU) Soles",
+          "description": "Comfort and flexibility",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDo5YDPTKJYoiNhSDPprBlD2T-qORIYaTze1JQi0MbwXh_LvarpIv-lZrUlx3xNtrv-vNK6qu2SzJeq25LWVqwL0EQ72FcWni1rJmrkMNzUVMKPD9QySLHBF9chBDo3gqVYH2ocrCJm8plw1r_i3L--2bwsVhK7Xc_RpG6Z52ahKG2UY8EtjXdezoJT03JKZKRzmrVmn-6Ncraf28n5kBn4xghzRpqerypKpVJQRuQ0Am86E_AikY6gO0i04TwMetEMTtvV5tlEqzYJ",
+          "alt": "Lightweight and flexible polyurethane (PU) soles"
+        },
+        {
+          "id": 7,
+          "name": "Injection Molded Components",
+          "description": "Custom specifications",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuArGLef2hB7xWVCVn9wnOFJTy_lQUkY5AIdOCVLd_XABnmvy7s2ClviqmWAZmywxKzgssQ1DnyOeYHWk6VO4ItlGJEMHXoKv3GvsZZ3gQZTqqCKt0mIxG6NYYUo6r7zIlpAFs4fDyOOq58_1cH913Vb95ucjC4s_iu9yGYcrOW2CJtSbzMpyai2BdR55MQzyp4SfDYtdzlIWWoNUl0TKzQFX8xhi5klveVXl9uMerO9Px3lhWZVYvNvQA6rNSS1GCg3Mymdl3nkHmkp",
+          "alt": "Various precision injection molded plastic components"
+        }
+      ]
+    },
+    {
+      "id": "bus-assembly",
+      "name": "Bus Assembly",
+      "title": "Bus Assembly Division",
+      "products": [
+        {
+          "id": 8,
+          "name": "Electric City Bus",
+          "description": "Zero-emission urban transit",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBHuTS5UrnK6PeORHS0-lu0Sp5tRmw_6pNRBz-qYVQgZE8Dn238HsIanqvDAm_aabRYzxZZuBGuk8c9BNFB2A54P1Lq03s2BhEHVz7fC5lxEP7iUC1xjJ-rJCAjlz6zu-wTPAeQF0rLc19xHyqBzkIioBqzgPvMQqnTbEw6I-Kh9lOmxVYtGBidKBMcKP0J2fGdSMOHh8W6kh7b2dEQkQYpprmp_a8X0ZRDVdPm_YTbAn9WJTL-Q6MhxfeKzaJ1dBlPXJSdUm1UmNII",
+          "alt": "A modern electric city bus on a city street"
+        },
+        {
+          "id": 9,
+          "name": "Diesel Inter-City Coach",
+          "description": "Long-distance comfort",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBCKbwzb4S0gs86Jmzzof2H9BJJ-2jcKQy52YUxozQaiUX4aOMyMIKIGGbfF0zYRMSaKcVjnszSESkwkxnNoUKvWfroyMkBcKsC_Rrrv9Sk-pX_9gXScAJGXrzh8FMXUsBwMkWsIMjZOliU8plZml9B3PTN8q20Hv1Ksi6EHu8BBBY1DBy_NG1kW2HE43mYAWRraJomC6A7odoBO1GOzes8_yExun1KjaK6yHDHe-3GAGhdFbnsxXtQxIHYvth-SXPrDv_ikb-a36kN",
+          "alt": "A large diesel inter-city coach on a highway"
+        },
+        {
+          "id": 10,
+          "name": "Hydrogen-Powered Bus",
+          "description": "Next-gen clean energy",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBfy-13eAG6fSLmWmJ2NWW-f02II6cFvBqmFlZTL2s2hWj0w4DdR1IWDGGWi2NPBwfN3NONNA3gNKlDj-ifgraDt_wDbKP0VNmZBcVH_AJ-ye5BOSZxIyFIBkkpC4EuNZ5G9x9N301mM7noa9dhKM2MRbHYj6B4wYaQGwcRdsjI6AKDdB-gDCHuTJtyh1j2Y3JgNsDXeFYQzpOzKYDRwf6JPnY6RN9S_CZ6xhAZaFzwmQu-Sg9UAOM4_TlSrAtrT6sapUyWNe24DDtB",
+          "alt": "A futuristic hydrogen-powered bus at a charging station"
+        }
+      ]
+    },
+    {
+      "id": "food-complex",
+      "name": "Food Complex",
+      "title": "Food Complex Division",
+      "products": [
+        {
+          "id": 11,
+          "name": "Bakery Products",
+          "description": "Fresh daily production",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDHjsCKhyjvBodUWqaEoUxhoHbbY2XqyN4-OakIjLSSNhukfNlGQYYXSNKNDD7pGHD_5tKDHpva46EkPqp8B-HANc6_IcjVkQc4Jfv1t2bCsT3ix_NF21fZtMsfWngK9U6Oe6b3staGZHq-rRLqMxCE0VbYzmCVeSTTjDmRHV7OWzy1jRz897Br2Ebc9SUz_wFJreDtlfl_DNFGfSuBvYQOoqAKPgO082GnGjqw1B9GHaNKwWpJA86YtEXXcG85MRGUi5myDRVy9RMm",
+          "alt": "Freshly baked bread on a conveyor belt in a large food processing facility"
+        },
+        {
+          "id": 12,
+          "name": "Packaged Foods",
+          "description": "Quality assured products",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDHjsCKhyjvBodUWqaEoUxhoHbbY2XqyN4-OakIjLSSNhukfNlGQYYXSNKNDD7pGHD_5tKDHpva46EkPqp8B-HANc6_IcjVkQc4Jfv1t2bCsT3ix_NF21fZtMsfWngK9U6Oe6b3staGZHq-rRLqMxCE0VbYzmCVeSTTjDmRHV7OWzy1jRz897Br2Ebc9SUz_wFJreDtlfl_DNFGfSuBvYQOoqAKPgO082GnGjqw1B9GHaNKwWpJA86YtEXXcG85MRGUi5myDRVy9RMm",
+          "alt": "Packaged food products on production line"
+        }
+      ]
+    },
+    {
+      "id": "textile-apparel",
+      "name": "Textile & Apparel",
+      "title": "Textile & Apparel Division",
+      "products": [
+        {
+          "id": 13,
+          "name": "Cotton Textiles",
+          "description": "Premium quality fabrics",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC_qa4L0bGqSQV0EiNaD7ue7HqpptaC6ZO3jm3ZGCu1U6VbJ1ncSfuK7bW-AjUYtrYsCKyzhiswu4YgC_-a2BdQyNMgGxrLabXZ_XauKuq7YDqcTkxteOix8JU7WQYt8nIbJ7a56k-gtllsA19Jzky6MuvoloGT3le77G76YOqhaZnUjW_4QWfuMuGVyHye4wNYWJzmNWlrdc8Hqs0acJ6nZZjK5LElJjOTb9HX9lnEIs9BzV8mqATCEF__dpvtyxNrxZFdM9DP1zRV",
+          "alt": "Large spools of colorful thread in an industrial textile mill"
+        },
+        {
+          "id": 14,
+          "name": "Ready-Made Garments",
+          "description": "Export-quality apparel",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC_qa4L0bGqSQV0EiNaD7ue7HqpptaC6ZO3jm3ZGCu1U6VbJ1ncSfuK7bW-AjUYtrYsCKyzhiswu4YgC_-a2BdQyNMgGxrLabXZ_XauKuq7YDqcTkxteOix8JU7WQYt8nIbJ7a56k-gtllsA19Jzky6MuvoloGT3le77G76YOqhaZnUjW_4QWfuMuGVyHye4wNYWJzmNWlrdc8Hqs0acJ6nZZjK5LElJjOTb9HX9lnEIs9BzV8mqATCEF__dpvtyxNrxZFdM9DP1zRV",
+          "alt": "Finished garments ready for export"
+        }
+      ]
+    }
+  ]
+}
+
