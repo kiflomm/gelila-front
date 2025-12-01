@@ -3,6 +3,7 @@ import Footer from "@/components/footer";
 import HeroSection from "./(sections)/hero-section";
 import PortfolioSection from "./(sections)/portfolio-section";
 import AchievementsSection from "./(sections)/achievements-section";
+import LeadershipSection from "./(sections)/leadership-section";
 
 export default function HomePage() {
   return (
@@ -17,6 +18,7 @@ export default function HomePage() {
             <div className="layout-content-container flex flex-col w-full max-w-7xl">
               <PortfolioSection />
               <AchievementsSection />
+              <LeadershipSection />
             </div>
           </div>
         </main>

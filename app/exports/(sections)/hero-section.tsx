@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { RequestQuoteDialog } from "@/components/request-quote-dialog";
 
 export default function HeroSection() {
   return (
@@ -26,14 +27,13 @@ export default function HeroSection() {
             </h2>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Button
-              asChild
-              className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:opacity-90! transition-opacity hover:bg-primary!"
-            >
-              <Link href="/contact">
-                <span className="truncate">Request Export Quote</span>
-              </Link>
-            </Button>
+            <RequestQuoteDialog
+              trigger={
+                <Button className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:opacity-90! transition-opacity hover:bg-primary!">
+                  <span className="truncate">Request Export Quote</span>
+                </Button>
+              }
+            />
             <Button
               asChild
               variant="outline"

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Mountain, Menu, X } from "lucide-react";
 import { useMobileMenuStore } from "@/store/use-mobile-menu-store";
 import { useEffect } from "react";
+import { RequestQuoteDialog } from "@/components/request-quote-dialog";
 
 export default function Header() {
   const { isOpen, toggle, close } = useMobileMenuStore();
@@ -98,9 +99,7 @@ export default function Header() {
 
           {/* Desktop CTA Button */}
           <div className="hidden lg:flex items-center ml-auto shrink-0">
-            <Button className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary!">
-              <span className="truncate">Request a Quote</span>
-            </Button>
+            <RequestQuoteDialog />
           </div>
 
           {/* Mobile/Tablet Hamburger Button */}
@@ -156,12 +155,18 @@ export default function Header() {
               </Link>
             );
           })}
-          <Button
-            onClick={close}
-            className="flex! w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 sm:h-14 px-4 bg-primary! text-white text-base sm:text-lg font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary! mt-2 sm:mt-4 touch-manipulation"
-          >
-            <span className="truncate">Request a Quote</span>
-          </Button>
+          <div className="mt-2 sm:mt-4">
+            <RequestQuoteDialog
+              trigger={
+                <Button
+                  onClick={close}
+                  className="flex! w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 sm:h-14 px-4 bg-primary! text-white text-base sm:text-lg font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary! touch-manipulation"
+                >
+                  <span className="truncate">Request a Quote</span>
+                </Button>
+              }
+            />
+          </div>
         </nav>
       </div>
     </header>
