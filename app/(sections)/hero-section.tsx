@@ -17,11 +17,12 @@ export default function HeroSection() {
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-6 sm:gap-8">
           <div className="flex flex-col gap-4 text-left max-w-3xl">
             <h1 className="text-white text-4xl font-black leading-tight tracking-tight sm:text-5xl md:text-6xl">
-              Engineering Ethiopia's Industrial Future
+              Leading Ethiopian Industrial Group
             </h1>
             <h2 className="text-white/90 text-base font-normal leading-normal sm:text-lg">
-              Powering progress across key sectors with innovative manufacturing
-              solutions and a commitment to national growth.
+              A diversified industrial and service company engaged in footwear
+              manufacturing, food processing, public bus transportation, and
+              developing new large-scale manufacturing projects across Ethiopia.
             </h2>
           </div>
           <div className="flex flex-wrap gap-3">

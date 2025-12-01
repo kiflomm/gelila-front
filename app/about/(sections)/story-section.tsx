@@ -18,25 +18,33 @@ export default function StorySection() {
           </div>
           <div className="flex flex-col gap-7 text-[#495057] dark:text-white/80 text-base md:text-lg leading-relaxed">
             <p className="text-lg md:text-xl font-medium text-[#181411] dark:text-white">
-              Founded in 1998, Gelila Manufacturing PLC emerged with a clear
-              vision: to catalyze industrial growth in Ethiopia and become a
-              cornerstone of the nation's manufacturing sector.
+              Founded in 2004 in Adwa City, Tigray Region, Gelila Manufacturing
+              PLC was originally established by its visionary founder Mr. Berhe
+              Assefa as a footwear manufacturer, building its reputation through
+              quality craftsmanship and reliable delivery.
             </p>
             <p className="pl-4 border-l-2 border-primary/20 dark:border-primary/30">
-              What started as a modest operation has grown into a multi-sector
-              industrial powerhouse. Over the past two decades, we've expanded
-              our operations across footwear, food processing, bus assembly,
-              textile manufacturing, and public transportation.
+              As the company expanded into new industries, it was officially
+              re-registered as Gelila Manufacturing PLC on December 07, 2022,
+              reflecting its diversified operations and national ambitions.
+              Today, Gelila operates established business units in footwear
+              manufacturing, food processing, and public bus transportation,
+              while simultaneously developing major new projects in bus assembly
+              and textile & apparel manufacturing.
             </p>
             <p>
               Each division represents our commitment to quality, innovation,
-              and sustainable practices. Today, we stand as one of Ethiopia's
-              leading manufacturing companies, employing over 5,000 people and
-              contributing significantly to the nation's industrial output.
+              and sustainable practices. From our original footwear production
+              to our growing fleet of luxury buses, from our flour and biscuit
+              processing to our upcoming bus assembly plant in Mekele and
+              textile factory in Adwa, we continue to build on our foundation of
+              excellence.
             </p>
             <p className="font-medium pt-2">
               Our journey continues as we invest in technology, expand our
-              capabilities, and build partnerships that drive progress.
+              capabilities, and build strategic partnerships like our
+              collaboration with Foton International for bus assembly technology
+              transfer.
             </p>
           </div>
         </div>
@@ -71,7 +79,7 @@ export default function StorySection() {
             </div>
             <div className="flex flex-col gap-2 p-6 rounded-xl bg-white dark:bg-gray-900 border border-border shadow-sm hover:shadow-md transition-shadow duration-300">
               <p className="text-3xl lg:text-4xl font-black text-[#181411] dark:text-white">
-                25+
+                20+
               </p>
               <p className="text-sm text-[#8c755f] dark:text-white/70 font-medium">
                 Years

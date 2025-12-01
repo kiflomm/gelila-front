@@ -51,8 +51,10 @@ export default function Footer() {
               </h3>
             </div>
             <p className="text-sm text-gray-300 leading-relaxed">
-              Leading manufacturer committed to quality and excellence. Building
-              a better future through innovative manufacturing solutions.
+              A diversified Ethiopian industrial and service company engaged in
+              footwear manufacturing, food processing, public bus
+              transportation, and the development of new large-scale
+              manufacturing projects.
             </p>
 
             {/* Contact Info */}
@@ -60,25 +62,37 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin className="size-4 text-primary mt-1 shrink-0" />
                 <p className="text-sm text-gray-300">
-                  123 Industrial Park, Addis Ababa, Ethiopia
+                  Lemi Kura Sub City, Woreda 06
+                  <br />
+                  Bole Lemi Industry Park
+                  <br />
+                  Addis Ababa, Ethiopia
                 </p>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="size-4 text-primary shrink-0" />
-                <Link
-                  href="tel:+251123456789"
-                  className="text-sm text-gray-300 hover:text-primary transition-colors"
-                >
-                  +251 123 456 789
-                </Link>
+                <div className="flex flex-col gap-1">
+                  <Link
+                    href="tel:+251993667101"
+                    className="text-sm text-gray-300 hover:text-primary transition-colors"
+                  >
+                    +251-993667101
+                  </Link>
+                  <Link
+                    href="tel:+251943164444"
+                    className="text-sm text-gray-300 hover:text-primary transition-colors"
+                  >
+                    +251-943164444
+                  </Link>
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="size-4 text-primary shrink-0" />
                 <Link
-                  href="mailto:info@gelila.com"
-                  className="text-sm text-gray-300 hover:text-primary transition-colors"
+                  href="mailto:info@gelilamanufacturingplc.com.et"
+                  className="text-sm text-gray-300 hover:text-primary transition-colors break-all"
                 >
-                  info@gelila.com
+                  info@gelilamanufacturingplc.com.et
                 </Link>
               </div>
             </div>

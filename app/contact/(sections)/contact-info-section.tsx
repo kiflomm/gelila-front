@@ -19,7 +19,9 @@ export default function ContactInfoSection() {
                 Address
               </h3>
               <p className="text-[#495057] dark:text-white/80 text-sm leading-relaxed">
-                123 Industrial Park
+                Lemi Kura Sub City, Woreda 06
+                <br />
+                Bole Lemi Industry Park
                 <br />
                 Addis Ababa, Ethiopia
               </p>
@@ -35,12 +37,20 @@ export default function ContactInfoSection() {
               <h3 className="text-[#181411] dark:text-white font-semibold mb-1.5 text-base">
                 Phone
               </h3>
-              <Link
-                href="tel:+251111223344"
-                className="text-[#495057] dark:text-white/80 text-sm hover:text-primary transition-colors duration-200 inline-block"
-              >
-                +251 111 223 344
-              </Link>
+              <div className="flex flex-col gap-1">
+                <Link
+                  href="tel:+251993667101"
+                  className="text-[#495057] dark:text-white/80 text-sm hover:text-primary transition-colors duration-200 inline-block"
+                >
+                  +251-993667101
+                </Link>
+                <Link
+                  href="tel:+251943164444"
+                  className="text-[#495057] dark:text-white/80 text-sm hover:text-primary transition-colors duration-200 inline-block"
+                >
+                  +251-943164444
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -54,10 +64,10 @@ export default function ContactInfoSection() {
                 Email
               </h3>
               <Link
-                href="mailto:info@gelilaplc.com"
+                href="mailto:info@gelilamanufacturingplc.com.et"
                 className="text-[#495057] dark:text-white/80 text-sm hover:text-primary transition-colors duration-200 inline-block break-all"
               >
-                info@gelilaplc.com
+                info@gelilamanufacturingplc.com.et
               </Link>
             </div>
           </div>

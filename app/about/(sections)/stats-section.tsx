@@ -27,7 +27,7 @@ const stats = [
   },
   {
     icon: Calendar,
-    value: "25+",
+    value: "20+",
     label: "Years",
     gradient: "from-green-500 to-emerald-500",
     iconBg: "bg-green-500/20",
@@ -56,7 +56,7 @@ export default function StatsSection() {
               <div
                 className={`absolute inset-0 bg-linear-to-br ${stat.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
               ></div>
-              
+
               {/* Decorative corner accent */}
               <div
                 className={`absolute top-0 right-0 w-24 h-24 bg-linear-to-br ${stat.gradient} opacity-5 rounded-bl-full`}

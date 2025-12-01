@@ -3,30 +3,30 @@ import { Award, Settings, Users, Lightbulb } from "lucide-react";
 const values = [
   {
     icon: Award,
-    title: "Excellence",
+    title: "Integrity",
     description:
-      "Excellence is the cornerstone of everything we do. We strive for the highest standards in every product we manufacture and every service we deliver.",
+      "We operate with honesty and professionalism in all our business dealings, building trust with our partners, customers, and stakeholders.",
     iconColor: "text-[#181411] dark:text-white",
   },
   {
     icon: Settings,
     title: "Quality",
     description:
-      "Our commitment to quality drives our operations. ISO 9001 certified, we maintain rigorous quality control processes across all our operations.",
-    iconColor: "text-[#181411] dark:text-white",
-  },
-  {
-    icon: Users,
-    title: "People First",
-    description:
-      "We believe that people come first. Our team is our greatest asset, and we invest in our people and create opportunities for growth.",
+      "We maintain strict quality standards in products and services, ensuring that every item we produce meets the highest benchmarks of excellence.",
     iconColor: "text-[#181411] dark:text-white",
   },
   {
     icon: Lightbulb,
     title: "Innovation",
     description:
-      "Innovation is at the heart of our evolution. We embrace new technologies and processes to stay at the forefront of industrial manufacturing.",
+      "We adopt modern technologies for continuous improvement, staying at the forefront of industrial manufacturing and service delivery.",
+    iconColor: "text-[#181411] dark:text-white",
+  },
+  {
+    icon: Users,
+    title: "Teamwork",
+    description:
+      "We believe in collaborative growth with our employees and partners, recognizing that our success comes from working together toward common goals.",
     iconColor: "text-[#181411] dark:text-white",
   },
 ];

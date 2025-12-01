@@ -17,8 +17,11 @@ export default function PageHeadingSection() {
             About Gelila Manufacturing
           </h1>
           <p className="text-white/90 text-base font-normal leading-normal sm:text-lg max-w-2xl">
-            Pioneering industrial excellence in Ethiopia since 1998, driving
-            innovation and sustainable growth across multiple sectors.
+            A diversified Ethiopian industrial and service company, originally
+            founded in 2004 in Adwa City, Tigray Region. Today, we operate
+            across footwear manufacturing, food processing, public bus
+            transportation, and are developing major new projects in bus
+            assembly and textile manufacturing.
           </p>
         </div>
       </div>

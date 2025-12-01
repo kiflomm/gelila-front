@@ -1,37 +1,36 @@
 {
   "milestones": [
     {
-      "year": "1998",
+      "year": "2004",
       "title": "Company Founded",
-      "description": "Gelila Manufacturing PLC was established with a vision to catalyze industrial growth in Ethiopia."
+      "description": "Gelila Manufacturing was originally founded in Adwa City, Tigray Region, by visionary founder Mr. Berhe Assefa, starting as a footwear manufacturer known for quality craftsmanship and reliable delivery."
     },
     {
-      "year": "2005",
-      "title": "First Bus Assembled",
-      "description": "A landmark achievement, rolling out the first locally assembled bus, transforming public transport."
+      "year": "2022",
+      "title": "Re-registered as Gelila Manufacturing PLC",
+      "description": "On December 07, 2022, the company was formally established under its current structure in Addis Ababa, reflecting its diversified operations and national ambitions across manufacturing and transport services."
     },
     {
-      "year": "2020",
-      "title": "ISO 9001 Certification",
-      "description": "Achieved international quality management standards, underscoring our commitment to excellence."
+      "year": "2023",
+      "title": "Strategic Partnership with Foton International",
+      "description": "Entered technical collaboration with Foton International Trade Co., Ltd. (China) for bus assembly plant development, marking a significant step in technology transfer and industrial expansion."
     }
   ],
   "highlights": [
     {
       "icon": "insights",
-      "value": "$50M+",
-      "label": "Invested in Technology"
+      "value": "5+",
+      "label": "Business Divisions"
     },
     {
       "icon": "groups",
       "value": "5,000+",
-      "label": "Jobs Created"
+      "label": "Employees"
     },
     {
       "icon": "verified",
-      "value": "Certifications",
-      "label": "ISO 9001, Fair Trade"
+      "value": "20+",
+      "label": "Years of Excellence"
     }
   ]
 }
-
