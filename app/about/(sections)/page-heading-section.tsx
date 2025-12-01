@@ -5,8 +5,8 @@ export default function PageHeadingSection() {
     <section className="w-full">
       <div className="relative flex min-h-[500px] lg:min-h-[600px] w-full flex-col gap-6 bg-cover bg-center bg-no-repeat items-start justify-center px-4 sm:px-6 lg:px-10 xl:px-20 py-16 sm:py-20 lg:py-24 overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop"
-          alt="Modern manufacturing facility with advanced machinery and production equipment"
+          src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2070&auto=format&fit=crop"
+          alt="Modern corporate office building representing Gelila Manufacturing's headquarters and business excellence"
           fill
           className="object-cover brightness-75"
           priority

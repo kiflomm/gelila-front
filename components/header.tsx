@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Mountain, Menu, X } from "lucide-react";
 import { useMobileMenuStore } from "@/store/use-mobile-menu-store";
+import { useEffect } from "react";
 
 export default function Header() {
   const { isOpen, toggle, close } = useMobileMenuStore();
@@ -25,6 +26,23 @@ export default function Header() {
     { href: "/about", label: "About Us" },
   ];
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    close();
+  }, [pathname, close]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
     <header
       className={`absolute top-0 left-0 right-0 z-50 w-full transition-colors duration-300 ${
@@ -33,29 +51,31 @@ export default function Header() {
           : "bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-border"
       }`}
     >
-      <div className="px-4 sm:px-10 lg:px-20 xl:px-40">
-        <div className="flex items-center justify-between whitespace-nowrap py-4 w-full max-w-[1280px] mx-auto">
-          <div
-            className={`flex items-center gap-4 ${
+      <div className="px-3 sm:px-6 md:px-8 lg:px-12 xl:px-20 2xl:px-40">
+        <div className="flex items-center justify-between py-3 sm:py-4 w-full max-w-[1280px] mx-auto gap-2 sm:gap-4">
+          <Link
+            href="/"
+            className={`flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0 shrink-0 ${
               hasTransparentNav
                 ? "text-white"
                 : "text-[#181411] dark:text-white"
             }`}
           >
-            <Mountain className="size-6 text-primary" />
+            <Mountain className="size-5 sm:size-6 text-primary shrink-0" />
             <h2
-              className={`text-lg font-bold leading-tight tracking-[-0.015em] ${
+              className={`text-sm sm:text-base md:text-lg font-bold leading-tight tracking-[-0.015em] truncate ${
                 hasTransparentNav
                   ? "text-white"
                   : "text-[#181411] dark:text-white"
               }`}
             >
-              Gelila Manufacturing PLC
+              <span className="hidden sm:inline">Gelila Manufacturing PLC</span>
+              <span className="sm:hidden">Gelila</span>
             </h2>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8 ml-8">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8 ml-4 xl:ml-8 flex-1 justify-center">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -63,10 +83,10 @@ export default function Header() {
                   key={link.href}
                   className={
                     isActive
-                      ? "text-primary text-sm font-bold leading-normal"
+                      ? "text-primary text-sm font-bold leading-normal whitespace-nowrap"
                       : hasTransparentNav
-                      ? "text-white/90 hover:text-white text-sm font-medium leading-normal transition-colors"
-                      : "text-[#181411] dark:text-white/80 hover:text-primary text-sm font-medium leading-normal transition-colors"
+                      ? "text-white/90 hover:text-white text-sm font-medium leading-normal transition-colors whitespace-nowrap"
+                      : "text-[#181411] dark:text-white/80 hover:text-primary text-sm font-medium leading-normal transition-colors whitespace-nowrap"
                   }
                   href={link.href}
                 >
@@ -74,62 +94,76 @@ export default function Header() {
                 </Link>
               );
             })}
-          </div>
+          </nav>
 
-          {/* Desktop CTA Buttons */}
-          <div className="hidden lg:flex items-center ml-auto">
+          {/* Desktop CTA Button */}
+          <div className="hidden lg:flex items-center ml-auto shrink-0">
             <Button className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary!">
               <span className="truncate">Request a Quote</span>
             </Button>
           </div>
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile/Tablet Hamburger Button */}
           <Button
             onClick={toggle}
             variant="ghost"
             size="icon"
-            className={`lg:hidden hover:text-primary ${
+            className={`lg:hidden hover:text-primary shrink-0 touch-manipulation ${
               hasTransparentNav
                 ? "text-white"
                 : "text-[#181411] dark:text-white"
             }`}
             aria-label="Toggle menu"
+            aria-expanded={isOpen}
           >
             {isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
           </Button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div className="lg:hidden bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm">
-          <div className="px-4 sm:px-10 py-4 flex flex-col gap-4">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  onClick={close}
-                  className={
-                    isActive
-                      ? "text-primary text-base font-bold leading-normal py-2"
-                      : "text-[#181411] dark:text-gray-300 text-base font-medium leading-normal hover:text-primary transition-colors py-2"
-                  }
-                  href={link.href}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-            <Button
-              onClick={close}
-              className="flex! w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary! mt-2"
-            >
-              <span className="truncate">Request a Quote</span>
-            </Button>
-          </div>
-        </div>
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 top-[73px] sm:top-[81px] animate-in fade-in duration-200"
+          onClick={close}
+          aria-hidden="true"
+        />
       )}
+
+      {/* Mobile Menu */}
+      <div
+        className={`lg:hidden fixed top-[73px] sm:top-[81px] left-0 right-0 z-40 bg-background-light/98 dark:bg-background-dark/98 backdrop-blur-md border-b border-border shadow-lg transition-transform duration-300 ease-in-out ${
+          isOpen
+            ? "translate-y-0 opacity-100"
+            : "-translate-y-full opacity-0 pointer-events-none"
+        }`}
+      >
+        <nav className="px-4 sm:px-6 py-4 sm:py-6 flex flex-col gap-1 max-h-[calc(100vh-73px)] sm:max-h-[calc(100vh-81px)] overflow-y-auto">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                onClick={close}
+                className={
+                  isActive
+                    ? "text-primary text-base sm:text-lg font-bold leading-normal py-3 sm:py-3.5 px-2 rounded-lg bg-primary/10 dark:bg-primary/20 touch-manipulation"
+                    : "text-[#181411] dark:text-gray-300 text-base sm:text-lg font-medium leading-normal hover:text-primary transition-colors py-3 sm:py-3.5 px-2 rounded-lg hover:bg-primary/5 dark:hover:bg-primary/10 touch-manipulation"
+                }
+                href={link.href}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+          <Button
+            onClick={close}
+            className="flex! w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 sm:h-14 px-4 bg-primary! text-white text-base sm:text-lg font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary! mt-2 sm:mt-4 touch-manipulation"
+          >
+            <span className="truncate">Request a Quote</span>
+          </Button>
+        </nav>
+      </div>
     </header>
   );
 }

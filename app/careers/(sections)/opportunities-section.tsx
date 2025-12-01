@@ -1,6 +1,3 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-
 export default function OpportunitiesSection() {
   return (
     <section className="py-16 md:py-24 bg-[#F8F9FA] dark:bg-background-dark">
@@ -20,18 +17,11 @@ export default function OpportunitiesSection() {
                 <h3 className="text-2xl font-bold text-[#212529] dark:text-[#F8F9FA] mb-2">
                   Internship Programs
                 </h3>
-                <p className="text-[#6C757D] dark:text-[#F8F9FA]/70 mb-4">
+                <p className="text-[#6C757D] dark:text-[#F8F9FA]/70">
                   Kickstart your career with our hands-on internship programs.
                   Gain real-world experience, work with industry experts, and
                   contribute to meaningful projects.
                 </p>
-                <Link
-                  href="/careers/internships"
-                  className="font-bold text-primary hover:underline inline-flex items-center gap-1"
-                >
-                  Learn More
-                  <ArrowRight className="size-4" />
-                </Link>
               </div>
             </div>
 
@@ -48,18 +38,11 @@ export default function OpportunitiesSection() {
                 <h3 className="text-2xl font-bold text-[#212529] dark:text-[#F8F9FA] mb-2">
                   Training & Development
                 </h3>
-                <p className="text-[#6C757D] dark:text-[#F8F9FA]/70 mb-4">
+                <p className="text-[#6C757D] dark:text-[#F8F9FA]/70">
                   We invest in our people. Access continuous learning
                   opportunities, professional certifications, and clear career
                   progression pathways to achieve your full potential.
                 </p>
-                <Link
-                  href="/careers/training"
-                  className="font-bold text-primary hover:underline inline-flex items-center gap-1"
-                >
-                  Explore Pathways
-                  <ArrowRight className="size-4" />
-                </Link>
               </div>
             </div>
           </div>
