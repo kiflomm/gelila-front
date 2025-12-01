@@ -3,28 +3,27 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Contact Us - Gelila Manufacturing PLC",
+  title: "Terms of Service - Gelila Manufacturing PLC",
   description:
-    "Get in touch with Gelila Manufacturing PLC. Reach out for inquiries, partnerships, or general information.",
+    "Read our Terms of Service to understand the rules and regulations for using Gelila Manufacturing PLC's website and services.",
   keywords: [
-    "contact",
-    "inquiry",
-    "get in touch",
-    "partnership",
-    "support",
-    "customer service",
+    "terms",
+    "terms of service",
+    "terms and conditions",
+    "user agreement",
+    "legal terms",
   ],
   openGraph: {
-    title: "Contact Us - Gelila Manufacturing PLC",
+    title: "Terms of Service - Gelila Manufacturing PLC",
     description:
-      "Get in touch with Gelila Manufacturing PLC for inquiries, partnerships, or general information.",
+      "Read our Terms of Service to understand the rules and regulations for using our website and services.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Us - Gelila Manufacturing PLC",
-    description: "Get in touch with Gelila Manufacturing PLC.",
+    title: "Terms of Service - Gelila Manufacturing PLC",
+    description: "Terms of Service for Gelila Manufacturing PLC.",
   },
   robots: {
     index: true,
@@ -38,11 +37,11 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "/contact",
+    canonical: "/terms",
   },
 };
 
-export default function ContactLayout({
+export default function TermsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

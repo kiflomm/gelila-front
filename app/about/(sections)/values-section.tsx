@@ -1,43 +1,44 @@
-import { Target, Award, Users, Zap } from "lucide-react";
+import { Award, Settings, Users, Lightbulb } from "lucide-react";
 
 const values = [
   {
-    icon: Target,
+    icon: Award,
     title: "Excellence",
     description:
-      "We strive for the highest standards in every product we manufacture and every service we deliver.",
+      "Excellence is the cornerstone of everything we do. We strive for the highest standards in every product we manufacture and every service we deliver.",
+    iconColor: "text-[#181411] dark:text-white",
   },
   {
-    icon: Award,
+    icon: Settings,
     title: "Quality",
     description:
-      "ISO 9001 certified, we maintain rigorous quality control processes across all our operations.",
+      "Our commitment to quality drives our operations. ISO 9001 certified, we maintain rigorous quality control processes across all our operations.",
+    iconColor: "text-[#181411] dark:text-white",
   },
   {
     icon: Users,
     title: "People First",
     description:
-      "Our team is our greatest asset. We invest in our people and create opportunities for growth.",
+      "We believe that people come first. Our team is our greatest asset, and we invest in our people and create opportunities for growth.",
+    iconColor: "text-[#181411] dark:text-white",
   },
   {
-    icon: Zap,
+    icon: Lightbulb,
     title: "Innovation",
     description:
-      "Embracing new technologies and processes to stay at the forefront of industrial manufacturing.",
+      "Innovation is at the heart of our evolution. We embrace new technologies and processes to stay at the forefront of industrial manufacturing.",
+    iconColor: "text-[#181411] dark:text-white",
   },
 ];
 
 export default function ValuesSection() {
   return (
-    <section className="py-10 sm:py-16 bg-white dark:bg-black/20 rounded-xl">
-      <div className="text-center mb-12">
-        <h2 className="text-[#181411] dark:text-white text-3xl font-bold leading-tight tracking-tight mb-4">
-          Our Core Values
+    <section className="py-12 sm:py-20 relative">
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-background-light/30 dark:via-black/10 to-transparent -z-10"></div>
+      <div className="text-center mb-16">
+        <h2 className="text-[#181411] dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-tight mb-4">
+          Core Values
         </h2>
-        <p className="text-[#8c755f] dark:text-white/70 text-base max-w-2xl mx-auto">
-          The principles that guide everything we do and shape our commitment to
-          excellence.
-        </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {values.map((value, index) => {
@@ -45,12 +46,14 @@ export default function ValuesSection() {
           return (
             <div
               key={index}
-              className="flex flex-col gap-4 p-6 rounded-xl border border-primary/20 bg-background-light dark:bg-black/20 hover:shadow-lg transition-shadow"
+              className="flex flex-col gap-4 p-6 rounded-lg border border-border bg-white dark:bg-gray-900 shadow-sm"
             >
-              <div className="flex items-center justify-center size-16 bg-primary/20 rounded-full text-primary">
-                <Icon className="size-8" />
+              <div
+                className={`flex items-center justify-center size-12 ${value.iconColor}`}
+              >
+                <Icon className="size-6" />
               </div>
-              <h3 className="text-[#181411] dark:text-white text-xl font-bold">
+              <h3 className="text-[#181411] dark:text-white text-lg font-bold">
                 {value.title}
               </h3>
               <p className="text-[#495057] dark:text-white/80 text-sm leading-relaxed">
@@ -63,4 +66,3 @@ export default function ValuesSection() {
     </section>
   );
 }
-

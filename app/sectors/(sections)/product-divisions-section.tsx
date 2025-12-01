@@ -64,34 +64,34 @@ function ScrollableProductGrid({
 
   return (
     <div className="relative">
-      {/* Previous Button */}
+      {/* Previous Button - Hidden on mobile, shown on larger screens */}
       <Button
         onClick={() => scroll("left")}
         disabled={!canScrollLeft}
         variant="outline"
         size="icon"
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 size-12 rounded-full bg-white dark:bg-gray-800 border-2 border-primary/20 hover:border-primary/40 shadow-lg hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
+        className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-14 z-10 size-10 sm:size-12 rounded-full bg-white dark:bg-gray-800 border-2 border-primary/20 hover:border-primary/40 shadow-lg hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
         aria-label="Previous products"
       >
-        <ChevronLeft className="size-6 text-primary" />
+        <ChevronLeft className="size-5 sm:size-6 text-primary" />
       </Button>
 
-      {/* Next Button */}
+      {/* Next Button - Hidden on mobile, shown on larger screens */}
       <Button
         onClick={() => scroll("right")}
         disabled={!canScrollRight}
         variant="outline"
         size="icon"
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 size-12 rounded-full bg-white dark:bg-gray-800 border-2 border-primary/20 hover:border-primary/40 shadow-lg hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
+        className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-14 z-10 size-10 sm:size-12 rounded-full bg-white dark:bg-gray-800 border-2 border-primary/20 hover:border-primary/40 shadow-lg hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
         aria-label="Next products"
       >
-        <ChevronRight className="size-6 text-primary" />
+        <ChevronRight className="size-5 sm:size-6 text-primary" />
       </Button>
 
       {/* Scrollable Cards Container */}
       <div
         ref={scrollContainerRef}
-        className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-14"
+        className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-2 sm:px-4 md:px-8 lg:px-14"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
@@ -101,7 +101,7 @@ function ScrollableProductGrid({
           <Link
             key={product.id}
             href={`/sectors/${sectorId}/products/${product.id}`}
-            className="group relative flex flex-col rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 shrink-0 w-[320px] sm:w-[360px] lg:w-[380px]"
+            className="group relative flex flex-col rounded-xl sm:rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 shrink-0 w-[280px] sm:w-[300px] md:w-[340px] lg:w-[360px] xl:w-[380px]"
           >
             {/* Image Container with Overlay */}
             <div className="relative w-full aspect-square overflow-hidden bg-gray-100 dark:bg-gray-900">
@@ -119,23 +119,23 @@ function ScrollableProductGrid({
             </div>
 
             {/* Content */}
-            <div className="flex flex-col gap-3 p-6 lg:p-7 grow">
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="text-[#181411] dark:text-white text-xl font-bold leading-tight group-hover:text-primary transition-colors duration-300">
+            <div className="flex flex-col gap-2 sm:gap-3 p-4 sm:p-5 md:p-6 lg:p-7 grow">
+              <div className="flex items-start justify-between gap-2 sm:gap-3">
+                <h3 className="text-[#181411] dark:text-white text-base sm:text-lg md:text-xl font-bold leading-tight group-hover:text-primary transition-colors duration-300">
                   {product.name}
                 </h3>
                 <ArrowRight
-                  className="size-5 text-primary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 shrink-0 mt-1"
+                  className="size-4 sm:size-5 text-primary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 shrink-0 mt-1"
                   aria-hidden="true"
                 />
               </div>
-              <p className="text-[#8c755f] dark:text-white/70 text-sm leading-relaxed line-clamp-2">
+              <p className="text-[#8c755f] dark:text-white/70 text-xs sm:text-sm leading-relaxed line-clamp-2">
                 {product.description}
               </p>
 
               {/* Decorative Element */}
-              <div className="mt-auto pt-4 border-t border-primary/10 dark:border-primary/20">
-                <span className="text-xs font-medium text-primary/60 dark:text-primary/40 uppercase tracking-wider">
+              <div className="mt-auto pt-3 sm:pt-4 border-t border-primary/10 dark:border-primary/20">
+                <span className="text-[10px] sm:text-xs font-medium text-primary/60 dark:text-primary/40 uppercase tracking-wider">
                   Inquiry
                 </span>
               </div>
@@ -164,13 +164,20 @@ export default function ProductDivisionsSection({
     : productsData.sectors;
 
   return (
-    <div className="mt-8">
+    <div className="mt-6 sm:mt-8 px-2 sm:px-4 md:px-6">
       {filteredSectors.map((sector) => (
-        <div key={sector.id} id={`sector-${sector.id}`} className="mt-12 first:mt-0">
-          <h2 className="text-[#212121] dark:text-white text-2xl font-bold leading-tight tracking-[-0.015em] px-4 pb-6">
+        <div
+          key={sector.id}
+          id={`sector-${sector.id}`}
+          className="mt-8 sm:mt-12 first:mt-0"
+        >
+          <h2 className="text-[#212121] dark:text-white text-xl sm:text-2xl font-bold leading-tight tracking-[-0.015em] px-2 sm:px-4 pb-4 sm:pb-6">
             {sector.title}
           </h2>
-          <ScrollableProductGrid products={sector.products} sectorId={sector.id} />
+          <ScrollableProductGrid
+            products={sector.products}
+            sectorId={sector.id}
+          />
         </div>
       ))}
     </div>

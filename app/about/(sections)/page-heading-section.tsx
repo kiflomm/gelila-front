@@ -1,14 +1,27 @@
+import Image from "next/image";
+
 export default function PageHeadingSection() {
   return (
-    <div className="flex flex-col items-center text-center gap-4 mb-10 lg:mb-12">
-      <h1 className="text-[#181411] dark:text-white text-4xl md:text-5xl font-black leading-tight tracking-[-0.033em]">
-        About Gelila Manufacturing
-      </h1>
-      <p className="text-[#8c755f] dark:text-white/70 text-base md:text-lg font-normal leading-normal max-w-2xl">
-        Pioneering industrial excellence in Ethiopia since 1998, driving innovation
-        and sustainable growth across multiple sectors.
-      </p>
-    </div>
+    <section className="w-full">
+      <div className="relative flex min-h-[500px] lg:min-h-[600px] w-full flex-col gap-6 bg-cover bg-center bg-no-repeat items-start justify-center px-4 sm:px-6 lg:px-10 xl:px-20 py-16 sm:py-20 lg:py-24 overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop"
+          alt="Modern manufacturing facility with advanced machinery and production equipment"
+          fill
+          className="object-cover brightness-75"
+          priority
+        />
+        <div className="absolute inset-0 bg-linear-to-r from-black/60 to-black/40" />
+        <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-4 text-left">
+          <h1 className="text-white text-4xl font-black leading-tight tracking-tight sm:text-5xl md:text-6xl max-w-3xl">
+            About Gelila Manufacturing
+          </h1>
+          <p className="text-white/90 text-base font-normal leading-normal sm:text-lg max-w-2xl">
+            Pioneering industrial excellence in Ethiopia since 1998, driving
+            innovation and sustainable growth across multiple sectors.
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
-

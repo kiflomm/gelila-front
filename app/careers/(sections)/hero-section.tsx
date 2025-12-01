@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button";
 
 export default function HeroSection() {
   return (
-    <section className="py-16 md:py-24 bg-white dark:bg-[#212529]/30">
+    <section className="pt-24 sm:pt-28 md:pt-32 pb-16 md:pb-24 bg-white dark:bg-[#212529]/30">
       <div className="px-4 sm:px-10 lg:px-20">
         <div className="@container">
-          <div className="flex flex-col gap-8 @[864px]:flex-row @[864px]:items-center max-w-7xl mx-auto">
+          <div className="flex flex-col gap-8 @[864px]:flex-row @[864px]:items-center max-w-7xl mx-auto px-2 sm:px-4 md:px-6">
             <div className="flex flex-col gap-6 text-center @[864px]:text-left @[864px]:w-1/2">
-              <div className="flex flex-col gap-2">
-                <h1 className="text-[#212529] dark:text-[#F8F9FA] text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl">
+              <div className="flex flex-col gap-2 sm:gap-3">
+                <h1 className="text-[#212529] dark:text-[#F8F9FA] text-3xl sm:text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl">
                   Build Your Future with Gelila Manufacturing.
                 </h1>
                 <h2 className="text-[#6C757D] dark:text-[#F8F9FA]/70 text-base font-normal leading-normal @[480px]:text-lg">
@@ -47,4 +47,3 @@ export default function HeroSection() {
     </section>
   );
 }
-

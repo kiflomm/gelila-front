@@ -24,12 +24,16 @@ export default function JobListingsSection() {
       searchQuery === "" ||
       job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       job.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesLocation = selectedLocation === "All" || job.location === selectedLocation;
+    const matchesLocation =
+      selectedLocation === "All" || job.location === selectedLocation;
     const matchesDepartment =
       selectedDepartment === "All" || job.department === selectedDepartment;
-    const matchesJobType = selectedJobType === "All" || job.type === selectedJobType;
+    const matchesJobType =
+      selectedJobType === "All" || job.type === selectedJobType;
 
-    return matchesSearch && matchesLocation && matchesDepartment && matchesJobType;
+    return (
+      matchesSearch && matchesLocation && matchesDepartment && matchesJobType
+    );
   });
 
   const resetFilters = () => {
@@ -42,14 +46,14 @@ export default function JobListingsSection() {
   return (
     <section id="job-listings" className="py-16 md:py-24">
       <div className="px-4 sm:px-10 lg:px-20">
-        <div className="max-w-7xl mx-auto flex flex-col gap-8">
+        <div className="max-w-7xl mx-auto flex flex-col gap-8 px-2 sm:px-4 md:px-6">
           {/* Section Header */}
-          <h2 className="text-[#212529] dark:text-[#F8F9FA] text-3xl font-bold leading-tight tracking-[-0.015em] text-center">
+          <h2 className="text-[#212529] dark:text-[#F8F9FA] text-2xl sm:text-3xl font-bold leading-tight tracking-[-0.015em] text-center">
             Explore Open Positions
           </h2>
 
           {/* Filters */}
-          <div className="border rounded-xl p-4 bg-white dark:bg-[#212529]/30 border-[#F8F9FA] dark:border-white/10 flex flex-col md:flex-row gap-4 items-center">
+          <div className="border rounded-xl p-4 sm:p-5 md:p-6 bg-white dark:bg-[#212529]/30 border-[#F8F9FA] dark:border-white/10 flex flex-col md:flex-row gap-4 items-center">
             {/* Search Input */}
             <div className="w-full md:grow">
               <div className="relative">
@@ -83,7 +87,9 @@ export default function JobListingsSection() {
                     <DropdownMenuItem
                       key={location}
                       onClick={() => setSelectedLocation(location)}
-                      className={selectedLocation === location ? "bg-primary/10" : ""}
+                      className={
+                        selectedLocation === location ? "bg-primary/10" : ""
+                      }
                     >
                       {location}
                     </DropdownMenuItem>
@@ -108,7 +114,9 @@ export default function JobListingsSection() {
                     <DropdownMenuItem
                       key={department}
                       onClick={() => setSelectedDepartment(department)}
-                      className={selectedDepartment === department ? "bg-primary/10" : ""}
+                      className={
+                        selectedDepartment === department ? "bg-primary/10" : ""
+                      }
                     >
                       {department}
                     </DropdownMenuItem>
@@ -133,7 +141,9 @@ export default function JobListingsSection() {
                     <DropdownMenuItem
                       key={jobType}
                       onClick={() => setSelectedJobType(jobType)}
-                      className={selectedJobType === jobType ? "bg-primary/10" : ""}
+                      className={
+                        selectedJobType === jobType ? "bg-primary/10" : ""
+                      }
                     >
                       {jobType}
                     </DropdownMenuItem>
@@ -153,7 +163,7 @@ export default function JobListingsSection() {
           </div>
 
           {/* Job Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredJobs.map((job) => (
               <div
                 key={job.id}
@@ -200,4 +210,3 @@ export default function JobListingsSection() {
     </section>
   );
 }
-

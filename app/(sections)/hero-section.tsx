@@ -7,13 +7,13 @@ export default function HeroSection() {
     <section className="w-full">
       <div className="relative flex min-h-[600px] lg:min-h-[700px] w-full flex-col gap-6 bg-cover bg-center bg-no-repeat items-start justify-center px-4 sm:px-6 lg:px-10 xl:px-20 py-16 sm:py-20 lg:py-24 overflow-hidden">
         <Image
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4i7laV2i-QVdbRf3idJagNz-tdiqPs5ymwV2wqvww1kUCGhUGeT3OWu-Kf0x8TQx2_6iJN7JMMCk2mFgPEJgxI6vTeyCqMAy17gOpaNPej9g8O6_fDs5dZ9_91B0VcpfhgXEHQJ87Gmbd9Vcv_uCh4u1ZLs5v1mLxoSHz-gPMAWU8yorGESPBohvA06K3XJ2iW9giI3W5-i0OnfbsAmtC-vBUyuahx69RMLdGJwNJrn-bhzrLraf-uJNJ8QsfxM8bT21hCdEdTGMM"
-          alt="A wide-angle shot of a modern, clean factory floor with automated machinery and production lines in motion."
+          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop"
+          alt="A dark industrial manufacturing facility with machinery and production equipment."
           fill
-          className="object-cover"
+          className="object-cover brightness-75"
           priority
         />
-        <div className="absolute inset-0 bg-linear-to-b from-black/10 to-black/60" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/50 to-black/80" />
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-6 sm:gap-8">
           <div className="flex flex-col gap-4 text-left max-w-3xl">
             <h1 className="text-white text-4xl font-black leading-tight tracking-tight sm:text-5xl md:text-6xl">
@@ -56,4 +56,3 @@ export default function HeroSection() {
     </section>
   );
 }
-

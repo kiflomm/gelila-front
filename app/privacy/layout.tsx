@@ -3,28 +3,28 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Contact Us - Gelila Manufacturing PLC",
+  title: "Privacy Policy - Gelila Manufacturing PLC",
   description:
-    "Get in touch with Gelila Manufacturing PLC. Reach out for inquiries, partnerships, or general information.",
+    "Read our Privacy Policy to understand how Gelila Manufacturing PLC collects, uses, and protects your personal information.",
   keywords: [
-    "contact",
-    "inquiry",
-    "get in touch",
-    "partnership",
-    "support",
-    "customer service",
+    "privacy",
+    "privacy policy",
+    "data protection",
+    "personal information",
+    "GDPR",
+    "data privacy",
   ],
   openGraph: {
-    title: "Contact Us - Gelila Manufacturing PLC",
+    title: "Privacy Policy - Gelila Manufacturing PLC",
     description:
-      "Get in touch with Gelila Manufacturing PLC for inquiries, partnerships, or general information.",
+      "Read our Privacy Policy to understand how we collect, use, and protect your personal information.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Us - Gelila Manufacturing PLC",
-    description: "Get in touch with Gelila Manufacturing PLC.",
+    title: "Privacy Policy - Gelila Manufacturing PLC",
+    description: "Privacy Policy for Gelila Manufacturing PLC.",
   },
   robots: {
     index: true,
@@ -38,11 +38,11 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "/contact",
+    canonical: "/privacy",
   },
 };
 
-export default function ContactLayout({
+export default function PrivacyLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

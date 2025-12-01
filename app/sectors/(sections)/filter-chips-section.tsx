@@ -31,20 +31,22 @@ export default function FilterChipsSection({
   };
 
   return (
-    <div className="flex gap-2 sm:gap-3 p-3 overflow-x-auto w-full scrollbar-hide">
+    <div className="flex gap-2 sm:gap-3 px-2 sm:px-4 md:px-6 py-3 sm:py-4 mb-4 sm:mb-6 overflow-x-auto w-full scrollbar-hide -mx-2 sm:mx-0">
       {allSectors.map((sector) => {
         const isActive = activeSector === sector.id;
         return (
           <button
             key={sector.id}
             onClick={() => handleSectorClick(sector.id)}
-            className={`flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full px-4 transition-colors ${
+            className={`flex h-9 sm:h-10 shrink-0 items-center justify-center gap-x-2 rounded-full px-3 sm:px-4 transition-colors ${
               isActive
                 ? "bg-primary/20 text-primary dark:bg-primary/30 dark:text-primary font-semibold"
                 : "bg-gray-100 dark:bg-gray-800 text-[#424242] dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-700"
             }`}
           >
-            <p className="text-sm leading-normal">{sector.name}</p>
+            <p className="text-xs sm:text-sm leading-normal whitespace-nowrap">
+              {sector.name}
+            </p>
           </button>
         );
       })}
@@ -60,4 +62,3 @@ export default function FilterChipsSection({
     </div>
   );
 }
-

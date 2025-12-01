@@ -21,13 +21,13 @@ export default function ContactFormSection() {
   };
 
   return (
-    <section className="py-6">
-      <div className="p-8 bg-white dark:bg-black/20 border border-primary/20 rounded-xl">
-        <h2 className="text-[#181411] dark:text-white text-2xl font-bold mb-6">
+    <section className="py-4 sm:py-6">
+      <div className="p-6 sm:p-8 bg-white dark:bg-black/20 border border-primary/20 rounded-xl">
+        <h2 className="text-[#181411] dark:text-white text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
           Send Us a Message
         </h2>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <Label
                 htmlFor="name"
@@ -117,4 +117,3 @@ export default function ContactFormSection() {
     </section>
   );
 }
-

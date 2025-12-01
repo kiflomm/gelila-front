@@ -13,7 +13,9 @@ export default function AchievementsSection() {
             {achievementsData.milestones.map((milestone, index) => (
               <div
                 key={index}
-                className={`mb-10 ml-4 ${index === achievementsData.milestones.length - 1 ? "" : ""}`}
+                className={`mb-10 ml-4 ${
+                  index === achievementsData.milestones.length - 1 ? "" : ""
+                }`}
               >
                 <div className="absolute w-4 h-4 bg-primary rounded-full -left-2.5 border-2 border-background-light dark:border-background-dark" />
                 <time className="mb-1 text-sm font-normal leading-none text-[#8c755f] dark:text-white/60 block">
@@ -57,4 +59,3 @@ export default function AchievementsSection() {
     </section>
   );
 }
-

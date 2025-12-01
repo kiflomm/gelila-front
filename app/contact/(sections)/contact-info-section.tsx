@@ -3,12 +3,12 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 export default function ContactInfoSection() {
   return (
-    <section className="py-6">
-      <div className="p-8 bg-white dark:bg-black/20 border border-primary/20 rounded-xl">
-        <h2 className="text-[#181411] dark:text-white text-2xl font-bold mb-6">
+    <section className="py-4 sm:py-6">
+      <div className="p-6 sm:p-8 bg-white dark:bg-black/20 border border-primary/20 rounded-xl">
+        <h2 className="text-[#181411] dark:text-white text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
           Contact Information
         </h2>
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4 sm:gap-6">
           {/* Address */}
           <div className="flex items-start gap-4">
             <div className="flex items-center justify-center size-12 bg-primary/20 rounded-full text-primary shrink-0">
@@ -83,12 +83,11 @@ export default function ContactInfoSection() {
         {/* Additional Info */}
         <div className="mt-8 pt-8 border-t border-primary/20">
           <p className="text-[#495057] dark:text-white/80 text-sm leading-relaxed">
-            For urgent matters or after-hours inquiries, please email us and we'll
-            respond as soon as possible.
+            For urgent matters or after-hours inquiries, please email us and
+            we'll respond as soon as possible.
           </p>
         </div>
       </div>
     </section>
   );
 }
-

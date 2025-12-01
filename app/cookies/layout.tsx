@@ -3,28 +3,27 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Contact Us - Gelila Manufacturing PLC",
+  title: "Cookie Policy - Gelila Manufacturing PLC",
   description:
-    "Get in touch with Gelila Manufacturing PLC. Reach out for inquiries, partnerships, or general information.",
+    "Learn about how Gelila Manufacturing PLC uses cookies and similar technologies to enhance your browsing experience.",
   keywords: [
-    "contact",
-    "inquiry",
-    "get in touch",
-    "partnership",
-    "support",
-    "customer service",
+    "cookies",
+    "cookie policy",
+    "tracking",
+    "web analytics",
+    "browser data",
   ],
   openGraph: {
-    title: "Contact Us - Gelila Manufacturing PLC",
+    title: "Cookie Policy - Gelila Manufacturing PLC",
     description:
-      "Get in touch with Gelila Manufacturing PLC for inquiries, partnerships, or general information.",
+      "Learn about how we use cookies and similar technologies to enhance your browsing experience.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Us - Gelila Manufacturing PLC",
-    description: "Get in touch with Gelila Manufacturing PLC.",
+    title: "Cookie Policy - Gelila Manufacturing PLC",
+    description: "Cookie Policy for Gelila Manufacturing PLC.",
   },
   robots: {
     index: true,
@@ -38,11 +37,11 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "/contact",
+    canonical: "/cookies",
   },
 };
 
-export default function ContactLayout({
+export default function CookiesLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
