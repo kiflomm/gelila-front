@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { Search, ChevronDown } from "lucide-react";
+import { Search, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -13,34 +13,58 @@ import {
 } from "@/components/ui/dropdown-menu";
 import jobsData from "@/data/jobs.json";
 
+const ITEMS_PER_PAGE = 6;
+
 export default function JobListingsSection() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("All");
   const [selectedDepartment, setSelectedDepartment] = useState("All");
   const [selectedJobType, setSelectedJobType] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredJobs = jobsData.jobs.filter((job) => {
-    const matchesSearch =
-      searchQuery === "" ||
-      job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesLocation =
-      selectedLocation === "All" || job.location === selectedLocation;
-    const matchesDepartment =
-      selectedDepartment === "All" || job.department === selectedDepartment;
-    const matchesJobType =
-      selectedJobType === "All" || job.type === selectedJobType;
+  const filteredJobs = useMemo(() => {
+    return jobsData.jobs.filter((job) => {
+      const matchesSearch =
+        searchQuery === "" ||
+        job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesLocation =
+        selectedLocation === "All" || job.location === selectedLocation;
+      const matchesDepartment =
+        selectedDepartment === "All" || job.department === selectedDepartment;
+      const matchesJobType =
+        selectedJobType === "All" || job.type === selectedJobType;
 
-    return (
-      matchesSearch && matchesLocation && matchesDepartment && matchesJobType
-    );
-  });
+      return (
+        matchesSearch && matchesLocation && matchesDepartment && matchesJobType
+      );
+    });
+  }, [searchQuery, selectedLocation, selectedDepartment, selectedJobType]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedLocation, selectedDepartment, selectedJobType]);
+
+  const totalPages = Math.ceil(filteredJobs.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const paginatedJobs = filteredJobs.slice(startIndex, endIndex);
 
   const resetFilters = () => {
     setSearchQuery("");
     setSelectedLocation("All");
     setSelectedDepartment("All");
     setSelectedJobType("All");
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Scroll to top of job listings section
+    document
+      .getElementById("job-listings")
+      ?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -164,7 +188,7 @@ export default function JobListingsSection() {
 
           {/* Job Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {filteredJobs.map((job) => (
+            {paginatedJobs.map((job) => (
               <div
                 key={job.id}
                 className="border rounded-xl p-6 bg-white dark:bg-[#212529]/30 border-[#F8F9FA] dark:border-white/10 flex flex-col gap-4 hover:shadow-lg hover:border-primary/50 dark:hover:border-primary/50 transition-all"
@@ -202,6 +226,114 @@ export default function JobListingsSection() {
             <div className="text-center py-12">
               <p className="text-[#6C757D] dark:text-[#F8F9FA]/70 text-lg">
                 No jobs found matching your criteria.
+              </p>
+            </div>
+          )}
+
+          {/* Pagination */}
+          {filteredJobs.length > ITEMS_PER_PAGE && (
+            <div className="flex items-center justify-center gap-2 mt-8">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="h-10 w-10 rounded-full border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark hover:bg-[#F8F9FA]/80 dark:hover:bg-background-dark/80 disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Previous page"
+              >
+                <ChevronLeft className="size-5 text-[#6C757D] dark:text-[#F8F9FA]/80" />
+              </Button>
+
+              <div className="flex items-center gap-1">
+                {(() => {
+                  const pages: (number | "ellipsis")[] = [];
+
+                  if (totalPages <= 7) {
+                    // Show all pages if 7 or fewer
+                    for (let i = 1; i <= totalPages; i++) {
+                      pages.push(i);
+                    }
+                  } else {
+                    // Always show first page
+                    pages.push(1);
+
+                    if (currentPage <= 3) {
+                      // Show pages 2, 3, 4 if current page is near start
+                      for (let i = 2; i <= 4; i++) {
+                        pages.push(i);
+                      }
+                      pages.push("ellipsis");
+                      pages.push(totalPages);
+                    } else if (currentPage >= totalPages - 2) {
+                      // Show pages near the end if current page is near end
+                      pages.push("ellipsis");
+                      for (let i = totalPages - 3; i <= totalPages; i++) {
+                        pages.push(i);
+                      }
+                    } else {
+                      // Show pages around current page
+                      pages.push("ellipsis");
+                      for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+                        pages.push(i);
+                      }
+                      pages.push("ellipsis");
+                      pages.push(totalPages);
+                    }
+                  }
+
+                  return pages.map((page, index) => {
+                    if (page === "ellipsis") {
+                      return (
+                        <span
+                          key={`ellipsis-${index}`}
+                          className="px-2 text-[#6C757D] dark:text-[#F8F9FA]/70"
+                        >
+                          ...
+                        </span>
+                      );
+                    }
+
+                    return (
+                      <Button
+                        key={page}
+                        variant={currentPage === page ? "default" : "ghost"}
+                        onClick={() => handlePageChange(page)}
+                        className={`h-10 w-10 rounded-full ${
+                          currentPage === page
+                            ? "bg-primary text-white hover:bg-primary/90"
+                            : "text-[#6C757D] dark:text-[#F8F9FA]/80 hover:bg-[#F8F9FA] dark:hover:bg-background-dark/80"
+                        }`}
+                        aria-label={`Go to page ${page}`}
+                        aria-current={currentPage === page ? "page" : undefined}
+                      >
+                        {page}
+                      </Button>
+                    );
+                  });
+                })()}
+              </div>
+
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="h-10 w-10 rounded-full border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark hover:bg-[#F8F9FA]/80 dark:hover:bg-background-dark/80 disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Next page"
+              >
+                <ChevronRight className="size-5 text-[#6C757D] dark:text-[#F8F9FA]/80" />
+              </Button>
+            </div>
+          )}
+
+          {/* Results count */}
+          {filteredJobs.length > 0 && (
+            <div className="text-center mt-4">
+              <p className="text-sm text-[#6C757D] dark:text-[#F8F9FA]/70">
+                Showing {startIndex + 1}-
+                {Math.min(endIndex, filteredJobs.length)} of{" "}
+                {filteredJobs.length}{" "}
+                {filteredJobs.length === 1 ? "job" : "jobs"}
               </p>
             </div>
           )}

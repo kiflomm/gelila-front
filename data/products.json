@@ -32,6 +32,27 @@
           "description": "Capacity: 4,000 pairs/day",
           "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBbV4RVP0V6Fh5kj6wfe7Md8Vz_tVU5KWUJc8HLuxmA_l6O-OR5l73YBDqQ-Zmk5QrBa49Q2vC3lyIomUJUslrXDXHXPUE2sjmyEnjpixDX-ixLZi_0lI8PqQIrMjQYqrA8qCPrJ-VgnRwifJJU6QkjLjoDvDWRMB1T8-Rxjqe-phNt6a-AdIFAC1hzPfZpvCppgvNWWAcmkRsVZyizXKvHeobmRmqqWo9p1j5ZeLG90KJ4GFNyHpakBGS8lO8r_ObK_sIquMZKhqaV",
           "alt": "A collection of high-quality export-grade footwear"
+        },
+        {
+          "id": 15,
+          "name": "Athletic Sneakers",
+          "description": "Capacity: 3,500 pairs/day",
+          "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Modern athletic sneakers with vibrant colors"
+        },
+        {
+          "id": 16,
+          "name": "Work Boots",
+          "description": "Capacity: 2,000 pairs/day",
+          "image": "https://images.unsplash.com/photo-1605812860427-4024433a70fd?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Durable work boots for industrial use"
+        },
+        {
+          "id": 17,
+          "name": "Children's Footwear",
+          "description": "Capacity: 2,500 pairs/day",
+          "image": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Colorful children's shoes in various sizes"
         }
       ]
     },
@@ -60,6 +81,20 @@
           "description": "Custom specifications",
           "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuArGLef2hB7xWVCVn9wnOFJTy_lQUkY5AIdOCVLd_XABnmvy7s2ClviqmWAZmywxKzgssQ1DnyOeYHWk6VO4ItlGJEMHXoKv3GvsZZ3gQZTqqCKt0mIxG6NYYUo6r7zIlpAFs4fDyOOq58_1cH913Vb95ucjC4s_iu9yGYcrOW2CJtSbzMpyai2BdR55MQzyp4SfDYtdzlIWWoNUl0TKzQFX8xhi5klveVXl9uMerO9Px3lhWZVYvNvQA6rNSS1GCg3Mymdl3nkHmkp",
           "alt": "Various precision injection molded plastic components"
+        },
+        {
+          "id": 18,
+          "name": "TPR Soles",
+          "description": "Thermoplastic rubber soles",
+          "image": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop",
+          "alt": "TPR sole components for footwear manufacturing"
+        },
+        {
+          "id": 19,
+          "name": "Shoe Laces & Accessories",
+          "description": "Premium quality laces",
+          "image": "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Various shoe laces and accessories"
         }
       ]
     },
@@ -88,6 +123,20 @@
           "description": "Next-gen clean energy",
           "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBfy-13eAG6fSLmWmJ2NWW-f02II6cFvBqmFlZTL2s2hWj0w4DdR1IWDGGWi2NPBwfN3NONNA3gNKlDj-ifgraDt_wDbKP0VNmZBcVH_AJ-ye5BOSZxIyFIBkkpC4EuNZ5G9x9N301mM7noa9dhKM2MRbHYj6B4wYaQGwcRdsjI6AKDdB-gDCHuTJtyh1j2Y3JgNsDXeFYQzpOzKYDRwf6JPnY6RN9S_CZ6xhAZaFzwmQu-Sg9UAOM4_TlSrAtrT6sapUyWNe24DDtB",
           "alt": "A futuristic hydrogen-powered bus at a charging station"
+        },
+        {
+          "id": 20,
+          "name": "School Bus",
+          "description": "Safe and reliable transportation",
+          "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Yellow school bus designed for student transportation"
+        },
+        {
+          "id": 21,
+          "name": "Mini Bus",
+          "description": "Compact urban transport",
+          "image": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Compact mini bus for city routes"
         }
       ]
     },
@@ -109,6 +158,27 @@
           "description": "Quality assured products",
           "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDHjsCKhyjvBodUWqaEoUxhoHbbY2XqyN4-OakIjLSSNhukfNlGQYYXSNKNDD7pGHD_5tKDHpva46EkPqp8B-HANc6_IcjVkQc4Jfv1t2bCsT3ix_NF21fZtMsfWngK9U6Oe6b3staGZHq-rRLqMxCE0VbYzmCVeSTTjDmRHV7OWzy1jRz897Br2Ebc9SUz_wFJreDtlfl_DNFGfSuBvYQOoqAKPgO082GnGjqw1B9GHaNKwWpJA86YtEXXcG85MRGUi5myDRVy9RMm",
           "alt": "Packaged food products on production line"
+        },
+        {
+          "id": 22,
+          "name": "Pasta Products",
+          "description": "Premium pasta varieties",
+          "image": "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Various pasta products on display"
+        },
+        {
+          "id": 23,
+          "name": "Snack Foods",
+          "description": "Healthy snack options",
+          "image": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Assorted snack foods in packaging"
+        },
+        {
+          "id": 24,
+          "name": "Beverages",
+          "description": "Refreshing drink products",
+          "image": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Various beverage products on shelves"
         }
       ]
     },
@@ -130,9 +200,29 @@
           "description": "Export-quality apparel",
           "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC_qa4L0bGqSQV0EiNaD7ue7HqpptaC6ZO3jm3ZGCu1U6VbJ1ncSfuK7bW-AjUYtrYsCKyzhiswu4YgC_-a2BdQyNMgGxrLabXZ_XauKuq7YDqcTkxteOix8JU7WQYt8nIbJ7a56k-gtllsA19Jzky6MuvoloGT3le77G76YOqhaZnUjW_4QWfuMuGVyHye4wNYWJzmNWlrdc8Hqs0acJ6nZZjK5LElJjOTb9HX9lnEIs9BzV8mqATCEF__dpvtyxNrxZFdM9DP1zRV",
           "alt": "Finished garments ready for export"
+        },
+        {
+          "id": 25,
+          "name": "Denim Products",
+          "description": "Premium denim fabrics",
+          "image": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Denim fabric rolls and products"
+        },
+        {
+          "id": 26,
+          "name": "Home Textiles",
+          "description": "Bedding and home fabrics",
+          "image": "https://images.unsplash.com/photo-1586105251261-72a756497a11?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Home textile products including bedding"
+        },
+        {
+          "id": 27,
+          "name": "Technical Textiles",
+          "description": "Industrial-grade fabrics",
+          "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Technical textile materials for industrial use"
         }
       ]
     }
   ]
 }
-

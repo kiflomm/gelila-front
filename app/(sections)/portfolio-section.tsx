@@ -44,7 +44,9 @@ export default function PortfolioSection() {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
     const cardWidth = container.querySelector("a")?.clientWidth || 0;
-    const gap = 24; // gap-6 = 1.5rem = 24px
+    // Get computed gap from container
+    const computedStyle = window.getComputedStyle(container);
+    const gap = parseFloat(computedStyle.gap) || 16;
     const scrollAmount = cardWidth + gap;
 
     container.scrollBy({
@@ -68,35 +70,35 @@ export default function PortfolioSection() {
 
       {/* Scrollable Container with Navigation */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Previous Button */}
+        {/* Previous Button - Hidden on mobile, shown on larger screens */}
         <Button
           onClick={() => scroll("left")}
           disabled={!canScrollLeft}
           variant="outline"
           size="icon"
-          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-14 z-10 size-12 rounded-full bg-white dark:bg-gray-800 border-2 border-primary/20 hover:border-primary/40 shadow-lg hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
+          className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 lg:-translate-x-14 z-10 size-10 md:size-11 lg:size-12 rounded-full bg-white dark:bg-gray-800 border-2 border-primary/20 hover:border-primary/40 shadow-lg hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
           aria-label="Previous cards"
         >
-          <ChevronLeft className="size-6 text-primary" />
+          <ChevronLeft className="size-5 md:size-5 lg:size-6 text-primary" />
         </Button>
 
-        {/* Next Button */}
+        {/* Next Button - Hidden on mobile, shown on larger screens */}
         <Button
           onClick={() => scroll("right")}
           disabled={!canScrollRight}
           variant="outline"
           size="icon"
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-14 z-10 size-12 rounded-full bg-white dark:bg-gray-800 border-2 border-primary/20 hover:border-primary/40 shadow-lg hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
+          className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 lg:translate-x-14 z-10 size-10 md:size-11 lg:size-12 rounded-full bg-white dark:bg-gray-800 border-2 border-primary/20 hover:border-primary/40 shadow-lg hover:shadow-xl disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
           aria-label="Next cards"
         >
-          <ChevronRight className="size-6 text-primary" />
+          <ChevronRight className="size-5 md:size-5 lg:size-6 text-primary" />
         </Button>
 
         {/* Scrollable Cards Container - Shows exactly 3 items */}
-        <div className="overflow-hidden mx-auto w-[calc(3*320px+2*24px)] sm:w-[calc(3*360px+2*24px)] lg:w-[calc(3*380px+2*24px)] max-w-full">
+        <div className="overflow-hidden mx-auto max-w-full">
           <div
             ref={scrollContainerRef}
-            className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+            className="flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-2 sm:px-4 lg:px-6"
             style={{
               scrollbarWidth: "none",
               msOverflowStyle: "none",
@@ -106,7 +108,7 @@ export default function PortfolioSection() {
               <Link
                 key={sector.id}
                 href={`/sectors/${sector.id}`}
-                className="group relative flex flex-col rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 shrink-0 w-[320px] sm:w-[360px] lg:w-[380px]"
+                className="group relative flex flex-col rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 shrink-0 w-[280px] sm:w-[300px] md:w-[320px] lg:w-[350px] xl:w-[380px] snap-start"
               >
                 {/* Image Container with Overlay */}
                 <div className="relative w-full aspect-4/3 overflow-hidden bg-gray-100 dark:bg-gray-900">
@@ -115,7 +117,7 @@ export default function PortfolioSection() {
                     alt={sector.alt}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    sizes="(max-width: 640px) 320px, (max-width: 1024px) 360px, 380px"
+                    sizes="(max-width: 640px) 280px, (max-width: 768px) 300px, (max-width: 1024px) 320px, (max-width: 1280px) 350px, 380px"
                   />
                   {/* Gradient Overlay on Hover */}
                   <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

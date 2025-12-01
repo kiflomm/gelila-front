@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { Upload, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,9 +16,6 @@ export default function ApplicationFormSection({
   jobTitle,
   jobId,
 }: ApplicationFormSectionProps) {
-  const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 3;
-
   return (
     <section className="py-16 md:py-24">
       <div className="px-4 sm:px-10 lg:px-20">
@@ -32,7 +28,10 @@ export default function ApplicationFormSection({
                 variant="ghost"
                 className="text-[#6C757D] dark:text-[#F8F9FA]/80 hover:text-primary"
               >
-                <Link href="/careers#job-listings" className="flex items-center gap-2">
+                <Link
+                  href="/careers#job-listings"
+                  className="flex items-center gap-2"
+                >
                   <ArrowLeft className="size-4" />
                   <span>Back to Job Listings</span>
                 </Link>
@@ -43,27 +42,13 @@ export default function ApplicationFormSection({
               Apply for {jobTitle}
             </h2>
             <div className="w-full p-8 bg-white dark:bg-[#212529]/30 border border-[#F8F9FA] dark:border-white/10 rounded-xl">
-              {/* Progress Indicator */}
-              <div className="mb-8">
-                <p className="text-center text-sm font-bold text-primary mb-2">
-                  Step {currentStep} of {totalSteps}: Personal Details
-                </p>
-                <div className="w-full bg-[#F8F9FA] dark:bg-background-dark rounded-full h-2">
-                  <div
-                    className="bg-primary h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${(currentStep / totalSteps) * 100}%` }}
-                  />
-                </div>
-              </div>
-
               {/* Form Fields */}
               <form
                 className="grid grid-cols-1 md:grid-cols-2 gap-6"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  if (currentStep < totalSteps) {
-                    setCurrentStep(currentStep + 1);
-                  }
+                  // Handle form submission here
+                  console.log("Form submitted");
                 }}
               >
                 <div>
@@ -123,8 +108,8 @@ export default function ApplicationFormSection({
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
                         <Upload className="size-8 text-[#6C757D] mb-2" />
                         <p className="mb-2 text-sm text-[#6C757D] dark:text-[#F8F9FA]/70">
-                          <span className="font-semibold">Click to upload</span> or drag
-                          and drop
+                          <span className="font-semibold">Click to upload</span>{" "}
+                          or drag and drop
                         </p>
                         <p className="text-xs text-[#6C757D] dark:text-[#F8F9FA]/70">
                           PDF, DOC, DOCX (MAX. 5MB)
@@ -158,11 +143,7 @@ export default function ApplicationFormSection({
                     type="submit"
                     className="flex! min-w-[120px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary! text-white text-base font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary!"
                   >
-                    <span className="truncate">
-                      {currentStep < totalSteps
-                        ? `Next: Step ${currentStep + 1}`
-                        : "Submit Application"}
-                    </span>
+                    <span className="truncate">Submit Application</span>
                   </Button>
                 </div>
               </form>
@@ -173,4 +154,3 @@ export default function ApplicationFormSection({
     </section>
   );
 }
-

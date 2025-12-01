@@ -12,16 +12,17 @@ export default function Header() {
   const isHome = pathname === "/";
   const isAbout = pathname === "/about";
   const isExports = pathname === "/exports";
-  const hasTransparentNav = isHome || isAbout || isExports;
+  const isSectors = pathname === "/sectors";
+  const hasTransparentNav = isHome || isAbout || isExports || isSectors;
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/about", label: "About Us" },
-    { href: "/sectors", label: "Sectors" },
     { href: "/exports", label: "Exports" },
+    { href: "/sectors", label: "Sectors" },
     { href: "/news", label: "News & Updates" },
     { href: "/careers", label: "Careers" },
     { href: "/contact", label: "Contact" },
+    { href: "/about", label: "About Us" },
   ];
 
   return (
