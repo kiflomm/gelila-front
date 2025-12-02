@@ -1,0 +1,50 @@
+{
+  "title": "Contact Information",
+  "sections": [
+    {
+      "type": "address",
+      "icon": "MapPin",
+      "title": "Address",
+      "content": {
+        "line1": "Lemi Kura Sub City, Woreda 06",
+        "line2": "Bole Lemi Industry Park",
+        "line3": "Addis Ababa, Ethiopia"
+      }
+    },
+    {
+      "type": "phone",
+      "icon": "Phone",
+      "title": "Phone",
+      "content": [
+        {
+          "number": "+251-993667101",
+          "href": "tel:+251993667101"
+        },
+        {
+          "number": "+251-943164444",
+          "href": "tel:+251943164444"
+        }
+      ]
+    },
+    {
+      "type": "email",
+      "icon": "Mail",
+      "title": "Email",
+      "content": {
+        "address": "info@gelilamanufacturingplc.com.et",
+        "href": "mailto:info@gelilamanufacturingplc.com.et"
+      }
+    },
+    {
+      "type": "hours",
+      "icon": "Clock",
+      "title": "Business Hours",
+      "content": [
+        "Monday - Friday: 8:00 AM - 5:00 PM",
+        "Saturday: 9:00 AM - 1:00 PM",
+        "Sunday: Closed"
+      ]
+    }
+  ],
+  "additionalInfo": "For urgent matters or after-hours inquiries, please email us and we'll respond as soon as possible."
+}

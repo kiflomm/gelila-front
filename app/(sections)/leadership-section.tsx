@@ -7,31 +7,15 @@ import {
   Lightbulb,
   UserCircle,
 } from "lucide-react";
+import leadershipData from "@/data/leadership.json";
 
-const coreValues = [
-  {
-    icon: Award,
-    title: "Integrity",
-    description: "We operate with honesty and professionalism.",
-  },
-  {
-    icon: Settings,
-    title: "Quality",
-    description:
-      "We maintain strict quality standards in products and services.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Innovation",
-    description: "We adopt modern technologies for continuous improvement.",
-  },
-  {
-    icon: Users,
-    title: "Teamwork",
-    description:
-      "We believe in collaborative growth with our employees and partners.",
-  },
-];
+// Icon mapping for core values
+const iconMap: Record<string, typeof Award> = {
+  Award,
+  Settings,
+  Lightbulb,
+  Users,
+};
 
 export default function LeadershipSection() {
   return (
@@ -47,13 +31,20 @@ export default function LeadershipSection() {
           </h2>
         </div>
         <p className="text-[#495057] dark:text-white/80 text-base sm:text-lg leading-relaxed">
-          Gelila Manufacturing PLC is founded and led by{" "}
+          {
+            leadershipData.leadership.founder.description.split(
+              leadershipData.leadership.founder.name
+            )[0]
+          }
           <strong className="text-[#181411] dark:text-white font-semibold">
-            Mr. Berhe Assefa
+            {" "}
+            {leadershipData.leadership.founder.name}{" "}
           </strong>
-          , an entrepreneur with decades of experience in manufacturing and
-          industrial operations. His vision continues to guide the company's
-          growth and diversification.
+          {
+            leadershipData.leadership.founder.description.split(
+              leadershipData.leadership.founder.name
+            )[1]
+          }
         </p>
       </div>
 
@@ -70,17 +61,21 @@ export default function LeadershipSection() {
               <Target className="size-5 text-primary" />
             </div>
             <h3 className="text-[#181411] dark:text-white text-xl sm:text-2xl font-black leading-tight tracking-tight">
-              Vision
+              {leadershipData.vision.title}
             </h3>
           </div>
-          <p className="text-[#495057] dark:text-white/80 text-base sm:text-lg leading-relaxed mb-3">
-            To become a leading Ethiopian industrial group known for innovation,
-            quality manufacturing, and reliable service delivery in Africa.
-          </p>
-          <p className="text-[#495057] dark:text-white/80 text-sm sm:text-base leading-relaxed">
-            To be a leading manufacturing and service providing company in
-            Ethiopia.
-          </p>
+          {leadershipData.vision.statements.map((statement, index) => (
+            <p
+              key={index}
+              className={`text-[#495057] dark:text-white/80 ${
+                index === 0
+                  ? "text-base sm:text-lg leading-relaxed mb-3"
+                  : "text-sm sm:text-base leading-relaxed"
+              }`}
+            >
+              {statement}
+            </p>
+          ))}
         </div>
 
         {/* Mission Section */}
@@ -90,30 +85,16 @@ export default function LeadershipSection() {
               <Rocket className="size-5 text-primary" />
             </div>
             <h3 className="text-[#181411] dark:text-white text-xl sm:text-2xl font-black leading-tight tracking-tight">
-              Mission
+              {leadershipData.mission.title}
             </h3>
           </div>
           <ul className="flex flex-col gap-3 text-[#495057] dark:text-white/80 text-sm sm:text-base leading-relaxed">
-            <li className="flex items-start gap-2">
-              <span className="text-primary shrink-0 mt-1">•</span>
-              <span>
-                To produce competitive, high-quality products in footwear, food,
-                and textiles for domestic and export markets.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary shrink-0 mt-1">•</span>
-              <span>
-                To provide safe and reliable public transport services.
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary shrink-0 mt-1">•</span>
-              <span>
-                Delivering quality products and services that uplift lives,
-                empower communities, and protect the environment.
-              </span>
-            </li>
+            {leadershipData.mission.statements.map((statement, index) => (
+              <li key={index} className="flex items-start gap-2">
+                <span className="text-primary shrink-0 mt-1">•</span>
+                <span>{statement}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -128,8 +109,8 @@ export default function LeadershipSection() {
             </h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {coreValues.map((value, index) => {
-              const Icon = value.icon;
+            {leadershipData.coreValues.map((value, index) => {
+              const Icon = iconMap[value.icon] || Award;
               return (
                 <div
                   key={index}

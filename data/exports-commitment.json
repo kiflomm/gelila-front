@@ -1,0 +1,30 @@
+{
+  "title": "Our Commitment to Global Excellence",
+  "description": "At Gelila Manufacturing PLC, our export division is built on a foundation of reliability, quality, and seamless logistics. We provide comprehensive support to our international partners, ensuring that every product meets rigorous standards and reaches its destination efficiently.",
+  "commitments": [
+    {
+      "id": "item-1",
+      "icon": "Globe",
+      "title": "Export-Readiness",
+      "description": "We ensure all products meet international standards with robust production capacity, superior packaging, and market-specific readiness for seamless global distribution."
+    },
+    {
+      "id": "item-2",
+      "icon": "ShieldCheck",
+      "title": "Quality Control & Compliance",
+      "description": "Our facilities are ISO certified, and we adhere to stringent internal quality assurance protocols to meet and exceed international compliance requirements."
+    },
+    {
+      "id": "item-3",
+      "icon": "Truck",
+      "title": "Logistics & Shipping",
+      "description": "We work with trusted freight partners to offer reliable shipping timelines, flexible incoterms, and real-time tracking for all our international shipments."
+    },
+    {
+      "id": "item-4",
+      "icon": "Handshake",
+      "title": "Partner Requirements",
+      "description": "We seek dedicated distributors and importers. Our guidelines ensure mutual growth and a commitment to upholding quality and brand integrity in every market."
+    }
+  ]
+}

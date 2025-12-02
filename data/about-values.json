@@ -1,0 +1,25 @@
+{
+  "title": "Core Values",
+  "values": [
+    {
+      "icon": "Award",
+      "title": "Integrity",
+      "description": "We operate with honesty and professionalism in all our business dealings, building trust with our partners, customers, and stakeholders."
+    },
+    {
+      "icon": "Settings",
+      "title": "Quality",
+      "description": "We maintain strict quality standards in products and services, ensuring that every item we produce meets the highest benchmarks of excellence."
+    },
+    {
+      "icon": "Lightbulb",
+      "title": "Innovation",
+      "description": "We adopt modern technologies for continuous improvement, staying at the forefront of industrial manufacturing and service delivery."
+    },
+    {
+      "icon": "Users",
+      "title": "Teamwork",
+      "description": "We believe in collaborative growth with our employees and partners, recognizing that our success comes from working together toward common goals."
+    }
+  ]
+}

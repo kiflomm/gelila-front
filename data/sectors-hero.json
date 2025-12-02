@@ -1,0 +1,18 @@
+{
+  "title": "Our Industrial Sectors",
+  "subtitle": "Explore our diverse range of high-quality products across multiple industries. From footwear to bus assembly, textiles to food processing, we deliver excellence in every sector.",
+  "image": {
+    "src": "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=2070&auto=format&fit=crop",
+    "alt": "Modern industrial manufacturing facility showcasing diverse production sectors"
+  },
+  "buttons": {
+    "primary": {
+      "text": "Request Quote",
+      "action": "dialog"
+    },
+    "secondary": {
+      "text": "View Our Exports",
+      "href": "/exports"
+    }
+  }
+}

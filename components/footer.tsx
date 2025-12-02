@@ -10,6 +10,7 @@ import {
   Instagram,
   Youtube,
 } from "lucide-react";
+import footerData from "@/data/footer.json";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -53,14 +54,11 @@ export default function Footer() {
                 className="h-10 w-auto"
               />
               <h3 className="text-lg font-bold text-white">
-                Gelila Manufacturing PLC
+                {footerData.company.name}
               </h3>
             </div>
             <p className="text-sm text-gray-300 leading-relaxed">
-              A diversified Ethiopian industrial and service company engaged in
-              footwear manufacturing, food processing, public bus
-              transportation, and the development of new large-scale
-              manufacturing projects.
+              {footerData.company.description}
             </p>
 
             {/* Contact Info */}
@@ -68,37 +66,34 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin className="size-4 text-primary mt-1 shrink-0" />
                 <p className="text-sm text-gray-300">
-                  Lemi Kura Sub City, Woreda 06
+                  {footerData.contact.address.line1}
                   <br />
-                  Bole Lemi Industry Park
+                  {footerData.contact.address.line2}
                   <br />
-                  Addis Ababa, Ethiopia
+                  {footerData.contact.address.line3}
                 </p>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="size-4 text-primary shrink-0" />
                 <div className="flex flex-col gap-1">
-                  <Link
-                    href="tel:+251993667101"
-                    className="text-sm text-gray-300 hover:text-primary transition-colors"
-                  >
-                    +251-993667101
-                  </Link>
-                  <Link
-                    href="tel:+251943164444"
-                    className="text-sm text-gray-300 hover:text-primary transition-colors"
-                  >
-                    +251-943164444
-                  </Link>
+                  {footerData.contact.phones.map((phone, index) => (
+                    <Link
+                      key={index}
+                      href={phone.href}
+                      className="text-sm text-gray-300 hover:text-primary transition-colors"
+                    >
+                      {phone.number}
+                    </Link>
+                  ))}
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="size-4 text-primary shrink-0" />
                 <Link
-                  href="mailto:info@gelilamanufacturingplc.com.et"
+                  href={footerData.contact.email.href}
                   className="text-sm text-gray-300 hover:text-primary transition-colors break-all"
                 >
-                  info@gelilamanufacturingplc.com.et
+                  {footerData.contact.email.address}
                 </Link>
               </div>
             </div>
@@ -146,7 +141,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
             <p className="text-sm text-gray-300">
-              © {currentYear} Gelila Manufacturing PLC. All Rights Reserved.
+              © {currentYear} {footerData.company.name}. All Rights Reserved.
             </p>
           </div>
 

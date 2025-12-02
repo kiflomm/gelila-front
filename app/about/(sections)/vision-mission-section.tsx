@@ -1,4 +1,5 @@
 import { Target, Rocket, CheckCircle2 } from "lucide-react";
+import leadershipData from "@/data/leadership.json";
 
 export default function VisionMissionSection() {
   return (
@@ -12,18 +13,20 @@ export default function VisionMissionSection() {
             <Target className="size-6 text-primary" />
           </div>
           <h2 className="text-[#181411] dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-tight">
-            Our Vision
+            Our {leadershipData.vision.title}
           </h2>
         </div>
         <div className="pl-0 sm:pl-16">
-          <p className="text-[#495057] dark:text-white/80 text-lg md:text-xl leading-relaxed mb-4">
-            To become a leading Ethiopian industrial group known for innovation,
-            quality manufacturing, and reliable service delivery in Africa.
-          </p>
-          <p className="text-[#495057] dark:text-white/80 text-base md:text-lg leading-relaxed">
-            To be a leading manufacturing and service providing company in
-            Ethiopia.
-          </p>
+          {leadershipData.vision.statements.map((statement, index) => (
+            <p
+              key={index}
+              className={`text-[#495057] dark:text-white/80 leading-relaxed ${
+                index === 0 ? "text-lg md:text-xl mb-4" : "text-base md:text-lg"
+              }`}
+            >
+              {statement}
+            </p>
+          ))}
         </div>
       </div>
 
@@ -34,31 +37,17 @@ export default function VisionMissionSection() {
             <Rocket className="size-6 text-primary" />
           </div>
           <h2 className="text-[#181411] dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-tight">
-            Our Mission
+            Our {leadershipData.mission.title}
           </h2>
         </div>
         <div className="pl-0 sm:pl-16">
           <ul className="flex flex-col gap-4 text-[#495057] dark:text-white/80 text-base md:text-lg leading-relaxed">
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="size-5 text-primary shrink-0 mt-1" />
-              <span>
-                To produce competitive, high-quality products in footwear, food,
-                and textiles for domestic and export markets.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="size-5 text-primary shrink-0 mt-1" />
-              <span>
-                To provide safe and reliable public transport services.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle2 className="size-5 text-primary shrink-0 mt-1" />
-              <span>
-                Delivering quality products and services that uplift lives,
-                empower communities, and protect the environment.
-              </span>
-            </li>
+            {leadershipData.mission.statements.map((statement, index) => (
+              <li key={index} className="flex items-start gap-3">
+                <CheckCircle2 className="size-5 text-primary shrink-0 mt-1" />
+                <span>{statement}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

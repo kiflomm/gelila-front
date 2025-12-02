@@ -1,0 +1,40 @@
+{
+  "badge": "Our Journey",
+  "title": "Building Ethiopia's Industrial Legacy",
+  "paragraphs": [
+    {
+      "type": "highlight",
+      "content": "Founded in 2004 in Adwa City, Tigray Region, Gelila Manufacturing PLC was originally established by its visionary founder Mr. Berhe Assefa as a footwear manufacturer, building its reputation through quality craftsmanship and reliable delivery."
+    },
+    {
+      "type": "quote",
+      "content": "As the company expanded into new industries, it was officially re-registered as Gelila Manufacturing PLC on December 07, 2022, reflecting its diversified operations and national ambitions. Today, Gelila operates established business units in footwear manufacturing, food processing, and public bus transportation, while simultaneously developing major new projects in bus assembly and textile & apparel manufacturing."
+    },
+    {
+      "type": "normal",
+      "content": "Each division represents our commitment to quality, innovation, and sustainable practices. From our original footwear production to our growing fleet of luxury buses, from our flour and biscuit processing to our upcoming bus assembly plant in Mekele and textile factory in Adwa, we continue to build on our foundation of excellence."
+    },
+    {
+      "type": "emphasis",
+      "content": "Our journey continues as we invest in technology, expand our capabilities, and build strategic partnerships like our collaboration with Foton International for bus assembly technology transfer."
+    }
+  ],
+  "image": {
+    "src": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070&auto=format&fit=crop",
+    "alt": "Modern manufacturing facility with advanced machinery and production lines"
+  },
+  "stats": [
+    {
+      "value": "5+",
+      "label": "Sectors"
+    },
+    {
+      "value": "5K+",
+      "label": "Employees"
+    },
+    {
+      "value": "20+",
+      "label": "Years"
+    }
+  ]
+}

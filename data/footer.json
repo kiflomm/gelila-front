@@ -1,0 +1,27 @@
+{
+  "company": {
+    "name": "Gelila Manufacturing PLC",
+    "description": "A diversified Ethiopian industrial and service company engaged in footwear manufacturing, food processing, public bus transportation, and the development of new large-scale manufacturing projects."
+  },
+  "contact": {
+    "address": {
+      "line1": "Lemi Kura Sub City, Woreda 06",
+      "line2": "Bole Lemi Industry Park",
+      "line3": "Addis Ababa, Ethiopia"
+    },
+    "phones": [
+      {
+        "number": "+251-993667101",
+        "href": "tel:+251993667101"
+      },
+      {
+        "number": "+251-943164444",
+        "href": "tel:+251943164444"
+      }
+    ],
+    "email": {
+      "address": "info@gelilamanufacturingplc.com.et",
+      "href": "mailto:info@gelilamanufacturingplc.com.et"
+    }
+  }
+}

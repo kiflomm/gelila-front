@@ -1,0 +1,37 @@
+{
+  "title": "By The Numbers",
+  "stats": [
+    {
+      "icon": "Building2",
+      "value": "5+",
+      "label": "Industrial Sectors",
+      "gradient": "from-blue-500 to-cyan-500",
+      "iconBg": "bg-blue-500/20",
+      "iconColor": "text-blue-600 dark:text-blue-400"
+    },
+    {
+      "icon": "Users",
+      "value": "5,000+",
+      "label": "Employees",
+      "gradient": "from-orange-500 to-amber-500",
+      "iconBg": "bg-orange-500/20",
+      "iconColor": "text-orange-600 dark:text-orange-400"
+    },
+    {
+      "icon": "TrendingUp",
+      "value": "$50M+",
+      "label": "Invested",
+      "gradient": "from-red-500 to-rose-500",
+      "iconBg": "bg-red-500/20",
+      "iconColor": "text-red-600 dark:text-red-400"
+    },
+    {
+      "icon": "Calendar",
+      "value": "20+",
+      "label": "Years",
+      "gradient": "from-green-500 to-emerald-500",
+      "iconBg": "bg-green-500/20",
+      "iconColor": "text-green-600 dark:text-green-400"
+    }
+  ]
+}

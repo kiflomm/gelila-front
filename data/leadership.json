@@ -1,0 +1,45 @@
+{
+  "leadership": {
+    "founder": {
+      "name": "Mr. Berhe Assefa",
+      "description": "Gelila Manufacturing PLC is founded and led by Mr. Berhe Assefa, an entrepreneur with decades of experience in manufacturing and industrial operations. His vision continues to guide the company's growth and diversification."
+    }
+  },
+  "vision": {
+    "title": "Vision",
+    "statements": [
+      "To become a leading Ethiopian industrial group known for innovation, quality manufacturing, and reliable service delivery in Africa.",
+      "To be a leading manufacturing and service providing company in Ethiopia."
+    ]
+  },
+  "mission": {
+    "title": "Mission",
+    "statements": [
+      "To produce competitive, high-quality products in footwear, food, and textiles for domestic and export markets.",
+      "To provide safe and reliable public transport services.",
+      "Delivering quality products and services that uplift lives, empower communities, and protect the environment."
+    ]
+  },
+  "coreValues": [
+    {
+      "icon": "Award",
+      "title": "Integrity",
+      "description": "We operate with honesty and professionalism."
+    },
+    {
+      "icon": "Settings",
+      "title": "Quality",
+      "description": "We maintain strict quality standards in products and services."
+    },
+    {
+      "icon": "Lightbulb",
+      "title": "Innovation",
+      "description": "We adopt modern technologies for continuous improvement."
+    },
+    {
+      "icon": "Users",
+      "title": "Teamwork",
+      "description": "We believe in collaborative growth with our employees and partners."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "opportunities": [
+    {
+      "icon": "school",
+      "title": "Internship Programs",
+      "description": "Kickstart your career with our hands-on internship programs. Gain real-world experience, work with industry experts, and contribute to meaningful projects."
+    },
+    {
+      "icon": "trending_up",
+      "title": "Training & Development",
+      "description": "We invest in our people. Access continuous learning opportunities, professional certifications, and clear career progression pathways to achieve your full potential."
+    }
+  ]
+}

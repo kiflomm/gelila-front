@@ -2,14 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { RequestQuoteDialog } from "@/components/request-quote-dialog";
+import sectorsHeroData from "@/data/sectors-hero.json";
 
 export default function HeroSection() {
   return (
     <section className="w-full">
       <div className="relative flex min-h-[500px] sm:min-h-[600px] md:min-h-[650px] lg:min-h-[700px] w-screen flex-col gap-4 sm:gap-6 bg-cover bg-center bg-no-repeat items-start justify-center px-4 sm:px-6 md:px-8 lg:px-10 xl:px-20 py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=2070&auto=format&fit=crop"
-          alt="Modern industrial manufacturing facility showcasing diverse production sectors"
+          src={sectorsHeroData.image.src}
+          alt={sectorsHeroData.image.alt}
           fill
           className="object-cover brightness-75"
           priority
@@ -18,19 +19,19 @@ export default function HeroSection() {
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-4 sm:gap-6 md:gap-8">
           <div className="flex flex-col gap-3 sm:gap-4 text-left max-w-3xl">
             <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
-              Our Industrial Sectors
+              {sectorsHeroData.title}
             </h1>
             <h2 className="text-white/90 text-sm sm:text-base md:text-lg font-normal leading-relaxed">
-              Explore our diverse range of high-quality products across multiple
-              industries. From footwear to bus assembly, textiles to food
-              processing, we deliver excellence in every sector.
+              {sectorsHeroData.subtitle}
             </h2>
           </div>
           <div className="flex flex-wrap gap-2 sm:gap-3">
             <RequestQuoteDialog
               trigger={
                 <Button className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:opacity-90! transition-opacity hover:bg-primary!">
-                  <span className="truncate">Request Quote</span>
+                  <span className="truncate">
+                    {sectorsHeroData.buttons.primary.text}
+                  </span>
                 </Button>
               }
             />
@@ -39,8 +40,10 @@ export default function HeroSection() {
               variant="outline"
               className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-transparent! border border-white! text-white! text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:bg-white/10! transition-colors"
             >
-              <Link href="/exports">
-                <span className="truncate">View Our Exports</span>
+              <Link href={sectorsHeroData.buttons.secondary.href}>
+                <span className="truncate">
+                  {sectorsHeroData.buttons.secondary.text}
+                </span>
               </Link>
             </Button>
           </div>

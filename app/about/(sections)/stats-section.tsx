@@ -1,39 +1,13 @@
 import { Building2, Users, TrendingUp, Calendar } from "lucide-react";
+import statsData from "@/data/about-stats.json";
 
-const stats = [
-  {
-    icon: Building2,
-    value: "5+",
-    label: "Industrial Sectors",
-    gradient: "from-blue-500 to-cyan-500",
-    iconBg: "bg-blue-500/20",
-    iconColor: "text-blue-600 dark:text-blue-400",
-  },
-  {
-    icon: Users,
-    value: "5,000+",
-    label: "Employees",
-    gradient: "from-orange-500 to-amber-500",
-    iconBg: "bg-orange-500/20",
-    iconColor: "text-orange-600 dark:text-orange-400",
-  },
-  {
-    icon: TrendingUp,
-    value: "$50M+",
-    label: "Invested",
-    gradient: "from-red-500 to-rose-500",
-    iconBg: "bg-red-500/20",
-    iconColor: "text-red-600 dark:text-red-400",
-  },
-  {
-    icon: Calendar,
-    value: "20+",
-    label: "Years",
-    gradient: "from-green-500 to-emerald-500",
-    iconBg: "bg-green-500/20",
-    iconColor: "text-green-600 dark:text-green-400",
-  },
-];
+// Icon mapping
+const iconMap: Record<string, typeof Building2> = {
+  Building2,
+  Users,
+  TrendingUp,
+  Calendar,
+};
 
 export default function StatsSection() {
   return (
@@ -41,12 +15,12 @@ export default function StatsSection() {
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-background-light/50 dark:via-black/20 to-transparent -z-10"></div>
       <div className="text-center mb-16">
         <h2 className="text-[#181411] dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-tight mb-4">
-          By The Numbers
+          {statsData.title}
         </h2>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => {
-          const Icon = stat.icon;
+        {statsData.stats.map((stat, index) => {
+          const Icon = iconMap[stat.icon] || Building2;
           return (
             <div
               key={index}
