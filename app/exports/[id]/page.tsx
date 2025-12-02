@@ -4,6 +4,7 @@ import exportPortfolioData from "@/data/export-portfolio.json";
 import HeroSection from "./(sections)/hero-section";
 import DescriptionSection from "./(sections)/description-section";
 import PortfolioDetailsSection from "./(sections)/portfolio-details-section";
+import { getProductSchema, getBreadcrumbSchema } from "@/lib/seo";
 
 interface PortfolioPageProps {
   params: Promise<{
@@ -88,8 +89,31 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
     notFound();
   }
 
+  // Generate Product structured data
+  const productSchema = getProductSchema({
+    name: portfolio.title,
+    description: portfolio.description,
+    image: portfolio.imageUrl,
+    category: "Export Portfolio",
+  });
+
+  // Generate Breadcrumb structured data
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Exports", url: "/exports" },
+    { name: portfolio.title, url: `/exports/${id}` },
+  ]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <HeroSection portfolio={portfolio} />
       <div className="px-4 sm:px-10 lg:px-20 py-10 lg:py-16 flex flex-1 justify-center">
         <div className="layout-content-container flex flex-col w-full max-w-7xl">

@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ReactQueryProvider } from "@/lib/react-query-provider";
+import { siteConfig, getOrganizationSchema, getWebSiteSchema } from "@/lib/seo";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -9,11 +10,96 @@ const inter = Inter({
   weight: ["400", "500", "700", "900"],
 });
 
-export const metadata: Metadata = {
-  title: "Gelila Manufacturing PLC - Leading Ethiopian Industrial Group",
-  description:
-    "A diversified Ethiopian industrial and service company engaged in footwear manufacturing, food processing, public bus transportation, and the development of new large-scale manufacturing projects.",
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
 };
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: "Gelila Manufacturing PLC - Leading Ethiopian Industrial Group",
+    template: "%s | Gelila Manufacturing PLC",
+  },
+  description: siteConfig.description,
+  keywords: [
+    "Gelila Manufacturing",
+    "Ethiopian manufacturing",
+    "footwear manufacturing",
+    "food processing",
+    "bus transportation",
+    "industrial group",
+    "Ethiopia",
+    "manufacturing PLC",
+    "export manufacturing",
+    "leather footwear",
+    "wheat flour",
+    "biscuits",
+    "public transport",
+    "Soloda",
+    "bus assembly",
+    "textile manufacturing",
+  ],
+  authors: [{ name: "Gelila Manufacturing PLC" }],
+  creator: "Gelila Manufacturing PLC",
+  publisher: "Gelila Manufacturing PLC",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: "Gelila Manufacturing PLC - Leading Ethiopian Industrial Group",
+    description: siteConfig.description,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: "Gelila Manufacturing PLC",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gelila Manufacturing PLC - Leading Ethiopian Industrial Group",
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+    creator: "@gelila",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "/",
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
+    yahoo: process.env.NEXT_PUBLIC_YAHOO_VERIFICATION,
+  },
+  category: "Manufacturing",
+};
+
+const organizationSchema = getOrganizationSchema();
+const websiteSchema = getWebSiteSchema();
 
 export default function RootLayout({
   children,
@@ -26,6 +112,16 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
           rel="stylesheet"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </head>
       <body

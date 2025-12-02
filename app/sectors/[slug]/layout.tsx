@@ -27,6 +27,11 @@ export async function generateMetadata({
     project: "In Development",
   };
 
+  const ogImage =
+    sector.products && sector.products.length > 0
+      ? sector.products[0].image
+      : "/og-image.jpg";
+
   return {
     title: `${sector.title} - Gelila Manufacturing PLC`,
     description: sector.description,
@@ -42,11 +47,20 @@ export async function generateMetadata({
       description: sector.description,
       type: "website",
       locale: "en_US",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: sector.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${sector.title} - Gelila Manufacturing PLC`,
       description: sector.description,
+      images: [ogImage],
     },
     robots: {
       index: true,

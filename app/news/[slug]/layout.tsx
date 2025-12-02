@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getNewsBySlug } from "@/store/news/news-data";
 import { notFound } from "next/navigation";
+import { getArticleSchema } from "@/lib/seo";
 
 interface NewsDetailLayoutProps {
   children: React.ReactNode;
@@ -81,7 +82,21 @@ export default async function NewsDetailLayout({
     notFound();
   }
 
-  // This layout only handles metadata generation
-  // The Header and Footer are provided by the parent news/layout.tsx
-  return <>{children}</>;
+  const articleSchema = getArticleSchema({
+    headline: newsItem.title,
+    description: newsItem.description,
+    image: newsItem.imageUrl,
+    datePublished: newsItem.date,
+    author: newsItem.author.name,
+  });
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      {children}
+    </>
+  );
 }

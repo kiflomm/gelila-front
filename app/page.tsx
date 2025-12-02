@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import HeroSection from "./(sections)/hero-section";
@@ -5,6 +6,49 @@ import PortfolioSection from "./(sections)/portfolio-section";
 import AchievementsSection from "./(sections)/achievements-section";
 import LeadershipSection from "./(sections)/leadership-section";
 import LatestNewsSection from "./(sections)/latest-news-section";
+import { siteConfig } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description:
+    "Gelila Manufacturing PLC - A leading Ethiopian industrial group specializing in footwear manufacturing, food processing, public bus transportation, and large-scale manufacturing projects. Discover our commitment to excellence and innovation.",
+  keywords: [
+    "Gelila Manufacturing",
+    "Ethiopian manufacturing",
+    "footwear Ethiopia",
+    "food processing Ethiopia",
+    "bus transportation Ethiopia",
+    "industrial manufacturing",
+    "Ethiopia manufacturing company",
+  ],
+  openGraph: {
+    title: "Gelila Manufacturing PLC - Leading Ethiopian Industrial Group",
+    description:
+      "A diversified Ethiopian industrial and service company engaged in footwear manufacturing, food processing, public bus transportation, and the development of new large-scale manufacturing projects.",
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: "Gelila Manufacturing PLC",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gelila Manufacturing PLC - Leading Ethiopian Industrial Group",
+    description:
+      "A diversified Ethiopian industrial and service company engaged in footwear manufacturing, food processing, public bus transportation, and the development of new large-scale manufacturing projects.",
+    images: [siteConfig.ogImage],
+  },
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default function HomePage() {
   return (

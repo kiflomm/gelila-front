@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import productsData from "@/data/products.json";
 import HeroSection from "./(sections)/hero-section";
 import ProductInfoSection from "./(sections)/product-info-section";
+import { getProductSchema, getBreadcrumbSchema } from "@/lib/seo";
 
 interface ProductPageProps {
   params: Promise<{
@@ -41,8 +42,32 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  // Generate Product structured data
+  const productSchema = getProductSchema({
+    name: product.name,
+    description: product.description,
+    image: product.image,
+    category: sector.name,
+  });
+
+  // Generate Breadcrumb structured data
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Sectors", url: "/sectors" },
+    { name: sector.title, url: `/sectors/${slug}` },
+    { name: product.name, url: `/sectors/${slug}/products/${productId}` },
+  ]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <HeroSection product={product} sectorName={sector.name} />
       <div className="px-4 sm:px-10 lg:px-20 py-10 lg:py-16 flex flex-1 justify-center">
         <div className="layout-content-container flex flex-col w-full max-w-7xl">
