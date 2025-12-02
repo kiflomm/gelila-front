@@ -1,6 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
-  Mountain,
   Mail,
   Phone,
   MapPin,
@@ -45,7 +45,13 @@ export default function Footer() {
           {/* Company Info */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3 mb-2">
-              <Mountain className="size-6 text-primary" />
+              <Image
+                src="/logo.png"
+                alt="Gelila Manufacturing PLC"
+                width={120}
+                height={40}
+                className="h-10 w-auto"
+              />
               <h3 className="text-lg font-bold text-white">
                 Gelila Manufacturing PLC
               </h3>

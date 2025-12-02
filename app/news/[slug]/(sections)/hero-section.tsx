@@ -28,7 +28,7 @@ export default function HeroSection({ newsItem }: HeroSectionProps) {
       </h1>
 
       {/* Featured Image */}
-      <div className="w-full aspect-[3/2] rounded-lg overflow-hidden relative">
+      <div className="w-full aspect-3/2 rounded-lg overflow-hidden relative">
         <Image
           src={newsItem.imageUrl}
           alt={newsItem.imageAlt}

@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Mountain, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useMobileMenuStore } from "@/store/use-mobile-menu-store";
 import { useEffect } from "react";
 import { RequestQuoteDialog } from "@/components/request-quote-dialog";
@@ -73,7 +74,14 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                 : "text-[#181411] dark:text-white"
             }`}
           >
-            <Mountain className="size-5 sm:size-6 text-primary shrink-0" />
+            <Image
+              src="/logo.png"
+              alt="Gelila Manufacturing PLC"
+              width={120}
+              height={40}
+              className="h-8 sm:h-10 w-auto shrink-0"
+              priority
+            />
             <h2
               className={`text-sm sm:text-base md:text-lg font-bold leading-tight tracking-[-0.015em] truncate ${
                 hasTransparentNav
