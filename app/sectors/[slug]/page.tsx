@@ -6,19 +6,19 @@ import ProductsSection from "./(sections)/products-section";
 
 interface SectorPageProps {
   params: Promise<{
-    id: string;
+    slug: string;
   }>;
 }
 
 export async function generateStaticParams() {
   return productsData.sectors.map((sector) => ({
-    id: sector.id,
+    slug: sector.id,
   }));
 }
 
 export default async function SectorPage({ params }: SectorPageProps) {
-  const { id } = await params;
-  const sector = productsData.sectors.find((s) => s.id === id);
+  const { slug } = await params;
+  const sector = productsData.sectors.find((s) => s.id === slug);
 
   if (!sector) {
     notFound();

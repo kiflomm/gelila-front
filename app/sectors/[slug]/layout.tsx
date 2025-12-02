@@ -5,15 +5,15 @@ import productsData from "@/data/products.json";
 interface SectorLayoutProps {
   children: React.ReactNode;
   params: Promise<{
-    id: string;
+    slug: string;
   }>;
 }
 
 export async function generateMetadata({
   params,
 }: SectorLayoutProps): Promise<Metadata> {
-  const { id } = await params;
-  const sector = productsData.sectors.find((s) => s.id === id);
+  const { slug } = await params;
+  const sector = productsData.sectors.find((s) => s.id === slug);
 
   if (!sector) {
     return {
@@ -60,7 +60,7 @@ export async function generateMetadata({
       },
     },
     alternates: {
-      canonical: `/sectors/${id}`,
+      canonical: `/sectors/${slug}`,
     },
   };
 }
@@ -69,8 +69,8 @@ export default async function SectorLayout({
   children,
   params,
 }: SectorLayoutProps) {
-  const { id } = await params;
-  const sector = productsData.sectors.find((s) => s.id === id);
+  const { slug } = await params;
+  const sector = productsData.sectors.find((s) => s.id === slug);
 
   if (!sector) {
     notFound();

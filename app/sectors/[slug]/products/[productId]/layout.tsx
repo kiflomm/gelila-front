@@ -5,7 +5,7 @@ import productsData from "@/data/products.json";
 interface ProductLayoutProps {
   children: React.ReactNode;
   params: Promise<{
-    id: string;
+    slug: string;
     productId: string;
   }>;
 }
@@ -13,8 +13,8 @@ interface ProductLayoutProps {
 export async function generateMetadata({
   params,
 }: ProductLayoutProps): Promise<Metadata> {
-  const { id, productId } = await params;
-  const sector = productsData.sectors.find((s) => s.id === id);
+  const { slug, productId } = await params;
+  const sector = productsData.sectors.find((s) => s.id === slug);
 
   if (!sector) {
     return {
@@ -70,7 +70,7 @@ export async function generateMetadata({
       },
     },
     alternates: {
-      canonical: `/sectors/${id}/products/${productId}`,
+      canonical: `/sectors/${slug}/products/${productId}`,
     },
   };
 }
@@ -79,8 +79,8 @@ export default async function ProductLayout({
   children,
   params,
 }: ProductLayoutProps) {
-  const { id, productId } = await params;
-  const sector = productsData.sectors.find((s) => s.id === id);
+  const { slug, productId } = await params;
+  const sector = productsData.sectors.find((s) => s.id === slug);
 
   if (!sector) {
     notFound();

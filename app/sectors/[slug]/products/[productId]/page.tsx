@@ -7,18 +7,18 @@ import ProductInfoSection from "./(sections)/product-info-section";
 
 interface ProductPageProps {
   params: Promise<{
-    id: string;
+    slug: string;
     productId: string;
   }>;
 }
 
 export async function generateStaticParams() {
-  const params: Array<{ id: string; productId: string }> = [];
+  const params: Array<{ slug: string; productId: string }> = [];
 
   productsData.sectors.forEach((sector) => {
     sector.products.forEach((product) => {
       params.push({
-        id: sector.id,
+        slug: sector.id,
         productId: product.id.toString(),
       });
     });
@@ -28,8 +28,8 @@ export async function generateStaticParams() {
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { id, productId } = await params;
-  const sector = productsData.sectors.find((s) => s.id === id);
+  const { slug, productId } = await params;
+  const sector = productsData.sectors.find((s) => s.id === slug);
 
   if (!sector) {
     notFound();
@@ -47,7 +47,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <div className="px-4 sm:px-10 lg:px-20 py-10 lg:py-16 flex flex-1 justify-center">
         <div className="layout-content-container flex flex-col w-full max-w-7xl">
           <Link
-            href={`/sectors/${id}`}
+            href={`/sectors/${slug}`}
             className="inline-flex items-center gap-2 text-[#6C757D] dark:text-white/70 hover:text-primary transition-colors text-sm font-medium w-fit mb-6 group/back"
           >
             <ArrowLeft className="size-4 transition-transform group-hover/back:-translate-x-1" />
@@ -55,7 +55,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </Link>
           <ProductInfoSection
             product={product}
-            sectorId={id}
+            sectorId={slug}
             sectorName={sector.name}
           />
         </div>

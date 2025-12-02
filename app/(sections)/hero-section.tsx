@@ -36,14 +36,6 @@ export default function HeroSection() {
             />
             <Button
               asChild
-              className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-background-light! text-[#181411]! text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:opacity-90! transition-opacity"
-            >
-              <Link href="/suppliers">
-                <span className="truncate">Become a Supplier</span>
-              </Link>
-            </Button>
-            <Button
-              asChild
               variant="outline"
               className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-transparent! border border-white! text-white! text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:bg-white/10! transition-colors"
             >

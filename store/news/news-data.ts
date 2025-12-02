@@ -54,3 +54,43 @@ export function getRelatedNews(
     )
     .slice(0, limit);
 }
+
+/**
+ * Parse date string in format "MMM DD, YYYY" to Date object
+ */
+function parseDate(dateString: string): Date {
+  const months: Record<string, number> = {
+    Jan: 0,
+    Feb: 1,
+    Mar: 2,
+    Apr: 3,
+    May: 4,
+    Jun: 5,
+    Jul: 6,
+    Aug: 7,
+    Sep: 8,
+    Oct: 9,
+    Nov: 10,
+    Dec: 11,
+  };
+
+  const parts = dateString.split(" ");
+  const month = months[parts[0]] ?? 0;
+  const day = parseInt(parts[1].replace(",", ""), 10);
+  const year = parseInt(parts[2], 10);
+
+  return new Date(year, month, day);
+}
+
+/**
+ * Get the latest news items sorted by date (newest first)
+ */
+export function getLatestNews(limit: number = 3): NewsItem[] {
+  return [...newsItems]
+    .sort((a, b) => {
+      const dateA = parseDate(a.date);
+      const dateB = parseDate(b.date);
+      return dateB.getTime() - dateA.getTime(); // Newest first
+    })
+    .slice(0, limit);
+}

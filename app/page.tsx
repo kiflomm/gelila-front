@@ -4,6 +4,7 @@ import HeroSection from "./(sections)/hero-section";
 import PortfolioSection from "./(sections)/portfolio-section";
 import AchievementsSection from "./(sections)/achievements-section";
 import LeadershipSection from "./(sections)/leadership-section";
+import LatestNewsSection from "./(sections)/latest-news-section";
 
 export default function HomePage() {
   return (
@@ -19,6 +20,7 @@ export default function HomePage() {
               <PortfolioSection />
               <AchievementsSection />
               <LeadershipSection />
+              <LatestNewsSection />
             </div>
           </div>
         </main>
