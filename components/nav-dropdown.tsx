@@ -51,7 +51,12 @@ export function NavDropdown({
     section.items.some((item) => pathname === item.href)
   );
 
-  // Close dropdown when clicking outside
+  // Close dropdown when route changes
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  // Combined effect for click outside, mouse tracking, and cleanup
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -62,41 +67,30 @@ export function NavDropdown({
       }
     };
 
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
-
-  // Close dropdown when route changes
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
-
-  // Track mouse position globally
-  useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       (window as any).lastMouseX = e.clientX;
       (window as any).lastMouseY = e.clientY;
     };
 
+    // Add event listeners
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
     window.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
 
-  // Clear timeout on unmount
-  useEffect(() => {
+    // Cleanup function
     return () => {
+      if (isOpen) {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
+      window.removeEventListener("mousemove", handleMouseMove);
+      // Clear timeout on unmount or when isOpen changes
       if (closeTimeoutRef.current) {
         clearTimeout(closeTimeoutRef.current);
+        closeTimeoutRef.current = null;
       }
     };
-  }, []);
+  }, [isOpen]);
 
   const handleMouseEnter = () => {
     // Clear any pending close timeout

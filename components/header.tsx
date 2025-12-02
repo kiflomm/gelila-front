@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useMobileMenuStore } from "@/store/use-mobile-menu-store";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { RequestQuoteDialog } from "@/components/request-quote-dialog";
 import { NavDropdown } from "@/components/nav-dropdown";
 import navigationData from "@/data/navigation.json";
@@ -53,6 +53,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
     } else {
       document.body.style.overflow = "";
     }
+
     return () => {
       document.body.style.overflow = "";
     };
@@ -171,10 +172,15 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
 
           {/* Mobile/Tablet Hamburger Button */}
           <Button
-            onClick={toggle}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggle();
+            }}
+            type="button"
             variant="ghost"
             size="icon"
-            className={`lg:hidden hover:text-primary shrink-0 touch-manipulation ${
+            className={`lg:hidden hover:text-primary shrink-0 touch-manipulation z-50 relative ${
               hasTransparentNav
                 ? "text-white"
                 : "text-[#181411] dark:text-white"
@@ -191,7 +197,16 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
       {isOpen && (
         <div
           className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 top-[73px] sm:top-[81px] animate-in fade-in duration-200"
-          onClick={close}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            close();
+          }}
+          onTouchStart={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            close();
+          }}
           aria-hidden="true"
         />
       )}
@@ -203,6 +218,10 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
             ? "translate-y-0 opacity-100"
             : "-translate-y-full opacity-0 pointer-events-none"
         }`}
+        onClick={(e) => {
+          // Prevent clicks inside menu from closing it
+          e.stopPropagation();
+        }}
       >
         <nav className="px-4 sm:px-6 py-4 sm:py-6 flex flex-col gap-1 max-h-[calc(100vh-73px)] sm:max-h-[calc(100vh-81px)] overflow-y-auto">
           {navLinks.map((link) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Search, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,18 +11,49 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import jobsData from "@/data/jobs.json";
+import { useJobs } from "@/hooks/use-jobs";
 
 const ITEMS_PER_PAGE = 6;
 
 export default function JobListingsSection() {
+  const { data: jobsData, isLoading } = useJobs();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("All");
   const [selectedDepartment, setSelectedDepartment] = useState("All");
   const [selectedJobType, setSelectedJobType] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Create wrapper functions that reset page when filters change
+  const updateSearchQuery = (value: string) => {
+    if (value !== searchQuery) {
+      setCurrentPage(1);
+    }
+    setSearchQuery(value);
+  };
+
+  const updateLocation = (value: string) => {
+    if (value !== selectedLocation) {
+      setCurrentPage(1);
+    }
+    setSelectedLocation(value);
+  };
+
+  const updateDepartment = (value: string) => {
+    if (value !== selectedDepartment) {
+      setCurrentPage(1);
+    }
+    setSelectedDepartment(value);
+  };
+
+  const updateJobType = (value: string) => {
+    if (value !== selectedJobType) {
+      setCurrentPage(1);
+    }
+    setSelectedJobType(value);
+  };
+
   const filteredJobs = useMemo(() => {
+    if (!jobsData?.jobs) return [];
     return jobsData.jobs.filter((job) => {
       const matchesSearch =
         searchQuery === "" ||
@@ -39,12 +70,13 @@ export default function JobListingsSection() {
         matchesSearch && matchesLocation && matchesDepartment && matchesJobType
       );
     });
-  }, [searchQuery, selectedLocation, selectedDepartment, selectedJobType]);
-
-  // Reset to page 1 when filters change
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchQuery, selectedLocation, selectedDepartment, selectedJobType]);
+  }, [
+    jobsData,
+    searchQuery,
+    selectedLocation,
+    selectedDepartment,
+    selectedJobType,
+  ]);
 
   const totalPages = Math.ceil(filteredJobs.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -52,10 +84,10 @@ export default function JobListingsSection() {
   const paginatedJobs = filteredJobs.slice(startIndex, endIndex);
 
   const resetFilters = () => {
-    setSearchQuery("");
-    setSelectedLocation("All");
-    setSelectedDepartment("All");
-    setSelectedJobType("All");
+    updateSearchQuery("");
+    updateLocation("All");
+    updateDepartment("All");
+    updateJobType("All");
     setCurrentPage(1);
   };
 
@@ -86,7 +118,7 @@ export default function JobListingsSection() {
                   type="text"
                   placeholder="Search by keyword, role..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => updateSearchQuery(e.target.value)}
                   className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] h-12 pl-10 focus:ring-primary focus:border-primary"
                 />
               </div>
@@ -107,10 +139,10 @@ export default function JobListingsSection() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48">
-                  {jobsData.locations.map((location) => (
+                  {jobsData?.locations.map((location) => (
                     <DropdownMenuItem
                       key={location}
-                      onClick={() => setSelectedLocation(location)}
+                      onClick={() => updateLocation(location)}
                       className={
                         selectedLocation === location ? "bg-primary/10" : ""
                       }
@@ -134,10 +166,10 @@ export default function JobListingsSection() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48">
-                  {jobsData.departments.map((department) => (
+                  {jobsData?.departments.map((department) => (
                     <DropdownMenuItem
                       key={department}
-                      onClick={() => setSelectedDepartment(department)}
+                      onClick={() => updateDepartment(department)}
                       className={
                         selectedDepartment === department ? "bg-primary/10" : ""
                       }
@@ -161,10 +193,10 @@ export default function JobListingsSection() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48">
-                  {jobsData.jobTypes.map((jobType) => (
+                  {jobsData?.jobTypes.map((jobType) => (
                     <DropdownMenuItem
                       key={jobType}
-                      onClick={() => setSelectedJobType(jobType)}
+                      onClick={() => updateJobType(jobType)}
                       className={
                         selectedJobType === jobType ? "bg-primary/10" : ""
                       }
@@ -186,43 +218,54 @@ export default function JobListingsSection() {
             </Button>
           </div>
 
-          {/* Job Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {paginatedJobs.map((job) => (
-              <div
-                key={job.id}
-                className="border rounded-xl p-6 bg-white dark:bg-[#212529]/30 border-[#F8F9FA] dark:border-white/10 flex flex-col gap-4 hover:shadow-lg hover:border-primary/50 dark:hover:border-primary/50 transition-all"
-              >
-                <h3 className="text-xl font-bold text-[#212529] dark:text-[#F8F9FA]">
-                  {job.title}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  <span className="text-xs font-medium bg-primary/20 text-primary py-1 px-2 rounded-full">
-                    {job.department}
-                  </span>
-                  <span className="text-xs font-medium bg-[#F8F9FA] dark:bg-background-dark text-[#6C757D] py-1 px-2 rounded-full">
-                    {job.location}
-                  </span>
-                  <span className="text-xs font-medium bg-[#F8F9FA] dark:bg-background-dark text-[#6C757D] py-1 px-2 rounded-full">
-                    {job.type}
-                  </span>
-                </div>
-                <p className="text-[#6C757D] dark:text-[#F8F9FA]/70 text-sm leading-relaxed grow">
-                  {job.description}
-                </p>
-                <Button
-                  asChild
-                  className="mt-4 flex! w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary!"
-                >
-                  <Link href={`/careers/apply/${job.id}`}>
-                    <span className="truncate">Apply Now</span>
-                  </Link>
-                </Button>
-              </div>
-            ))}
-          </div>
+          {/* Loading State */}
+          {isLoading && (
+            <div className="text-center py-12">
+              <p className="text-[#6C757D] dark:text-[#F8F9FA]/70 text-lg">
+                Loading jobs...
+              </p>
+            </div>
+          )}
 
-          {filteredJobs.length === 0 && (
+          {/* Job Cards Grid */}
+          {!isLoading && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {paginatedJobs.map((job) => (
+                <div
+                  key={job.id}
+                  className="border rounded-xl p-6 bg-white dark:bg-[#212529]/30 border-[#F8F9FA] dark:border-white/10 flex flex-col gap-4 hover:shadow-lg hover:border-primary/50 dark:hover:border-primary/50 transition-all"
+                >
+                  <h3 className="text-xl font-bold text-[#212529] dark:text-[#F8F9FA]">
+                    {job.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="text-xs font-medium bg-primary/20 text-primary py-1 px-2 rounded-full">
+                      {job.department}
+                    </span>
+                    <span className="text-xs font-medium bg-[#F8F9FA] dark:bg-background-dark text-[#6C757D] py-1 px-2 rounded-full">
+                      {job.location}
+                    </span>
+                    <span className="text-xs font-medium bg-[#F8F9FA] dark:bg-background-dark text-[#6C757D] py-1 px-2 rounded-full">
+                      {job.type}
+                    </span>
+                  </div>
+                  <p className="text-[#6C757D] dark:text-[#F8F9FA]/70 text-sm leading-relaxed grow">
+                    {job.description}
+                  </p>
+                  <Button
+                    asChild
+                    className="mt-4 flex! w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary!"
+                  >
+                    <Link href={`/careers/apply/${job.id}`}>
+                      <span className="truncate">Apply Now</span>
+                    </Link>
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {!isLoading && filteredJobs.length === 0 && (
             <div className="text-center py-12">
               <p className="text-[#6C757D] dark:text-[#F8F9FA]/70 text-lg">
                 No jobs found matching your criteria.
