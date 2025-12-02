@@ -8,16 +8,25 @@ import { useMobileMenuStore } from "@/store/use-mobile-menu-store";
 import { useEffect } from "react";
 import { RequestQuoteDialog } from "@/components/request-quote-dialog";
 
-export default function Header() {
+interface HeaderProps {
+  forceTransparent?: boolean;
+}
+
+export default function Header({ forceTransparent = false }: HeaderProps) {
   const { isOpen, toggle, close } = useMobileMenuStore();
   const pathname = usePathname();
   const isHome = pathname === "/";
   const isAbout = pathname === "/about";
-  const isExports = pathname === "/exports";
+  const isExports = pathname === "/exports" || pathname.startsWith("/exports/");
   const isSectors = pathname === "/sectors" || pathname.startsWith("/sectors/");
   const isCareers = pathname === "/careers";
   const hasTransparentNav =
-    isHome || isAbout || isExports || isSectors || isCareers;
+    forceTransparent ||
+    isHome ||
+    isAbout ||
+    isExports ||
+    isSectors ||
+    isCareers;
 
   const navLinks = [
     { href: "/", label: "Home" },
