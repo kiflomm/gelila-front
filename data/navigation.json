@@ -1,0 +1,128 @@
+{
+  "dropdowns": {
+    "sectors": {
+      "sections": [
+        {
+          "title": "Manufacturing",
+          "items": [
+            {
+              "label": "Shoes & Sole",
+              "href": "/sectors/footwear"
+            },
+            {
+              "label": "Food Complex",
+              "href": "/sectors/food-processing"
+            },
+            {
+              "label": "Textile & Apparel",
+              "href": "/sectors/textile-apparel"
+            }
+          ]
+        },
+        {
+          "title": "Transportation",
+          "items": [
+            {
+              "label": "Bus Assembly",
+              "href": "/sectors/bus-assembly"
+            },
+            {
+              "label": "Public Transport",
+              "href": "/sectors/bus-transport"
+            }
+          ]
+        }
+      ]
+    },
+    "exports": {
+      "sections": [
+        {
+          "title": "Industrial",
+          "items": [
+            {
+              "label": "Industrial Machinery",
+              "href": "/exports/industrial-machinery"
+            },
+            {
+              "label": "Electronics & Components",
+              "href": "/exports/electronics-components"
+            }
+          ]
+        },
+        {
+          "title": "Consumer Goods",
+          "items": [
+            {
+              "label": "Packaged Consumer Goods",
+              "href": "/exports/packaged-consumer-goods"
+            },
+            {
+              "label": "Textiles and Garments",
+              "href": "/exports/textiles-garments"
+            }
+          ]
+        },
+        {
+          "title": "Materials",
+          "items": [
+            {
+              "label": "Agricultural Products",
+              "href": "/exports/agricultural-products"
+            },
+            {
+              "label": "Building Materials",
+              "href": "/exports/building-materials"
+            }
+          ]
+        }
+      ]
+    },
+    "careers": {
+      "sections": [
+        {
+          "title": "Engineering & Operations",
+          "items": [
+            {
+              "label": "Engineering",
+              "href": "/careers?department=Engineering"
+            },
+            {
+              "label": "Operations",
+              "href": "/careers?department=Operations"
+            }
+          ]
+        },
+        {
+          "title": "Business & Support",
+          "items": [
+            {
+              "label": "Finance",
+              "href": "/careers?department=Finance"
+            },
+            {
+              "label": "Human Resources",
+              "href": "/careers?department=Human Resources"
+            },
+            {
+              "label": "Marketing",
+              "href": "/careers?department=Marketing"
+            }
+          ]
+        },
+        {
+          "title": "Opportunities",
+          "items": [
+            {
+              "label": "View All Jobs",
+              "href": "/careers"
+            },
+            {
+              "label": "Internships",
+              "href": "/careers?type=Internship"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

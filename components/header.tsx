@@ -8,6 +8,8 @@ import { Menu, X } from "lucide-react";
 import { useMobileMenuStore } from "@/store/use-mobile-menu-store";
 import { useEffect } from "react";
 import { RequestQuoteDialog } from "@/components/request-quote-dialog";
+import { NavDropdown } from "@/components/nav-dropdown";
+import navigationData from "@/data/navigation.json";
 
 interface HeaderProps {
   forceTransparent?: boolean;
@@ -98,6 +100,52 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
           <nav className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8 ml-4 xl:ml-8 flex-1 justify-center">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
+
+              // Check if this link should have a dropdown
+              const isSectors = link.href === "/sectors";
+              const isExports = link.href === "/exports";
+              const isCareers = link.href === "/careers";
+
+              if (isSectors && navigationData.dropdowns.sectors) {
+                return (
+                  <NavDropdown
+                    key={link.href}
+                    label={link.label}
+                    href={link.href}
+                    sections={navigationData.dropdowns.sectors.sections}
+                    isTransparent={hasTransparentNav}
+                    isActive={isActive}
+                  />
+                );
+              }
+
+              if (isExports && navigationData.dropdowns.exports) {
+                return (
+                  <NavDropdown
+                    key={link.href}
+                    label={link.label}
+                    href={link.href}
+                    sections={navigationData.dropdowns.exports.sections}
+                    isTransparent={hasTransparentNav}
+                    isActive={isActive}
+                  />
+                );
+              }
+
+              if (isCareers && navigationData.dropdowns.careers) {
+                return (
+                  <NavDropdown
+                    key={link.href}
+                    label={link.label}
+                    href={link.href}
+                    sections={navigationData.dropdowns.careers.sections}
+                    isTransparent={hasTransparentNav}
+                    isActive={isActive}
+                  />
+                );
+              }
+
+              // Regular link without dropdown
               return (
                 <Link
                   key={link.href}
