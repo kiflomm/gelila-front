@@ -7,15 +7,6 @@ import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import portfolioData from "@/data/portfolio.json";
 
-// Map portfolio numeric IDs to sector slugs
-const portfolioIdToSlug: Record<number, string> = {
-  1: "footwear", // Shoes & Sole
-  2: "food-processing", // Food Complex
-  3: "bus-assembly", // Bus Assembly
-  4: "textile-apparel", // Textile & Apparel
-  5: "bus-transport", // Public Transport
-};
-
 export default function PortfolioSection() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -113,58 +104,54 @@ export default function PortfolioSection() {
               msOverflowStyle: "none",
             }}
           >
-            {portfolioData.sectors.map((sector) => {
-              const slug =
-                portfolioIdToSlug[sector.id as number] || sector.id.toString();
-              return (
-                <Link
-                  key={sector.id}
-                  href={`/sectors/${slug}`}
-                  className="group relative flex flex-col rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 shrink-0 w-[280px] sm:w-[300px] md:w-[320px] lg:w-[350px] xl:w-[380px] snap-start"
-                >
-                  {/* Image Container with Overlay */}
-                  <div className="relative w-full aspect-4/3 overflow-hidden bg-gray-100 dark:bg-gray-900">
-                    <Image
-                      src={sector.image}
-                      alt={sector.alt}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      sizes="(max-width: 640px) 280px, (max-width: 768px) 300px, (max-width: 1024px) 320px, (max-width: 1280px) 350px, 380px"
+            {portfolioData.sectors.map((sector) => (
+              <Link
+                key={sector.id}
+                href={`/sectors/${sector.id}`}
+                className="group relative flex flex-col rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 shrink-0 w-[280px] sm:w-[300px] md:w-[320px] lg:w-[350px] xl:w-[380px] snap-start"
+              >
+                {/* Image Container with Overlay */}
+                <div className="relative w-full aspect-4/3 overflow-hidden bg-gray-100 dark:bg-gray-900">
+                  <Image
+                    src={sector.image}
+                    alt={sector.alt}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 640px) 280px, (max-width: 768px) 300px, (max-width: 1024px) 320px, (max-width: 1280px) 350px, 380px"
+                  />
+                  {/* Gradient Overlay on Hover */}
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  {/* Primary Accent Bar */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                </div>
+
+                {/* Content */}
+                <div className="flex flex-col gap-3 p-6 lg:p-7 grow">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="text-[#181411] dark:text-white text-xl font-bold leading-tight group-hover:text-primary transition-colors duration-300">
+                      {sector.title}
+                    </h3>
+                    <ArrowRight
+                      className="size-5 text-primary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 shrink-0 mt-1"
+                      aria-hidden="true"
                     />
-                    {/* Gradient Overlay on Hover */}
-                    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    {/* Primary Accent Bar */}
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                   </div>
+                  <p className="text-[#8c755f] dark:text-white/70 text-sm leading-relaxed line-clamp-2">
+                    {sector.description}
+                  </p>
 
-                  {/* Content */}
-                  <div className="flex flex-col gap-3 p-6 lg:p-7 grow">
-                    <div className="flex items-start justify-between gap-3">
-                      <h3 className="text-[#181411] dark:text-white text-xl font-bold leading-tight group-hover:text-primary transition-colors duration-300">
-                        {sector.title}
-                      </h3>
-                      <ArrowRight
-                        className="size-5 text-primary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 shrink-0 mt-1"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <p className="text-[#8c755f] dark:text-white/70 text-sm leading-relaxed line-clamp-2">
-                      {sector.description}
-                    </p>
-
-                    {/* Decorative Element */}
-                    <div className="mt-auto pt-4 border-t border-primary/10 dark:border-primary/20">
-                      <span className="text-xs font-medium text-primary/60 dark:text-primary/40 uppercase tracking-wider">
-                        Learn More
-                      </span>
-                    </div>
+                  {/* Decorative Element */}
+                  <div className="mt-auto pt-4 border-t border-primary/10 dark:border-primary/20">
+                    <span className="text-xs font-medium text-primary/60 dark:text-primary/40 uppercase tracking-wider">
+                      Learn More
+                    </span>
                   </div>
+                </div>
 
-                  {/* Hover Glow Effect */}
-                  <div className="absolute inset-0 rounded-2xl ring-2 ring-primary/0 group-hover:ring-primary/20 transition-all duration-500 pointer-events-none" />
-                </Link>
-              );
-            })}
+                {/* Hover Glow Effect */}
+                <div className="absolute inset-0 rounded-2xl ring-2 ring-primary/0 group-hover:ring-primary/20 transition-all duration-500 pointer-events-none" />
+              </Link>
+            ))}
           </div>
         </div>
       </div>
