@@ -27,7 +27,7 @@ export default function Footer() {
     { href: "/privacy", label: "Privacy Policy" },
     { href: "/terms", label: "Terms of Service" },
     { href: "/cookies", label: "Cookie Policy" },
-    { href: "/sitemap", label: "Sitemap" },
+    { href: "/site-map", label: "Sitemap" },
   ];
 
   const socialLinks = [

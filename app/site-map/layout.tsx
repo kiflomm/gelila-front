@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "/sitemap",
+    canonical: "/site-map",
   },
 };
 

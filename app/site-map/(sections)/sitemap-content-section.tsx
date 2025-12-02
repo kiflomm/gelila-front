@@ -15,7 +15,7 @@ export default function SitemapContentSection() {
     { href: "/privacy", label: "Privacy Policy" },
     { href: "/terms", label: "Terms of Service" },
     { href: "/cookies", label: "Cookie Policy" },
-    { href: "/sitemap", label: "Sitemap" },
+    { href: "/site-map", label: "Sitemap" },
   ];
 
   return (

@@ -32,22 +32,52 @@ export default function ContactInfoSection() {
                   <h3 className="text-[#181411] dark:text-white font-semibold mb-1.5 text-base">
                     {section.title}
                   </h3>
-                  {section.type === "address" && (
-                    <p className="text-[#495057] dark:text-white/80 text-sm leading-relaxed">
-                      {section.content.line1}
-                      <br />
-                      {section.content.line2}
-                      <br />
-                      {section.content.line3}
-                    </p>
-                  )}
-                  {section.type === "phone" && (
-                    <div className="flex flex-col gap-1">
-                      {section.content.map(
-                        (
-                          phone: { number: string; href: string },
-                          phoneIndex: number
-                        ) => (
+                  {section.type === "address" &&
+                    typeof section.content === "object" &&
+                    "line1" in section.content &&
+                    "line2" in section.content &&
+                    "line3" in section.content && (
+                      <p className="text-[#495057] dark:text-white/80 text-sm leading-relaxed">
+                        {
+                          (
+                            section.content as {
+                              line1: string;
+                              line2: string;
+                              line3: string;
+                            }
+                          ).line1
+                        }
+                        <br />
+                        {
+                          (
+                            section.content as {
+                              line1: string;
+                              line2: string;
+                              line3: string;
+                            }
+                          ).line2
+                        }
+                        <br />
+                        {
+                          (
+                            section.content as {
+                              line1: string;
+                              line2: string;
+                              line3: string;
+                            }
+                          ).line3
+                        }
+                      </p>
+                    )}
+                  {section.type === "phone" &&
+                    Array.isArray(section.content) && (
+                      <div className="flex flex-col gap-1">
+                        {(
+                          section.content as Array<{
+                            number: string;
+                            href: string;
+                          }>
+                        ).map((phone, phoneIndex) => (
                           <Link
                             key={phoneIndex}
                             href={phone.href}
@@ -55,27 +85,36 @@ export default function ContactInfoSection() {
                           >
                             {phone.number}
                           </Link>
-                        )
-                      )}
-                    </div>
-                  )}
-                  {section.type === "email" && (
-                    <Link
-                      href={section.content.href}
-                      className="text-[#495057] dark:text-white/80 text-sm hover:text-primary transition-colors duration-200 inline-block break-all"
-                    >
-                      {section.content.address}
-                    </Link>
-                  )}
-                  {section.type === "hours" && (
-                    <div className="text-[#495057] dark:text-white/80 text-sm leading-relaxed space-y-0.5">
-                      {section.content.map(
-                        (hour: string, hourIndex: number) => (
-                          <p key={hourIndex}>{hour}</p>
-                        )
-                      )}
-                    </div>
-                  )}
+                        ))}
+                      </div>
+                    )}
+                  {section.type === "email" &&
+                    typeof section.content === "object" &&
+                    "href" in section.content &&
+                    "address" in section.content && (
+                      <Link
+                        href={
+                          (section.content as { address: string; href: string })
+                            .href
+                        }
+                        className="text-[#495057] dark:text-white/80 text-sm hover:text-primary transition-colors duration-200 inline-block break-all"
+                      >
+                        {
+                          (section.content as { address: string; href: string })
+                            .address
+                        }
+                      </Link>
+                    )}
+                  {section.type === "hours" &&
+                    Array.isArray(section.content) && (
+                      <div className="text-[#495057] dark:text-white/80 text-sm leading-relaxed space-y-0.5">
+                        {(section.content as string[]).map(
+                          (hour, hourIndex) => (
+                            <p key={hourIndex}>{hour}</p>
+                          )
+                        )}
+                      </div>
+                    )}
                 </div>
               </div>
             );
