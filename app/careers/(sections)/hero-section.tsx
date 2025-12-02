@@ -4,43 +4,35 @@ import { Button } from "@/components/ui/button";
 
 export default function HeroSection() {
   return (
-    <section className="pt-24 sm:pt-28 md:pt-32 pb-16 md:pb-24 bg-white dark:bg-[#212529]/30">
-      <div className="px-4 sm:px-10 lg:px-20">
-        <div className="@container">
-          <div className="flex flex-col gap-8 @[864px]:flex-row @[864px]:items-center max-w-7xl mx-auto px-2 sm:px-4 md:px-6">
-            <div className="flex flex-col gap-6 text-center @[864px]:text-left @[864px]:w-1/2">
-              <div className="flex flex-col gap-2 sm:gap-3">
-                <h1 className="text-[#212529] dark:text-[#F8F9FA] text-3xl sm:text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl">
-                  Build Your Future with Gelila Manufacturing.
-                </h1>
-                <h2 className="text-[#6C757D] dark:text-[#F8F9FA]/70 text-base font-normal leading-normal @[480px]:text-lg">
-                  Join a team of innovators dedicated to excellence and shaping
-                  the future of industry. Discover your potential and grow with
-                  us.
-                </h2>
-              </div>
-              <div className="flex justify-center @[864px]:justify-start">
-                <Button
-                  asChild
-                  className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary! text-white text-base font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary!"
-                >
-                  <Link href="#job-listings">
-                    <span className="truncate">Explore Open Positions</span>
-                  </Link>
-                </Button>
-              </div>
-            </div>
-            <div className="w-full @[864px]:w-1/2">
-              <div className="relative w-full aspect-video bg-center bg-no-repeat bg-cover rounded-xl overflow-hidden">
-                <Image
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuALrnMLhPMHqI-qexStUiCnn132Hz55eJKLmhZcZWQ-IBJbJr9PwNsLjWoBOZIDQcmr7_rfFOsSoPXSP1oVxVqNbkCW2uBV1jUiVzeE1WqnJavkE5cZ2LM7awx0a-kU_dUvKQOYiC_aWuy_qJn7_alrp5-mvh-7QuCOfFTvQetD4qWx7qFQia3DZxwvjl_rTxBx7BXXuRAbqypx1xntbqRU4vsT-fDj0yobozlm6nZvw1GAkZBQS_A2GJv7oGK6wVTGPCuQsZrstN3k"
-                  alt="Team of engineers collaborating in a modern factory setting"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            </div>
+    <section className="w-full">
+      <div className="relative flex min-h-[600px] lg:min-h-[700px] w-full flex-col gap-6 bg-cover bg-center bg-no-repeat items-start justify-center px-4 sm:px-6 lg:px-10 xl:px-20 py-16 sm:py-20 lg:py-24 overflow-hidden">
+        <Image
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuALrnMLhPMHqI-qexStUiCnn132Hz55eJKLmhZcZWQ-IBJbJr9PwNsLjWoBOZIDQcmr7_rfFOsSoPXSP1oVxVqNbkCW2uBV1jUiVzeE1WqnJavkE5cZ2LM7awx0a-kU_dUvKQOYiC_aWuy_qJn7_alrp5-mvh-7QuCOfFTvQetD4qWx7qFQia3DZxwvjl_rTxBx7BXXuRAbqypx1xntbqRU4vsT-fDj0yobozlm6nZvw1GAkZBQS_A2GJv7oGK6wVTGPCuQsZrstN3k"
+          alt="Team of engineers collaborating in a modern factory setting"
+          fill
+          className="object-cover brightness-75"
+          priority
+        />
+        <div className="absolute inset-0 bg-linear-to-b from-black/50 to-black/80" />
+        <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-6 sm:gap-8">
+          <div className="flex flex-col gap-4 text-left max-w-3xl">
+            <h1 className="text-white text-4xl font-black leading-tight tracking-tight sm:text-5xl md:text-6xl">
+              Build Your Future with Gelila Manufacturing
+            </h1>
+            <h2 className="text-white/90 text-base font-normal leading-normal sm:text-lg">
+              Join a team of innovators dedicated to excellence and shaping the
+              future of industry. Discover your potential and grow with us.
+            </h2>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Button
+              asChild
+              className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:opacity-90! transition-opacity hover:bg-primary!"
+            >
+              <Link href="#job-listings">
+                <span className="truncate">Explore Open Positions</span>
+              </Link>
+            </Button>
           </div>
         </div>
       </div>

@@ -14,8 +14,10 @@ export default function Header() {
   const isHome = pathname === "/";
   const isAbout = pathname === "/about";
   const isExports = pathname === "/exports";
-  const isSectors = pathname === "/sectors";
-  const hasTransparentNav = isHome || isAbout || isExports || isSectors;
+  const isSectors = pathname === "/sectors" || pathname.startsWith("/sectors/");
+  const isCareers = pathname === "/careers";
+  const hasTransparentNav =
+    isHome || isAbout || isExports || isSectors || isCareers;
 
   const navLinks = [
     { href: "/", label: "Home" },

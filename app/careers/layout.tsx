@@ -53,13 +53,14 @@ export default function CareersLayout({
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
       <div className="layout-container flex h-full grow flex-col">
-        <Header />
-        <main className="flex-1">
-          {children}
+        <main className="flex flex-1 flex-col">
+          <div className="relative">
+            <Header />
+            {children}
+          </div>
         </main>
         <Footer />
       </div>
     </div>
   );
 }
-

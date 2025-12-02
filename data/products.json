@@ -6,7 +6,8 @@
       "title": "Footwear & Sole Manufacturing",
       "status": "operational",
       "location": "Addis Ababa",
-      "description": "Producing leather footwear for local and international markets. Export-oriented product lines include men's, women's, and children's shoes. Strong domestic distribution network.",
+      "heroDescription": "Producing high-quality leather footwear for local and international markets with export-oriented product lines.",
+      "description": "Our Footwear & Sole Manufacturing division is a leading producer of high-quality leather footwear serving both local and international markets. We specialize in crafting premium export-oriented product lines that include men's formal and casual shoes, women's fashionable footwear, and durable children's shoes designed for comfort and longevity. Our state-of-the-art manufacturing facility in Addis Ababa combines traditional craftsmanship with modern production techniques to deliver products that meet international quality standards. We maintain a robust domestic distribution network that ensures our products reach customers across Ethiopia, while our export division focuses on building strong relationships with international partners. Our commitment to quality, innovation, and customer satisfaction has established us as a trusted name in the footwear industry, with a growing presence in regional and global markets.",
       "products": [
         {
           "id": 1,
@@ -35,37 +36,55 @@
           "description": "High-quality footwear for international markets",
           "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBbV4RVP0V6Fh5kj6wfe7Md8Vz_tVU5KWUJc8HLuxmA_l6O-OR5l73YBDqQ-Zmk5QrBa49Q2vC3lyIomUJUslrXDXHXPUE2sjmyEnjpixDX-ixLZi_0lI8PqQIrMjQYqrA8qCPrJ-VgnRwifJJU6QkjLjoDvDWRMB1T8-Rxjqe-phNt6a-AdIFAC1hzPfZpvCppgvNWWAcmkRsVZyizXKvHeobmRmqqWo9p1j5ZeLG90KJ4GFNyHpakBGS8lO8r_ObK_sIquMZKhqaV",
           "alt": "A collection of high-quality export-grade footwear"
-        }
-      ]
-    },
-    {
-      "id": "sole-component",
-      "name": "Sole & Component",
-      "title": "Sole & Component Manufacturing",
-      "status": "planned",
-      "location": "Addis Ababa",
-      "description": "Sole production (Rubber, EVA, PU) is planned for future in-house implementation but has not yet started.",
-      "products": [
-        {
-          "id": 5,
-          "name": "Rubber Soles",
-          "description": "Planned: High-grip, long-lasting rubber soles",
-          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuB_ZH_zDIJCIAI-V8f6aub8viDMeMsndjJCtsJlXlivJ1ms58nGeXIFFgk-4bIwhmIAUJYBuJXUt6oKjdKn3rW1-OHZR9CS6Ih-lrtTQfUNENsJst1K770c9kv9QfegO4_eIq5LN4tJWtvOEE6NoCoae0Mw8mbLh0kRaVYntXJsZulfrFfVSGZlZB6bQ3RQ-l6FmyUiWHlBtbp7bxnzdPvujFYKTdeXHk_Hi6XyLpFDYT7QenJwurCVmDI_oYJOI8yp5Hdl1ul6Ql6T",
-          "alt": "Stacks of durable rubber soles for shoes"
         },
         {
-          "id": 6,
-          "name": "EVA Soles",
-          "description": "Planned: Lightweight and flexible EVA soles",
-          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDo5YDPTKJYoiNhSDPprBlD2T-qORIYaTze1JQi0MbwXh_LvarpIv-lZrUlx3xNtrv-vNK6qu2SzJeq25LWVqwL0EQ72FcWni1rJmrkMNzUVMKPD9QySLHBF9chBDo3gqVYH2ocrCJm8plw1r_i3L--2bwsVhK7Xc_RpG6Z52ahKG2UY8EtjXdezoJT03JKZKRzmrVmn-6Ncraf28n5kBn4xghzRpqerypKpVJQRuQ0Am86E_AikY6gO0i04TwMetEMTtvV5tlEqzYJ",
-          "alt": "Lightweight and flexible EVA soles"
+          "id": 21,
+          "name": "Athletic Footwear",
+          "description": "Performance-oriented athletic shoes for sports and fitness activities",
+          "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Modern athletic running shoes"
         },
         {
-          "id": 7,
-          "name": "Polyurethane (PU) Soles",
-          "description": "Planned: Comfort and flexibility with PU technology",
-          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDo5YDPTKJYoiNhSDPprBlD2T-qORIYaTze1JQi0MbwXh_LvarpIv-lZrUlx3xNtrv-vNK6qu2SzJeq25LWVqwL0EQ72FcWni1rJmrkMNzUVMKPD9QySLHBF9chBDo3gqVYH2ocrCJm8plw1r_i3L--2bwsVhK7Xc_RpG6Z52ahKG2UY8EtjXdezoJT03JKZKRzmrVmn-6Ncraf28n5kBn4xghzRpqerypKpVJQRuQ0Am86E_AikY6gO0i04TwMetEMTtvV5tlEqzYJ",
-          "alt": "Lightweight and flexible polyurethane (PU) soles"
+          "id": 22,
+          "name": "Casual Leather Boots",
+          "description": "Stylish and durable casual boots for everyday wear",
+          "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Brown leather casual boots"
+        },
+        {
+          "id": 23,
+          "name": "Formal Dress Shoes",
+          "description": "Elegant formal dress shoes for business and special occasions",
+          "image": "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Black formal dress shoes"
+        },
+        {
+          "id": 24,
+          "name": "Sandals & Flip-Flops",
+          "description": "Comfortable sandals and flip-flops for warm weather and casual wear",
+          "image": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Leather sandals and flip-flops"
+        },
+        {
+          "id": 25,
+          "name": "Work Safety Boots",
+          "description": "Durable safety boots with protective features for industrial and construction work",
+          "image": "https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Industrial safety work boots"
+        },
+        {
+          "id": 26,
+          "name": "Fashion Sneakers",
+          "description": "Trendy fashion sneakers combining style and comfort for modern lifestyles",
+          "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Stylish fashion sneakers"
+        },
+        {
+          "id": 27,
+          "name": "Premium Leather Loafers",
+          "description": "Sophisticated leather loafers for professional and casual settings",
+          "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=2070&auto=format&fit=crop",
+          "alt": "Premium brown leather loafers"
         }
       ]
     },
@@ -75,7 +94,8 @@
       "title": "Public Bus Transport Services (Soloda)",
       "status": "operational",
       "location": "Addis Ababa",
-      "description": "Operates city and intercity bus transportation services across major routes with luxury buses. Operates a growing fleet to meet demand for safe and reliable mobility.",
+      "heroDescription": "Providing safe, reliable, and comfortable city and intercity bus transportation services across Ethiopia's major routes.",
+      "description": "Soloda, our Public Bus Transport division, operates comprehensive city and intercity bus transportation services across Ethiopia's major routes using a modern fleet of luxury buses. We provide safe, reliable, and comfortable transportation solutions that connect communities and facilitate economic growth. Our city bus services cover extensive urban networks, ensuring efficient daily commutes for thousands of passengers, while our intercity routes link major cities and regions, supporting both business and leisure travel. We continuously invest in expanding our fleet with state-of-the-art vehicles equipped with modern amenities, safety features, and environmentally conscious technologies. Our commitment to excellence extends to professional driver training, regular maintenance programs, and customer service initiatives that prioritize passenger comfort and satisfaction. As demand for quality public transportation grows, we remain dedicated to providing accessible, affordable, and dependable mobility solutions that serve the needs of Ethiopia's expanding urban and intercity travel requirements.",
       "products": [
         {
           "id": 8,
@@ -99,7 +119,8 @@
       "title": "Food Processing Division (Flour & Biscuits)",
       "status": "operational",
       "location": "Axum",
-      "description": "Wheat flour production with modern milling machinery. Biscuit manufacturing line producing assorted varieties. Ensures compliance with food safety and quality standards.",
+      "heroDescription": "Specializing in premium wheat flour production and assorted biscuit varieties, ensuring the highest food safety and quality standards.",
+      "description": "Our Food Processing Division, located in Axum, is a cornerstone of Ethiopia's food manufacturing industry, specializing in wheat flour production and biscuit manufacturing. We operate state-of-the-art milling facilities equipped with modern machinery that processes high-quality wheat into premium flour products meeting the highest industry standards. Our flour production capabilities serve both commercial bakeries and retail markets, ensuring consistent quality and reliable supply. Our biscuit manufacturing line produces an extensive range of assorted varieties, including hard biscuits for everyday consumption and soft biscuits that appeal to diverse consumer preferences. Every aspect of our operations adheres to strict food safety protocols and quality assurance measures, with comprehensive quality control systems in place from raw material sourcing through final packaging. We are committed to maintaining the highest standards of hygiene, nutritional value, and product consistency, contributing to food security and supporting Ethiopia's agricultural value chain while meeting the growing demand for processed food products in both domestic and export markets.",
       "products": [
         {
           "id": 10,
@@ -125,12 +146,45 @@
       ]
     },
     {
+      "id": "sole-component",
+      "name": "Sole & Component",
+      "title": "Sole & Component Manufacturing",
+      "status": "planned",
+      "location": "Addis Ababa",
+      "heroDescription": "Planned in-house production of high-quality rubber, EVA, and polyurethane soles to support our footwear manufacturing operations.",
+      "description": "Our Sole & Component Manufacturing division represents a strategic expansion into vertical integration, with comprehensive plans for in-house production of high-quality shoe soles and components. This initiative will enable us to control the entire footwear manufacturing value chain, from raw materials to finished products, while reducing dependency on external suppliers and improving cost efficiency. The planned facility will produce three primary types of soles: durable rubber soles engineered for superior grip and long-lasting performance, lightweight EVA (Ethylene-Vinyl Acetate) soles that offer exceptional comfort and flexibility for athletic and casual footwear, and advanced polyurethane (PU) soles that combine comfort, durability, and modern manufacturing technology. This expansion will not only support our existing footwear operations but also position us as a potential supplier to other manufacturers in the region. The implementation of this division will include investment in specialized machinery, technical training programs, and quality control systems to ensure that our sole production meets the same high standards that define our footwear products. While this project is currently in the planning and development phase, it represents a significant step forward in our commitment to manufacturing excellence and industry leadership.",
+      "products": [
+        {
+          "id": 5,
+          "name": "Rubber Soles",
+          "description": "Planned: High-grip, long-lasting rubber soles",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuB_ZH_zDIJCIAI-V8f6aub8viDMeMsndjJCtsJlXlivJ1ms58nGeXIFFgk-4bIwhmIAUJYBuJXUt6oKjdKn3rW1-OHZR9CS6Ih-lrtTQfUNENsJst1K770c9kv9QfegO4_eIq5LN4tJWtvOEE6NoCoae0Mw8mbLh0kRaVYntXJsZulfrFfVSGZlZB6bQ3RQ-l6FmyUiWHlBtbp7bxnzdPvujFYKTdeXHk_Hi6XyLpFDYT7QenJwurCVmDI_oYJOI8yp5Hdl1ul6Ql6T",
+          "alt": "Stacks of durable rubber soles for shoes"
+        },
+        {
+          "id": 6,
+          "name": "EVA Soles",
+          "description": "Planned: Lightweight and flexible EVA soles",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDo5YDPTKJYoiNhSDPprBlD2T-qORIYaTze1JQi0MbwXh_LvarpIv-lZrUlx3xNtrv-vNK6qu2SzJeq25LWVqwL0EQ72FcWni1rJmrkMNzUVMKPD9QySLHBF9chBDo3gqVYH2ocrCJm8plw1r_i3L--2bwsVhK7Xc_RpG6Z52ahKG2UY8EtjXdezoJT03JKZKRzmrVmn-6Ncraf28n5kBn4xghzRpqerypKpVJQRuQ0Am86E_AikY6gO0i04TwMetEMTtvV5tlEqzYJ",
+          "alt": "Lightweight and flexible EVA soles"
+        },
+        {
+          "id": 7,
+          "name": "Polyurethane (PU) Soles",
+          "description": "Planned: Comfort and flexibility with PU technology",
+          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDo5YDPTKJYoiNhSDPprBlD2T-qORIYaTze1JQi0MbwXh_LvarpIv-lZrUlx3xNtrv-vNK6qu2SzJeq25LWVqwL0EQ72FcWni1rJmrkMNzUVMKPD9QySLHBF9chBDo3gqVYH2ocrCJm8plw1r_i3L--2bwsVhK7Xc_RpG6Z52ahKG2UY8EtjXdezoJT03JKZKRzmrVmn-6Ncraf28n5kBn4xghzRpqerypKpVJQRuQ0Am86E_AikY6gO0i04TwMetEMTtvV5tlEqzYJ",
+          "alt": "Lightweight and flexible polyurethane (PU) soles"
+        }
+      ]
+    },
+    {
       "id": "bus-assembly",
       "name": "Bus Assembly",
       "title": "Bus Assembly Plant",
       "status": "project",
       "location": "Mekele",
-      "description": "Being developed in technical collaboration with Foton International Trade Co., Ltd. (China). Will assemble electric (EV) and diesel buses for city, intercity, and export markets. Planned capabilities include chassis assembly, body manufacturing, electrical installation, painting & finishing, and quality testing.",
+      "heroDescription": "Developing a state-of-the-art bus assembly facility in collaboration with Foton International to produce electric and diesel buses for domestic and export markets.",
+      "description": "Our Bus Assembly Plant in Mekele represents a transformative project that will establish Ethiopia as a regional hub for bus manufacturing and assembly. This ambitious initiative is being developed through strategic technical collaboration with Foton International Trade Co., Ltd., a leading Chinese automotive manufacturer with extensive expertise in commercial vehicle production. The facility will be equipped to assemble both electric (EV) and diesel-powered buses, catering to diverse market needs including city transit, intercity transportation, and export opportunities. Our comprehensive assembly capabilities will encompass the complete manufacturing process, including precision chassis assembly, advanced body manufacturing using modern fabrication techniques, sophisticated electrical systems installation for both conventional and electric vehicles, professional painting and finishing operations that ensure durability and aesthetic appeal, and rigorous quality testing protocols that guarantee safety and performance standards. This project aligns with Ethiopia's industrial development goals, creating skilled employment opportunities, transferring advanced manufacturing technology, and supporting the country's transportation infrastructure needs. The plant will not only serve domestic demand but also position Ethiopia as a competitive player in regional bus manufacturing, with potential for export to neighboring countries. This investment represents our commitment to industrial diversification, technological advancement, and contributing to Ethiopia's economic growth through high-value manufacturing.",
       "products": [
         {
           "id": 13,
@@ -175,7 +229,8 @@
       "title": "Textile & Apparel Manufacturing",
       "status": "project",
       "location": "Adwa",
-      "description": "A modern textile and garment factory in the project development stage. Expected to produce uniforms, casual wear, and export apparel. Will support Ethiopia's textile value chain and job creation goals.",
+      "heroDescription": "A modern textile and garment factory in development, designed to produce uniforms, casual wear, and export apparel for global markets.",
+      "description": "Our Textile & Apparel Manufacturing facility in Adwa represents a forward-looking investment in Ethiopia's rapidly growing textile and garment industry. Currently in the project development stage, this modern factory is being designed to meet international manufacturing standards and will serve as a significant contributor to the country's industrial transformation. The facility is planned to produce a diverse range of textile products, including professional uniforms for various industries such as healthcare, hospitality, security, and corporate sectors, stylish casual wear that appeals to both domestic and international fashion markets, and high-quality export apparel manufactured to meet the exacting standards of global brands and retailers. This project is strategically aligned with Ethiopia's broader economic development objectives, particularly in supporting the textile value chain from raw material processing through finished product manufacturing. The factory will create substantial employment opportunities, providing skilled and semi-skilled jobs that contribute to local economic development and community prosperity. By integrating modern production technologies, quality control systems, and sustainable manufacturing practices, we aim to establish a facility that not only meets current market demands but also positions Ethiopia as a competitive player in the global textile and apparel export market. This investment reflects our commitment to industrial diversification, job creation, and supporting Ethiopia's vision of becoming a leading manufacturing hub in Africa.",
       "products": [
         {
           "id": 18,
