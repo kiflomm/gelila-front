@@ -46,16 +46,22 @@ export default function Footer() {
           {/* Company Info */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3 mb-2">
-              <Image
-                src="/logo.png"
-                alt="Gelila Manufacturing PLC"
-                width={120}
-                height={40}
-                className="h-10 w-auto"
-              />
-              <h3 className="text-lg font-bold text-white">
-                {footerData.company.name}
-              </h3>
+              <div className="flex flex-col items-center gap-0 shrink-0 bg-white px-2 py-1 rounded">
+                <Image
+                  src="/logo-left.png"
+                  alt="Gelila Manufacturing PLC"
+                  width={100}
+                  height={80}
+                  className="h-8 sm:h-10 md:h-12 lg:h-14 w-auto shrink-0"
+                />
+                <Image
+                  src="/logo-right.png"
+                  alt="Gelila Manufacturing PLC"
+                  width={100}
+                  height={80}
+                  className="hidden sm:block h-8 sm:h-10 md:h-12 lg:h-14 w-auto shrink-0"
+                />
+              </div>
             </div>
             <p className="text-sm text-gray-300 leading-relaxed">
               {footerData.company.description}
@@ -69,8 +75,12 @@ export default function Footer() {
                   {footerData.contact.address.line1}
                   <br />
                   {footerData.contact.address.line2}
-                  <br />
-                  {footerData.contact.address.line3}
+                  {footerData.contact.address.line3 && (
+                    <>
+                      <br />
+                      {footerData.contact.address.line3}
+                    </>
+                  )}
                 </p>
               </div>
               <div className="flex items-center gap-3">

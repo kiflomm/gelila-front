@@ -16,16 +16,16 @@
             {
               "label": "Textile & Apparel",
               "href": "/sectors/textile-apparel"
+            },
+            {
+              "label": "Bus Assembly",
+              "href": "/sectors/bus-assembly"
             }
           ]
         },
         {
           "title": "Transportation",
           "items": [
-            {
-              "label": "Bus Assembly",
-              "href": "/sectors/bus-assembly"
-            },
             {
               "label": "Public Transport",
               "href": "/sectors/bus-transport"

@@ -33,12 +33,12 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
 
   const navLinks = [
     { href: "/", label: "Home" },
+    { href: "/about", label: "About Us" },
     { href: "/exports", label: "Exports" },
     { href: "/sectors", label: "Sectors" },
     { href: "/news", label: "News & Updates" },
     { href: "/careers", label: "Careers" },
     { href: "/contact", label: "Contact" },
-    { href: "/about", label: "About Us" },
   ];
 
   // Close mobile menu on route change
@@ -64,7 +64,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
       className={`absolute top-0 left-0 right-0 z-50 w-full transition-colors duration-300 ${
         hasTransparentNav
           ? "bg-linear-to-b from-black/30 via-black/15 to-transparent"
-          : "bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-border"
+          : "bg-white dark:bg-background-dark/95 backdrop-blur-sm border-b border-border"
       }`}
     >
       <div className="px-3 sm:px-6 md:px-8 lg:px-12 xl:px-20 2xl:px-40">
@@ -77,24 +77,32 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                 : "text-[#181411] dark:text-white"
             }`}
           >
-            <Image
-              src="/logo.png"
-              alt="Gelila Manufacturing PLC"
-              width={120}
-              height={40}
-              className="h-8 sm:h-10 w-auto shrink-0"
-              priority
-            />
-            <h2
-              className={`text-sm sm:text-base md:text-lg font-bold leading-tight tracking-[-0.015em] truncate ${
-                hasTransparentNav
-                  ? "text-white"
-                  : "text-[#181411] dark:text-white"
-              }`}
-            >
-              <span className="hidden sm:inline">Gelila Manufacturing PLC</span>
-              <span className="sm:hidden">Gelila</span>
-            </h2>
+            <div className="flex items-center gap-0 shrink-0 bg-white px-2 py-1 rounded">
+              <Image
+                src="/logo-left.png"
+                alt="Gelila Manufacturing PLC"
+                width={100}
+                height={80}
+                className={`w-auto shrink-0 ${
+                  hasTransparentNav
+                    ? "h-8 sm:h-5 md:h-6 lg:h-10"
+                    : "h-8 sm:h-5 md:h-6 lg:h-10"
+                }`}
+                priority
+              />
+              <Image
+                src="/logo-right.png"
+                alt="Gelila Manufacturing PLC"
+                width={100}
+                height={80}
+                className={`hidden sm:block w-auto shrink-0 ${
+                  hasTransparentNav
+                    ? "h-4 sm:h-5 md:h-6 lg:h-10"
+                    : "h-4 sm:h-5 md:h-6 lg:h-10"
+                }`}
+                priority
+              />
+            </div>
           </Link>
 
           {/* Desktop Navigation */}

@@ -6,6 +6,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import productsData from "@/data/products.json";
+import navigationData from "@/data/navigation.json";
 
 interface ProductDivisionsSectionProps {
   activeSector: string | null;
@@ -161,33 +162,82 @@ function ScrollableProductGrid({
 export default function ProductDivisionsSection({
   activeSector,
 }: ProductDivisionsSectionProps) {
-  const filteredSectors = activeSector
-    ? productsData.sectors.filter((sector) => sector.id === activeSector)
-    : productsData.sectors;
+  // Get sector grouping from navigation data
+  const sectorSections = navigationData.dropdowns.sectors.sections;
+
+  // Create a map of sector IDs to their full data
+  const sectorsMap = new Map(
+    productsData.sectors.map((sector) => [sector.id, sector])
+  );
+
+  // Group sectors by category
+  const groupedSectors = sectorSections.map((section) => {
+    const sectorsInSection = section.items
+      .map((item) => {
+        // Extract sector ID from href (e.g., "/sectors/footwear" -> "footwear")
+        const sectorId = item.href.replace("/sectors/", "");
+        const sector = sectorsMap.get(sectorId);
+        return sector;
+      })
+      .filter((sector) => sector !== undefined);
+
+    return {
+      title: section.title,
+      sectors: sectorsInSection,
+    };
+  });
+
+  // Filter sectors if a specific sector is selected
+  let displayGroups = groupedSectors;
+  if (activeSector) {
+    displayGroups = groupedSectors
+      .map((group) => ({
+        ...group,
+        sectors: group.sectors.filter((sector) => sector.id === activeSector),
+      }))
+      .filter((group) => group.sectors.length > 0);
+  }
 
   return (
     <div className="mt-4 sm:mt-6 md:mt-8 px-2 sm:px-4 md:px-6 lg:px-8">
-      {filteredSectors.map((sector) => (
+      {displayGroups.map((group, groupIndex) => (
         <div
-          key={sector.id}
-          id={`sector-${sector.id}`}
-          className="mt-6 sm:mt-8 md:mt-10 lg:mt-12 first:mt-0"
+          key={group.title}
+          className={groupIndex > 0 ? "mt-10 sm:mt-12 md:mt-16 lg:mt-20" : ""}
         >
-          <div className="flex items-center justify-between px-2 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-5 lg:pb-6">
-            <Link
-              href={`/sectors/${sector.id}`}
-              className="group flex items-center gap-3 hover:gap-4 transition-all"
-            >
-              <h2 className="text-[#212121] dark:text-white text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold leading-tight tracking-[-0.015em] group-hover:text-primary transition-colors">
-                {sector.title}
-              </h2>
-              <ArrowRight className="size-5 sm:size-6 text-primary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
-            </Link>
+          {/* Section Header */}
+          <div className="mb-6 sm:mb-8 md:mb-10 px-2 sm:px-4 md:px-6">
+            <h2 className="text-[#212121] dark:text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight tracking-[-0.015em]">
+              {group.title}
+            </h2>
           </div>
-          <ScrollableProductGrid
-            products={sector.products}
-            sectorId={sector.id}
-          />
+
+          {/* Sectors in this group */}
+          {group.sectors.map((sector, sectorIndex) => (
+            <div
+              key={sector.id}
+              id={`sector-${sector.id}`}
+              className={
+                sectorIndex > 0 ? "mt-6 sm:mt-8 md:mt-10 lg:mt-12" : ""
+              }
+            >
+              <div className="flex items-center justify-between px-2 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-5 lg:pb-6">
+                <Link
+                  href={`/sectors/${sector.id}`}
+                  className="group flex items-center gap-3 hover:gap-4 transition-all"
+                >
+                  <h3 className="text-[#212121] dark:text-white text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold leading-tight tracking-[-0.015em] group-hover:text-primary transition-colors">
+                    {sector.title}
+                  </h3>
+                  <ArrowRight className="size-5 sm:size-6 text-primary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+                </Link>
+              </div>
+              <ScrollableProductGrid
+                products={sector.products}
+                sectorId={sector.id}
+              />
+            </div>
+          ))}
         </div>
       ))}
     </div>

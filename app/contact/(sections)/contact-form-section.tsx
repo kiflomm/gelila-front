@@ -26,18 +26,18 @@ export default function ContactFormSection() {
   const remainingFields = formData.fields.slice(2);
 
   return (
-    <section className="py-4 sm:py-6">
-      <div className="p-6 sm:p-8 bg-white dark:bg-black/20 border border-primary/20 rounded-xl">
-        <h2 className="text-[#181411] dark:text-white text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
+    <section className="py-2 sm:py-3">
+      <div className="p-4 sm:p-5 bg-white dark:bg-black/20 border border-primary/20 rounded-xl">
+        <h2 className="text-[#181411] dark:text-white text-lg sm:text-xl font-bold mb-3 sm:mb-4">
           {formData.title}
         </h2>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
             {firstTwoFields.map((field) => (
               <div key={field.id}>
                 <Label
                   htmlFor={field.id}
-                  className="block text-sm font-medium text-[#181411] dark:text-white mb-2"
+                  className="block text-xs sm:text-sm font-medium text-[#181411] dark:text-white mb-1.5"
                 >
                   {field.label}
                 </Label>
@@ -55,7 +55,7 @@ export default function ContactFormSection() {
             <div key={field.id}>
               <Label
                 htmlFor={field.id}
-                className="block text-sm font-medium text-[#181411] dark:text-white mb-2"
+                className="block text-xs sm:text-sm font-medium text-[#181411] dark:text-white mb-1.5"
               >
                 {field.label}
               </Label>
@@ -81,7 +81,7 @@ export default function ContactFormSection() {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="flex! w-full! cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary! text-white text-base font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary! disabled:opacity-50"
+            className="flex! w-full! cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary! disabled:opacity-50"
           >
             <span className="truncate">
               {isSubmitting

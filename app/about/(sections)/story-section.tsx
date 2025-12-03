@@ -12,20 +12,20 @@ export default function StorySection() {
               <div className="size-1.5 rounded-full bg-primary"></div>
               <span>{storyData.badge}</span>
             </div>
-            <h2 className="text-[#181411] dark:text-white text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight">
+            <h2 className="text-[#181411] dark:text-white text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight">
               {storyData.title}
             </h2>
           </div>
-          <div className="flex flex-col gap-7 text-[#495057] dark:text-white/80 text-base md:text-lg leading-relaxed">
+          <div className="flex flex-col gap-7">
             {storyData.paragraphs.map((paragraph, index) => {
               const className =
                 paragraph.type === "highlight"
-                  ? "text-lg md:text-xl font-medium text-[#181411] dark:text-white"
+                  ? "text-lg md:text-xl font-medium text-[#495057] dark:text-white/80 leading-relaxed"
                   : paragraph.type === "quote"
-                  ? "pl-4 border-l-2 border-primary/20 dark:border-primary/30"
+                  ? "text-[#495057] dark:text-white/80 text-base md:text-lg leading-relaxed pl-4 border-l-2 border-primary/20 dark:border-primary/30"
                   : paragraph.type === "emphasis"
-                  ? "font-medium pt-2"
-                  : "";
+                  ? "text-[#495057] dark:text-white/80 text-base md:text-lg leading-relaxed font-medium"
+                  : "text-[#495057] dark:text-white/80 text-base md:text-lg leading-relaxed";
               return (
                 <p key={index} className={className}>
                   {paragraph.content}
