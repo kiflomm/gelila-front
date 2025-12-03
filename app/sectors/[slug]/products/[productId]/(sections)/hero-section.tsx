@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { RequestQuoteDialog } from "@/components/request-quote-dialog";
 
@@ -13,9 +14,18 @@ interface Product {
 interface HeroSectionProps {
   product: Product;
   sectorName: string;
+  sectorId: string;
 }
 
-export default function HeroSection({ product, sectorName }: HeroSectionProps) {
+export default function HeroSection({
+  product,
+  sectorName,
+  sectorId,
+}: HeroSectionProps) {
+  // Service-based sectors that should show "Contact Us" instead of "Request Quote"
+  const serviceBasedSectors = ["bus-transport"];
+  const isServiceBased = serviceBasedSectors.includes(sectorId);
+
   return (
     <section className="w-full">
       <div className="relative flex min-h-[600px] lg:min-h-[700px] w-full flex-col gap-6 bg-cover bg-center bg-no-repeat items-start justify-center px-4 sm:px-6 lg:px-10 xl:px-20 py-16 sm:py-20 lg:py-24 overflow-hidden">
@@ -40,13 +50,24 @@ export default function HeroSection({ product, sectorName }: HeroSectionProps) {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <RequestQuoteDialog
-              trigger={
-                <Button className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:opacity-90! transition-opacity hover:bg-primary!">
-                  <span className="truncate">Request Quote</span>
-                </Button>
-              }
-            />
+            {isServiceBased ? (
+              <Button
+                asChild
+                className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:opacity-90! transition-opacity hover:bg-primary!"
+              >
+                <Link href="/contact">
+                  <span className="truncate">Contact Us</span>
+                </Link>
+              </Button>
+            ) : (
+              <RequestQuoteDialog
+                trigger={
+                  <Button className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:opacity-90! transition-opacity hover:bg-primary!">
+                    <span className="truncate">Request Quote</span>
+                  </Button>
+                }
+              />
+            )}
           </div>
         </div>
       </div>

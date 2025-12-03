@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { RequestQuoteDialog } from "@/components/request-quote-dialog";
 
@@ -21,6 +22,10 @@ export default function ProductInfoSection({
   sectorId,
   sectorName,
 }: ProductInfoSectionProps) {
+  // Service-based sectors that should show "Contact Us" instead of "Request Quote"
+  const serviceBasedSectors = ["bus-transport"];
+  const isServiceBased = serviceBasedSectors.includes(sectorId);
+
   return (
     <div className="w-full">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
@@ -60,19 +65,34 @@ export default function ProductInfoSection({
           <div className="pt-4 border-t border-primary/10 dark:border-primary/20">
             <div className="flex flex-col gap-4">
               <h3 className="text-[#181411] dark:text-white text-xl sm:text-2xl font-semibold leading-tight">
-                Interested in this product?
+                {isServiceBased
+                  ? "Interested in this service?"
+                  : "Interested in this product?"}
               </h3>
               <p className="text-[#6C757D] dark:text-white/70 text-sm sm:text-base leading-relaxed">
-                Contact us for pricing, availability, and custom specifications.
+                {isServiceBased
+                  ? "Contact us for route information, schedules, and service inquiries."
+                  : "Contact us for pricing, availability, and custom specifications."}
               </p>
               <div className="flex flex-wrap gap-3 pt-2">
-                <RequestQuoteDialog
-                  trigger={
-                    <Button className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:opacity-90! transition-opacity hover:bg-primary!">
-                      <span className="truncate">Request Quote</span>
-                    </Button>
-                  }
-                />
+                {isServiceBased ? (
+                  <Button
+                    asChild
+                    className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:opacity-90! transition-opacity hover:bg-primary!"
+                  >
+                    <Link href="/contact">
+                      <span className="truncate">Contact Us</span>
+                    </Link>
+                  </Button>
+                ) : (
+                  <RequestQuoteDialog
+                    trigger={
+                      <Button className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:opacity-90! transition-opacity hover:bg-primary!">
+                        <span className="truncate">Request Quote</span>
+                      </Button>
+                    }
+                  />
+                )}
               </div>
             </div>
           </div>

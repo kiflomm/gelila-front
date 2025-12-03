@@ -123,25 +123,25 @@
       "description": "Our Food Processing Division, located in Axum, is a cornerstone of Ethiopia's food manufacturing industry, specializing in wheat flour production and biscuit manufacturing. We operate state-of-the-art milling facilities equipped with modern machinery that processes high-quality wheat into premium flour products meeting the highest industry standards. Our flour production capabilities serve both commercial bakeries and retail markets, ensuring consistent quality and reliable supply. Our biscuit manufacturing line produces an extensive range of assorted varieties, including hard biscuits for everyday consumption and soft biscuits that appeal to diverse consumer preferences. Every aspect of our operations adheres to strict food safety protocols and quality assurance measures, with comprehensive quality control systems in place from raw material sourcing through final packaging. We are committed to maintaining the highest standards of hygiene, nutritional value, and product consistency, contributing to food security and supporting Ethiopia's agricultural value chain while meeting the growing demand for processed food products in both domestic and export markets.",
       "products": [
         {
-          "id": 10,
-          "name": "Wheat Flour",
-          "description": "High-quality wheat flour produced with modern milling machinery",
-          "image": "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?q=80&w=2070&auto=format&fit=crop",
-          "alt": "Premium wheat flour in production"
-        },
-        {
           "id": 11,
-          "name": "Hard Biscuits",
-          "description": "Assorted hard biscuit varieties",
-          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDHjsCKhyjvBodUWqaEoUxhoHbbY2XqyN4-OakIjLSSNhukfNlGQYYXSNKNDD7pGHD_5tKDHpva46EkPqp8B-HANc6_IcjVkQc4Jfv1t2bCsT3ix_NF21fZtMsfWngK9U6Oe6b3staGZHq-rRLqMxCE0VbYzmCVeSTTjDmRHV7OWzy1jRz897Br2Ebc9SUz_wFJreDtlfl_DNFGfSuBvYQOoqAKPgO082GnGjqw1B9GHaNKwWpJA86YtEXXcG85MRGUi5myDRVy9RMm",
-          "alt": "Freshly baked biscuits on a production line"
+          "name": "Gelila Biscuits",
+          "description": "Assorted Gelila brand biscuit varieties with Gelila brand nameplate",
+          "image": "/gelila-biscuit.png",
+          "alt": "Gelila brand hard biscuits displayed with brand nameplate on packaging"
         },
         {
           "id": 12,
-          "name": "Soft Biscuits",
-          "description": "Assorted soft biscuit varieties",
-          "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDHjsCKhyjvBodUWqaEoUxhoHbbY2XqyN4-OakIjLSSNhukfNlGQYYXSNKNDD7pGHD_5tKDHpva46EkPqp8B-HANc6_IcjVkQc4Jfv1t2bCsT3ix_NF21fZtMsfWngK9U6Oe6b3staGZHq-rRLqMxCE0VbYzmCVeSTTjDmRHV7OWzy1jRz897Br2Ebc9SUz_wFJreDtlfl_DNFGfSuBvYQOoqAKPgO082GnGjqw1B9GHaNKwWpJA86YtEXXcG85MRGUi5myDRVy9RMm",
-          "alt": "Packaged biscuit products on production line"
+          "name": "Wheat Flour (100kg)",
+          "description": "High-quality wheat flour produced with modern milling machinery, available in 100kg sacks",
+          "image": "/wheat-flour-100kg.png",
+          "alt": "Stacked sacks of wheat flour (100kg) with Gelila branding in a warehouse"
+        },
+        {
+          "id": 10,
+          "name": "Wheat Flour (50kg)",
+          "description": "High-quality wheat flour produced with modern milling machinery, available in 50kg sacks",
+          "image": "/wheat-flour-50kg.png",
+          "alt": "Stacked sacks of wheat flour (50kg) with Gelila branding in a warehouse"
         }
       ]
     },
