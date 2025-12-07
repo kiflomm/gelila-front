@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
-import { cn } from "@/lib/utils";
+import { useRef, useEffect } from "react";
+import { cn, getNavDropdownTriggerClasses } from "@/lib/utils";
+import { useNavDropdownStore } from "@/store/use-nav-dropdown-store";
 
 interface DropdownItem {
   label: string;
@@ -16,6 +17,7 @@ interface DropdownSection {
 }
 
 interface NavDropdownProps {
+  id: string;
   label: string;
   href: string;
   items?: DropdownItem[];
@@ -25,6 +27,7 @@ interface NavDropdownProps {
 }
 
 export function NavDropdown({
+  id,
   label,
   href,
   items,
@@ -32,7 +35,8 @@ export function NavDropdown({
   isTransparent = false,
   isActive = false,
 }: NavDropdownProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const { openDropdownId, setOpenDropdown, closeAll } = useNavDropdownStore();
+  const isOpen = openDropdownId === id;
   const dropdownRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -53,8 +57,8 @@ export function NavDropdown({
 
   // Close dropdown when route changes
   useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
+    closeAll();
+  }, [pathname, closeAll]);
 
   // Combined effect for click outside, mouse tracking, and cleanup
   useEffect(() => {
@@ -63,7 +67,7 @@ export function NavDropdown({
         containerRef.current &&
         !containerRef.current.contains(event.target as Node)
       ) {
-        setIsOpen(false);
+        closeAll();
       }
     };
 
@@ -98,7 +102,8 @@ export function NavDropdown({
       clearTimeout(closeTimeoutRef.current);
       closeTimeoutRef.current = null;
     }
-    setIsOpen(true);
+    // Close any other open dropdown and open this one
+    setOpenDropdown(id);
   };
 
   const handleMouseLeave = () => {
@@ -120,18 +125,15 @@ export function NavDropdown({
 
       // Only close if mouse is not over any part of the dropdown area
       if (!isOverTrigger && !isOverDropdown && !isOverBridge) {
-        setIsOpen(false);
+        closeAll();
       }
     }, 200);
   };
 
+  // Shared hover states matching header navigation
   const triggerClassName = cn(
     "text-sm font-medium leading-normal whitespace-nowrap transition-colors relative",
-    isActive || hasActiveItem
-      ? "text-primary font-bold"
-      : isTransparent
-      ? "text-white/90 hover:text-white"
-      : "text-[#181411] dark:text-white/80 hover:text-primary"
+    getNavDropdownTriggerClasses(isActive || hasActiveItem, isTransparent)
   );
 
   return (

@@ -4,6 +4,7 @@ import StorySection from "./(sections)/story-section";
 import VisionMissionSection from "./(sections)/vision-mission-section";
 import ValuesSection from "./(sections)/values-section";
 import StatsSection from "./(sections)/stats-section";
+import SubsidiariesSection from "./(sections)/subsidiaries-section";
 
 export default function AboutPage() {
   return (
@@ -18,6 +19,7 @@ export default function AboutPage() {
           <VisionMissionSection />
           <ValuesSection />
           <StatsSection />
+          <SubsidiariesSection />
         </div>
       </div>
     </>

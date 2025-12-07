@@ -1,0 +1,18 @@
+{
+  "title": "Global Sourcing, Guaranteed Quality",
+  "subtitle": "Your trusted partner in importing premium goods worldwide. We are committed to excellence, from sourcing to delivery.",
+  "image": {
+    "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuBc4xkf-9LRitn4tn4A9BHTYICAwTwdZnPBoUe3n_5z2Zqg4r3b_P53Qxk0POCGT42YlbbPUtbOo1j80uBp5YgPA2mI6-vtXSHk1kYxT4kEKMVjUxrj7HVpY00ojzab7KcIODwAITtMjgFZdyEvgvDvuk3EzzWgkQDDz55JjgxSC5twFqapjwpPktJIFJ7EteY4bdWU-ybHOfzzcduB0HJTycNe4mBz9IeZqmrxappqoolhwZ4U3LH3eNudVgIlN88MJn_6nrwgSti8",
+    "alt": "Global import and sourcing operations"
+  },
+  "buttons": {
+    "primary": {
+      "text": "Request Import Quote",
+      "action": "dialog"
+    },
+    "secondary": {
+      "text": "View Our Products",
+      "href": "/sectors"
+    }
+  }
+}

@@ -34,18 +34,18 @@
         }
       ]
     },
-    "exports": {
+    "imports": {
       "sections": [
         {
           "title": "Industrial",
           "items": [
             {
               "label": "Industrial Machinery",
-              "href": "/exports/industrial-machinery"
+              "href": "/imports/industrial-machinery"
             },
             {
               "label": "Electronics & Components",
-              "href": "/exports/electronics-components"
+              "href": "/imports/electronics-components"
             }
           ]
         },
@@ -54,11 +54,11 @@
           "items": [
             {
               "label": "Packaged Consumer Goods",
-              "href": "/exports/packaged-consumer-goods"
+              "href": "/imports/packaged-consumer-goods"
             },
             {
               "label": "Textiles and Garments",
-              "href": "/exports/textiles-garments"
+              "href": "/imports/textiles-garments"
             }
           ]
         },
@@ -67,11 +67,24 @@
           "items": [
             {
               "label": "Agricultural Products",
-              "href": "/exports/agricultural-products"
+              "href": "/imports/agricultural-products"
             },
             {
               "label": "Building Materials",
-              "href": "/exports/building-materials"
+              "href": "/imports/building-materials"
+            }
+          ]
+        }
+      ]
+    },
+    "exports": {
+      "sections": [
+        {
+          "title": "Footwear",
+          "items": [
+            {
+              "label": "Shoes & Sole",
+              "href": "/exports/footwear"
             }
           ]
         }
@@ -119,6 +132,27 @@
             {
               "label": "Internships",
               "href": "/careers?type=Internship"
+            }
+          ]
+        }
+      ]
+    },
+    "companies": {
+      "sections": [
+        {
+          "title": "Subsidiary Companies",
+          "items": [
+            {
+              "label": "Gelila Shoe & sole factory",
+              "href": "/companies/gelila-shoe"
+            },
+            {
+              "label": "Soloda Special Bus Public Transport",
+              "href": "/companies/soloda-bus"
+            },
+            {
+              "label": "Gelila Food Complex",
+              "href": "/companies/gelila-food"
             }
           ]
         }

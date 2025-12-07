@@ -1,0 +1,22 @@
+{
+  "slug": "gelila-food",
+  "name": "Gelila Food Complex",
+  "title": "Gelila Food Complex",
+  "badge": "Subsidiary Company",
+  "description": "Gelila Food Complex - Processing high-quality food products including flour and biscuits.",
+  "location": "Ethiopia",
+  "paragraphs": [
+    {
+      "type": "highlight",
+      "content": "Gelila Food Complex is a subsidiary company processing high-quality food products including flour and biscuits."
+    },
+    {
+      "type": "normal",
+      "content": "Company profile content will be added here."
+    }
+  ],
+  "image": {
+    "src": "https://images.unsplash.com/photo-1628088062854-d1870b9e5b7a?q=80&w=2070&auto=format&fit=crop",
+    "alt": "Wheat flour sacks and Gelila brand biscuits displayed in food processing facility"
+  }
+}

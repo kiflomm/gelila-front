@@ -10,6 +10,8 @@ import { useEffect, useCallback } from "react";
 import { RequestQuoteDialog } from "@/components/request-quote-dialog";
 import { NavDropdown } from "@/components/nav-dropdown";
 import navigationData from "@/data/navigation.json";
+import { getNavLinkClasses } from "@/lib/utils";
+import { useNavDropdownStore } from "@/store/use-nav-dropdown-store";
 
 interface HeaderProps {
   forceTransparent?: boolean;
@@ -17,34 +19,42 @@ interface HeaderProps {
 
 export default function Header({ forceTransparent = false }: HeaderProps) {
   const { isOpen, toggle, close } = useMobileMenuStore();
+  const { closeAll: closeAllDropdowns } = useNavDropdownStore();
   const pathname = usePathname();
   const isHome = pathname === "/";
   const isAbout = pathname === "/about";
   const isExports = pathname === "/exports" || pathname.startsWith("/exports/");
+  const isImports = pathname === "/imports" || pathname.startsWith("/imports/");
   const isSectors = pathname === "/sectors" || pathname.startsWith("/sectors/");
   const isCareers = pathname === "/careers";
+  const isCompanies = pathname.startsWith("/companies/");
   const hasTransparentNav =
     forceTransparent ||
     isHome ||
     isAbout ||
     isExports ||
+    isImports ||
     isSectors ||
-    isCareers;
+    isCareers ||
+    isCompanies;
 
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About Us" },
-    { href: "/exports", label: "Exports" },
     { href: "/sectors", label: "Sectors" },
+    { href: "/imports", label: "Imports" },
+    { href: "/exports", label: "Exports" },
+    { href: "/companies/gelila-shoe", label: "Subsidiaries" },
     { href: "/news", label: "News & Updates" },
     { href: "/careers", label: "Careers" },
     { href: "/contact", label: "Contact" },
   ];
 
-  // Close mobile menu on route change
+  // Close mobile menu and all dropdowns on route change
   useEffect(() => {
     close();
-  }, [pathname, close]);
+    closeAllDropdowns();
+  }, [pathname, close, closeAllDropdowns]);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -113,15 +123,32 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
               // Check if this link should have a dropdown
               const isSectors = link.href === "/sectors";
               const isExports = link.href === "/exports";
+              const isImports = link.href === "/imports";
               const isCareers = link.href === "/careers";
+              const isCompanies = link.href.startsWith("/companies");
 
               if (isSectors && navigationData.dropdowns.sectors) {
                 return (
                   <NavDropdown
                     key={link.href}
+                    id="sectors"
                     label={link.label}
                     href={link.href}
                     sections={navigationData.dropdowns.sectors.sections}
+                    isTransparent={hasTransparentNav}
+                    isActive={isActive}
+                  />
+                );
+              }
+
+              if (isImports && navigationData.dropdowns.imports) {
+                return (
+                  <NavDropdown
+                    key={link.href}
+                    id="imports"
+                    label={link.label}
+                    href={link.href}
+                    sections={navigationData.dropdowns.imports.sections}
                     isTransparent={hasTransparentNav}
                     isActive={isActive}
                   />
@@ -132,6 +159,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                 return (
                   <NavDropdown
                     key={link.href}
+                    id="exports"
                     label={link.label}
                     href={link.href}
                     sections={navigationData.dropdowns.exports.sections}
@@ -145,6 +173,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                 return (
                   <NavDropdown
                     key={link.href}
+                    id="careers"
                     label={link.label}
                     href={link.href}
                     sections={navigationData.dropdowns.careers.sections}
@@ -154,17 +183,26 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                 );
               }
 
+              if (isCompanies && navigationData.dropdowns.companies) {
+                const isCompaniesPage = pathname.startsWith("/companies/");
+                return (
+                  <NavDropdown
+                    key={link.href}
+                    id="companies"
+                    label={link.label}
+                    href="/about"
+                    sections={navigationData.dropdowns.companies.sections}
+                    isTransparent={hasTransparentNav}
+                    isActive={isCompaniesPage}
+                  />
+                );
+              }
+
               // Regular link without dropdown
               return (
                 <Link
                   key={link.href}
-                  className={
-                    isActive
-                      ? "text-primary text-sm font-bold leading-normal whitespace-nowrap"
-                      : hasTransparentNav
-                      ? "text-white/90 hover:text-white text-sm font-medium leading-normal transition-colors whitespace-nowrap"
-                      : "text-[#181411] dark:text-white/80 hover:text-primary text-sm font-medium leading-normal transition-colors whitespace-nowrap"
-                  }
+                  className={getNavLinkClasses(isActive, hasTransparentNav)}
                   href={link.href}
                 >
                   {link.label}
@@ -234,6 +272,49 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
         <nav className="px-4 sm:px-6 py-4 sm:py-6 flex flex-col gap-1 max-h-[calc(100vh-73px)] sm:max-h-[calc(100vh-81px)] overflow-y-auto">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
+            const isCompanies = link.href.startsWith("/companies");
+            const isCompaniesPage = pathname.startsWith("/companies/");
+
+            // Check if this link has a dropdown in mobile
+            if (isCompanies && navigationData.dropdowns.companies) {
+              return (
+                <div key={link.href} className="flex flex-col">
+                  <Link
+                    onClick={close}
+                    className={
+                      isCompaniesPage
+                        ? "text-primary text-base sm:text-lg font-bold leading-normal py-3 sm:py-3.5 px-2 rounded-lg bg-primary/10 dark:bg-primary/20 touch-manipulation"
+                        : "text-[#181411] dark:text-gray-300 text-base sm:text-lg font-medium leading-normal hover:text-primary transition-colors py-3 sm:py-3.5 px-2 rounded-lg hover:bg-primary/5 dark:hover:bg-primary/10 touch-manipulation"
+                    }
+                    href="/about"
+                  >
+                    {link.label}
+                  </Link>
+                  <div className="pl-4 pt-1 pb-2 flex flex-col gap-1">
+                    {navigationData.dropdowns.companies.sections[0]?.items.map(
+                      (item) => {
+                        const isItemActive = pathname === item.href;
+                        return (
+                          <Link
+                            key={item.href}
+                            onClick={close}
+                            className={
+                              isItemActive
+                                ? "text-primary text-sm font-semibold leading-normal py-2 px-2 rounded-lg bg-primary/5 dark:bg-primary/10 touch-manipulation"
+                                : "text-[#181411] dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary transition-colors py-2 px-2 rounded-lg hover:bg-primary/5 dark:hover:bg-primary/10 touch-manipulation"
+                            }
+                            href={item.href}
+                          >
+                            {item.label}
+                          </Link>
+                        );
+                      }
+                    )}
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={link.href}

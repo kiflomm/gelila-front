@@ -1,0 +1,113 @@
+{
+  "slug": "soloda-bus",
+  "name": "Soloda Special Bus Public Transport Service Company",
+  "title": "Soloda Special Bus Public Transport Service Company",
+  "badge": "Subsidiary Company",
+  "description": "A subsidiary of Gelila Manufacturing PLC, providing reliable, modern, and comfortable long-distance passenger transport services across Ethiopia.",
+  "location": "Addis Ababa, Ethiopia",
+  "paragraphs": [
+    {
+      "type": "highlight",
+      "content": "Soloda Special Bus Public Transport Service Company is a subsidiary of Gelila Manufacturing PLC, providing reliable, modern, and comfortable long-distance passenger transport services across Ethiopia. Since launching our operations in 2024, we have been committed to connecting major cities and towns with exceptional service quality and unmatched customer care."
+    },
+    {
+      "type": "normal",
+      "content": "Today, Soloda Bus operates premium cross-country routes linking Addis Ababa with Denbi Delo, Nekemt, Metu, Gambela, Jijiga, Mekelle, Shire Indeslasie, and other destinations. We are recognized as one of Ethiopia's leading long-distance transport providers—offering a unique blend of comfort, safety, and convenience."
+    },
+    {
+      "type": "quote",
+      "content": "Our dedication to delivering outstanding travel experiences sets us apart in the industry. From our modern fleet to our well-trained customer service personnel, we ensure that every journey meets the highest standards of comfort and satisfaction."
+    },
+    {
+      "type": "emphasis",
+      "content": "Our Luxury Fleet"
+    },
+    {
+      "type": "normal",
+      "content": "At Soloda Bus, we operate luxury and uniquely designed buses built to provide an elevated travel experience. Our vehicles are equipped with modern onboard amenities, plush sofa-style seats, and advanced safety systems—ensuring your comfort, entertainment, and security throughout the journey."
+    },
+    {
+      "type": "emphasis",
+      "content": "Onboard Amenities"
+    },
+    {
+      "type": "normal",
+      "content": "Our luxury buses feature 3-by-2 comfortable reclining seats, air conditioning, high-quality audio system, CCTV surveillance, individual charging ports, complimentary snacks, free Wi-Fi, spacious luggage compartments, personal reading lights, and television and entertainment systems."
+    },
+    {
+      "type": "emphasis",
+      "content": "Our Services"
+    },
+    {
+      "type": "normal",
+      "content": "We provide daily passenger transport services from Addis Ababa to key cities and towns across Ethiopia. Tickets can be booked at any of our branch offices, or you may contact us directly for booking assistance."
+    },
+    {
+      "type": "emphasis",
+      "content": "Operating Routes"
+    },
+    {
+      "type": "normal",
+      "content": "Soloda Bus currently operates the following major routes: Addis Ababa → Denbi Delo, Addis Ababa → Nekemt, Addis Ababa → Metu, Addis Ababa → Gambella, Addis Ababa → Jijiga, Addis Ababa → Mekelle, and Mekelle → Shire-Indeslasie. For updated ticket prices, please contact any of our ticket offices."
+    },
+    {
+      "type": "emphasis",
+      "content": "Contact Information"
+    },
+    {
+      "type": "normal",
+      "content": "Ticket Offices: Addis Ababa Ticket Offices (Lamberte & Asko Bus Station) - 0912 40 06 57 | Mekelle Ticket Office - 0912 04 16 19 | Shire Ticket Office - 0990 41 59 11"
+    },
+    {
+      "type": "normal",
+      "content": "Head Office: Soloda Special Bus Public Transport Service Company, Bole Lemi Industrial Park, Gelila Manufacturing PLC, Addis Ababa, Ethiopia. Phone: 0908 12 66 12 | 0905 38 55 38"
+    }
+  ],
+  "image": {
+    "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuDK-3SXrYMfOrKvO4qmo-7-ub_xmZnO1Qf40VFgNaf8TWAGWXudUfTSsqDJ4U34YnfZXYhXbugz4c4oq5JJ2r0KTIx633uUS0yqNAVaBo3Bp2d7gGIsPlKU5hmWBK5hciwXGy92I1k9243rRm3qraPw8GInyPnH2TkfadXVSZVZS8xB7sUOH7wTIdloqPcFMY4akyt51uffljK96-bsKooVwdLFCEEBazjAV40MFUY5wpONJDXUg5UIWNluG2kZel4NATVjgSbGLXCN",
+    "alt": "A modern luxury bus from Soloda Special Bus Public Transport Service Company"
+  },
+  "routes": [
+    "Addis Ababa → Denbi Delo",
+    "Addis Ababa → Nekemt",
+    "Addis Ababa → Metu",
+    "Addis Ababa → Gambella",
+    "Addis Ababa → Jijiga",
+    "Addis Ababa → Mekelle",
+    "Mekelle → Shire-Indeslasie"
+  ],
+  "amenities": [
+    "3-by-2 comfortable reclining seats",
+    "Air conditioning",
+    "High-quality audio system",
+    "CCTV surveillance",
+    "Individual charging ports",
+    "Complimentary snacks",
+    "Free Wi-Fi",
+    "Spacious luggage compartments",
+    "Personal reading lights",
+    "Television and entertainment system"
+  ],
+  "contactInfo": {
+    "ticketOffices": [
+      {
+        "location": "Addis Ababa Ticket Offices (Lamberte & Asko Bus Station)",
+        "phone": "0912 40 06 57"
+      },
+      {
+        "location": "Mekelle Ticket Office",
+        "phone": "0912 04 16 19"
+      },
+      {
+        "location": "Shire Ticket Office",
+        "phone": "0990 41 59 11"
+      }
+    ],
+    "headOffice": {
+      "name": "Soloda Special Bus Public Transport Service Company",
+      "address": "Bole Lemi Industrial Park, Gelila Manufacturing PLC",
+      "city": "Addis Ababa, Ethiopia",
+      "phones": ["0908 12 66 12", "0905 38 55 38"]
+    }
+  }
+}

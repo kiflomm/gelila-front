@@ -11,6 +11,7 @@ import {
   Youtube,
 } from "lucide-react";
 import footerData from "@/data/footer.json";
+import companiesData from "@/data/companies/companies.json";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -22,6 +23,11 @@ export default function Footer() {
     { href: "/careers", label: "Careers" },
     { href: "/blog", label: "Blog" },
   ];
+
+  const subsidiaryLinks = companiesData.companies.map((company) => ({
+    href: `/companies/${company.slug}`,
+    label: company.name,
+  }));
 
   const legalLinks = [
     { href: "/privacy", label: "Privacy Policy" },
@@ -126,6 +132,25 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Subsidiary Companies */}
+          <div>
+            <h4 className="font-semibold text-white mb-4 text-base">
+              Subsidiaries
+            </h4>
+            <ul className="flex flex-col gap-3">
+              {subsidiaryLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-300 hover:text-primary transition-colors inline-block"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Legal Links */}
           <div>
             <h4 className="font-semibold text-white mb-4 text-base">Legal</h4>
@@ -151,7 +176,15 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
             <p className="text-sm text-gray-300">
-              © {currentYear} {footerData.company.name}. All Rights Reserved.
+              © {currentYear} {footerData.company.name}. All Rights Reserved.{" "}
+              <Link
+                href="https://memitrading.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-primary transition-colors"
+              >
+                Powered by MeMi Trading PLC
+              </Link>
             </p>
           </div>
 
