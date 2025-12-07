@@ -63,6 +63,31 @@
       "description": "Exported to South American regions",
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
       "imageAlt": "Building Materials"
+    },
+    {
+      "id": "footwear",
+      "title": "Shoes & Sole",
+      "description": "High-quality footwear exported to international markets",
+      "imageUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuCunK55Dy_mEJRUYxiUouX9-8a2_3EUBp4OCZOqFGS_uY9jgPMX8fomKkxlJVJ0fmFWecsh0P5Lj2Ka_ZixwCbys08VHjoIOJ3bE4N8NKIiPSbIfsGUJSLlJYM2aUiJ5kIAC466LsuzI1F1Ijamy0ESuej2550evf9JlhuvYBCxym5RfACNUHoLYEhAfFYgegis-4VZgfr8upIkmmLH1nPM7oQ6CCc-mNMagJso8Q_mwnWDXuDjx8bTjAyLQQSredlTGQU_4vm18yOP",
+      "imageAlt": "Stylish leather shoes being stitched on a production line",
+      "images": [
+        {
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCunK55Dy_mEJRUYxiUouX9-8a2_3EUBp4OCZOqFGS_uY9jgPMX8fomKkxlJVJ0fmFWecsh0P5Lj2Ka_ZixwCbys08VHjoIOJ3bE4N8NKIiPSbIfsGUJSLlJYM2aUiJ5kIAC466LsuzI1F1Ijamy0ESuej2550evf9JlhuvYBCxym5RfACNUHoLYEhAfFYgegis-4VZgfr8upIkmmLH1nPM7oQ6CCc-mNMagJso8Q_mwnWDXuDjx8bTjAyLQQSredlTGQU_4vm18yOP",
+          "alt": "Footwear Production Line"
+        },
+        {
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuB0BotXUe09v_RKxWipBJToZPPLXZxFGlb0XLlyYA_OyQ6kHCxOP3ILb2F25ikgiWUfLuejvn9hGuu-BEuSfVOuQBhl2KaV7tnHrRQ3XY0WNC0LIFkMdMhUhNJBxcWV8tkCZbOdbJMUfvo7Fkf_FDJGe6cl8g8Q7BNYufgL3d-q371vPz1tWIStxlAro07mc3WJmTsf68HvAgUwYzkEfBLwJPOlU80__3WiTQ6KIzfaw6PEI13k1SJwmI-G5tF97RlTh1lKHuxBeULM",
+          "alt": "Men's Leather Shoes"
+        },
+        {
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAywF3uy2iYyctXMMeqK5gCvzcRvegH0L24W2AUkQYH_ueaUdnH46NtnXTZaxivz3d-HD-VnPySGIBOsys0PkjwJczx4_O1qPuSocyu1_pNNhcjKX5_dnIERBxnTlQimKg-g1rR1lf6loNAxwM0R10MnfbQdPtWP8yaSPjQc22Q1fkvDYZ2iZYqHFsqyEAPV89TUTzornfMENJp1Wh85USRHCHFW0sNVQfh6r5CD0-PraTGUIMAJeKm6pC4PswqfLfayCgKgiqDR-VQ",
+          "alt": "Women's Footwear"
+        },
+        {
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBbV4RVP0V6Fh5kj6wfe7Md8Vz_tVU5KWUJc8HLuxmA_l6O-OR5l73YBDqQ-Zmk5QrBa49Q2vC3lyIomUJUslrXDXHXPUE2sjmyEnjpixDX-ixLZi_0lI8PqQIrMjQYqrA8qCPrJ-VgnRwifJJU6QkjLjoDvDWRMB1T8-Rxjqe-phNt6a-AdIFAC1hzPfZpvCppgvNWWAcmkRsVZyizXKvHeobmRmqqWo9p1j5ZeLG90KJ4GFNyHpakBGS8lO8r_ObK_sIquMZKhqaV",
+          "alt": "Export-Grade Footwear Collection"
+        }
+      ]
     }
   ]
 }
