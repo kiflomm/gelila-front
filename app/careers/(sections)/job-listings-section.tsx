@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Search, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,39 +18,140 @@ const ITEMS_PER_PAGE = 6;
 
 export default function JobListingsSection() {
   const { data: jobsData, isLoading } = useJobs();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState("All");
-  const [selectedDepartment, setSelectedDepartment] = useState("All");
-  const [selectedJobType, setSelectedJobType] = useState("All");
-  const [currentPage, setCurrentPage] = useState(1);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const isUpdatingRef = useRef(false);
 
-  // Create wrapper functions that reset page when filters change
+  // Initialize state from URL params
+  const [searchQuery, setSearchQuery] = useState(
+    searchParams.get("search") || ""
+  );
+  const [selectedLocation, setSelectedLocation] = useState(
+    searchParams.get("location") || "All"
+  );
+  const [selectedDepartment, setSelectedDepartment] = useState(
+    searchParams.get("department") || "All"
+  );
+  const [selectedJobType, setSelectedJobType] = useState(
+    searchParams.get("type") || "All"
+  );
+  const [currentPage, setCurrentPage] = useState(
+    parseInt(searchParams.get("page") || "1", 10)
+  );
+
+  // Update URL when filters change
+  const updateURL = (updates: {
+    search?: string;
+    location?: string;
+    department?: string;
+    type?: string;
+    page?: number;
+  }) => {
+    isUpdatingRef.current = true;
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (updates.search !== undefined) {
+      if (updates.search) {
+        params.set("search", updates.search);
+      } else {
+        params.delete("search");
+      }
+    }
+
+    if (updates.location !== undefined) {
+      if (updates.location && updates.location !== "All") {
+        params.set("location", updates.location);
+      } else {
+        params.delete("location");
+      }
+    }
+
+    if (updates.department !== undefined) {
+      if (updates.department && updates.department !== "All") {
+        params.set("department", updates.department);
+      } else {
+        params.delete("department");
+      }
+    }
+
+    if (updates.type !== undefined) {
+      if (updates.type && updates.type !== "All") {
+        params.set("type", updates.type);
+      } else {
+        params.delete("type");
+      }
+    }
+
+    if (updates.page !== undefined) {
+      if (updates.page > 1) {
+        params.set("page", updates.page.toString());
+      } else {
+        params.delete("page");
+      }
+    }
+
+    const newUrl = params.toString()
+      ? `/careers?${params.toString()}`
+      : "/careers";
+    router.push(newUrl, { scroll: false });
+
+    // Reset flag after a short delay to allow URL update to complete
+    setTimeout(() => {
+      isUpdatingRef.current = false;
+    }, 0);
+  };
+
+  // Sync state with URL params when URL changes externally (e.g., browser back/forward)
+  useEffect(() => {
+    if (isUpdatingRef.current) return;
+
+    const urlSearch = searchParams.get("search") || "";
+    const urlLocation = searchParams.get("location") || "All";
+    const urlDepartment = searchParams.get("department") || "All";
+    const urlType = searchParams.get("type") || "All";
+    const urlPage = parseInt(searchParams.get("page") || "1", 10);
+
+    setSearchQuery((prev) => (urlSearch !== prev ? urlSearch : prev));
+    setSelectedLocation((prev) => (urlLocation !== prev ? urlLocation : prev));
+    setSelectedDepartment((prev) =>
+      urlDepartment !== prev ? urlDepartment : prev
+    );
+    setSelectedJobType((prev) => (urlType !== prev ? urlType : prev));
+    setCurrentPage((prev) => (urlPage !== prev ? urlPage : prev));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  // Create wrapper functions that reset page when filters change and update URL
   const updateSearchQuery = (value: string) => {
     if (value !== searchQuery) {
       setCurrentPage(1);
+      setSearchQuery(value);
+      updateURL({ search: value, page: 1 });
     }
-    setSearchQuery(value);
   };
 
   const updateLocation = (value: string) => {
     if (value !== selectedLocation) {
       setCurrentPage(1);
+      setSelectedLocation(value);
+      updateURL({ location: value, page: 1 });
     }
-    setSelectedLocation(value);
   };
 
   const updateDepartment = (value: string) => {
     if (value !== selectedDepartment) {
       setCurrentPage(1);
+      setSelectedDepartment(value);
+      updateURL({ department: value, page: 1 });
     }
-    setSelectedDepartment(value);
   };
 
   const updateJobType = (value: string) => {
     if (value !== selectedJobType) {
       setCurrentPage(1);
+      setSelectedJobType(value);
+      updateURL({ type: value, page: 1 });
     }
-    setSelectedJobType(value);
   };
 
   const filteredJobs = useMemo(() => {
@@ -84,15 +186,23 @@ export default function JobListingsSection() {
   const paginatedJobs = filteredJobs.slice(startIndex, endIndex);
 
   const resetFilters = () => {
-    updateSearchQuery("");
-    updateLocation("All");
-    updateDepartment("All");
-    updateJobType("All");
+    setSearchQuery("");
+    setSelectedLocation("All");
+    setSelectedDepartment("All");
+    setSelectedJobType("All");
     setCurrentPage(1);
+    updateURL({
+      search: "",
+      location: "All",
+      department: "All",
+      type: "All",
+      page: 1,
+    });
   };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    updateURL({ page });
     // Scroll to top of job listings section
     document
       .getElementById("job-listings")
