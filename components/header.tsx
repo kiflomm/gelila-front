@@ -6,8 +6,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useMobileMenuStore } from "@/store/use-mobile-menu-store";
-import { useEffect, useCallback } from "react";
-import { RequestQuoteDialog } from "@/components/request-quote-dialog";
+import { useEffect } from "react";
 import { NavDropdown } from "@/components/nav-dropdown";
 import navigationData from "@/data/navigation.json";
 import { getNavLinkClasses } from "@/lib/utils";
@@ -116,7 +115,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8 ml-4 xl:ml-8 flex-1 justify-center">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8 flex-1 justify-center">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
 
@@ -210,11 +209,6 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
               );
             })}
           </nav>
-
-          {/* Desktop CTA Button */}
-          <div className="hidden lg:flex items-center ml-auto shrink-0">
-            <RequestQuoteDialog />
-          </div>
 
           {/* Mobile/Tablet Hamburger Button */}
           <Button
@@ -330,18 +324,6 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
               </Link>
             );
           })}
-          <div className="mt-2 sm:mt-4">
-            <RequestQuoteDialog
-              trigger={
-                <Button
-                  onClick={close}
-                  className="flex! w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 sm:h-14 px-4 bg-primary! text-white text-base sm:text-lg font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary! touch-manipulation"
-                >
-                  <span className="truncate">Request a Quote</span>
-                </Button>
-              }
-            />
-          </div>
         </nav>
       </div>
     </header>
