@@ -48,7 +48,7 @@ export default function Footer() {
     <footer className="bg-gray-800 dark:bg-gray-900 border-t border-gray-700 dark:border-gray-800">
       <div className="px-4 sm:px-10 lg:px-20 xl:px-40 py-16 max-w-[1280px] mx-auto">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-12">
           {/* Company Info */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3 mb-2">
