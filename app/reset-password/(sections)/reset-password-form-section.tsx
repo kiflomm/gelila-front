@@ -1,49 +1,81 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { authApi } from "@/lib/api/auth";
+
+const resetPasswordSchema = z
+  .object({
+    password: z.string().min(6, "Password must be at least 6 characters long"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
 export default function ResetPasswordFormSection() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    watch,
+  } = useForm<ResetPasswordFormData>({
+    resolver: zodResolver(resetPasswordSchema),
+  });
+
+  const password = watch("password");
 
   useEffect(() => {
-    // Validate passwords match
-    if (confirmPassword && password !== confirmPassword) {
-      setPasswordError("Passwords do not match");
-    } else {
-      setPasswordError("");
+    if (!token) {
+      toast.error("Invalid reset link", {
+        description: "No reset token found. Please request a new password reset.",
+      });
     }
-  }, [password, confirmPassword]);
+  }, [token]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (password !== confirmPassword) {
-      setPasswordError("Passwords do not match");
+  const onSubmit = async (data: ResetPasswordFormData) => {
+    if (!token) {
+      toast.error("Invalid reset link", {
+        description: "No reset token found. Please request a new password reset.",
+      });
       return;
     }
 
-    if (password.length < 8) {
-      setPasswordError("Password must be at least 8 characters long");
-      return;
-    }
-
-    setIsSubmitting(true);
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      await authApi.resetPassword(token, data.password);
       setIsSubmitted(true);
-    }, 1000);
+      toast.success("Password reset successful!", {
+        description: "Your password has been reset. You can now login.",
+      });
+      // Redirect to login after a short delay
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to reset password. The token may be invalid or expired.";
+      toast.error("Reset failed", {
+        description: errorMessage,
+      });
+    }
   };
 
   if (isSubmitted) {
@@ -88,17 +120,59 @@ export default function ResetPasswordFormSection() {
     );
   }
 
+  if (!token) {
+    return (
+      <section>
+        <div className="p-6 bg-white dark:bg-black/20 border border-primary/20 rounded-xl shadow-sm">
+          <div className="flex flex-col gap-4 text-center">
+            <div className="flex justify-center">
+              <div className="size-12 rounded-full bg-destructive/10 dark:bg-destructive/20 flex items-center justify-center">
+                <svg
+                  className="size-6 text-destructive"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h2 className="text-[#181411] dark:text-white text-lg font-bold mb-1.5">
+                Invalid Reset Link
+              </h2>
+              <p className="text-[#8c755f] dark:text-white/70 text-sm leading-relaxed">
+                No reset token found. Please request a new password reset link.
+              </p>
+            </div>
+            <Link href="/forgot-password">
+              <Button className="flex! w-full! cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary! mt-2">
+                Request New Reset Link
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button
+                variant="outline"
+                className="flex! w-full! cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5"
+              >
+                Back to Login
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section>
       <div className="p-6 bg-white dark:bg-black/20 border border-primary/20 rounded-xl shadow-sm">
-        {token && (
-          <div className="mb-4 p-2.5 bg-primary/10 dark:bg-primary/20 border border-primary/20 rounded-lg">
-            <p className="text-xs text-[#8c755f] dark:text-white/70">
-              Reset token detected: {token.substring(0, 20)}...
-            </p>
-          </div>
-        )}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div>
             <Label
               htmlFor="password"
@@ -109,16 +183,24 @@ export default function ResetPasswordFormSection() {
             <Input
               id="password"
               type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary"
+              {...register("password")}
+              className={`w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary ${
+                errors.password
+                  ? "border-destructive focus:border-destructive"
+                  : ""
+              }`}
               placeholder="Enter your new password"
-              minLength={8}
             />
-            <p className="text-xs text-[#8c755f] dark:text-white/70 mt-1">
-              Must be at least 8 characters long
-            </p>
+            {errors.password && (
+              <p className="text-xs text-destructive mt-1">
+                {errors.password.message}
+              </p>
+            )}
+            {!errors.password && password && (
+              <p className="text-xs text-[#8c755f] dark:text-white/70 mt-1">
+                Must be at least 6 characters long
+              </p>
+            )}
           </div>
 
           <div>
@@ -131,24 +213,24 @@ export default function ResetPasswordFormSection() {
             <Input
               id="confirmPassword"
               type="password"
-              required
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              {...register("confirmPassword")}
               className={`w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary ${
-                passwordError
+                errors.confirmPassword
                   ? "border-destructive focus:border-destructive"
                   : ""
               }`}
               placeholder="Confirm your new password"
             />
-            {passwordError && (
-              <p className="text-xs text-destructive mt-1">{passwordError}</p>
+            {errors.confirmPassword && (
+              <p className="text-xs text-destructive mt-1">
+                {errors.confirmPassword.message}
+              </p>
             )}
           </div>
 
           <Button
             type="submit"
-            disabled={isSubmitting || !!passwordError}
+            disabled={isSubmitting}
             className="flex! w-full! cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary! disabled:opacity-50 mt-2"
           >
             <span className="truncate">

@@ -1,33 +1,61 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useAuthStore } from "@/store/auth-store";
+
+const loginSchema = z.object({
+  email: z.string().email("Please provide a valid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginFormSection() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
   const [rememberMe, setRememberMe] = useState(false);
+  const { login, isLoading, error, clearError } = useAuthStore();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      alert(
-        "Login functionality will be implemented with backend integration."
-      );
-      (e.target as HTMLFormElement).reset();
-    }, 1000);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      clearError();
+      await login(data.email, data.password);
+      toast.success("Login successful!", {
+        description: "Welcome back!",
+      });
+      router.push("/dashboard");
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Login failed. Please check your credentials.";
+      toast.error("Login failed", {
+        description: errorMessage,
+      });
+    }
   };
 
   return (
     <section>
       <div className="p-6 bg-white dark:bg-black/20 border border-primary/20 rounded-xl shadow-sm">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div>
             <Label
               htmlFor="email"
@@ -38,10 +66,17 @@ export default function LoginFormSection() {
             <Input
               id="email"
               type="email"
-              required
-              className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary"
+              {...register("email")}
+              className={`w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary ${
+                errors.email ? "border-destructive focus:border-destructive" : ""
+              }`}
               placeholder="your.email@example.com"
             />
+            {errors.email && (
+              <p className="text-xs text-destructive mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <div>
@@ -54,10 +89,19 @@ export default function LoginFormSection() {
             <Input
               id="password"
               type="password"
-              required
-              className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary"
+              {...register("password")}
+              className={`w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary ${
+                errors.password
+                  ? "border-destructive focus:border-destructive"
+                  : ""
+              }`}
               placeholder="Enter your password"
             />
+            {errors.password && (
+              <p className="text-xs text-destructive mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           <div className="flex items-center justify-between text-sm">
@@ -84,11 +128,11 @@ export default function LoginFormSection() {
 
           <Button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isLoading}
             className="flex! w-full! cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90! transition-opacity hover:bg-primary! disabled:opacity-50 mt-2"
           >
             <span className="truncate">
-              {isSubmitting ? "Logging in..." : "Login"}
+              {isSubmitting || isLoading ? "Logging in..." : "Login"}
             </span>
           </Button>
         </form>

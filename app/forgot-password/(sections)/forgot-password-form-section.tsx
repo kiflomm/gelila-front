@@ -2,22 +2,49 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { authApi } from "@/lib/api/auth";
+
+const forgotPasswordSchema = z.object({
+  email: z.string().email("Please provide a valid email address"),
+});
+
+type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordFormSection() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ForgotPasswordFormData>({
+    resolver: zodResolver(forgotPasswordSchema),
+  });
+
+  const onSubmit = async (data: ForgotPasswordFormData) => {
+    try {
+      await authApi.forgotPassword(data.email);
       setIsSubmitted(true);
-    }, 1000);
+      toast.success("Email sent!", {
+        description:
+          "If the email exists, a password reset link has been sent.",
+      });
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to send reset email. Please try again.";
+      toast.error("Error", {
+        description: errorMessage,
+      });
+    }
   };
 
   if (isSubmitted) {
@@ -65,7 +92,7 @@ export default function ForgotPasswordFormSection() {
   return (
     <section>
       <div className="p-6 bg-white dark:bg-black/20 border border-primary/20 rounded-xl shadow-sm">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div>
             <Label
               htmlFor="email"
@@ -76,10 +103,17 @@ export default function ForgotPasswordFormSection() {
             <Input
               id="email"
               type="email"
-              required
-              className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary"
+              {...register("email")}
+              className={`w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary ${
+                errors.email ? "border-destructive focus:border-destructive" : ""
+              }`}
               placeholder="your.email@example.com"
             />
+            {errors.email && (
+              <p className="text-xs text-destructive mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <Button
