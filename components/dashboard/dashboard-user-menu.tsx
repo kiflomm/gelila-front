@@ -13,19 +13,27 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { User, LogOut, Settings } from "lucide-react";
-import { useAuthStore } from "@/store/auth-store";
+import { useAuthStore, useAuthActions } from "@/stores/auth-store";
+import { logoutUser } from "@/api/auth";
 
 export function DashboardUserMenu() {
   const router = useRouter();
-  const { user, logout, isLoading } = useAuthStore();
+  const { user, isLoading } = useAuthStore();
+  const { logout } = useAuthActions();
 
   const handleLogout = async () => {
     try {
-      await logout();
+      // Call logout API first
+      await logoutUser();
+      // Clear local state
+      logout();
       toast.success("Logged out successfully");
       router.push("/login");
     } catch (error) {
-      toast.error("Failed to logout");
+      // Even if API call fails, clear local state
+      logout();
+      toast.success("Logged out successfully");
+      router.push("/login");
     }
   };
 

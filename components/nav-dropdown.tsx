@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, useEffect } from "react";
 import { cn, getNavDropdownTriggerClasses } from "@/lib/utils";
-import { useNavDropdownStore } from "@/store/use-nav-dropdown-store";
+import { useNavDropdownStore } from "@/stores/use-nav-dropdown-store";
 
 interface DropdownItem {
   label: string;

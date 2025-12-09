@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { newsApi, type NewsItem } from "@/lib/api/news";
+import { newsApi, type NewsItem } from "@/api/news";
 
 export function useNews() {
   return useQuery<NewsItem[]>({

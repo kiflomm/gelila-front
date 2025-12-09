@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { getRelatedNews } from "@/store/news/news-data";
+import { getRelatedNews } from "@/stores/news/news-data";
 
 interface RelatedPostsSectionProps {
   currentSlug: string;

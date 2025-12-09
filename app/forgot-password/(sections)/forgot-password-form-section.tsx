@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { authApi } from "@/lib/api/auth";
+import { requestPasswordReset } from "@/api/auth";
 
 const forgotPasswordSchema = z.object({
   email: z.string().email("Please provide a valid email address"),
@@ -30,7 +30,7 @@ export default function ForgotPasswordFormSection() {
 
   const onSubmit = async (data: ForgotPasswordFormData) => {
     try {
-      await authApi.forgotPassword(data.email);
+      await requestPasswordReset({ email: data.email });
       setIsSubmitted(true);
       toast.success("Email sent!", {
         description:

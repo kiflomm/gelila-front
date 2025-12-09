@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Clock } from "lucide-react";
-import type { NewsItem } from "@/store/news/news-data";
+import type { NewsItem } from "@/stores/news/news-data";
 import { calculateReadTime, getInitials } from "../utils";
 
 interface HeroSectionProps {

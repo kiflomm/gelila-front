@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { authApi } from "@/lib/api/auth";
+import { completePasswordReset } from "@/api/auth";
 
 const resetPasswordSchema = z
   .object({
@@ -58,7 +58,10 @@ export default function ResetPasswordFormSection() {
     }
 
     try {
-      await authApi.resetPassword(token, data.password);
+      await completePasswordReset({
+        token,
+        password: data.password,
+      });
       setIsSubmitted(true);
       toast.success("Password reset successful!", {
         description: "Your password has been reset. You can now login.",

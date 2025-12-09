@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { jobsApi, type JobsData } from "@/lib/api/jobs";
+import { jobsApi, type JobsData } from "@/api/jobs";
 
 export function useJobs() {
   return useQuery<JobsData>({

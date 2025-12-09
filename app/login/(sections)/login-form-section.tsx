@@ -11,7 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useAuthStore } from "@/store/auth-store";
+import { useAuthStore, useAuthActions } from "@/stores/auth-store";
+import { loginUser } from "@/api/auth";
 
 const loginSchema = z.object({
   email: z.string().email("Please provide a valid email address"),
@@ -23,7 +24,8 @@ type LoginFormData = z.infer<typeof loginSchema>;
 export default function LoginFormSection() {
   const router = useRouter();
   const [rememberMe, setRememberMe] = useState(false);
-  const { login, isLoading, error, clearError } = useAuthStore();
+  const { isLoading } = useAuthStore();
+  const { login, setLoading, clearError } = useAuthActions();
 
   const {
     register,
@@ -36,7 +38,16 @@ export default function LoginFormSection() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       clearError();
-      await login(data.email, data.password);
+      setLoading(true);
+      
+      const response = await loginUser({
+        email: data.email,
+        password: data.password,
+      });
+      
+      // Store user and access token in the store
+      login(response.data.user, response.data.accessToken);
+      
       toast.success("Login successful!", {
         description: "Welcome back!",
       });
@@ -49,6 +60,8 @@ export default function LoginFormSection() {
       toast.error("Login failed", {
         description: errorMessage,
       });
+    } finally {
+      setLoading(false);
     }
   };
 

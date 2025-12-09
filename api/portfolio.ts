@@ -1,4 +1,4 @@
-import { axiosClient } from "@/lib/axios-client";
+import { axiosProtectedClient } from "@/lib/axios-client";
 
 export interface PortfolioSector {
   id: string;

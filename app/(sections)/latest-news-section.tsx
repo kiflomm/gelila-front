@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { getLatestNews } from "@/store/news/news-data";
+import { getLatestNews } from "@/stores/news/news-data";
 
 export default function LatestNewsSection() {
   const latestNews = getLatestNews(3);

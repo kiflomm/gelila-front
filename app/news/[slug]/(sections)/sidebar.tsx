@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getAllNews, categoryMap } from "@/store/news/news-data";
+import { getAllNews, categoryMap } from "@/stores/news/news-data";
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import { SidebarSection } from "./sidebar-section";
 

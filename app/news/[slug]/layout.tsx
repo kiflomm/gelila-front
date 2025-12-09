@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getNewsBySlug } from "@/store/news/news-data";
+import { getNewsBySlug } from "@/stores/news/news-data";
 import { notFound } from "next/navigation";
 import { getArticleSchema } from "@/lib/seo";
 

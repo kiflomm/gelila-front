@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useAuthStore } from "@/store/auth-store";
+import { useAuth } from "@/stores/auth-store";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -11,27 +11,20 @@ interface ProtectedRouteProps {
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const { isAuthenticated, isLoading, initialize } = useAuthStore();
-  const [hasInitialized, setHasInitialized] = useState(false);
+  const { isAuthenticated, isRehydrated } = useAuth();
 
   useEffect(() => {
-    if (!hasInitialized) {
-      initialize().finally(() => {
-        setHasInitialized(true);
-      });
-    }
-  }, [hasInitialized, initialize]);
-
-  useEffect(() => {
-    if (hasInitialized && !isLoading && !isAuthenticated) {
+    // Wait for store to rehydrate from localStorage
+    if (isRehydrated && !isAuthenticated) {
       // Only redirect if we're not already on the login page
       if (pathname !== "/login") {
         router.push("/login");
       }
     }
-  }, [isAuthenticated, isLoading, hasInitialized, router, pathname]);
+  }, [isAuthenticated, isRehydrated, router, pathname]);
 
-  if (!hasInitialized || isLoading) {
+  // Show loading while store is rehydrating
+  if (!isRehydrated) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="flex flex-col items-center gap-4">
@@ -42,6 +35,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
     );
   }
 
+  // Don't render children if not authenticated (will redirect)
   if (!isAuthenticated) {
     return null;
   }

@@ -5,12 +5,12 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { useMobileMenuStore } from "@/store/use-mobile-menu-store";
+import { useMobileMenuStore } from "@/stores/use-mobile-menu-store";
 import { useEffect } from "react";
 import { NavDropdown } from "@/components/nav-dropdown";
 import navigationData from "@/data/navigation.json";
 import { getNavLinkClasses } from "@/lib/utils";
-import { useNavDropdownStore } from "@/store/use-nav-dropdown-store";
+import { useNavDropdownStore } from "@/stores/use-nav-dropdown-store";
 
 interface HeaderProps {
   forceTransparent?: boolean;

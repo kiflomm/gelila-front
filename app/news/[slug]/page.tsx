@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getNewsBySlug } from "@/store/news/news-data";
+import { getNewsBySlug } from "@/stores/news/news-data";
 import HeroSection from "./(sections)/hero-section";
 import ContentSection from "./(sections)/content-section";
 import Sidebar from "./(sections)/sidebar";

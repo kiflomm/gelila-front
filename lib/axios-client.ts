@@ -1,22 +1,35 @@
-import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
+import { useAuthStore } from '@/stores/auth-store';
 
-// Create axios instance with default config
-export const axiosClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "/api",
-  timeout: 30000,
+// API Configuration
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/v1';
+
+// Create axios instance for authenticated requests
+export const axiosProtectedClient = axios.create({
+  baseURL: API_BASE_URL,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
-  withCredentials: true, // Important: enables sending cookies
+  withCredentials: true, // Important: Send cookies with requests for refresh token
 });
 
+// Create axios instance for public requests (no auth required)
+export const axiosPublicClient = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  // No withCredentials for public endpoints
+});
+
+// Flag to prevent multiple simultaneous refresh requests
 let isRefreshing = false;
 let failedQueue: Array<{
   resolve: (value?: unknown) => void;
-  reject: (error?: unknown) => void;
+  reject: (reason?: unknown) => void;
 }> = [];
 
-const processQueue = (error: AxiosError | null, token: string | null = null) => {
+const processQueue = (error: Error | null, token: string | null = null) => {
   failedQueue.forEach((prom) => {
     if (error) {
       prom.reject(error);
@@ -28,85 +41,113 @@ const processQueue = (error: AxiosError | null, token: string | null = null) => 
   failedQueue = [];
 };
 
-// Request interceptor
-axiosClient.interceptors.request.use(
-  (config) => {
-    // Cookies (including accessToken) are automatically sent with withCredentials: true
+// Request Interceptor: Attach access token to every request
+axiosProtectedClient.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    const { accessToken } = useAuthStore.getState();
+
+    // Attach Authorization header if access token exists
+    if (accessToken && config.headers) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+
     return config;
   },
-  (error) => {
+  (error: AxiosError) => {
     return Promise.reject(error);
   }
 );
 
-// Response interceptor
-axiosClient.interceptors.response.use(
+// Response Interceptor: Handle 401 errors and refresh token
+axiosProtectedClient.interceptors.response.use(
   (response) => {
+    // If response is successful, just return it
     return response;
   },
   async (error: AxiosError) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
+      url?: string;
     };
-
-    // Handle 401 Unauthorized - try to refresh token
-    // Skip refresh for login, forgot-password, reset-password, and refresh endpoints
-    const skipRefreshPaths = [
-      "/auth/login",
-      "/auth/forgot-password",
-      "/auth/reset-password",
-      "/auth/refresh",
-    ];
-    const shouldSkipRefresh =
-      skipRefreshPaths.some((path) => originalRequest.url?.includes(path));
-
+    
+    // Don't retry if it's not a 401, if we've already retried this request, or if this is the refresh endpoint
     if (
-      error.response?.status === 401 &&
-      !originalRequest._retry &&
-      !shouldSkipRefresh
+      error.response?.status !== 401 || 
+      originalRequest._retry || 
+      originalRequest.url?.includes('/auth/refresh')
     ) {
-      if (isRefreshing) {
-        // If already refreshing, queue this request
-        return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject });
+      return Promise.reject(error);
+    }
+
+    // If we're already refreshing the token, queue this request
+    if (isRefreshing) {
+      return new Promise((resolve, reject) => {
+        failedQueue.push({ resolve, reject });
+      })
+        .then((token) => {
+          if (originalRequest.headers) {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+          }
+          return axiosProtectedClient(originalRequest);
         })
-          .then(() => {
-            return axiosClient(originalRequest);
-          })
-          .catch((err) => {
-            return Promise.reject(err);
-          });
-      }
-
-      originalRequest._retry = true;
-      isRefreshing = true;
-
-      try {
-        // Try to refresh the token
-        await axiosClient.post("/auth/refresh", {}, { withCredentials: true });
-        processQueue(null, null);
-        // Retry the original request
-        return axiosClient(originalRequest);
-      } catch (refreshError) {
-        processQueue(refreshError as AxiosError, null);
-        // Refresh failed, redirect to login
-        if (typeof window !== "undefined") {
-          window.location.href = "/login";
-        }
-        return Promise.reject(refreshError);
-      } finally {
-        isRefreshing = false;
-      }
+        .catch((err) => {
+          return Promise.reject(err);
+        });
     }
 
-    // Handle other errors
-    const status = error.response?.status;
-    if (status === 404) {
-      // Handle not found
-    } else if (status && status >= 500) {
-      // Handle server errors
-    }
+    originalRequest._retry = true;
+    isRefreshing = true;
 
-    return Promise.reject(error);
+    return new Promise((resolve, reject) => {
+      // Attempt to refresh the token
+      axiosProtectedClient
+        .post('/auth/refresh')
+        .then((response) => {
+          // Handle the actual response structure from the API
+          const { data } = response.data;
+          const accessToken = data?.accessToken || data;
+          const user = data?.user;
+
+          // Update access token and user in store
+          const { setAccessToken, setUser } = useAuthStore.getState();
+          setAccessToken(accessToken);
+          if (user) {
+            setUser(user);
+          }
+
+          // Update the Authorization header for the original request
+          if (originalRequest.headers) {
+            originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+          }
+
+          // Process all queued requests with the new token
+          processQueue(null, accessToken);
+
+          // Retry the original request
+          resolve(axiosProtectedClient(originalRequest));
+        })
+        .catch((err) => {
+          // Refresh failed - logout user and clear state
+          processQueue(err, null);
+          
+          const { logout } = useAuthStore.getState();
+          logout();
+
+          // Only redirect to login if we're not already on the login page
+          // This prevents infinite redirect loops
+          if (typeof window !== 'undefined' && !window.location.pathname.includes('/login')) {
+            window.location.href = '/login';
+          }
+
+          reject(err);
+        })
+        .finally(() => {
+          isRefreshing = false;
+        });
+    });
   }
 );
+
+// Export both clients
+export default axiosProtectedClient;
+
