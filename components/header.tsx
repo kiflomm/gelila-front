@@ -70,7 +70,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
 
   return (
     <header
-      className={`absolute top-0 left-0 right-0 z-50 w-full transition-colors duration-300 ${
+      className={` absolute top-0 left-0 right-0 z-50 w-full transition-colors duration-300 ${
         hasTransparentNav
           ? "bg-linear-to-b from-black/30 via-black/15 to-transparent"
           : "bg-white dark:bg-background-dark/95 backdrop-blur-sm border-b border-border"
