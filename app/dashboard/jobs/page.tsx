@@ -79,8 +79,9 @@ export default function JobsPage() {
     },
   });
 
-  const handleCreate = async (data: CreateJobData) => {
-    await createMutation.mutateAsync(data);
+  const handleCreate = async (data: CreateJobData | UpdateJobData) => {
+    // For create dialog, data will always be CreateJobData (all fields required)
+    await createMutation.mutateAsync(data as CreateJobData);
   };
 
   const handleEdit = (job: Job) => {

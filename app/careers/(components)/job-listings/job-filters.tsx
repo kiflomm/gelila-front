@@ -9,14 +9,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { JobsResponse } from "@/api/jobs";
+import type { JobsData } from "@/api/jobs";
 
 interface JobFiltersProps {
   searchQuery: string;
   selectedLocation: string;
   selectedDepartment: string;
   selectedJobType: string;
-  jobsData: JobsResponse | undefined;
+  jobsData: JobsData | undefined;
   onSearchChange: (value: string) => void;
   onLocationChange: (value: string) => void;
   onDepartmentChange: (value: string) => void;

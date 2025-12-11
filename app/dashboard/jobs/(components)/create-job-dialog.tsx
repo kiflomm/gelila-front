@@ -8,12 +8,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { JobForm } from "./job-form";
-import type { CreateJobData } from "@/api/jobs";
+import type { CreateJobData, UpdateJobData } from "@/api/jobs";
 
 interface CreateJobDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: CreateJobData) => Promise<void>;
+  onSubmit: (data: CreateJobData | UpdateJobData) => Promise<void>;
   isSubmitting?: boolean;
 }
 

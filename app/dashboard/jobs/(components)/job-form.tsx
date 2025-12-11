@@ -21,7 +21,7 @@ const jobSchema = z.object({
   department: z.string().min(1, "Department is required"),
   location: z.string().min(1, "Location is required"),
   type: z.enum(["Full-time", "Part-time", "Internship"], {
-    required_error: "Job type is required",
+    message: "Job type is required",
   }),
   description: z
     .string()
