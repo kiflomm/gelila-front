@@ -15,6 +15,7 @@ import {
   Truck,
   Briefcase,
   FileText,
+  Newspaper,
 } from "lucide-react";
 import {
   Sidebar,
@@ -111,6 +112,11 @@ const menuItems = [
         title: "Applications",
         url: "/dashboard/jobs/applications",
         icon: FileText,
+      },
+      {
+        title: "News",
+        url: "/dashboard/news",
+        icon: Newspaper,
       },
     ],
   },

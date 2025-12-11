@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getNewsBySlug } from "@/stores/news/news-data";
+import { newsApi } from "@/api/news";
 import HeroSection from "./(sections)/hero-section";
 import ContentSection from "./(sections)/content-section";
 import Sidebar from "./(sections)/sidebar";
@@ -15,7 +15,13 @@ const LATEST_POSTS_COUNT = 3;
 
 export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   const { slug } = await params;
-  const newsItem = getNewsBySlug(slug);
+  
+  let newsItem;
+  try {
+    newsItem = await newsApi.getNewsBySlug(slug);
+  } catch (error) {
+    notFound();
+  }
 
   if (!newsItem) {
     notFound();

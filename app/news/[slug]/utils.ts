@@ -28,3 +28,18 @@ export function getInitials(name: string): string {
     .join("")
     .toUpperCase();
 }
+
+/**
+ * Format date string to "MMM DD, YYYY" format
+ * @param dateString - ISO date string
+ * @returns Formatted date string
+ */
+export function formatDate(dateString: string): string {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+}

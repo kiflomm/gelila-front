@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getNewsBySlug } from "@/stores/news/news-data";
+import { newsApi } from "@/api/news";
 import { notFound } from "next/navigation";
 import { getArticleSchema } from "@/lib/seo";
 
@@ -14,7 +14,15 @@ export async function generateMetadata({
   params,
 }: NewsDetailLayoutProps): Promise<Metadata> {
   const { slug } = await params;
-  const newsItem = getNewsBySlug(slug);
+  
+  let newsItem;
+  try {
+    newsItem = await newsApi.getNewsBySlug(slug);
+  } catch (error) {
+    return {
+      title: "News Article Not Found - Gelila Manufacturing PLC",
+    };
+  }
 
   if (!newsItem) {
     return {
@@ -22,11 +30,13 @@ export async function generateMetadata({
     };
   }
 
+  const categoryName = newsItem.category?.name || "News";
+
   return {
     title: `${newsItem.title} - Gelila Manufacturing PLC`,
     description: newsItem.description,
     keywords: [
-      newsItem.category.toLowerCase(),
+      categoryName.toLowerCase(),
       "manufacturing",
       "news",
       "updates",
@@ -45,8 +55,8 @@ export async function generateMetadata({
           height: 630,
         },
       ],
-      publishedTime: newsItem.date,
-      authors: [newsItem.author.name],
+      publishedTime: newsItem.publishedAt || newsItem.createdAt,
+      authors: [newsItem.authorName],
     },
     twitter: {
       card: "summary_large_image",
@@ -76,7 +86,13 @@ export default async function NewsDetailLayout({
   params,
 }: NewsDetailLayoutProps) {
   const { slug } = await params;
-  const newsItem = getNewsBySlug(slug);
+  
+  let newsItem;
+  try {
+    newsItem = await newsApi.getNewsBySlug(slug);
+  } catch (error) {
+    notFound();
+  }
 
   if (!newsItem) {
     notFound();
@@ -86,8 +102,8 @@ export default async function NewsDetailLayout({
     headline: newsItem.title,
     description: newsItem.description,
     image: newsItem.imageUrl,
-    datePublished: newsItem.date,
-    author: newsItem.author.name,
+    datePublished: newsItem.publishedAt || newsItem.createdAt || new Date().toISOString(),
+    author: newsItem.authorName,
   });
 
   return (

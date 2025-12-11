@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Clock } from "lucide-react";
-import type { NewsItem } from "@/stores/news/news-data";
-import { calculateReadTime, getInitials } from "../utils";
+import type { NewsItem } from "@/api/news";
+import { calculateReadTime, getInitials, formatDate } from "../utils";
 
 interface HeroSectionProps {
   newsItem: NewsItem;
@@ -10,6 +10,8 @@ interface HeroSectionProps {
 
 export default function HeroSection({ newsItem }: HeroSectionProps) {
   const readTime = calculateReadTime(newsItem.content);
+  const categoryName = newsItem.category?.name || "News";
+  const date = newsItem.publishedAt || newsItem.createdAt || "";
 
   return (
     <header className="flex flex-col gap-6 mb-8">
@@ -44,10 +46,10 @@ export default function HeroSection({ newsItem }: HeroSectionProps) {
         {/* Category and Date - Left Side */}
         <div className="flex items-center gap-4 text-sm">
           <span className="text-primary font-semibold">
-            {newsItem.category}
+            {categoryName}
           </span>
           <span className="text-zinc-500 dark:text-zinc-400">
-            {newsItem.date}
+            {formatDate(date)}
           </span>
         </div>
 
@@ -55,10 +57,10 @@ export default function HeroSection({ newsItem }: HeroSectionProps) {
         <div className="flex items-center gap-4">
           {/* Author */}
           <div className="flex items-center gap-2">
-            {newsItem.author.avatar ? (
+            {newsItem.authorAvatar ? (
               <Image
-                src={newsItem.author.avatar}
-                alt={newsItem.author.name}
+                src={newsItem.authorAvatar}
+                alt={newsItem.authorName}
                 width={32}
                 height={32}
                 className="rounded-full"
@@ -66,12 +68,12 @@ export default function HeroSection({ newsItem }: HeroSectionProps) {
             ) : (
               <div className="size-8 rounded-full bg-primary/20 flex items-center justify-center">
                 <span className="text-primary text-xs font-bold">
-                  {getInitials(newsItem.author.name)}
+                  {getInitials(newsItem.authorName)}
                 </span>
               </div>
             )}
             <span className="text-zinc-900 dark:text-zinc-100 text-sm font-medium">
-              {newsItem.author.name}
+              {newsItem.authorName}
             </span>
           </div>
 

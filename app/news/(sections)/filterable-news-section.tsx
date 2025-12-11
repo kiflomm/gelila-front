@@ -13,7 +13,7 @@ export default function FilterableNewsSection() {
         activeCategory={activeCategory}
         setActiveCategory={setActiveCategory}
       />
-      <NewsGridSection activeCategory={activeCategory} />
+      <NewsGridSection activeCategory={activeCategory === "all" ? "all" : activeCategory} />
     </>
   );
 }
