@@ -132,18 +132,30 @@
 /* News Content Styles */
 .news-content {
   @apply space-y-6;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 .prose-wrapper {
   @apply py-8;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .news-content p {
   @apply text-lg leading-[1.8] mb-6 text-zinc-700 dark:text-zinc-300;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-width: 100%;
 }
 
 .news-content p:first-of-type {
   @apply text-xl leading-[1.8] font-medium text-zinc-900 dark:text-zinc-100;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .news-content h2 {

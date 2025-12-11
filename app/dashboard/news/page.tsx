@@ -5,13 +5,13 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { NewsTable } from "./(components)/news-table";
-import { CategoriesSection } from "./(components)/categories-section";
+import { NewsStats } from "./(components)/news-stats";
+import { NewsPageContent } from "./(components)/news-page-content";
 import { CreateNewsDialog } from "./(components)/create-news-dialog";
 import { EditNewsDialog } from "./(components)/edit-news-dialog";
 import { DeleteNewsDialog } from "./(components)/delete-news-dialog";
 import { newsApi, type NewsItem, type CreateNewsData, type UpdateNewsData } from "@/api/news";
+import { calculateNewsStats } from "./utils/news-dashboard.utils";
 
 export default function NewsPage() {
   const queryClient = useQueryClient();
@@ -101,16 +101,7 @@ export default function NewsPage() {
   // Calculate statistics
   const stats = useMemo(() => {
     if (!newsData) return null;
-    const publishedNews = newsData.filter((news) => news.isPublished).length;
-    const totalNews = newsData.length;
-    const categories = new Set(newsData.map((news) => news.category?.name).filter(Boolean)).size;
-
-    return {
-      total: totalNews,
-      published: publishedNews,
-      drafts: totalNews - publishedNews,
-      categories,
-    };
+    return calculateNewsStats(newsData);
   }, [newsData]);
 
   return (
@@ -135,63 +126,14 @@ export default function NewsPage() {
         </Button>
       </div>
 
-      {/* Stats Cards */}
-      {stats && (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-2xl bg-muted/30 p-6 backdrop-blur-sm">
-            <div className="space-y-2">
-              <p className="text-sm font-medium text-muted-foreground">Total Articles</p>
-              <p className="text-3xl font-bold">{stats.total}</p>
-              <p className="text-xs text-muted-foreground">All news articles</p>
-            </div>
-          </div>
+      <NewsStats stats={stats} isLoading={isLoading} />
 
-          <div className="rounded-2xl bg-muted/30 p-6 backdrop-blur-sm">
-            <div className="space-y-2">
-              <p className="text-sm font-medium text-muted-foreground">Published</p>
-              <p className="text-3xl font-bold">{stats.published}</p>
-              <p className="text-xs text-muted-foreground">Currently visible on news page</p>
-            </div>
-          </div>
-
-          <div className="rounded-2xl bg-muted/30 p-6 backdrop-blur-sm">
-            <div className="space-y-2">
-              <p className="text-sm font-medium text-muted-foreground">Drafts</p>
-              <p className="text-3xl font-bold">{stats.drafts}</p>
-              <p className="text-xs text-muted-foreground">Unpublished articles</p>
-            </div>
-          </div>
-
-          <div className="rounded-2xl bg-muted/30 p-6 backdrop-blur-sm">
-            <div className="space-y-2">
-              <p className="text-sm font-medium text-muted-foreground">Categories</p>
-              <p className="text-3xl font-bold">{stats.categories}</p>
-              <p className="text-xs text-muted-foreground">Unique categories</p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Tabs Section */}
-      <Tabs defaultValue="news" className="space-y-6">
-        <TabsList>
-          <TabsTrigger value="news">News Articles</TabsTrigger>
-          <TabsTrigger value="categories">Categories</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="news" className="space-y-6">
-          <NewsTable
-            news={newsData || []}
-            isLoading={isLoading}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
-        </TabsContent>
-
-        <TabsContent value="categories">
-          <CategoriesSection />
-        </TabsContent>
-      </Tabs>
+      <NewsPageContent
+        newsData={newsData}
+        isLoading={isLoading}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
 
       {/* Create Dialog */}
       <CreateNewsDialog

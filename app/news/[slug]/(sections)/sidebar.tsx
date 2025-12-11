@@ -1,25 +1,18 @@
 "use client";
 
+import { useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import { SidebarSection } from "./sidebar-section";
 import { useNews, useCategories } from "@/hooks/use-news";
-import { formatDate } from "../utils";
+import { formatDate, getImageUrl } from "../utils";
 import type { NewsItem } from "@/api/news";
 
 interface SidebarProps {
   currentSlug: string;
   latestPostsCount?: number;
 }
-
-const POPULAR_TAGS = [
-  "indexfunds",
-  "investing",
-  "financialplanning",
-  "passiveincome",
-  "wealthbuilding",
-] as const;
 
 const SOCIAL_LINKS = [
   { name: "Facebook", icon: Facebook, href: "https://facebook.com" },
@@ -32,18 +25,63 @@ export default function Sidebar({
   currentSlug,
   latestPostsCount = 3,
 }: SidebarProps) {
-  const { data: newsData } = useNews({ limit: 20 });
-  const { data: categories = [] } = useCategories();
+  const { data: newsData, isLoading: newsLoading } = useNews({ limit: 20 });
+  const { data: categories = [], isLoading: categoriesLoading } = useCategories();
 
-  const latestPosts = (newsData?.news || [])
-    .filter((item: NewsItem) => item.slug !== currentSlug)
-    .slice(0, latestPostsCount);
+  // Get latest published posts (excluding current article)
+  const latestPosts = useMemo(() => {
+    if (!newsData?.news) return [];
+    return newsData.news
+      .filter((item: NewsItem) => 
+        item.slug !== currentSlug && 
+        item.isPublished === true
+      )
+      .sort((a: NewsItem, b: NewsItem) => {
+        const dateA = new Date(a.publishedAt || a.createdAt || 0).getTime();
+        const dateB = new Date(b.publishedAt || b.createdAt || 0).getTime();
+        return dateB - dateA;
+      })
+      .slice(0, latestPostsCount);
+  }, [newsData, currentSlug, latestPostsCount]);
+
+  // Extract popular tags from news articles
+  // Tags are extracted from categories (most used categories become popular tags)
+  const popularTags = useMemo(() => {
+    if (!newsData?.news) return [];
+    
+    // Count category usage
+    const categoryCounts = new Map<string, number>();
+    newsData.news.forEach((item: NewsItem) => {
+      if (item.category?.slug) {
+        const count = categoryCounts.get(item.category.slug) || 0;
+        categoryCounts.set(item.category.slug, count + 1);
+      }
+    });
+
+    // Sort by count and get top 5
+    return Array.from(categoryCounts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([slug]) => slug);
+  }, [newsData]);
 
   return (
     <aside className="flex flex-col gap-8">
       <SidebarSection title="Latest Post">
         <div className="flex flex-col gap-4">
-          {latestPosts.length === 0 ? (
+          {newsLoading ? (
+            <div className="space-y-3">
+              {Array.from({ length: latestPostsCount }).map((_, i) => (
+                <div key={i} className="flex gap-3">
+                  <div className="w-20 h-20 rounded-lg bg-zinc-200 dark:bg-zinc-800 animate-pulse shrink-0" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 w-full bg-zinc-200 dark:bg-zinc-800 rounded animate-pulse" />
+                    <div className="h-3 w-2/3 bg-zinc-200 dark:bg-zinc-800 rounded animate-pulse" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : latestPosts.length === 0 ? (
             <p className="text-zinc-500 dark:text-zinc-400 text-sm">No recent posts</p>
           ) : (
             latestPosts.map((post: NewsItem) => (
@@ -54,7 +92,7 @@ export default function Sidebar({
               >
                 <div className="w-20 h-20 rounded-lg overflow-hidden relative shrink-0">
                   <Image
-                    src={post.imageUrl}
+                    src={getImageUrl(post.imageUrl)}
                     alt={post.imageAlt}
                     fill
                     className="object-cover"
@@ -95,15 +133,30 @@ export default function Sidebar({
 
       <SidebarSection title="Popular Tags">
         <div className="flex flex-wrap gap-2">
-          {POPULAR_TAGS.map((tag) => (
-            <Link
-              key={tag}
-              href="/news"
-              className="px-3 py-1.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-sm font-medium rounded-full hover:bg-primary hover:text-white dark:hover:bg-primary transition-colors"
-            >
-              #{tag}
-            </Link>
-          ))}
+          {newsLoading ? (
+            Array.from({ length: 5 }).map((_, i) => (
+              <div
+                key={i}
+                className="h-7 w-20 bg-zinc-200 dark:bg-zinc-800 rounded-full animate-pulse"
+              />
+            ))
+          ) : popularTags.length === 0 ? (
+            <p className="text-zinc-500 dark:text-zinc-400 text-sm">No tags available</p>
+          ) : (
+            popularTags.map((tagSlug) => {
+              const category = categories.find((cat) => cat.slug === tagSlug);
+              const tagName = category?.name || tagSlug;
+              return (
+                <Link
+                  key={tagSlug}
+                  href={`/news?category=${tagSlug}`}
+                  className="px-3 py-1.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-sm font-medium rounded-full hover:bg-primary hover:text-white dark:hover:bg-primary transition-colors"
+                >
+                  {tagName}
+                </Link>
+              );
+            })
+          )}
         </div>
       </SidebarSection>
 

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Clock } from "lucide-react";
 import type { NewsItem } from "@/api/news";
-import { calculateReadTime, getInitials, formatDate } from "../utils";
+import { calculateReadTime, getInitials, formatDate, getImageUrl } from "../utils";
 
 interface HeroSectionProps {
   newsItem: NewsItem;
@@ -32,7 +32,7 @@ export default function HeroSection({ newsItem }: HeroSectionProps) {
       {/* Featured Image */}
       <div className="w-full aspect-3/2 rounded-lg overflow-hidden relative">
         <Image
-          src={newsItem.imageUrl}
+          src={getImageUrl(newsItem.imageUrl)}
           alt={newsItem.imageAlt}
           fill
           className="object-cover"
@@ -59,11 +59,12 @@ export default function HeroSection({ newsItem }: HeroSectionProps) {
           <div className="flex items-center gap-2">
             {newsItem.authorAvatar ? (
               <Image
-                src={newsItem.authorAvatar}
+                src={getImageUrl(newsItem.authorAvatar)}
                 alt={newsItem.authorName}
                 width={32}
                 height={32}
                 className="rounded-full"
+                unoptimized
               />
             ) : (
               <div className="size-8 rounded-full bg-primary/20 flex items-center justify-center">

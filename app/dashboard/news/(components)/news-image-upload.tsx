@@ -1,0 +1,209 @@
+"use client";
+
+import { useState, useRef } from "react";
+import { Controller, Control, FieldErrors } from "react-hook-form";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
+import { Upload, X, Image as ImageIcon } from "lucide-react";
+import type { NewsFormData } from "../schemas/news-form.schemas";
+
+interface NewsImageUploadProps {
+  control: Control<NewsFormData>;
+  errors: FieldErrors<NewsFormData>;
+  news?: { imageUrl?: string | null };
+  isRequired?: boolean;
+}
+
+/**
+ * Convert relative image URL to full URL for preview
+ */
+function getImagePreviewUrl(imageUrl: string | null | undefined): string | null {
+  if (!imageUrl) return null;
+  // If it's already a full URL (starts with http:// or https://), return as is
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+    return imageUrl;
+  }
+  // If it's a relative path starting with /uploads, use it directly (served by backend)
+  // Otherwise, prepend the API base URL
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || '';
+  if (imageUrl.startsWith('/uploads')) {
+    return `${apiBaseUrl.replace('/api/v1', '')}${imageUrl}`;
+  }
+  return imageUrl.startsWith('/') ? `${apiBaseUrl}${imageUrl}` : `${apiBaseUrl}/${imageUrl}`;
+}
+
+export function NewsImageUpload({
+  control,
+  errors,
+  news,
+  isRequired = false,
+}: NewsImageUploadProps) {
+  const [isDragging, setIsDragging] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    getImagePreviewUrl(news?.imageUrl)
+  );
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (file: File | undefined, onChange: (file: File | undefined) => void) => {
+    if (file) {
+      onChange(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      onChange(undefined);
+      // Reset to original image URL if editing, otherwise clear preview
+      setImagePreview(getImagePreviewUrl(news?.imageUrl));
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (
+    e: React.DragEvent,
+    onChange: (file: File | undefined) => void
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files?.[0];
+    if (file && file.type.startsWith("image/")) {
+      handleFileChange(file, onChange);
+    }
+  };
+
+  const handleRemoveImage = (onChange: (file: File | undefined) => void) => {
+    handleFileChange(undefined, onChange);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  return (
+    <div className="space-y-2">
+      <Label htmlFor="image">
+        Image {isRequired && <span className="text-destructive">*</span>}
+      </Label>
+      <Controller
+        name="image"
+        control={control}
+        render={({ field: { onChange, value, ...field } }) => (
+          <div className="space-y-2">
+            <div
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={(e) => handleDrop(e, onChange)}
+              className={cn(
+                "relative border-2 border-dashed rounded-lg transition-colors",
+                isDragging
+                  ? "border-primary bg-primary/5"
+                  : errors.image
+                  ? "border-destructive bg-destructive/5"
+                  : "border-border hover:border-primary/50 bg-muted/30",
+                (imagePreview || value) && "border-primary"
+              )}
+            >
+              {imagePreview ? (
+                <div className="relative p-4">
+                  <div className="relative w-full h-48 rounded-md overflow-hidden bg-muted">
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                      onError={() => {
+                        console.error('Failed to load image:', imagePreview);
+                        setImagePreview(null);
+                        if (fileInputRef.current) {
+                          fileInputRef.current.value = "";
+                        }
+                        onChange(undefined);
+                      }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveImage(onChange)}
+                      className="absolute top-2 right-2 p-1.5 rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors shadow-lg z-10"
+                      aria-label="Remove image"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                  {value instanceof File && (
+                    <p className="mt-2 text-sm text-muted-foreground text-center">
+                      {value.name}
+                    </p>
+                  )}
+                  {news && !value && (
+                    <p className="mt-2 text-xs text-muted-foreground text-center">
+                      Current image (upload a new image to replace)
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <label
+                  htmlFor="image-upload"
+                  className={cn(
+                    "flex flex-col items-center justify-center w-full h-48 cursor-pointer transition-colors",
+                    isDragging && "bg-primary/5"
+                  )}
+                >
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6 px-4">
+                    <div className="mb-4 p-3 rounded-full bg-muted">
+                      <Upload className="h-6 w-6 text-muted-foreground" />
+                    </div>
+                    <p className="mb-2 text-sm font-medium text-foreground">
+                      <span className="text-primary">Click to upload</span> or drag and drop
+                    </p>
+                    <p className="text-xs text-muted-foreground text-center">
+                      PNG, JPG, GIF, WEBP (MAX. 10MB)
+                    </p>
+                  </div>
+                </label>
+              )}
+              <input
+                {...field}
+                id="image-upload"
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                value={undefined}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    handleFileChange(file, onChange);
+                  }
+                }}
+              />
+            </div>
+            {errors.image && (
+              <p className="text-sm text-destructive flex items-center gap-1.5">
+                <ImageIcon className="h-4 w-4" />
+                {errors.image.message}
+              </p>
+            )}
+            {news && !value && !imagePreview && (
+              <p className="text-sm text-muted-foreground">
+                Current image: {news.imageUrl} (upload a new image to replace)
+              </p>
+            )}
+          </div>
+        )}
+      />
+    </div>
+  );
+}
+

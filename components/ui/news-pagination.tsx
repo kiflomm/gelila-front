@@ -8,6 +8,7 @@ interface NewsPaginationProps {
   currentPage: number;
   totalPages: number;
   getPageHref?: (page: number) => string;
+  onPageChange?: (page: number) => void;
   className?: string;
 }
 
@@ -15,6 +16,7 @@ export function NewsPagination({
   currentPage,
   totalPages,
   getPageHref = (page) => `?page=${page}`,
+  onPageChange,
   className,
 }: NewsPaginationProps) {
   const renderPageNumbers = () => {
@@ -61,19 +63,33 @@ export function NewsPagination({
   const prevPage = currentPage > 1 ? currentPage - 1 : null;
   const nextPage = currentPage < totalPages ? currentPage + 1 : null;
 
+  const handlePageClick = (page: number, e?: React.MouseEvent) => {
+    if (onPageChange) {
+      e?.preventDefault();
+      onPageChange(page);
+    }
+  };
+
   return (
     <div className={cn("flex items-center justify-center p-4", className)}>
-      <Link
-        href={prevPage ? getPageHref(prevPage) : "#"}
-        className={cn(
-          "flex size-10 items-center justify-center text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100",
-          !prevPage && "pointer-events-none opacity-50"
-        )}
-        aria-label="Previous page"
-        aria-disabled={!prevPage}
-      >
-        <ChevronLeft className="size-5" />
-      </Link>
+      {prevPage ? (
+        <Link
+          href={getPageHref(prevPage)}
+          onClick={(e) => handlePageClick(prevPage, e)}
+          className="flex size-10 items-center justify-center text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
+          aria-label="Previous page"
+        >
+          <ChevronLeft className="size-5" />
+        </Link>
+      ) : (
+        <div
+          className="flex size-10 items-center justify-center text-zinc-600 dark:text-zinc-400 pointer-events-none opacity-50"
+          aria-label="Previous page"
+          aria-disabled={true}
+        >
+          <ChevronLeft className="size-5" />
+        </div>
+      )}
 
       {pages.map((page, index) => {
         if (page === "ellipsis") {
@@ -93,6 +109,7 @@ export function NewsPagination({
           <Link
             key={page}
             href={getPageHref(page)}
+            onClick={(e) => handlePageClick(page, e)}
             className={cn(
               "text-sm leading-normal flex size-10 items-center justify-center rounded-full transition-colors",
               isActive
@@ -107,17 +124,24 @@ export function NewsPagination({
         );
       })}
 
-      <Link
-        href={nextPage ? getPageHref(nextPage) : "#"}
-        className={cn(
-          "flex size-10 items-center justify-center text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100",
-          !nextPage && "pointer-events-none opacity-50"
-        )}
-        aria-label="Next page"
-        aria-disabled={!nextPage}
-      >
-        <ChevronRight className="size-5" />
-      </Link>
+      {nextPage ? (
+        <Link
+          href={getPageHref(nextPage)}
+          onClick={(e) => handlePageClick(nextPage, e)}
+          className="flex size-10 items-center justify-center text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
+          aria-label="Next page"
+        >
+          <ChevronRight className="size-5" />
+        </Link>
+      ) : (
+        <div
+          className="flex size-10 items-center justify-center text-zinc-600 dark:text-zinc-400 pointer-events-none opacity-50"
+          aria-label="Next page"
+          aria-disabled={true}
+        >
+          <ChevronRight className="size-5" />
+        </div>
+      )}
     </div>
   );
 }

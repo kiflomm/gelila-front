@@ -31,6 +31,19 @@ export async function generateMetadata({
   }
 
   const categoryName = newsItem.category?.name || "News";
+  
+  // Convert relative image URL to full URL for metadata
+  const getImageUrl = (imageUrl: string | null | undefined): string => {
+    if (!imageUrl) return '';
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+      return imageUrl;
+    }
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    const baseUrl = apiBaseUrl.replace('/api/v1', '');
+    return imageUrl.startsWith('/') ? `${baseUrl}${imageUrl}` : `${baseUrl}/${imageUrl}`;
+  };
+  
+  const fullImageUrl = getImageUrl(newsItem.imageUrl);
 
   return {
     title: `${newsItem.title} - Gelila Manufacturing PLC`,
@@ -49,7 +62,7 @@ export async function generateMetadata({
       locale: "en_US",
       images: [
         {
-          url: newsItem.imageUrl,
+          url: fullImageUrl,
           alt: newsItem.imageAlt,
           width: 1200,
           height: 630,
@@ -62,7 +75,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: newsItem.title,
       description: newsItem.description,
-      images: [newsItem.imageUrl],
+      images: [fullImageUrl],
     },
     robots: {
       index: true,
@@ -98,10 +111,23 @@ export default async function NewsDetailLayout({
     notFound();
   }
 
+  // Convert relative image URL to full URL for schema
+  const getImageUrl = (imageUrl: string | null | undefined): string => {
+    if (!imageUrl) return '';
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+      return imageUrl;
+    }
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    const baseUrl = apiBaseUrl.replace('/api/v1', '');
+    return imageUrl.startsWith('/') ? `${baseUrl}${imageUrl}` : `${baseUrl}/${imageUrl}`;
+  };
+  
+  const fullImageUrl = getImageUrl(newsItem.imageUrl);
+
   const articleSchema = getArticleSchema({
     headline: newsItem.title,
     description: newsItem.description,
-    image: newsItem.imageUrl,
+    image: fullImageUrl,
     datePublished: newsItem.publishedAt || newsItem.createdAt || new Date().toISOString(),
     author: newsItem.authorName,
   });

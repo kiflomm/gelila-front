@@ -34,6 +34,24 @@ export function getInitials(name: string): string {
  * @param dateString - ISO date string
  * @returns Formatted date string
  */
+/**
+ * Convert relative image URL to full URL
+ */
+export function getImageUrl(imageUrl: string | null | undefined): string {
+  if (!imageUrl) return '';
+  
+  // If it's already a full URL, return as is
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+    return imageUrl;
+  }
+  
+  // If it's a relative path starting with /uploads, use backend URL directly
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+  const baseUrl = apiBaseUrl.replace('/api/v1', '');
+  
+  return imageUrl.startsWith('/') ? `${baseUrl}${imageUrl}` : `${baseUrl}/${imageUrl}`;
+}
+
 export function formatDate(dateString: string): string {
   if (!dateString) return "";
   const date = new Date(dateString);

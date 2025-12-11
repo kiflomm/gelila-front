@@ -4,18 +4,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useNewsByCategory } from "@/hooks/use-news";
-import { formatDate } from "../[slug]/utils";
+import { useNews } from "@/hooks/use-news";
+import { formatDate, getImageUrl } from "../[slug]/utils";
 
 interface NewsGridSectionProps {
-  activeCategory: string;
+  activeCategory?: string;
+  currentPage?: number;
 }
 
 function NewsCardSkeleton() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 animate-in fade-in duration-300">
       {/* Image skeleton */}
-      <div className="w-full aspect-video rounded-lg overflow-hidden">
+      <div className="w-full aspect-video rounded-lg overflow-hidden bg-zinc-100 dark:bg-zinc-900/50">
         <Skeleton className="w-full h-full rounded-lg" />
       </div>
       
@@ -23,26 +24,26 @@ function NewsCardSkeleton() {
       <div className="flex flex-col gap-2">
         {/* Category and date */}
         <div className="flex items-center gap-3">
-          <Skeleton className="h-4 w-28 rounded-full" />
-          <Skeleton className="h-4 w-20" />
+          <Skeleton className="h-5 w-28 rounded-full" />
+          <Skeleton className="h-4 w-20 rounded-md" />
         </div>
         
         {/* Title - matches text-xl font-bold */}
         <div className="space-y-2">
-          <Skeleton className="h-6 w-full" />
-          <Skeleton className="h-6 w-5/6" />
+          <Skeleton className="h-6 w-full rounded-md" />
+          <Skeleton className="h-6 w-5/6 rounded-md" />
         </div>
         
         {/* Description - matches text-sm */}
         <div className="space-y-1.5 mt-1">
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-4/5" />
+          <Skeleton className="h-4 w-full rounded-md" />
+          <Skeleton className="h-4 w-full rounded-md" />
+          <Skeleton className="h-4 w-4/5 rounded-md" />
         </div>
         
         {/* Read more link - matches text-sm font-bold */}
         <div className="flex items-center gap-1 mt-2">
-          <Skeleton className="h-4 w-20" />
+          <Skeleton className="h-4 w-20 rounded-md" />
           <Skeleton className="h-4 w-4 rounded-full" />
         </div>
       </div>
@@ -50,14 +51,22 @@ function NewsCardSkeleton() {
   );
 }
 
+const ITEMS_PER_PAGE = 12;
+
 export default function NewsGridSection({
   activeCategory,
+  currentPage = 1,
 }: NewsGridSectionProps) {
-  const { data: newsItems = [], isLoading } = useNewsByCategory(activeCategory);
+  const { data: newsData, isLoading, isFetching } = useNews({
+    category: activeCategory,
+    page: currentPage,
+    limit: ITEMS_PER_PAGE,
+  });
 
-  if (isLoading) {
+  // Show loading state if data is loading or fetching
+  if (isLoading || isFetching || !newsData) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 px-2 sm:px-4 md:px-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 px-2 sm:px-4 md:px-6 animate-in fade-in duration-300">
         {Array.from({ length: 6 }).map((_, index) => (
           <NewsCardSkeleton key={index} />
         ))}
@@ -65,14 +74,16 @@ export default function NewsGridSection({
     );
   }
 
+  const items = newsData?.news || [];
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 px-2 sm:px-4 md:px-6">
-      {newsItems.length === 0 ? (
+      {items.length === 0 ? (
         <div className="col-span-full text-center py-12">
           <p className="text-zinc-600 dark:text-zinc-400">No news found.</p>
         </div>
       ) : (
-        newsItems.map((item) => {
+        items.map((item) => {
           const categoryName = item.category?.name || "News";
           const date = item.publishedAt || item.createdAt || "";
           
@@ -84,7 +95,7 @@ export default function NewsGridSection({
             >
               <div className="w-full aspect-video rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105 relative">
                 <Image
-                  src={item.imageUrl}
+                  src={getImageUrl(item.imageUrl)}
                   alt={item.imageAlt}
                   fill
                   className="object-cover"
