@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Plus } from "lucide-react";
 import { JobsTable } from "./(components)/jobs-table";
 import { CreateJobDialog } from "./(components)/create-job-dialog";
@@ -120,6 +121,60 @@ export default function JobsPage() {
     };
   }, [jobsData]);
 
+  if (isLoading) {
+    return (
+      <div className="flex flex-1 flex-col gap-8 min-w-0 overflow-x-hidden">
+        {/* Header Section Skeleton */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="space-y-1 min-w-0">
+            <Skeleton className="h-8 sm:h-10 md:h-12 w-64 sm:w-80" />
+            <Skeleton className="h-4 w-96 max-w-full" />
+          </div>
+          <Skeleton className="h-11 w-full sm:w-32 rounded-lg" />
+        </div>
+
+        {/* Stats Cards Skeleton */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="rounded-2xl bg-muted/30 p-6 backdrop-blur-sm">
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-9 w-16" />
+                <Skeleton className="h-3 w-32" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Table Section Skeleton */}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <Skeleton className="h-7 w-40 mb-2" />
+              <Skeleton className="h-4 w-64" />
+            </div>
+          </div>
+          
+          <div className="space-y-6">
+            <Skeleton className="h-14 w-full max-w-md rounded-2xl" />
+            {/* Mobile skeleton */}
+            <div className="md:hidden space-y-3">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <Skeleton key={i} className="h-48 w-full rounded-2xl" />
+              ))}
+            </div>
+            {/* Desktop skeleton */}
+            <div className="hidden md:block rounded-2xl bg-muted/20 p-4 space-y-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Skeleton key={i} className="h-16 w-full rounded-xl" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-1 flex-col gap-8 min-w-0 overflow-x-hidden">
       {/* Header Section */}
@@ -192,7 +247,7 @@ export default function JobsPage() {
         
         <JobsTable
           jobs={jobsData || []}
-          isLoading={isLoading}
+          isLoading={false}
           onEdit={handleEdit}
           onDelete={handleDelete}
         />

@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ApplicationsTable } from "./(components)/applications-table";
 import { UpdateStatusDialog } from "./(components)/update-status-dialog";
 import { DeleteApplicationDialog } from "./(components)/delete-application-dialog";
@@ -121,6 +122,66 @@ export default function ApplicationsPage() {
     };
   }, [applications]);
 
+  if (isLoading) {
+    return (
+      <div className="flex flex-1 flex-col gap-4 sm:gap-6 md:gap-8 min-w-0 max-w-full overflow-x-hidden">
+        {/* Header Section Skeleton */}
+        <div className="flex flex-col gap-2 sm:gap-4 min-w-0">
+          <div className="space-y-1 min-w-0">
+            <Skeleton className="h-7 sm:h-9 md:h-11 lg:h-12 w-48 sm:w-64" />
+            <Skeleton className="h-3 sm:h-4 w-80 max-w-full" />
+          </div>
+        </div>
+
+        {/* Stats Cards Skeleton */}
+        <div className="grid gap-3 sm:gap-4 md:gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 min-w-0">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div
+              key={i}
+              className={`rounded-xl sm:rounded-2xl bg-muted/30 p-3 sm:p-4 md:p-6 backdrop-blur-sm min-w-0 ${
+                i === 4 ? "col-span-2 sm:col-span-1" : ""
+              }`}
+            >
+              <div className="space-y-1 sm:space-y-2">
+                <Skeleton className="h-3 sm:h-4 w-16" />
+                <Skeleton className="h-6 sm:h-8 md:h-9 w-12" />
+                <Skeleton className="h-2.5 sm:h-3 w-24 hidden sm:block" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Table Section Skeleton */}
+        <div className="space-y-4 sm:space-y-6 min-w-0">
+          <div className="flex items-center justify-between min-w-0">
+            <div className="min-w-0">
+              <Skeleton className="h-6 sm:h-7 w-40 mb-2" />
+              <Skeleton className="h-3 sm:h-4 w-64 hidden sm:block" />
+            </div>
+          </div>
+
+          <div className="space-y-4 sm:space-y-6 min-w-0 max-w-full overflow-x-hidden">
+            <Skeleton className="h-12 sm:h-14 w-full max-w-md rounded-xl sm:rounded-2xl" />
+            {/* Desktop skeleton */}
+            <div className="hidden md:block rounded-lg bg-muted/20 p-1 backdrop-blur-sm min-w-0 w-full max-w-full overflow-hidden">
+              <div className="space-y-3">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Skeleton key={i} className="h-12 w-full rounded" />
+                ))}
+              </div>
+            </div>
+            {/* Mobile skeleton */}
+            <div className="md:hidden space-y-3 sm:space-y-4">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <Skeleton key={i} className="h-64 w-full rounded-xl sm:rounded-2xl" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-1 flex-col gap-4 sm:gap-6 md:gap-8 min-w-0 max-w-full overflow-x-hidden">
       {/* Header Section */}
@@ -193,7 +254,7 @@ export default function ApplicationsPage() {
 
         <ApplicationsTable
           applications={applications}
-          isLoading={isLoading}
+          isLoading={false}
           onUpdateStatus={handleUpdateStatus}
           onDelete={handleDelete}
           onViewResume={handleViewResume}

@@ -8,14 +8,12 @@ import {
   Package,
   ShoppingCart,
   Layers,
-  ClipboardCheck,
-  BarChart3,
-  Settings,
   Home,
   Truck,
   Briefcase,
   FileText,
   Newspaper,
+  MessageSquare,
 } from "lucide-react";
 import {
   Sidebar,
@@ -86,21 +84,6 @@ const menuItems = [
     ],
   },
   {
-    title: "Quality & Reports",
-    items: [
-      {
-        title: "Quality Control",
-        url: "/dashboard/quality",
-        icon: ClipboardCheck,
-      },
-      {
-        title: "Analytics",
-        url: "/dashboard/analytics",
-        icon: BarChart3,
-      },
-    ],
-  },
-  {
     title: "Content",
     items: [
       {
@@ -118,15 +101,10 @@ const menuItems = [
         url: "/dashboard/news",
         icon: Newspaper,
       },
-    ],
-  },
-  {
-    title: "Settings",
-    items: [
       {
-        title: "Settings",
-        url: "/dashboard/settings",
-        icon: Settings,
+        title: "Contact Messages",
+        url: "/dashboard/contact",
+        icon: MessageSquare,
       },
     ],
   },
