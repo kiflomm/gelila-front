@@ -133,7 +133,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <AuthProvider>{children}</AuthProvider>
         </ReactQueryProvider>
-        <Toaster />
+        <Toaster position="top-center" />
       </body>
     </html>
   );

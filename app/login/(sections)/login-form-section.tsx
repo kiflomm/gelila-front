@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Eye, EyeOff } from "lucide-react";
 import { useAuthStore, useAuthActions } from "@/stores/auth-store";
 import { loginUser } from "@/api/auth";
 
@@ -24,6 +25,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 export default function LoginFormSection() {
   const router = useRouter();
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { isLoading } = useAuthStore();
   const { login, setLoading, clearError } = useAuthActions();
 
@@ -50,6 +52,12 @@ export default function LoginFormSection() {
       
       toast.success("Login successful!", {
         description: "Welcome back!",
+        style: {
+          background: "white",
+          color: "#181411",
+          border: "1px solid #e5e7eb",
+        },
+        className: "custom-toast",
       });
       router.push("/dashboard");
     } catch (error: any) {
@@ -99,17 +107,31 @@ export default function LoginFormSection() {
             >
               Password *
             </Label>
-            <Input
-              id="password"
-              type="password"
-              {...register("password")}
-              className={`w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary ${
-                errors.password
-                  ? "border-destructive focus:border-destructive"
-                  : ""
-              }`}
-              placeholder="Enter your password"
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                {...register("password")}
+                className={`w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary pr-10 ${
+                  errors.password
+                    ? "border-destructive focus:border-destructive"
+                    : ""
+                }`}
+                placeholder="Enter your password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6C757D] dark:text-white/60 hover:text-[#212529] dark:hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
+              </button>
+            </div>
             {errors.password && (
               <p className="text-xs text-destructive mt-1">
                 {errors.password.message}

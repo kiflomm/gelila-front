@@ -21,7 +21,7 @@ export default function Footer() {
     { href: "/products", label: "Products" },
     { href: "/exports", label: "Exports" },
     { href: "/careers", label: "Careers" },
-    { href: "/blog", label: "Blog" },
+    { href: "/news", label: "Blog" },
   ];
 
   const subsidiaryLinks = companiesData.companies.map((company) => ({
@@ -132,40 +132,43 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Subsidiary Companies */}
-          <div>
-            <h4 className="font-semibold text-white mb-4 text-base">
-              Subsidiaries
-            </h4>
-            <ul className="flex flex-col gap-3">
-              {subsidiaryLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-gray-300 hover:text-primary transition-colors inline-block"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Subsidiaries & Legal Links */}
+          <div className="flex flex-col gap-6">
+            {/* Subsidiary Companies */}
+            <div>
+              <h4 className="font-semibold text-white mb-4 text-base">
+                Subsidiaries
+              </h4>
+              <ul className="flex flex-col gap-3">
+                {subsidiaryLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-gray-300 hover:text-primary transition-colors inline-block"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Legal Links */}
-          <div>
-            <h4 className="font-semibold text-white mb-4 text-base">Legal</h4>
-            <ul className="flex flex-col gap-3">
-              {legalLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-gray-300 hover:text-primary transition-colors inline-block"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            {/* Legal Links */}
+            <div>
+              <h4 className="font-semibold text-white mb-4 text-base">Legal</h4>
+              <ul className="flex flex-col gap-3">
+                {legalLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-gray-300 hover:text-primary transition-colors inline-block"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
