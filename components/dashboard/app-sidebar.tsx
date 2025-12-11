@@ -13,6 +13,8 @@ import {
   Settings,
   Home,
   Truck,
+  Briefcase,
+  FileText,
 } from "lucide-react";
 import {
   Sidebar,
@@ -94,6 +96,21 @@ const menuItems = [
         title: "Analytics",
         url: "/dashboard/analytics",
         icon: BarChart3,
+      },
+    ],
+  },
+  {
+    title: "Content",
+    items: [
+      {
+        title: "Jobs",
+        url: "/dashboard/jobs",
+        icon: Briefcase,
+      },
+      {
+        title: "Applications",
+        url: "/dashboard/jobs/applications",
+        icon: FileText,
       },
     ],
   },
