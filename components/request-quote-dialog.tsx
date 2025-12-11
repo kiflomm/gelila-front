@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,6 +16,50 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import { ordersApi } from "@/api/orders";
+
+const quoteRequestSchema = z.object({
+  fullName: z
+    .string()
+    .min(1, "Full name is required")
+    .min(2, "Full name must be at least 2 characters")
+    .max(100, "Full name must be less than 100 characters"),
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Please provide a valid email address"),
+  phone: z
+    .string()
+    .optional()
+    .or(z.literal("")),
+  companyName: z
+    .string()
+    .optional()
+    .or(z.literal(""))
+    .refine((val) => !val || val.length <= 100, {
+      message: "Company name must be less than 100 characters",
+    }),
+  productServiceInterest: z
+    .string()
+    .min(1, "Product/Service interest is required")
+    .min(3, "Product/Service interest must be at least 3 characters")
+    .max(200, "Product/Service interest must be less than 200 characters"),
+  estimatedQuantity: z
+    .string()
+    .optional()
+    .or(z.literal(""))
+    .refine((val) => !val || val.length <= 100, {
+      message: "Estimated quantity must be less than 100 characters",
+    }),
+  additionalDetails: z
+    .string()
+    .min(1, "Additional details are required")
+    .min(10, "Additional details must be at least 10 characters")
+    .max(5000, "Additional details must be less than 5000 characters"),
+});
+
+type QuoteRequestFormData = z.infer<typeof quoteRequestSchema>;
 
 interface RequestQuoteDialogProps {
   trigger?: React.ReactNode;
@@ -26,18 +73,52 @@ export function RequestQuoteDialog({
   className,
 }: RequestQuoteDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<QuoteRequestFormData>({
+    resolver: zodResolver(quoteRequestSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      companyName: "",
+      productServiceInterest: "",
+      estimatedQuantity: "",
+      additionalDetails: "",
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      alert("Thank you for your quote request! We'll get back to you soon.");
-      (e.target as HTMLFormElement).reset();
+  const onSubmit = async (data: QuoteRequestFormData) => {
+    try {
+      await ordersApi.submitQuoteRequest({
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone || undefined,
+        companyName: data.companyName || undefined,
+        productServiceInterest: data.productServiceInterest,
+        estimatedQuantity: data.estimatedQuantity || undefined,
+        additionalDetails: data.additionalDetails,
+      });
+
+      toast.success("Quote request submitted!", {
+        description: "Thank you for your quote request! We'll get back to you soon.",
+      });
+
+      // Reset form and close dialog
+      reset();
       setIsOpen(false);
-    }, 1000);
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to submit quote request. Please try again.";
+      toast.error("Submission failed", {
+        description: errorMessage,
+      });
+    }
   };
 
   const defaultTrigger = (
@@ -77,7 +158,7 @@ export function RequestQuoteDialog({
           </DialogDescription>
         </DialogHeader>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-4 sm:gap-6 mt-4"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
@@ -91,10 +172,13 @@ export function RequestQuoteDialog({
               <Input
                 id="quote-name"
                 type="text"
-                required
+                {...register("fullName")}
                 className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary"
                 placeholder="John Doe"
               />
+              {errors.fullName && (
+                <p className="mt-1 text-xs text-red-500">{errors.fullName.message}</p>
+              )}
             </div>
             <div>
               <Label
@@ -106,10 +190,13 @@ export function RequestQuoteDialog({
               <Input
                 id="quote-email"
                 type="email"
-                required
+                {...register("email")}
                 className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary"
                 placeholder="john@example.com"
               />
+              {errors.email && (
+                <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>
+              )}
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
@@ -123,9 +210,13 @@ export function RequestQuoteDialog({
               <Input
                 id="quote-phone"
                 type="tel"
+                {...register("phone")}
                 className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary"
                 placeholder="+251 111 223 344"
               />
+              {errors.phone && (
+                <p className="mt-1 text-xs text-red-500">{errors.phone.message}</p>
+              )}
             </div>
             <div>
               <Label
@@ -137,9 +228,13 @@ export function RequestQuoteDialog({
               <Input
                 id="quote-company"
                 type="text"
+                {...register("companyName")}
                 className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary"
                 placeholder="Your Company"
               />
+              {errors.companyName && (
+                <p className="mt-1 text-xs text-red-500">{errors.companyName.message}</p>
+              )}
             </div>
           </div>
           <div>
@@ -152,10 +247,13 @@ export function RequestQuoteDialog({
             <Input
               id="quote-product"
               type="text"
-              required
+              {...register("productServiceInterest")}
               className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary"
               placeholder="What product or service are you interested in?"
             />
+            {errors.productServiceInterest && (
+              <p className="mt-1 text-xs text-red-500">{errors.productServiceInterest.message}</p>
+            )}
           </div>
           <div>
             <Label
@@ -167,9 +265,13 @@ export function RequestQuoteDialog({
             <Input
               id="quote-quantity"
               type="text"
+              {...register("estimatedQuantity")}
               className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary"
               placeholder="e.g., 100 units, 500 kg, etc."
             />
+            {errors.estimatedQuantity && (
+              <p className="mt-1 text-xs text-red-500">{errors.estimatedQuantity.message}</p>
+            )}
           </div>
           <div>
             <Label
@@ -181,10 +283,13 @@ export function RequestQuoteDialog({
             <Textarea
               id="quote-message"
               rows={6}
-              required
+              {...register("additionalDetails")}
               className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary"
               placeholder="Tell us more about your requirements, timeline, or any specific needs..."
             />
+            {errors.additionalDetails && (
+              <p className="mt-1 text-xs text-red-500">{errors.additionalDetails.message}</p>
+            )}
           </div>
           <Button
             type="submit"

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
-  Factory,
   Package,
   ShoppingCart,
   Layers,
@@ -41,16 +40,6 @@ const menuItems = [
   {
     title: "Operations",
     items: [
-      {
-        title: "Production",
-        url: "/dashboard/production",
-        icon: Factory,
-      },
-      {
-        title: "Inventory",
-        url: "/dashboard/inventory",
-        icon: Package,
-      },
       {
         title: "Orders",
         url: "/dashboard/orders",

@@ -60,16 +60,16 @@ export function ContactMessagesTable({
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
-        <Skeleton className="h-14 w-full max-w-md rounded-2xl" />
-        <div className="hidden md:block rounded-2xl bg-muted/20 p-4 space-y-3">
+      <div className="space-y-4">
+        <Skeleton className="h-12 w-full max-w-md rounded-xl" />
+        <div className="hidden md:block rounded-lg bg-muted/20 p-3 space-y-2">
           {Array.from({ length: 5 }).map((_, i) => (
-            <Skeleton key={i} className="h-16 w-full rounded-xl" />
+            <Skeleton key={i} className="h-12 w-full rounded-lg" />
           ))}
         </div>
-        <div className="md:hidden space-y-3">
+        <div className="md:hidden space-y-2">
           {Array.from({ length: 3 }).map((_, i) => (
-            <Skeleton key={i} className="h-64 w-full rounded-2xl" />
+            <Skeleton key={i} className="h-48 w-full rounded-xl" />
           ))}
         </div>
       </div>
@@ -91,7 +91,7 @@ export function ContactMessagesTable({
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6 min-w-0 max-w-full overflow-x-hidden">
+    <div className="space-y-3 sm:space-y-4 min-w-0 max-w-full overflow-x-hidden">
       {/* Search */}
       <div className="relative w-full min-w-0">
         <Input
@@ -99,40 +99,40 @@ export function ContactMessagesTable({
           placeholder="Search messages..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-9 sm:pl-10 h-12 sm:h-14 rounded-xl sm:rounded-2xl bg-background border-border min-w-0 text-sm sm:text-base"
+          className="pl-9 h-10 rounded-lg bg-background border-border min-w-0 text-sm"
         />
-        <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 size-4 sm:size-5 text-muted-foreground shrink-0" />
+        <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground shrink-0" />
       </div>
 
-      {/* Mobile View */}
-      <div className="md:hidden space-y-3 sm:space-y-4">
+      {/* Mobile View - Cards */}
+      <div className="md:hidden space-y-2">
         {filteredMessages.map((msg) => (
           <div
             key={msg.id}
-            className="rounded-xl sm:rounded-2xl bg-muted/20 p-4 sm:p-6 space-y-3 sm:space-y-4 backdrop-blur-sm min-w-0"
+            className="rounded-lg bg-card border border-border p-3 space-y-2.5 min-w-0"
           >
-            <div className="space-y-1 min-w-0">
-              <h3 className="font-semibold text-base sm:text-lg truncate">{msg.name}</h3>
-              <p className="text-xs sm:text-sm font-medium text-foreground truncate">{msg.subject}</p>
+            <div className="space-y-0.5 min-w-0">
+              <h3 className="font-semibold text-sm truncate">{msg.name}</h3>
+              <p className="text-xs font-medium text-foreground truncate">{msg.subject}</p>
             </div>
 
-            <div className="space-y-2 text-xs sm:text-sm min-w-0">
+            <div className="space-y-1.5 text-xs min-w-0">
               {msg.email && (
-                <div className="flex items-center gap-2 text-muted-foreground min-w-0">
-                  <Mail className="size-3.5 sm:size-4 shrink-0" />
-                  <span className="truncate">{msg.email}</span>
+                <div className="flex items-center gap-1.5 text-muted-foreground min-w-0">
+                  <Mail className="size-3 shrink-0" />
+                  <span className="truncate text-xs">{msg.email}</span>
                 </div>
               )}
-              <div className="flex items-center gap-2 text-muted-foreground min-w-0">
-                <Phone className="size-3.5 sm:size-4 shrink-0" />
-                <span className="truncate">{msg.phone}</span>
+              <div className="flex items-center gap-1.5 text-muted-foreground min-w-0">
+                <Phone className="size-3 shrink-0" />
+                <span className="truncate text-xs">{msg.phone}</span>
               </div>
-              <div className="flex items-center gap-2 text-muted-foreground min-w-0">
-                <Calendar className="size-3.5 sm:size-4 shrink-0" />
-                <span className="truncate">{formatDate(msg.createdAt)}</span>
+              <div className="flex items-center gap-1.5 text-muted-foreground min-w-0">
+                <Calendar className="size-3 shrink-0" />
+                <span className="truncate text-xs">{formatDate(msg.createdAt)}</span>
               </div>
-              <div className="pt-2 border-t border-border min-w-0">
-                <p className="text-muted-foreground text-xs sm:text-sm line-clamp-3">
+              <div className="pt-1.5 border-t border-border min-w-0">
+                <p className="text-muted-foreground text-xs line-clamp-2">
                   {msg.message}
                 </p>
               </div>
@@ -143,91 +143,94 @@ export function ContactMessagesTable({
                 variant="outline"
                 size="sm"
                 onClick={() => onView(msg)}
-                className="flex-1 text-xs sm:text-sm h-8 sm:h-9"
+                className="flex-1 text-xs h-8"
               >
-                View Message
+                <Eye className="size-3 mr-1" />
+                View
               </Button>
               <Button
-                variant="outline"
+                variant="destructive"
                 size="sm"
                 onClick={() => onDelete(msg)}
-                className="h-8 sm:h-9 w-9 sm:w-10 p-0 text-destructive hover:text-destructive"
-                title="Delete"
+                className="flex-1 text-xs h-8"
               >
-                <Trash2 className="size-4" />
+                <Trash2 className="size-3 mr-1" />
+                Delete
               </Button>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Desktop/Tablet Table */}
-      <div className="hidden md:block rounded-lg bg-muted/20 p-1 backdrop-blur-sm min-w-0 w-full max-w-full overflow-hidden">
-        <Table className="min-w-[800px] lg:min-w-[900px] xl:min-w-full">
+      {/* Desktop View */}
+      <div className="hidden md:block rounded-lg bg-muted/20 p-3 backdrop-blur-sm overflow-x-auto">
+        <Table>
           <TableHeader>
-            <TableRow className="border-border hover:bg-transparent">
-              <TableHead className="font-semibold min-w-[120px] h-7 px-2 py-1 text-[10px] uppercase tracking-wider">Name</TableHead>
-              <TableHead className="font-semibold min-w-[180px] h-7 px-2 py-1 text-[10px] uppercase tracking-wider">Contact</TableHead>
-              <TableHead className="font-semibold min-w-[200px] h-7 px-2 py-1 text-[10px] uppercase tracking-wider">Subject</TableHead>
-              <TableHead className="font-semibold min-w-[250px] h-7 px-2 py-1 text-[10px] uppercase tracking-wider">Message</TableHead>
-              <TableHead className="font-semibold min-w-[120px] h-7 px-2 py-1 text-[10px] uppercase tracking-wider">Date</TableHead>
-              <TableHead className="font-semibold text-right min-w-[60px] h-7 px-2 py-1 text-[10px] uppercase tracking-wider">Actions</TableHead>
+            <TableRow className="border-border/50 hover:bg-transparent">
+              <TableHead className="w-[120px] h-10 text-xs font-medium">Name</TableHead>
+              <TableHead className="w-[180px] h-10 text-xs font-medium">Contact</TableHead>
+              <TableHead className="h-10 text-xs font-medium">Subject</TableHead>
+              <TableHead className="h-10 text-xs font-medium">Message</TableHead>
+              <TableHead className="w-[120px] h-10 text-xs font-medium">Date</TableHead>
+              <TableHead className="w-[60px] h-10 text-right text-xs font-medium">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredMessages.map((msg) => (
               <TableRow
                 key={msg.id}
-                className="border-border hover:bg-muted/40 transition-colors"
+                className="border-border/50 h-12"
               >
-                <TableCell className="font-medium min-w-0 px-2 py-1.5">
-                  <div className="truncate text-xs">{msg.name}</div>
+                <TableCell className="font-medium text-xs py-2">
+                  <div className="truncate">{msg.name}</div>
                 </TableCell>
-                <TableCell className="min-w-0 px-2 py-1.5">
+                <TableCell className="py-2">
                   <div className="space-y-0.5">
                     {msg.email && (
                       <div className="flex items-center gap-1 text-[11px] text-muted-foreground min-w-0">
-                        <Mail className="size-2.5 shrink-0" />
-                        <span className="truncate">{msg.email}</span>
+                        <Mail className="size-3 shrink-0" />
+                        <span className="truncate max-w-[150px]">{msg.email}</span>
                       </div>
                     )}
                     <div className="flex items-center gap-1 text-[11px] text-muted-foreground min-w-0">
-                      <Phone className="size-2.5 shrink-0" />
-                      <span className="truncate">{msg.phone}</span>
+                      <Phone className="size-3 shrink-0" />
+                      <span className="truncate max-w-[150px]">{msg.phone}</span>
                     </div>
                   </div>
                 </TableCell>
-                <TableCell className="min-w-0 px-2 py-1.5">
-                  <div className="truncate text-xs font-medium">{msg.subject}</div>
+                <TableCell className="py-2">
+                  <div className="truncate text-xs font-medium max-w-[200px]">
+                    {msg.subject}
+                  </div>
                 </TableCell>
-                <TableCell className="min-w-0 px-2 py-1.5">
-                  <div className="truncate text-[11px] text-muted-foreground line-clamp-2">
+                <TableCell className="py-2">
+                  <div className="truncate text-[11px] text-muted-foreground line-clamp-2 max-w-[250px]">
                     {msg.message}
                   </div>
                 </TableCell>
-                <TableCell className="text-muted-foreground min-w-0 px-2 py-1.5">
+                <TableCell className="text-muted-foreground py-2">
                   <div className="truncate text-[11px]">{formatDate(msg.createdAt)}</div>
                 </TableCell>
-                <TableCell className="text-right min-w-0 px-2 py-1.5">
+                <TableCell className="text-right py-2">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="h-6 w-6 p-0"
+                        className="h-8 w-8 p-0"
                       >
-                        <MoreVertical className="size-3.5" />
+                        <MoreVertical className="size-4" />
                         <span className="sr-only">Open menu</span>
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
+                    <DropdownMenuContent align="end" className="w-40">
                       <DropdownMenuItem onClick={() => onView(msg)}>
                         <Eye className="size-4 mr-2" />
                         View Message
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={() => onDelete(msg)}
-                        variant="destructive"
+                        className="text-destructive focus:text-destructive"
                       >
                         <Trash2 className="size-4 mr-2" />
                         Delete
@@ -242,8 +245,8 @@ export function ContactMessagesTable({
       </div>
 
       {filteredMessages.length === 0 && searchQuery && (
-        <div className="text-center py-8 sm:py-12">
-          <p className="text-sm sm:text-base text-muted-foreground px-4">
+        <div className="text-center py-8">
+          <p className="text-sm text-muted-foreground">
             No messages found matching "{searchQuery}"
           </p>
         </div>

@@ -91,56 +91,43 @@ export default function ContactMessagesPage() {
 
   if (isLoading) {
     return (
-      <div className="flex flex-1 flex-col gap-4 sm:gap-6 md:gap-8 min-w-0 max-w-full overflow-x-hidden">
+      <div className="flex flex-1 flex-col gap-4 sm:gap-6 min-w-0 max-w-full overflow-x-hidden">
         {/* Header Section Skeleton */}
-        <div className="flex flex-col gap-2 sm:gap-4 min-w-0">
-          <div className="space-y-1 min-w-0">
-            <Skeleton className="h-7 sm:h-9 md:h-11 lg:h-12 w-48 sm:w-64" />
-            <Skeleton className="h-3 sm:h-4 w-80 max-w-full" />
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+          <div className="space-y-0.5 min-w-0">
+            <Skeleton className="h-7 sm:h-9 md:h-10 w-48 sm:w-64" />
+            <Skeleton className="h-3 sm:h-4 w-72 max-w-full" />
           </div>
         </div>
 
         {/* Stats Cards Skeleton */}
-        <div className="grid gap-3 sm:gap-4 md:gap-6 grid-cols-2 sm:grid-cols-4 min-w-0">
+        <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4 min-w-0">
           {Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}
-              className="rounded-xl sm:rounded-2xl bg-muted/30 p-3 sm:p-4 md:p-6 backdrop-blur-sm min-w-0"
+              className="rounded-lg bg-muted/30 p-3 sm:p-4 backdrop-blur-sm min-w-0"
             >
-              <div className="space-y-1 sm:space-y-2">
-                <Skeleton className="h-3 sm:h-4 w-16" />
-                <Skeleton className="h-6 sm:h-8 md:h-9 w-12" />
-                <Skeleton className="h-2.5 sm:h-3 w-24 hidden sm:block" />
+              <div className="space-y-1.5">
+                <Skeleton className="h-3 w-16" />
+                <Skeleton className="h-7 w-12" />
+                <Skeleton className="h-2.5 w-24" />
               </div>
             </div>
           ))}
         </div>
 
         {/* Table Section Skeleton */}
-        <div className="space-y-4 sm:space-y-6 min-w-0">
-          <div className="flex items-center justify-between min-w-0">
-            <div className="min-w-0">
-              <Skeleton className="h-6 sm:h-7 w-40 mb-2" />
-              <Skeleton className="h-3 sm:h-4 w-64 hidden sm:block" />
-            </div>
+        <div className="space-y-3 sm:space-y-4 min-w-0">
+          <Skeleton className="h-10 w-full rounded-lg" />
+          <div className="hidden md:block rounded-lg bg-muted/20 p-3 space-y-2">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Skeleton key={i} className="h-12 w-full rounded-lg" />
+            ))}
           </div>
-
-          <div className="space-y-4 sm:space-y-6 min-w-0 max-w-full overflow-x-hidden">
-            <Skeleton className="h-12 sm:h-14 w-full max-w-md rounded-xl sm:rounded-2xl" />
-            {/* Desktop skeleton */}
-            <div className="hidden md:block rounded-lg bg-muted/20 p-1 backdrop-blur-sm min-w-0 w-full max-w-full overflow-hidden">
-              <div className="space-y-3">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Skeleton key={i} className="h-12 w-full rounded" />
-                ))}
-              </div>
-            </div>
-            {/* Mobile skeleton */}
-            <div className="md:hidden space-y-3 sm:space-y-4">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <Skeleton key={i} className="h-64 w-full rounded-xl sm:rounded-2xl" />
-              ))}
-            </div>
+          <div className="md:hidden space-y-2">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <Skeleton key={i} className="h-48 w-full rounded-lg" />
+            ))}
           </div>
         </div>
       </div>
@@ -148,11 +135,11 @@ export default function ContactMessagesPage() {
   }
 
   return (
-    <div className="flex flex-1 flex-col gap-4 sm:gap-6 md:gap-8 min-w-0 max-w-full overflow-x-hidden">
+    <div className="flex flex-1 flex-col gap-4 sm:gap-6 min-w-0 max-w-full overflow-x-hidden">
       {/* Header Section */}
-      <div className="flex flex-col gap-2 sm:gap-4 min-w-0">
-        <div className="space-y-1 min-w-0">
-          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+        <div className="space-y-0.5 min-w-0">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">
             Contact Messages
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground">
@@ -163,52 +150,43 @@ export default function ContactMessagesPage() {
 
       {/* Stats Cards */}
       {stats.total > 0 && (
-        <div className="grid gap-3 sm:gap-4 md:gap-6 grid-cols-2 sm:grid-cols-4 min-w-0">
-          <div className="rounded-xl sm:rounded-2xl bg-muted/30 p-3 sm:p-4 md:p-6 backdrop-blur-sm min-w-0">
-            <div className="space-y-1 sm:space-y-2">
-              <p className="text-[10px] xs:text-xs sm:text-sm font-medium text-muted-foreground truncate">Total</p>
-              <p className="text-xl sm:text-2xl md:text-3xl font-bold">{stats.total}</p>
-              <p className="text-[10px] xs:text-xs text-muted-foreground truncate hidden sm:block">All messages</p>
+        <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4 min-w-0">
+          <div className="rounded-lg bg-muted/30 p-3 sm:p-4 backdrop-blur-sm min-w-0">
+            <div className="space-y-1.5">
+              <p className="text-xs sm:text-sm font-medium text-muted-foreground truncate">Total</p>
+              <p className="text-2xl sm:text-3xl font-bold">{stats.total}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground truncate">All messages</p>
             </div>
           </div>
 
-          <div className="rounded-xl sm:rounded-2xl bg-muted/30 p-3 sm:p-4 md:p-6 backdrop-blur-sm min-w-0">
-            <div className="space-y-1 sm:space-y-2">
-              <p className="text-[10px] xs:text-xs sm:text-sm font-medium text-muted-foreground truncate">Today</p>
-              <p className="text-xl sm:text-2xl md:text-3xl font-bold">{stats.today}</p>
-              <p className="text-[10px] xs:text-xs text-muted-foreground truncate hidden sm:block">Received today</p>
+          <div className="rounded-lg bg-muted/30 p-3 sm:p-4 backdrop-blur-sm min-w-0">
+            <div className="space-y-1.5">
+              <p className="text-xs sm:text-sm font-medium text-muted-foreground truncate">Today</p>
+              <p className="text-2xl sm:text-3xl font-bold">{stats.today}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground truncate">Received today</p>
             </div>
           </div>
 
-          <div className="rounded-xl sm:rounded-2xl bg-muted/30 p-3 sm:p-4 md:p-6 backdrop-blur-sm min-w-0">
-            <div className="space-y-1 sm:space-y-2">
-              <p className="text-[10px] xs:text-xs sm:text-sm font-medium text-muted-foreground truncate">This Week</p>
-              <p className="text-xl sm:text-2xl md:text-3xl font-bold">{stats.thisWeek}</p>
-              <p className="text-[10px] xs:text-xs text-muted-foreground truncate hidden sm:block">Last 7 days</p>
+          <div className="rounded-lg bg-muted/30 p-3 sm:p-4 backdrop-blur-sm min-w-0">
+            <div className="space-y-1.5">
+              <p className="text-xs sm:text-sm font-medium text-muted-foreground truncate">This Week</p>
+              <p className="text-2xl sm:text-3xl font-bold">{stats.thisWeek}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground truncate">Last 7 days</p>
             </div>
           </div>
 
-          <div className="rounded-xl sm:rounded-2xl bg-muted/30 p-3 sm:p-4 md:p-6 backdrop-blur-sm min-w-0">
-            <div className="space-y-1 sm:space-y-2">
-              <p className="text-[10px] xs:text-xs sm:text-sm font-medium text-muted-foreground truncate">This Month</p>
-              <p className="text-xl sm:text-2xl md:text-3xl font-bold">{stats.thisMonth}</p>
-              <p className="text-[10px] xs:text-xs text-muted-foreground truncate hidden sm:block">Last 30 days</p>
+          <div className="rounded-lg bg-muted/30 p-3 sm:p-4 backdrop-blur-sm min-w-0">
+            <div className="space-y-1.5">
+              <p className="text-xs sm:text-sm font-medium text-muted-foreground truncate">This Month</p>
+              <p className="text-2xl sm:text-3xl font-bold">{stats.thisMonth}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground truncate">Last 30 days</p>
             </div>
           </div>
         </div>
       )}
 
       {/* Table Section */}
-      <div className="space-y-4 sm:space-y-6 min-w-0">
-        <div className="flex items-center justify-between min-w-0">
-          <div className="min-w-0">
-            <h2 className="text-lg sm:text-xl font-semibold">All Messages</h2>
-            <p className="text-xs sm:text-sm text-muted-foreground mt-1 hidden sm:block">
-              View and manage all contact messages
-            </p>
-          </div>
-        </div>
-
+      <div className="space-y-3 sm:space-y-4 min-w-0">
         <ContactMessagesTable
           messages={messages}
           isLoading={false}
