@@ -1,11 +1,4 @@
-interface Sector {
-  id: string;
-  name: string;
-  title: string;
-  description: string;
-  location?: string;
-  status?: string;
-}
+import type { Sector } from "@/api/sectors";
 
 interface DescriptionSectionProps {
   sector: Sector;
@@ -27,11 +20,13 @@ export default function DescriptionSection({
             </p>
           )}
         </div>
-        <div className="pt-2">
-          <p className="text-[#424242] dark:text-white/80 text-base sm:text-lg leading-relaxed">
-            {sector.description}
-          </p>
-        </div>
+        {sector.description && (
+          <div className="pt-2">
+            <p className="text-[#424242] dark:text-white/80 text-base sm:text-lg leading-relaxed">
+              {sector.description}
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );
