@@ -24,6 +24,17 @@ export function useAdminSectors() {
   });
 }
 
+export function useCreateSector() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: (data: CreateSectorData) => sectorsApi.createSector(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["sectors"] });
+    },
+  });
+}
+
 export function useUpdateSector() {
   const queryClient = useQueryClient();
   

@@ -89,6 +89,35 @@ export const sectorsApi = {
     return response.data;
   },
 
+  createSector: async (data: CreateSectorData): Promise<Sector> => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    if (data.slug !== undefined) {
+      formData.append("slug", data.slug);
+    }
+    formData.append("title", data.title);
+    formData.append("status", data.status);
+    formData.append("location", data.location);
+    formData.append("heroDescription", data.heroDescription);
+    formData.append("description", data.description);
+    if (data.imageUrl !== undefined) {
+      formData.append("imageUrl", data.imageUrl);
+    }
+    if (data.imageAlt !== undefined) {
+      formData.append("imageAlt", data.imageAlt);
+    }
+    if (data.image) {
+      formData.append("image", data.image);
+    }
+
+    const response = await axiosProtectedClient.post("/sectors", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  },
+
   updateSector: async (
     id: number,
     data: UpdateSectorData
