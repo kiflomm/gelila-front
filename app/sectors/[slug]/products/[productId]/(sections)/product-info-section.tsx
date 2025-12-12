@@ -6,21 +6,26 @@ import { RequestQuoteDialog } from "@/components/request-quote-dialog";
 interface Product {
   id: number;
   name: string;
-  description: string;
-  image: string;
-  alt: string;
 }
 
 interface ProductInfoSectionProps {
-  product: Product;
+  product: {
+    id: number;
+    name: string;
+    description: string;
+    image: string;
+    alt: string;
+  };
   sectorId: string;
   sectorName: string;
+  products?: Product[];
 }
 
 export default function ProductInfoSection({
   product,
   sectorId,
   sectorName,
+  products = [],
 }: ProductInfoSectionProps) {
   // Service-based sectors that should show "Contact Us" instead of "Request Quote"
   const serviceBasedSectors = ["bus-transport"];
@@ -86,6 +91,8 @@ export default function ProductInfoSection({
                   </Button>
                 ) : (
                   <RequestQuoteDialog
+                    products={products}
+                    defaultProductId={product.id}
                     trigger={
                       <Button className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:opacity-90! transition-opacity hover:bg-primary!">
                         <span className="truncate">Request Quote</span>

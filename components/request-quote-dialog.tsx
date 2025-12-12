@@ -16,8 +16,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toast } from "sonner";
 import { ordersApi } from "@/api/orders";
+import { Controller } from "react-hook-form";
 
 const quoteRequestSchema = z.object({
   fullName: z
@@ -61,21 +69,35 @@ const quoteRequestSchema = z.object({
 
 type QuoteRequestFormData = z.infer<typeof quoteRequestSchema>;
 
+interface Product {
+  id: number;
+  name: string;
+}
+
 interface RequestQuoteDialogProps {
   trigger?: React.ReactNode;
   variant?: "default" | "outline";
   className?: string;
+  products?: Product[];
+  defaultProductId?: number;
 }
 
 export function RequestQuoteDialog({
   trigger,
   variant = "default",
   className,
+  products = [],
+  defaultProductId,
 }: RequestQuoteDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const defaultProduct = defaultProductId 
+    ? products.find(p => p.id === defaultProductId)
+    : products[0];
+  
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<QuoteRequestFormData>({
@@ -85,7 +107,7 @@ export function RequestQuoteDialog({
       email: "",
       phone: "",
       companyName: "",
-      productServiceInterest: "",
+      productServiceInterest: defaultProduct?.name || "",
       estimatedQuantity: "",
       additionalDetails: "",
     },
@@ -244,13 +266,37 @@ export function RequestQuoteDialog({
             >
               Product/Service Interest *
             </Label>
-            <Input
-              id="quote-product"
-              type="text"
-              {...register("productServiceInterest")}
-              className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary"
-              placeholder="What product or service are you interested in?"
-            />
+            {products.length > 0 ? (
+              <Controller
+                name="productServiceInterest"
+                control={control}
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger
+                      id="quote-product"
+                      className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white focus:ring-primary focus:border-primary"
+                    >
+                      <SelectValue placeholder="Select a product or service" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {products.map((product) => (
+                        <SelectItem key={product.id} value={product.name}>
+                          {product.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            ) : (
+              <Input
+                id="quote-product"
+                type="text"
+                {...register("productServiceInterest")}
+                className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] focus:ring-primary focus:border-primary"
+                placeholder="What product or service are you interested in?"
+              />
+            )}
             {errors.productServiceInterest && (
               <p className="mt-1 text-xs text-red-500">{errors.productServiceInterest.message}</p>
             )}
