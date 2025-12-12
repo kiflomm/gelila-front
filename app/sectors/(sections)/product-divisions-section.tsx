@@ -5,16 +5,25 @@ import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useProductsBySectorId } from "@/hooks/use-sectors";
-import { useSectorsData, useActiveSectorFilter } from "@/stores/sectors/sectors-store";
-import type { Product } from "@/api/sectors";
+import productsData from "@/data/products.json";
+import navigationData from "@/data/navigation.json";
+
+interface ProductDivisionsSectionProps {
+  activeSector: string | null;
+}
 
 function ScrollableProductGrid({
   products,
-  sectorSlug,
+  sectorId,
 }: {
-  products: Product[];
-  sectorSlug: string;
+  products: Array<{
+    id: number;
+    name: string;
+    description: string;
+    image: string;
+    alt: string;
+  }>;
+  sectorId: string;
 }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -56,10 +65,6 @@ function ScrollableProductGrid({
     });
   };
 
-  if (products.length === 0) {
-    return null;
-  }
-
   return (
     <div className="relative">
       {/* Previous Button - Hidden on mobile, shown on larger screens */}
@@ -98,14 +103,14 @@ function ScrollableProductGrid({
         {products.map((product) => (
           <Link
             key={product.id}
-            href={`/sectors/${sectorSlug}/products/${product.id}`}
+            href={`/sectors/${sectorId}/products/${product.id}`}
             className="group relative flex flex-col rounded-xl sm:rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 shrink-0 w-[280px] sm:w-[300px] md:w-[310px] lg:w-[330px] xl:w-[360px] snap-start"
           >
             {/* Image Container with Overlay */}
             <div className="relative w-full aspect-square overflow-hidden bg-gray-100 dark:bg-gray-900">
               <Image
-                src={product.imageUrl || "/placeholder.png"}
-                alt={product.imageAlt || product.name}
+                src={product.image}
+                alt={product.alt}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                 sizes="(max-width: 640px) 280px, (max-width: 768px) 300px, (max-width: 1024px) 310px, (max-width: 1280px) 330px, 360px"
@@ -154,73 +159,86 @@ function ScrollableProductGrid({
   );
 }
 
-function SectorSection({ sector }: { sector: any }) {
-  const { data: products, isLoading } = useProductsBySectorId(sector.id);
-  const activeSector = useActiveSectorFilter();
+export default function ProductDivisionsSection({
+  activeSector,
+}: ProductDivisionsSectionProps) {
+  // Get sector grouping from navigation data
+  const sectorSections = navigationData.dropdowns.sectors.sections;
 
-  // Don't show if filtering and this isn't the active sector
-  if (activeSector !== null && activeSector !== sector.id) {
-    return null;
-  }
-
-  if (isLoading) {
-    return (
-      <div className="mt-6 sm:mt-8 md:mt-10 lg:mt-12">
-        <div className="h-8 w-64 bg-gray-200 dark:bg-gray-800 rounded animate-pulse mb-4" />
-        <div className="flex gap-4 overflow-x-auto">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="w-[280px] h-[400px] bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse shrink-0" />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (!products || products.length === 0) {
-    return null;
-  }
-
-  return (
-    <div
-      id={`sector-${sector.id}`}
-      className="mt-6 sm:mt-8 md:mt-10 lg:mt-12"
-    >
-      <div className="flex items-center justify-between px-2 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-5 lg:pb-6">
-        <Link
-          href={`/sectors/${sector.slug}`}
-          className="group flex items-center gap-3 hover:gap-4 transition-all"
-        >
-          <h3 className="text-[#212121] dark:text-white text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold leading-tight tracking-[-0.015em] group-hover:text-primary transition-colors">
-            {sector.title}
-          </h3>
-          <ArrowRight className="size-5 sm:size-6 text-primary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
-        </Link>
-      </div>
-      <ScrollableProductGrid products={products} sectorSlug={sector.slug} />
-    </div>
+  // Create a map of sector IDs to their full data
+  const sectorsMap = new Map(
+    productsData.sectors.map((sector) => [sector.id, sector])
   );
-}
 
-export default function ProductDivisionsSection() {
-  const { sectors } = useSectorsData();
-  const activeSector = useActiveSectorFilter();
+  // Group sectors by category
+  const groupedSectors = sectorSections.map((section) => {
+    const sectorsInSection = section.items
+      .map((item) => {
+        // Extract sector ID from href (e.g., "/sectors/footwear" -> "footwear")
+        const sectorId = item.href.replace("/sectors/", "");
+        const sector = sectorsMap.get(sectorId);
+        return sector;
+      })
+      .filter((sector) => sector !== undefined);
 
-  if (!sectors || sectors.length === 0) {
-    return null;
-  }
+    return {
+      title: section.title,
+      sectors: sectorsInSection,
+    };
+  });
 
   // Filter sectors if a specific sector is selected
-  const displaySectors = activeSector
-    ? sectors.filter((s) => s.id === activeSector)
-    : sectors;
+  let displayGroups = groupedSectors;
+  if (activeSector) {
+    displayGroups = groupedSectors
+      .map((group) => ({
+        ...group,
+        sectors: group.sectors.filter((sector) => sector.id === activeSector),
+      }))
+      .filter((group) => group.sectors.length > 0);
+  }
 
   return (
     <div className="mt-4 sm:mt-6 md:mt-8 px-2 sm:px-4 md:px-6 lg:px-8">
-      {displaySectors.map((sector) => (
-        <SectorSection
-          key={sector.id}
-          sector={sector}
-        />
+      {displayGroups.map((group, groupIndex) => (
+        <div
+          key={group.title}
+          className={groupIndex > 0 ? "mt-10 sm:mt-12 md:mt-16 lg:mt-20" : ""}
+        >
+          {/* Section Header */}
+          <div className="mb-6 sm:mb-8 md:mb-10 px-2 sm:px-4 md:px-6">
+            <h2 className="text-[#212121] dark:text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight tracking-[-0.015em]">
+              {group.title}
+            </h2>
+          </div>
+
+          {/* Sectors in this group */}
+          {group.sectors.map((sector, sectorIndex) => (
+            <div
+              key={sector.id}
+              id={`sector-${sector.id}`}
+              className={
+                sectorIndex > 0 ? "mt-6 sm:mt-8 md:mt-10 lg:mt-12" : ""
+              }
+            >
+              <div className="flex items-center justify-between px-2 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-5 lg:pb-6">
+                <Link
+                  href={`/sectors/${sector.id}`}
+                  className="group flex items-center gap-3 hover:gap-4 transition-all"
+                >
+                  <h3 className="text-[#212121] dark:text-white text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold leading-tight tracking-[-0.015em] group-hover:text-primary transition-colors">
+                    {sector.title}
+                  </h3>
+                  <ArrowRight className="size-5 sm:size-6 text-primary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+                </Link>
+              </div>
+              <ScrollableProductGrid
+                products={sector.products}
+                sectorId={sector.id}
+              />
+            </div>
+          ))}
+        </div>
       ))}
     </div>
   );

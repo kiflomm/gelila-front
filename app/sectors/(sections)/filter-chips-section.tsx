@@ -1,15 +1,24 @@
 "use client";
 
-import { useSectorsData, useActiveSectorFilter, useSectorsActions } from "@/stores/sectors/sectors-store";
+import productsData from "@/data/products.json";
 
-export default function FilterChipsSection() {
-  const { sectors } = useSectorsData();
-  const activeSector = useActiveSectorFilter();
-  const { setActiveSectorFilter } = useSectorsActions();
+interface FilterChipsSectionProps {
+  activeSector: string | null;
+  setActiveSector: (sector: string | null) => void;
+}
 
-  const handleSectorClick = (sectorId: number) => {
+export default function FilterChipsSection({
+  activeSector,
+  setActiveSector,
+}: FilterChipsSectionProps) {
+  const allSectors = productsData.sectors.map((sector) => ({
+    id: sector.id,
+    name: sector.name,
+  }));
+
+  const handleSectorClick = (sectorId: string) => {
     const newActiveSector = activeSector === sectorId ? null : sectorId;
-    setActiveSectorFilter(newActiveSector);
+    setActiveSector(newActiveSector);
     // Scroll to the section if filtering
     if (newActiveSector) {
       setTimeout(() => {
@@ -21,13 +30,9 @@ export default function FilterChipsSection() {
     }
   };
 
-  if (!sectors || sectors.length === 0) {
-    return null;
-  }
-
   return (
     <div className="flex gap-2 sm:gap-3 md:gap-4 px-2 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-5 mb-4 sm:mb-6 md:mb-8 overflow-x-auto w-full scrollbar-hide -mx-2 sm:-mx-4 md:mx-0 snap-x snap-mandatory">
-      {sectors.map((sector) => {
+      {allSectors.map((sector) => {
         const isActive = activeSector === sector.id;
         return (
           <button

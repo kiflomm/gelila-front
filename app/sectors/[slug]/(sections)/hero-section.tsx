@@ -2,20 +2,39 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { RequestQuoteDialog } from "@/components/request-quote-dialog";
-import type { Sector } from "@/api/sectors";
+
+interface Sector {
+  id: string;
+  name: string;
+  title: string;
+  heroDescription?: string;
+  description: string;
+  products: Array<{
+    id: number;
+    name: string;
+    image: string;
+    alt: string;
+  }>;
+}
 
 interface HeroSectionProps {
   sector: Sector;
 }
 
 export default function HeroSection({ sector }: HeroSectionProps) {
-  // Use sector image or fallback to a default image
-  const heroImage = sector.imageUrl || "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=2070&auto=format&fit=crop";
-  const heroAlt = sector.imageAlt || sector.title || "Sector image";
+  // Use first product image as hero background, or fallback to a default image
+  const heroImage =
+    sector.products.length > 0
+      ? sector.products[0].image
+      : "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=2070&auto=format&fit=crop";
+  const heroAlt =
+    sector.products.length > 0
+      ? sector.products[0].alt
+      : "Modern industrial manufacturing facility";
 
   // Service-based sectors that should show "Contact Us" instead of "Request Quote"
   const serviceBasedSectors = ["bus-transport"];
-  const isServiceBased = serviceBasedSectors.includes(sector.slug);
+  const isServiceBased = serviceBasedSectors.includes(sector.id);
 
   return (
     <section className="w-full">
@@ -34,7 +53,7 @@ export default function HeroSection({ sector }: HeroSectionProps) {
               {sector.title}
             </h1>
             <h2 className="text-white/90 text-base font-normal leading-normal sm:text-lg">
-              {sector.heroDescription || sector.description || ""}
+              {sector.heroDescription || sector.description}
             </h2>
           </div>
           <div className="flex flex-wrap gap-3">

@@ -1,47 +1,48 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import type { Product } from "@/api/sectors";
+
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  alt: string;
+}
+
+interface Sector {
+  id: string;
+  name: string;
+  title: string;
+  products: Product[];
+}
 
 interface ProductsSectionProps {
-  products: Product[];
-  sectorSlug: string;
+  sector: Sector;
 }
 
 function ProductGrid({
   products,
-  sectorSlug,
+  sectorId,
 }: {
-  products: Array<{
-    id: number;
-    name: string;
-    description: string;
-    imageUrl: string | null;
-    imageAlt: string;
-  }>;
-  sectorSlug: string;
+  products: Product[];
+  sectorId: string;
 }) {
-  if (products.length === 0) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-gray-500 dark:text-gray-400">No products available for this sector.</p>
-      </div>
-    );
-  }
-
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
       {products.map((product) => (
         <Link
           key={product.id}
-          href={`/sectors/${sectorSlug}/products/${product.id}`}
+          href={`/sectors/${sectorId}/products/${product.id}`}
           className="group relative flex flex-col rounded-xl sm:rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2"
         >
           {/* Image Container with Overlay */}
           <div className="relative w-full aspect-square overflow-hidden bg-gray-100 dark:bg-gray-900">
             <Image
-              src={product.imageUrl || "/placeholder.png"}
-              alt={product.imageAlt || product.name}
+              src={product.image}
+              alt={product.alt}
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-110"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -83,7 +84,7 @@ function ProductGrid({
   );
 }
 
-export default function ProductsSection({ products, sectorSlug }: ProductsSectionProps) {
+export default function ProductsSection({ sector }: ProductsSectionProps) {
   return (
     <div className="w-full">
       <div className="mb-6 sm:mb-8 md:mb-10">
@@ -91,10 +92,10 @@ export default function ProductsSection({ products, sectorSlug }: ProductsSectio
           Our Products
         </h2>
         <p className="text-[#6C757D] dark:text-white/70 text-base sm:text-lg leading-relaxed">
-          Explore our range of products
+          Explore our range of {sector.name.toLowerCase()} products
         </p>
       </div>
-      <ProductGrid products={products} sectorSlug={sectorSlug} />
+      <ProductGrid products={sector.products} sectorId={sector.id} />
     </div>
   );
 }
