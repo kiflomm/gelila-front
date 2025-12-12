@@ -9,6 +9,8 @@ interface Sector {
   title: string;
   heroDescription?: string;
   description: string;
+  image?: string;
+  imageAlt?: string;
   products: Array<{
     id: number;
     name: string;
@@ -22,15 +24,15 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ sector }: HeroSectionProps) {
-  // Use first product image as hero background, or fallback to a default image
+  // Use sector's own image as hero background, fallback to first product image, then default
   const heroImage =
-    sector.products.length > 0
-      ? sector.products[0].image
-      : "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=2070&auto=format&fit=crop";
+    sector.image ||
+    (sector.products.length > 0 ? sector.products[0].image : undefined) ||
+    "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=2070&auto=format&fit=crop";
   const heroAlt =
-    sector.products.length > 0
-      ? sector.products[0].alt
-      : "Modern industrial manufacturing facility";
+    sector.imageAlt ||
+    (sector.products.length > 0 ? sector.products[0].alt : undefined) ||
+    "Modern industrial manufacturing facility";
 
   // Service-based sectors that should show "Contact Us" instead of "Request Quote"
   const serviceBasedSectors = ["bus-transport"];

@@ -63,7 +63,13 @@ export function SectorForm({ sector, onSubmit, onCancel, isSubmitting = false }:
   const onSubmitForm = async (data: SectorFormData) => {
     const submitData: UpdateSectorData = {
       ...data,
+      // Only include image if it's a new File upload
       image: data.image instanceof File ? data.image : undefined,
+      // Always preserve the existing imageUrl if no new image is uploaded
+      // This ensures the backend doesn't clear the image
+      ...(!(data.image instanceof File) ? {
+        imageUrl: sector.imageUrl || undefined,
+      } : {}),
     };
     await onSubmit(submitData);
   };
