@@ -55,7 +55,13 @@ export function ProductForm({ product, onSubmit, onCancel, isSubmitting = false 
   const onSubmitForm = async (data: ProductFormData) => {
     const submitData: CreateProductData | UpdateProductData = {
       ...data,
+      // Only include image if it's a new File upload
       image: data.image instanceof File ? data.image : undefined,
+      // For updates, always preserve the existing imageUrl if no new image is uploaded
+      // This ensures the backend doesn't clear the image
+      ...(product && !(data.image instanceof File) ? {
+        imageUrl: product.imageUrl || undefined,
+      } : {}),
     };
     await onSubmit(submitData);
   };

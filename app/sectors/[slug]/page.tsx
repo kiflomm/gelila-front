@@ -69,6 +69,22 @@ export default async function SectorPage({ params }: SectorPageProps) {
     notFound();
   }
   
+  // Helper function to construct full image URL
+  const getImageUrl = (imageUrl: string | null | undefined): string => {
+    if (!imageUrl) return "";
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+      return imageUrl;
+    }
+    // Backend serves images at /uploads/* (before global prefix)
+    // So we need to use the base URL without /api/v1
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || '';
+    // Remove /api/v1 if present, or use the base URL
+    const baseUrl = apiBaseUrl.replace('/api/v1', '').replace(/\/$/, '');
+    // Ensure imageUrl starts with /uploads
+    const cleanImageUrl = imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
+    return `${baseUrl}${cleanImageUrl}`;
+  };
+
   // Transform API data to match the format expected by sections
   const transformedSector = {
     id: sector.slug,
@@ -78,13 +94,13 @@ export default async function SectorPage({ params }: SectorPageProps) {
     location: sector.location,
     heroDescription: sector.heroDescription,
     description: sector.description,
-    image: sector.imageUrl,
+    image: getImageUrl(sector.imageUrl),
     imageAlt: sector.imageAlt,
     products: sector.products.map((product) => ({
       id: product.id,
       name: product.name,
       description: product.description,
-      image: product.imageUrl || "",
+      image: getImageUrl(product.imageUrl),
       alt: product.imageAlt || product.name,
     })),
   };

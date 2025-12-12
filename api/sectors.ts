@@ -178,6 +178,7 @@ export const sectorsApi = {
     if (data.description !== undefined) {
       formData.append("description", data.description);
     }
+    // Always include imageUrl if provided (to preserve existing image when no new upload)
     if (data.imageUrl !== undefined) {
       formData.append("imageUrl", data.imageUrl);
     }
@@ -187,6 +188,7 @@ export const sectorsApi = {
     if (data.orderIndex !== undefined) {
       formData.append("orderIndex", data.orderIndex.toString());
     }
+    // Only append image if it's a new File upload
     if (data.image) {
       formData.append("image", data.image);
     }

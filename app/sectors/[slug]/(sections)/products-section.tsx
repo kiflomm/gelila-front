@@ -40,13 +40,20 @@ function ProductGrid({
         >
           {/* Image Container with Overlay */}
           <div className="relative w-full aspect-square overflow-hidden bg-gray-100 dark:bg-gray-900">
-            <Image
-              src={product.image}
-              alt={product.alt}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-110"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
+            {product.image ? (
+              <Image
+                src={product.image}
+                alt={product.alt}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                unoptimized={product.image.startsWith('http') || product.image.startsWith('/uploads')}
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-muted">
+                <span className="text-muted-foreground">No image</span>
+              </div>
+            )}
             {/* Gradient Overlay on Hover */}
             <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             {/* Primary Accent Bar */}
