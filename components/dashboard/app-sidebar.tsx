@@ -57,18 +57,23 @@ const menuItems = [
       },
       {
         title: "Food Processing",
-        url: "/dashboard/sectors/food",
+        url: "/dashboard/sectors/food-processing",
         icon: Package,
       },
       {
+        title: "Textile",
+        url: "/dashboard/sectors/textile-apparel",
+        icon: Layers,
+      },
+      {
         title: "Bus Assembly",
-        url: "/dashboard/sectors/bus",
+        url: "/dashboard/sectors/bus-assembly",
         icon: Truck,
       },
       {
-        title: "Textile",
-        url: "/dashboard/sectors/textile",
-        icon: Layers,
+        title: "Public Transport",
+        url: "/dashboard/sectors/bus-transport",
+        icon: Truck,
       },
     ],
   },
