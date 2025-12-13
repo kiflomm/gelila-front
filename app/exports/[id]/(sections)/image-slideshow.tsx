@@ -43,8 +43,20 @@ export default function ImageSlideshow({ images, title }: ImageSlideshowProps) {
     return null;
   }
 
+  // Helper to check if image should be unoptimized (uploaded images from backend)
+  const shouldUnoptimize = (url: string) => {
+    return url.includes('/uploads') || 
+           url.includes('localhost') || 
+           url.includes('unsplash.com') ||
+           !url.startsWith('https://') && !url.startsWith('http://localhost');
+  };
+
   // If only one image, show it without carousel
   if (images.length === 1) {
+    // Skip if URL is empty
+    if (!images[0].url || images[0].url.trim() === '') {
+      return null;
+    }
     return (
       <div className="relative w-full aspect-video rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl ring-2 ring-primary/10 dark:ring-primary/20 group">
         <Image
@@ -53,7 +65,7 @@ export default function ImageSlideshow({ images, title }: ImageSlideshowProps) {
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
           priority
-          unoptimized={images[0].url.includes("unsplash.com")}
+          unoptimized={shouldUnoptimize(images[0].url)}
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
@@ -79,7 +91,9 @@ export default function ImageSlideshow({ images, title }: ImageSlideshowProps) {
           className="w-full"
         >
           <CarouselContent className="-ml-1 sm:-ml-2 md:-ml-4">
-            {images.map((image, index) => (
+            {images
+              .filter((image) => image.url && image.url.trim() !== '') // Filter out empty URLs
+              .map((image, index) => (
               <CarouselItem
                 key={index}
                 className="pl-1 sm:pl-2 md:pl-4 basis-full"
@@ -92,7 +106,7 @@ export default function ImageSlideshow({ images, title }: ImageSlideshowProps) {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     priority={index === 0}
                     sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-                    unoptimized={image.url.includes("unsplash.com")}
+                    unoptimized={shouldUnoptimize(image.url)}
                   />
                   {/* Modern gradient overlay */}
                   <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
