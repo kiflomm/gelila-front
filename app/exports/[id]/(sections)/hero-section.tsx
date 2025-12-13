@@ -2,6 +2,11 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { RequestQuoteDialog } from "@/components/request-quote-dialog";
 
+interface Product {
+  id: number;
+  name: string;
+}
+
 interface ExportPortfolio {
   id: string;
   title: string;
@@ -9,6 +14,7 @@ interface ExportPortfolio {
   description: string;
   imageUrl: string;
   imageAlt: string;
+  products?: Product[];
 }
 
 interface HeroSectionProps {
@@ -16,6 +22,8 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ portfolio }: HeroSectionProps) {
+  const productsList = (portfolio.products || []).map(p => ({ id: p.id, name: p.name }));
+  
   return (
     <section className="w-full">
       <div className="relative flex min-h-[600px] lg:min-h-[700px] w-full flex-col gap-6 bg-cover bg-center bg-no-repeat items-start justify-center px-4 sm:px-6 lg:px-10 xl:px-20 py-16 sm:py-20 lg:py-24 overflow-hidden">
@@ -40,6 +48,7 @@ export default function HeroSection({ portfolio }: HeroSectionProps) {
           </div>
           <div className="flex flex-wrap gap-3">
             <RequestQuoteDialog
+              products={productsList}
               trigger={
                 <Button className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-primary! text-white text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:opacity-90! transition-opacity hover:bg-primary!">
                   <span className="truncate">Request Quote</span>
