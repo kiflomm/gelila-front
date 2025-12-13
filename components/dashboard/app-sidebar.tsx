@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useAdminImports } from "@/hooks/use-imports";
 import { useAdminSectors } from "@/hooks/use-sectors";
+import { useAdminExports } from "@/hooks/use-exports";
 
 // Icon mapping for imports based on title
 const getImportIcon = (title: string) => {
@@ -68,10 +69,29 @@ const getSectorIcon = (slug: string) => {
   return Layers; // Default icon
 };
 
+// Icon mapping for exports based on title
+const getExportIcon = (title: string) => {
+  const titleLower = title.toLowerCase();
+  if (titleLower.includes("shoe") || titleLower.includes("sole") || titleLower.includes("footwear")) {
+    return Package;
+  }
+  if (titleLower.includes("textile") || titleLower.includes("garment")) {
+    return Shirt;
+  }
+  if (titleLower.includes("electronics") || titleLower.includes("components")) {
+    return Cpu;
+  }
+  if (titleLower.includes("building") || titleLower.includes("material")) {
+    return Building2;
+  }
+  return Globe; // Default icon
+};
+
 export function AppSidebar() {
   const pathname = usePathname();
   const { data: sectors = [], isLoading: sectorsLoading } = useAdminSectors();
   const { data: imports = [], isLoading: importsLoading } = useAdminImports();
+  const { data: exports = [], isLoading: exportsLoading } = useAdminExports();
 
   // Build sectors menu items dynamically
   const sectorsItems = sectors.map((sector) => ({
@@ -85,6 +105,13 @@ export function AppSidebar() {
     title: importItem.title,
     url: `/dashboard/imports/${importItem.slug}`,
     icon: getImportIcon(importItem.title),
+  }));
+
+  // Build exports menu items dynamically
+  const exportsItems = exports.map((exportItem) => ({
+    title: exportItem.title,
+    url: `/dashboard/exports/${exportItem.slug}`,
+    icon: getExportIcon(exportItem.title),
   }));
 
   const menuItems = [
@@ -115,6 +142,10 @@ export function AppSidebar() {
     {
       title: "Imports",
       items: importsItems,
+    },
+    {
+      title: "Exports",
+      items: exportsItems,
     },
     {
       title: "Content",
@@ -181,10 +212,11 @@ export function AppSidebar() {
                 ) : (
                   group.items.map((item) => {
                     const Icon = item.icon;
-                    // Check if active: exact match or if it's a sector/import and pathname starts with the base path
+                    // Check if active: exact match or if it's a sector/import/export and pathname starts with the base path
                     const isActive = pathname === item.url || 
                       (group.title === "Sectors" && pathname.startsWith("/dashboard/sectors/") && pathname !== "/dashboard/sectors") ||
-                      (group.title === "Imports" && pathname.startsWith("/dashboard/imports/") && pathname !== "/dashboard/imports");
+                      (group.title === "Imports" && pathname.startsWith("/dashboard/imports/") && pathname !== "/dashboard/imports") ||
+                      (group.title === "Exports" && pathname.startsWith("/dashboard/exports/") && pathname !== "/dashboard/exports");
                     return (
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton
