@@ -43,3 +43,4 @@ export type CreateNewsFormData = z.infer<typeof createNewsSchema>;
 export type UpdateNewsFormData = z.infer<typeof updateNewsSchema>;
 export type NewsFormData = CreateNewsFormData | UpdateNewsFormData;
 
+

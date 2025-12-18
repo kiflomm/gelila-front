@@ -49,17 +49,17 @@ export default function DashboardLayout({
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
-          <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 px-4">
-            <div className="flex items-center gap-3 flex-1 min-w-0">
-              <SidebarTrigger className="-ml-1 size-8 hover:bg-accent transition-colors" />
-              <Separator orientation="vertical" className="h-5" />
+          <header className="sticky top-0 z-40 flex h-12 sm:h-14 shrink-0 items-center gap-2 sm:gap-3 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 px-2 sm:px-4">
+            <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+              <SidebarTrigger className="-ml-1 size-7 sm:size-8 hover:bg-accent transition-colors" />
+              <Separator orientation="vertical" className="h-4 sm:h-5 hidden sm:block" />
               <Breadcrumb>
-                <BreadcrumbList className="gap-1.5">
+                <BreadcrumbList className="gap-1 sm:gap-1.5">
                   <BreadcrumbItem className="hidden md:block">
                     <BreadcrumbLink asChild>
                       <Link
                         href="/dashboard"
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        className="text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
                       >
                         Dashboard
                       </Link>
@@ -67,18 +67,18 @@ export default function DashboardLayout({
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block text-muted-foreground" />
                   <BreadcrumbItem>
-                    <BreadcrumbPage className="text-sm font-medium text-foreground">
+                    <BreadcrumbPage className="text-xs sm:text-sm font-medium text-foreground">
                       Overview
                     </BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               <DashboardUserMenu />
             </div>
           </header>
-          <div className="flex flex-1 flex-col gap-3 p-3 md:p-4 lg:p-5">
+          <div className="flex flex-1 flex-col gap-2 sm:gap-3 p-2 sm:p-3 md:p-4 lg:p-5">
             {children}
           </div>
         </SidebarInset>
