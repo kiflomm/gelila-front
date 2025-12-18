@@ -4,6 +4,9 @@ import DescriptionSection from "./(sections)/description-section";
 import ProductsSection from "./(sections)/products-section";
 import { getProductSchema, getBreadcrumbSchema } from "@/lib/seo";
 
+// This page is fully dynamic to always show the latest import data
+export const dynamic = "force-dynamic";
+
 async function getImportBySlug(slug: string) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {
@@ -20,38 +23,10 @@ async function getImportBySlug(slug: string) {
   }
 }
 
-async function getAllImports() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-  try {
-    const response = await fetch(`${apiUrl}/imports`, {
-      cache: 'no-store',
-    });
-    if (!response.ok) {
-      return [];
-    }
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching imports:', error);
-    return [];
-  }
-}
-
 interface ImportPageProps {
   params: Promise<{
     slug: string;
   }>;
-}
-
-export async function generateStaticParams() {
-  try {
-    const imports = await getAllImports();
-    return imports.map((importItem: any) => ({
-      slug: importItem.slug,
-    }));
-  } catch (error) {
-    console.error("Error fetching imports for static params:", error);
-    return [];
-  }
 }
 
 export default async function ImportPage({ params }: ImportPageProps) {

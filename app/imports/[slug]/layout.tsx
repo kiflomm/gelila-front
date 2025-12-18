@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+// This layout is dynamic because it fetches import data for metadata
+export const dynamic = "force-dynamic";
+
 async function getImportBySlug(slug: string) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {

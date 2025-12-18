@@ -1,6 +1,9 @@
 import HeroSection from "./(sections)/hero-section";
 import FilterableExportsSection from "./(sections)/filterable-exports-section";
 
+// This page is fully dynamic to always show the latest exports data
+export const dynamic = "force-dynamic";
+
 async function getAllExports() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {

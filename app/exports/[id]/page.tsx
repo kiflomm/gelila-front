@@ -8,7 +8,6 @@ import { getProductSchema, getBreadcrumbSchema } from "@/lib/seo";
 
 // Force dynamic rendering to ensure updated images appear immediately
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 async function getExportBySlug(slug: string) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';

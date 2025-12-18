@@ -5,6 +5,9 @@ import HeroSection from "./(sections)/hero-section";
 import ProductInfoSection from "./(sections)/product-info-section";
 import { getProductSchema, getBreadcrumbSchema } from "@/lib/seo";
 
+// This page is fully dynamic to always show the latest product data
+export const dynamic = "force-dynamic";
+
 async function getSectorBySlug(slug: string) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {
@@ -37,33 +40,6 @@ interface ProductPageProps {
     slug: string;
     productId: string;
   }>;
-}
-
-export async function generateStaticParams() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-  try {
-    const response = await fetch(`${apiUrl}/sectors`, {
-      cache: 'no-store',
-    });
-    if (!response.ok) {
-      return [];
-    }
-    const sectors = await response.json();
-    
-    const params: Array<{ slug: string; productId: string }> = [];
-    sectors.forEach((sector: any) => {
-      sector.products.forEach((product: any) => {
-        params.push({
-          slug: sector.slug,
-          productId: product.id.toString(),
-        });
-      });
-    });
-    return params;
-  } catch (error) {
-    console.error("Error fetching sectors for static params:", error);
-    return [];
-  }
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {

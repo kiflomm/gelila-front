@@ -4,6 +4,9 @@ import DescriptionSection from "./(sections)/description-section";
 import ProductsSection from "./(sections)/products-section";
 import { getProductSchema, getBreadcrumbSchema } from "@/lib/seo";
 
+// This page is fully dynamic to always show the latest sector data
+export const dynamic = "force-dynamic";
+
 async function getSectorBySlug(slug: string) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {
@@ -20,38 +23,10 @@ async function getSectorBySlug(slug: string) {
   }
 }
 
-async function getAllSectors() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-  try {
-    const response = await fetch(`${apiUrl}/sectors`, {
-      cache: 'no-store',
-    });
-    if (!response.ok) {
-      return [];
-    }
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching sectors:', error);
-    return [];
-  }
-}
-
 interface SectorPageProps {
   params: Promise<{
     slug: string;
   }>;
-}
-
-export async function generateStaticParams() {
-  try {
-    const sectors = await getAllSectors();
-    return sectors.map((sector: any) => ({
-      slug: sector.slug,
-    }));
-  } catch (error) {
-    console.error("Error fetching sectors for static params:", error);
-    return [];
-  }
 }
 
 export default async function SectorPage({ params }: SectorPageProps) {

@@ -2,6 +2,9 @@ import HeroSection from "./(sections)/hero-section";
 import CommitmentSection from "./(sections)/commitment-section";
 import FilterableImportsSection from "./(sections)/filterable-imports-section";
 
+// This page is fully dynamic to always show the latest imports data
+export const dynamic = "force-dynamic";
+
 async function getPageConfig() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
   try {
