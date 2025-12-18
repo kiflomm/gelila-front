@@ -1,0 +1,39 @@
+{
+  "links": [
+    {
+      "name": "Facebook",
+      "label": "Facebook",
+      "href": "https://facebook.com",
+      "icon": "Facebook"
+    },
+    {
+      "name": "Twitter",
+      "label": "Twitter",
+      "href": "https://twitter.com",
+      "icon": "Twitter"
+    },
+    {
+      "name": "LinkedIn",
+      "label": "LinkedIn",
+      "href": "https://linkedin.com",
+      "icon": "Linkedin"
+    },
+    {
+      "name": "Instagram",
+      "label": "Instagram",
+      "href": "https://instagram.com",
+      "icon": "Instagram"
+    },
+    {
+      "name": "YouTube",
+      "label": "YouTube",
+      "href": "https://youtube.com",
+      "icon": "Youtube"
+    }
+  ],
+  "seo": {
+    "twitter": "https://twitter.com/gelila",
+    "linkedin": "https://linkedin.com/company/gelila"
+  }
+}
+

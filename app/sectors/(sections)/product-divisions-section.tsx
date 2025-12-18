@@ -5,8 +5,9 @@ import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import productsData from "@/data/products.json";
+import { useSectors } from "@/hooks/use-sectors";
 import navigationData from "@/data/navigation.json";
+import { getImageUrl } from "@/app/news/[slug]/utils";
 
 interface ProductDivisionsSectionProps {
   activeSector: string | null;
@@ -20,8 +21,8 @@ function ScrollableProductGrid({
     id: number;
     name: string;
     description: string;
-    image: string;
-    alt: string;
+    imageUrl: string | null;
+    imageAlt: string | null;
   }>;
   sectorId: string;
 }) {
@@ -109,8 +110,8 @@ function ScrollableProductGrid({
             {/* Image Container with Overlay */}
             <div className="relative w-full aspect-square overflow-hidden bg-gray-100 dark:bg-gray-900">
               <Image
-                src={product.image}
-                alt={product.alt}
+                src={product.imageUrl ? getImageUrl(product.imageUrl) : "/placeholder-product.jpg"}
+                alt={product.imageAlt || product.name}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                 sizes="(max-width: 640px) 280px, (max-width: 768px) 300px, (max-width: 1024px) 310px, (max-width: 1280px) 330px, 360px"
@@ -162,21 +163,23 @@ function ScrollableProductGrid({
 export default function ProductDivisionsSection({
   activeSector,
 }: ProductDivisionsSectionProps) {
+  const { data: sectors, isLoading } = useSectors();
+
   // Get sector grouping from navigation data
   const sectorSections = navigationData.dropdowns.sectors.sections;
 
-  // Create a map of sector IDs to their full data
+  // Create a map of sector slugs to their full data
   const sectorsMap = new Map(
-    productsData.sectors.map((sector) => [sector.id, sector])
+    sectors?.map((sector) => [sector.slug, sector]) || []
   );
 
   // Group sectors by category
   const groupedSectors = sectorSections.map((section) => {
     const sectorsInSection = section.items
       .map((item) => {
-        // Extract sector ID from href (e.g., "/sectors/footwear" -> "footwear")
-        const sectorId = item.href.replace("/sectors/", "");
-        const sector = sectorsMap.get(sectorId);
+        // Extract sector slug from href (e.g., "/sectors/footwear" -> "footwear")
+        const sectorSlug = item.href.replace("/sectors/", "");
+        const sector = sectorsMap.get(sectorSlug);
         return sector;
       })
       .filter((sector) => sector !== undefined);
@@ -193,9 +196,13 @@ export default function ProductDivisionsSection({
     displayGroups = groupedSectors
       .map((group) => ({
         ...group,
-        sectors: group.sectors.filter((sector) => sector.id === activeSector),
+        sectors: group.sectors.filter((sector) => sector.slug === activeSector),
       }))
       .filter((group) => group.sectors.length > 0);
+  }
+
+  if (isLoading || !sectors || sectors.length === 0) {
+    return null;
   }
 
   return (
@@ -215,15 +222,15 @@ export default function ProductDivisionsSection({
           {/* Sectors in this group */}
           {group.sectors.map((sector, sectorIndex) => (
             <div
-              key={sector.id}
-              id={`sector-${sector.id}`}
+              key={sector.slug}
+              id={`sector-${sector.slug}`}
               className={
                 sectorIndex > 0 ? "mt-6 sm:mt-8 md:mt-10 lg:mt-12" : ""
               }
             >
               <div className="flex items-center justify-between px-2 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-5 lg:pb-6">
                 <Link
-                  href={`/sectors/${sector.id}`}
+                  href={`/sectors/${sector.slug}`}
                   className="group flex items-center gap-3 hover:gap-4 transition-all"
                 >
                   <h3 className="text-[#212121] dark:text-white text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold leading-tight tracking-[-0.015em] group-hover:text-primary transition-colors">
@@ -234,7 +241,7 @@ export default function ProductDivisionsSection({
               </div>
               <ScrollableProductGrid
                 products={sector.products}
-                sectorId={sector.id}
+                sectorId={sector.slug}
               />
             </div>
           ))}

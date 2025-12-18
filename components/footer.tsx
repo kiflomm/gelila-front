@@ -12,6 +12,16 @@ import {
 } from "lucide-react";
 import footerData from "@/data/footer.json";
 import companiesData from "@/data/companies/companies.json";
+import socialMediaData from "@/data/social-media.json";
+
+// Icon mapping for social media
+const iconMap: Record<string, typeof Facebook> = {
+  Facebook,
+  Twitter,
+  Linkedin,
+  Instagram,
+  Youtube,
+};
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -36,13 +46,11 @@ export default function Footer() {
     { href: "/site-map", label: "Sitemap" },
   ];
 
-  const socialLinks = [
-    { href: "https://facebook.com", label: "Facebook", icon: Facebook },
-    { href: "https://twitter.com", label: "Twitter", icon: Twitter },
-    { href: "https://linkedin.com", label: "LinkedIn", icon: Linkedin },
-    { href: "https://instagram.com", label: "Instagram", icon: Instagram },
-    { href: "https://youtube.com", label: "YouTube", icon: Youtube },
-  ];
+  const socialLinks = socialMediaData.links.map((link) => ({
+    href: link.href,
+    label: link.label,
+    icon: iconMap[link.icon],
+  }));
 
   return (
     <footer className="bg-gray-800 dark:bg-gray-900 border-t border-gray-700 dark:border-gray-800">

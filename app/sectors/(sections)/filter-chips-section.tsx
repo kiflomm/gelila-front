@@ -1,6 +1,6 @@
 "use client";
 
-import productsData from "@/data/products.json";
+import { useSectors } from "@/hooks/use-sectors";
 
 interface FilterChipsSectionProps {
   activeSector: string | null;
@@ -11,10 +11,12 @@ export default function FilterChipsSection({
   activeSector,
   setActiveSector,
 }: FilterChipsSectionProps) {
-  const allSectors = productsData.sectors.map((sector) => ({
-    id: sector.id,
+  const { data: sectors, isLoading } = useSectors();
+
+  const allSectors = sectors?.map((sector) => ({
+    id: sector.slug,
     name: sector.name,
-  }));
+  })) || [];
 
   const handleSectorClick = (sectorId: string) => {
     const newActiveSector = activeSector === sectorId ? null : sectorId;
@@ -29,6 +31,10 @@ export default function FilterChipsSection({
       }, 100);
     }
   };
+
+  if (isLoading || allSectors.length === 0) {
+    return null;
+  }
 
   return (
     <div className="flex gap-2 sm:gap-3 md:gap-4 px-2 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-5 mb-4 sm:mb-6 md:mb-8 overflow-x-auto w-full scrollbar-hide -mx-2 sm:-mx-4 md:mx-0 snap-x snap-mandatory">

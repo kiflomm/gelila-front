@@ -2,6 +2,8 @@
  * SEO utility functions and constants
  */
 
+import socialMediaData from "@/data/social-media.json";
+
 export const siteConfig = {
   name: "Gelila Manufacturing PLC",
   description:
@@ -9,8 +11,8 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://gelila.com",
   ogImage: "/og-image.jpg",
   links: {
-    twitter: "https://twitter.com/gelila",
-    linkedin: "https://linkedin.com/company/gelila",
+    twitter: socialMediaData.seo.twitter,
+    linkedin: socialMediaData.seo.linkedin,
   },
 };
 

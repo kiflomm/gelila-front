@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import productsData from "@/data/products.json";
+import { sectorsApi } from "@/api/sectors";
+import { getImageUrl } from "@/app/news/[slug]/utils";
 
 interface SectorLayoutProps {
   children: React.ReactNode;
@@ -13,7 +14,15 @@ export async function generateMetadata({
   params,
 }: SectorLayoutProps): Promise<Metadata> {
   const { slug } = await params;
-  const sector = productsData.sectors.find((s) => s.id === slug);
+  
+  let sector;
+  try {
+    sector = await sectorsApi.getSectorBySlug(slug);
+  } catch {
+    return {
+      title: "Sector Not Found - Gelila Manufacturing PLC",
+    };
+  }
 
   if (!sector) {
     return {
@@ -28,8 +37,8 @@ export async function generateMetadata({
   };
 
   const ogImage =
-    sector.products && sector.products.length > 0
-      ? sector.products[0].image
+    sector.products && sector.products.length > 0 && sector.products[0].imageUrl
+      ? getImageUrl(sector.products[0].imageUrl)
       : "/og-image.jpg";
 
   return {
@@ -84,7 +93,13 @@ export default async function SectorLayout({
   params,
 }: SectorLayoutProps) {
   const { slug } = await params;
-  const sector = productsData.sectors.find((s) => s.id === slug);
+  
+  let sector;
+  try {
+    sector = await sectorsApi.getSectorBySlug(slug);
+  } catch {
+    notFound();
+  }
 
   if (!sector) {
     notFound();

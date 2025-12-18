@@ -1,11 +1,11 @@
 import { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/seo";
-import productsData from "@/data/products.json";
-import exportPortfolioData from "@/data/export-portfolio.json";
-import newsData from "@/data/news.json";
-import jobsData from "@/data/jobs.json";
+import { sectorsApi } from "@/api/sectors";
+import { exportsApi } from "@/api/exports";
+import { newsApi } from "@/api/news";
+import { jobsApi } from "@/api/jobs";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url;
   const currentDate = new Date();
 
@@ -79,60 +79,60 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // Dynamic sector routes
-  const sectorRoutes: MetadataRoute.Sitemap = productsData.sectors.map(
-    (sector) => ({
-      url: `${baseUrl}/sectors/${sector.id}`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
+  // Fetch dynamic data from APIs
+  try {
+    // Dynamic sector routes
+    const sectors = await sectorsApi.getAllSectors();
+    const sectorRoutes: MetadataRoute.Sitemap = sectors.map((sector) => ({
+      url: `${baseUrl}/sectors/${sector.slug}`,
+      lastModified: sector.updatedAt ? new Date(sector.updatedAt) : currentDate,
+      changeFrequency: "monthly" as const,
       priority: 0.8,
-    })
-  );
+    }));
 
-  // Dynamic export portfolio routes
-  const exportRoutes: MetadataRoute.Sitemap =
-    exportPortfolioData.exportPortfolios.map((portfolio) => ({
-      url: `${baseUrl}/exports/${portfolio.id}`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
+    // Dynamic export portfolio routes
+    const exports = await exportsApi.getAllExports();
+    const exportRoutes: MetadataRoute.Sitemap = exports.map((exportItem) => ({
+      url: `${baseUrl}/exports/${exportItem.slug}`,
+      lastModified: exportItem.updatedAt ? new Date(exportItem.updatedAt) : currentDate,
+      changeFrequency: "monthly" as const,
       priority: 0.7,
     }));
 
-  // Dynamic news article routes
-  const newsRoutes: MetadataRoute.Sitemap = newsData.newsItems.map(
-    (newsItem) => {
-      // Parse date string (format: "Oct 26, 2023") to Date object
-      let lastModified = currentDate;
-      try {
-        const parsedDate = new Date(newsItem.date);
-        if (!isNaN(parsedDate.getTime())) {
-          lastModified = parsedDate;
-        }
-      } catch {
-        // Use currentDate if parsing fails
-      }
-      return {
-        url: `${baseUrl}/news/${newsItem.slug}`,
-        lastModified,
-        changeFrequency: "monthly",
-        priority: 0.7,
-      };
-    }
-  );
+    // Dynamic news article routes
+    const newsData = await newsApi.getNews({ limit: 1000 }); // Get all news
+    const newsRoutes: MetadataRoute.Sitemap = newsData.news.map((newsItem) => ({
+      url: `${baseUrl}/news/${newsItem.slug}`,
+      lastModified: newsItem.publishedAt || newsItem.updatedAt || newsItem.createdAt
+        ? new Date(newsItem.publishedAt || newsItem.updatedAt || newsItem.createdAt!)
+        : currentDate,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }));
 
-  // Dynamic job application routes
-  const jobRoutes: MetadataRoute.Sitemap = jobsData.jobs.map((job) => ({
-    url: `${baseUrl}/careers/apply/${job.id}`,
-    lastModified: currentDate,
-    changeFrequency: "weekly",
-    priority: 0.6,
-  }));
+    // Dynamic job application routes
+    const jobsData = await jobsApi.getJobs({ limit: 1000 }); // Get all jobs
+    const jobRoutes: MetadataRoute.Sitemap = jobsData.jobs
+      .filter((job) => job.isActive !== false) // Only active jobs
+      .map((job) => ({
+        url: `${baseUrl}/careers/apply/${job.id}`,
+        lastModified: job.updatedAt || job.createdAt
+          ? new Date(job.updatedAt || job.createdAt!)
+          : currentDate,
+        changeFrequency: "weekly" as const,
+        priority: 0.6,
+      }));
 
-  return [
-    ...staticRoutes,
-    ...sectorRoutes,
-    ...exportRoutes,
-    ...newsRoutes,
-    ...jobRoutes,
-  ];
+    return [
+      ...staticRoutes,
+      ...sectorRoutes,
+      ...exportRoutes,
+      ...newsRoutes,
+      ...jobRoutes,
+    ];
+  } catch (error) {
+    // If API calls fail, return only static routes
+    console.error("Error generating sitemap:", error);
+    return staticRoutes;
+  }
 }

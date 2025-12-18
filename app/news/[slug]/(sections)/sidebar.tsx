@@ -8,18 +8,29 @@ import { SidebarSection } from "./sidebar-section";
 import { useNews, useCategories } from "@/hooks/use-news";
 import { formatDate, getImageUrl } from "../utils";
 import type { NewsItem } from "@/api/news";
+import socialMediaData from "@/data/social-media.json";
 
 interface SidebarProps {
   currentSlug: string;
   latestPostsCount?: number;
 }
 
-const SOCIAL_LINKS = [
-  { name: "Facebook", icon: Facebook, href: "https://facebook.com" },
-  { name: "Twitter", icon: Twitter, href: "https://twitter.com" },
-  { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
-  { name: "Instagram", icon: Instagram, href: "https://instagram.com" },
-] as const;
+// Icon mapping for social media
+const iconMap: Record<string, typeof Facebook> = {
+  Facebook,
+  Twitter,
+  Linkedin,
+  Instagram,
+};
+
+// Filter to only show Facebook, Twitter, LinkedIn, Instagram (exclude YouTube)
+const SOCIAL_LINKS = socialMediaData.links
+  .filter((link) => link.icon !== "Youtube")
+  .map((link) => ({
+    name: link.name,
+    icon: iconMap[link.icon],
+    href: link.href,
+  }));
 
 export default function Sidebar({
   currentSlug,
