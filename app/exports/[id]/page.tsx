@@ -183,7 +183,10 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
         alt: product.imageAlt || product.name,
       };
     })
-    .filter((img): img is { url: string; alt: string } => img !== null); // Remove null entries
+    .filter(
+      (img: { url: string; alt: string } | null): img is { url: string; alt: string } =>
+        img !== null
+    ); // Remove null entries
 
   const transformedExport = {
     id: exportItem.slug,

@@ -96,7 +96,7 @@ export default async function SectorPage({ params }: SectorPageProps) {
     description: sector.description,
     image: getImageUrl(sector.imageUrl),
     imageAlt: sector.imageAlt,
-    products: sector.products.map((product) => ({
+    products: sector.products.map((product: any) => ({
       id: product.id,
       name: product.name,
       description: product.description,

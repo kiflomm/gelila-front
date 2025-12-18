@@ -55,10 +55,15 @@ export default function ExportPage() {
     );
   };
 
-  const handleCreateProduct = async (data: CreateExportProductData) => {
+  const handleCreateProduct = async (data: CreateExportProductData | UpdateExportProductData) => {
     if (!exportItem) return;
+    const payload: CreateExportProductData = {
+      ...data,
+      name: data.name ?? "",
+      description: data.description ?? "",
+    };
     await createProductMutation.mutateAsync(
-      { exportId: exportItem.id, data },
+      { exportId: exportItem.id, data: payload },
       {
         onSuccess: () => {
           toast.success("Product created successfully!");

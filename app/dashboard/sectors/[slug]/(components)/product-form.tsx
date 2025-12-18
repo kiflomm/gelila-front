@@ -25,21 +25,33 @@ const updateProductSchema = z.object({
   image: z.instanceof(File).optional(),
 });
 
-type ProductFormData = z.infer<typeof createProductSchema> | z.infer<typeof updateProductSchema>;
+type CreateProductFormData = z.infer<typeof createProductSchema>;
+type UpdateProductFormData = z.infer<typeof updateProductSchema>;
 
-interface ProductFormProps {
-  product?: Product;
-  onSubmit: (data: CreateProductData | UpdateProductData) => Promise<void>;
+interface BaseProductFormProps {
   onCancel?: () => void;
   isSubmitting?: boolean;
 }
 
-export function ProductForm({ product, onSubmit, onCancel, isSubmitting = false }: ProductFormProps) {
+interface CreateProductFormProps extends BaseProductFormProps {
+  product?: undefined;
+  onSubmit: (data: CreateProductData) => Promise<void>;
+}
+
+interface EditProductFormProps extends BaseProductFormProps {
+  product: Product;
+  onSubmit: (data: UpdateProductData) => Promise<void>;
+}
+
+type ProductFormProps = CreateProductFormProps | EditProductFormProps;
+
+export function ProductForm(props: ProductFormProps) {
+  const { product, onCancel, isSubmitting = false } = props;
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<ProductFormData>({
+  } = useForm<CreateProductFormData | UpdateProductFormData>({
     resolver: zodResolver(product ? updateProductSchema : createProductSchema),
     defaultValues: product
       ? {
@@ -52,18 +64,26 @@ export function ProductForm({ product, onSubmit, onCancel, isSubmitting = false 
         },
   });
 
-  const onSubmitForm = async (data: ProductFormData) => {
-    const submitData: CreateProductData | UpdateProductData = {
-      ...data,
-      // Only include image if it's a new File upload
+  const onSubmitForm = async (data: CreateProductFormData | UpdateProductFormData) => {
+    if (product) {
+      const submitData: UpdateProductData = {
+        ...(data as UpdateProductFormData),
+        image: data.image instanceof File ? data.image : undefined,
+        ...(data.image instanceof File
+          ? {}
+          : {
+              imageUrl: product.imageUrl || undefined,
+            }),
+      };
+      await (props as EditProductFormProps).onSubmit(submitData);
+      return;
+    }
+
+    const submitData: CreateProductData = {
+      ...(data as CreateProductFormData),
       image: data.image instanceof File ? data.image : undefined,
-      // For updates, always preserve the existing imageUrl if no new image is uploaded
-      // This ensures the backend doesn't clear the image
-      ...(product && !(data.image instanceof File) ? {
-        imageUrl: product.imageUrl || undefined,
-      } : {}),
     };
-    await onSubmit(submitData);
+    await (props as CreateProductFormProps).onSubmit(submitData);
   };
 
   return (

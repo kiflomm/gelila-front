@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ImportForm } from "./import-form";
-import type { CreateImportData, UpdateImportData } from "@/api/imports";
+import type { CreateImportData } from "@/api/imports";
 
 interface CreateImportDialogProps {
   open: boolean;

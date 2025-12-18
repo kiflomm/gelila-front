@@ -8,13 +8,13 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ImportForm } from "./import-form";
-import type { Import, UpdateImportData } from "@/api/imports";
+import type { Import, CreateImportData } from "@/api/imports";
 
 interface EditImportDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   importItem: Import | null;
-  onSubmit: (data: UpdateImportData) => Promise<void>;
+  onSubmit: (data: CreateImportData) => Promise<void>;
   isSubmitting?: boolean;
 }
 

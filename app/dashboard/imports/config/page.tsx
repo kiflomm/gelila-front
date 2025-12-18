@@ -11,7 +11,6 @@ import { usePageConfig, useUpdatePageConfig } from "@/hooks/use-imports";
 import { type UpdatePageConfigData } from "@/api/imports";
 
 export default function PageConfigPage() {
-  const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
 
   const { data: pageConfig, isLoading } = usePageConfig();
@@ -60,7 +59,7 @@ export default function PageConfigPage() {
       </div>
 
       <PageConfigForm
-        pageConfig={pageConfig}
+        pageConfig={pageConfig ?? null}
         onSubmit={handleUpdate}
         onCancel={() => setIsEditing(false)}
         isEditing={isEditing}

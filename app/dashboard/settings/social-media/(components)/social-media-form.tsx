@@ -28,23 +28,29 @@ const socialMediaSchema = z.object({
 
 type SocialMediaFormValues = z.infer<typeof socialMediaSchema>;
 
-interface SocialMediaFormProps {
-  initialData?: Partial<CreateSocialMediaData>;
-  onSubmit: (data: CreateSocialMediaData | UpdateSocialMediaData) => Promise<void>;
+interface BaseSocialMediaFormProps {
   onCancel: () => void;
   isSubmitting?: boolean;
 }
 
+interface CreateSocialMediaFormProps extends BaseSocialMediaFormProps {
+  initialData?: undefined;
+  onSubmit: (data: CreateSocialMediaData) => Promise<void>;
+}
+
+interface EditSocialMediaFormProps extends BaseSocialMediaFormProps {
+  initialData: Partial<CreateSocialMediaData>;
+  onSubmit: (data: UpdateSocialMediaData) => Promise<void>;
+}
+
+type SocialMediaFormProps = CreateSocialMediaFormProps | EditSocialMediaFormProps;
+
 const ICON_OPTIONS = ["Facebook", "Twitter", "Linkedin", "Instagram", "Youtube"];
 
-export function SocialMediaForm({
-  initialData,
-  onSubmit,
-  onCancel,
-  isSubmitting = false,
-}: SocialMediaFormProps) {
+export function SocialMediaForm(props: SocialMediaFormProps) {
+  const { initialData, onCancel, isSubmitting = false } = props;
   const form = useForm<SocialMediaFormValues>({
-    resolver: zodResolver(socialMediaSchema),
+    resolver: zodResolver(socialMediaSchema) as any,
     defaultValues: {
       name: initialData?.name || "",
       label: initialData?.label || "",
@@ -56,7 +62,12 @@ export function SocialMediaForm({
   });
 
   const handleSubmit = async (values: SocialMediaFormValues) => {
-    await onSubmit(values);
+    if (initialData) {
+      await (props as EditSocialMediaFormProps).onSubmit(values as UpdateSocialMediaData);
+      return;
+    }
+
+    await (props as CreateSocialMediaFormProps).onSubmit(values as CreateSocialMediaData);
   };
 
   return (

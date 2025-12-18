@@ -31,8 +31,20 @@ export default function ExportsPage() {
   // Delete mutation
   const deleteMutation = useDeleteExport();
 
-  const handleCreate = async (data: CreateExportData) => {
-    await createMutation.mutateAsync(data, {
+  const handleCreate = async (data: CreateExportData | UpdateExportData) => {
+    const payload: CreateExportData = {
+      title: data.title ?? "",
+      slug: data.slug,
+      heroDescription: data.heroDescription ?? "",
+      description: data.description ?? "",
+      destinationRegion: data.destinationRegion ?? "",
+      status: data.status ?? "operational",
+      imageUrl: data.imageUrl,
+      imageAlt: data.imageAlt,
+      orderIndex: data.orderIndex,
+      image: data.image,
+    };
+    await createMutation.mutateAsync(payload, {
       onSuccess: () => {
         toast.success("Export created successfully!");
         setCreateDialogOpen(false);

@@ -51,10 +51,10 @@ export default function ImportsPage() {
     setEditDialogOpen(true);
   };
 
-  const handleUpdate = async (data: UpdateImportData) => {
+  const handleUpdate = async (data: CreateImportData) => {
     if (!selectedImport) return;
     await updateMutation.mutateAsync(
-      { id: selectedImport.id, data },
+      { id: selectedImport.id, data: data as UpdateImportData },
       {
         onSuccess: () => {
           toast.success("Import updated successfully!");

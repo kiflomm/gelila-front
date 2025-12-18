@@ -8,12 +8,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ExportForm } from "./export-form";
-import type { CreateExportData } from "@/api/exports";
+import type { CreateExportData, UpdateExportData } from "@/api/exports";
 
 interface CreateExportDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: CreateExportData) => Promise<void>;
+  onSubmit: (data: CreateExportData | UpdateExportData) => Promise<void>;
   isSubmitting?: boolean;
 }
 

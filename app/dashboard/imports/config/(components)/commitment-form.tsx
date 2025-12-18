@@ -18,14 +18,25 @@ const commitmentSchema = z.object({
 
 type CommitmentFormData = z.infer<typeof commitmentSchema>;
 
-interface CommitmentFormProps {
-  commitment?: ImportCommitment;
-  onSubmit: (data: CreateCommitmentData | UpdateCommitmentData) => Promise<void>;
+interface BaseCommitmentFormProps {
   onCancel?: () => void;
   isSubmitting?: boolean;
 }
 
-export function CommitmentForm({ commitment, onSubmit, onCancel, isSubmitting = false }: CommitmentFormProps) {
+interface CreateCommitmentFormProps extends BaseCommitmentFormProps {
+  commitment?: undefined;
+  onSubmit: (data: CreateCommitmentData) => Promise<void>;
+}
+
+interface EditCommitmentFormProps extends BaseCommitmentFormProps {
+  commitment: ImportCommitment;
+  onSubmit: (data: UpdateCommitmentData) => Promise<void>;
+}
+
+type CommitmentFormProps = CreateCommitmentFormProps | EditCommitmentFormProps;
+
+export function CommitmentForm(props: CommitmentFormProps) {
+  const { commitment, onCancel, isSubmitting = false } = props;
   const {
     handleSubmit,
     register,
@@ -45,7 +56,12 @@ export function CommitmentForm({ commitment, onSubmit, onCancel, isSubmitting = 
   });
 
   const onSubmitForm = async (data: CommitmentFormData) => {
-    await onSubmit(data);
+    if (commitment) {
+      await (props as EditCommitmentFormProps).onSubmit(data as UpdateCommitmentData);
+      return;
+    }
+
+    await (props as CreateCommitmentFormProps).onSubmit(data as CreateCommitmentData);
   };
 
   return (

@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Controller } from "react-hook-form";
 import * as z from "zod";
-import { type Import, type CreateImportData, type UpdateImportData } from "@/api/imports";
+import { type Import, type CreateImportData } from "@/api/imports";
 import { ImportImageUpload } from "./import-image-upload";
 
 const importSchema = z.object({
@@ -35,7 +35,7 @@ type ImportFormData = z.infer<typeof importSchema>;
 
 interface ImportFormProps {
   importItem?: Import;
-  onSubmit: (data: CreateImportData | UpdateImportData) => Promise<void>;
+  onSubmit: (data: CreateImportData) => Promise<void>;
   onCancel?: () => void;
   isSubmitting?: boolean;
 }
@@ -67,7 +67,7 @@ export function ImportForm({ importItem, onSubmit, onCancel, isSubmitting = fals
   });
 
   const onSubmitForm = async (data: ImportFormData) => {
-    const submitData: CreateImportData | UpdateImportData = {
+    const submitData: CreateImportData = {
       ...data,
       image: data.image instanceof File ? data.image : undefined,
       ...(!(data.image instanceof File) && importItem ? {
