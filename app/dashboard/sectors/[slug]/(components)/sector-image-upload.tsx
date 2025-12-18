@@ -123,7 +123,7 @@ export function SectorImageUpload({
             >
               {imagePreview ? (
                 <div className="relative p-4">
-                  <div className="relative w-full h-48 rounded-md overflow-hidden bg-muted">
+                  <div className="relative w-full h-48 rounded-md overflow-hidden bg-muted group">
                     <img
                       src={imagePreview}
                       alt="Preview"
@@ -138,16 +138,37 @@ export function SectorImageUpload({
                     />
                     <button
                       type="button"
-                      onClick={() => handleRemoveImage(onChange)}
-                      className="absolute top-2 right-2 p-1.5 rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors shadow-lg z-10"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleRemoveImage(onChange);
+                      }}
+                      className="absolute top-2 right-2 p-1.5 rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors shadow-lg z-20"
                       aria-label="Remove image"
                     >
                       <X className="h-4 w-4" />
                     </button>
+                    {/* Click overlay to upload new image */}
+                    <label
+                      htmlFor="image-upload"
+                      className="absolute inset-0 cursor-pointer opacity-0 hover:opacity-100 transition-opacity bg-black/50 flex items-center justify-center z-10"
+                      onClick={(e) => {
+                        // Don't trigger parent handlers
+                        e.stopPropagation();
+                      }}
+                    >
+                      <div className="text-white text-sm font-medium bg-primary/80 px-4 py-2 rounded">
+                        Click to change image
+                      </div>
+                    </label>
                   </div>
                   {value instanceof File && (
                     <p className="mt-2 text-sm text-muted-foreground text-center">
-                      {value.name}
+                      New image: {value.name}
+                    </p>
+                  )}
+                  {sector && !value && (
+                    <p className="mt-2 text-xs text-muted-foreground text-center">
+                      Current image (click image above or upload button to replace)
                     </p>
                   )}
                 </div>
