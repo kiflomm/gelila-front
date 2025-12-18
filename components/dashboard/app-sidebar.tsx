@@ -20,6 +20,7 @@ import {
   Cpu,
   Shirt,
   Building2,
+  Settings,
 } from "lucide-react";
 import {
   Sidebar,
@@ -169,6 +170,16 @@ export function AppSidebar() {
           title: "Contact Messages",
           url: "/dashboard/contact",
           icon: MessageSquare,
+        },
+      ],
+    },
+    {
+      title: "Settings",
+      items: [
+        {
+          title: "Social Media",
+          url: "/dashboard/settings/social-media",
+          icon: Settings,
         },
       ],
     },

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -12,7 +14,7 @@ import {
 } from "lucide-react";
 import footerData from "@/data/footer.json";
 import companiesData from "@/data/companies/companies.json";
-import socialMediaData from "@/data/social-media.json";
+import { useSocialMedia } from "@/hooks/use-social-media";
 
 // Icon mapping for social media
 const iconMap: Record<string, typeof Facebook> = {
@@ -25,6 +27,7 @@ const iconMap: Record<string, typeof Facebook> = {
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { data: socialMediaLinks = [], isLoading } = useSocialMedia();
 
   const companyLinks = [
     { href: "/about", label: "About Us" },
@@ -46,11 +49,13 @@ export default function Footer() {
     { href: "/site-map", label: "Sitemap" },
   ];
 
-  const socialLinks = socialMediaData.links.map((link) => ({
-    href: link.href,
-    label: link.label,
-    icon: iconMap[link.icon],
-  }));
+  const socialLinks = socialMediaLinks
+    .filter((link) => link.isActive)
+    .map((link) => ({
+      href: link.href,
+      label: link.label,
+      icon: iconMap[link.icon],
+    }));
 
   return (
     <footer className="bg-gray-800 dark:bg-gray-900 border-t border-gray-700 dark:border-gray-800">
@@ -200,23 +205,34 @@ export default function Footer() {
           </div>
 
           {/* Social Links */}
-          <div className="flex items-center gap-4">
-            {socialLinks.map((social) => {
-              const Icon = social.icon;
-              return (
-                <Link
-                  key={social.href}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                  className="size-10 flex items-center justify-center rounded-lg bg-gray-700 dark:bg-gray-800 text-gray-300 hover:text-primary hover:bg-gray-600 dark:hover:bg-gray-700 transition-all duration-200"
-                >
-                  <Icon className="size-5" />
-                </Link>
-              );
-            })}
-          </div>
+          {isLoading ? (
+            <div className="flex items-center gap-4">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="size-10 rounded-lg bg-gray-700 dark:bg-gray-800 animate-pulse"
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center gap-4">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <Link
+                    key={social.href}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="size-10 flex items-center justify-center rounded-lg bg-gray-700 dark:bg-gray-800 text-gray-300 hover:text-primary hover:bg-gray-600 dark:hover:bg-gray-700 transition-all duration-200"
+                  >
+                    <Icon className="size-5" />
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </footer>

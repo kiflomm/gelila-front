@@ -6,9 +6,9 @@ import Image from "next/image";
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import { SidebarSection } from "./sidebar-section";
 import { useNews, useCategories } from "@/hooks/use-news";
+import { useSocialMedia } from "@/hooks/use-social-media";
 import { formatDate, getImageUrl } from "../utils";
 import type { NewsItem } from "@/api/news";
-import socialMediaData from "@/data/social-media.json";
 
 interface SidebarProps {
   currentSlug: string;
@@ -23,21 +23,22 @@ const iconMap: Record<string, typeof Facebook> = {
   Instagram,
 };
 
-// Filter to only show Facebook, Twitter, LinkedIn, Instagram (exclude YouTube)
-const SOCIAL_LINKS = socialMediaData.links
-  .filter((link) => link.icon !== "Youtube")
-  .map((link) => ({
-    name: link.name,
-    icon: iconMap[link.icon],
-    href: link.href,
-  }));
-
 export default function Sidebar({
   currentSlug,
   latestPostsCount = 3,
 }: SidebarProps) {
   const { data: newsData, isLoading: newsLoading } = useNews({ limit: 20 });
   const { data: categories = [], isLoading: categoriesLoading } = useCategories();
+  const { data: socialMediaLinks = [] } = useSocialMedia();
+
+  // Filter to only show Facebook, Twitter, LinkedIn, Instagram (exclude YouTube)
+  const SOCIAL_LINKS = socialMediaLinks
+    .filter((link) => link.isActive && link.icon !== "Youtube")
+    .map((link) => ({
+      name: link.name,
+      icon: iconMap[link.icon],
+      href: link.href,
+    }));
 
   // Get latest published posts (excluding current article)
   const latestPosts = useMemo(() => {
