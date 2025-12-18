@@ -61,33 +61,89 @@ export default function Footer() {
     <footer className="bg-gray-800 dark:bg-gray-900 border-t border-gray-700 dark:border-gray-800">
       <div className="px-4 sm:px-10 lg:px-20 xl:px-40 py-16 max-w-[1280px] mx-auto">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 lg:gap-6 xl:gap-8 mb-12">
           {/* Company Info */}
           <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="flex flex-col items-center gap-0 shrink-0 bg-white px-2 py-1 rounded">
+            <div className="flex items-start gap-3 mb-2">
+              <div className="flex flex-col items-start gap-0 shrink-0 bg-white px-2 py-1 rounded">
                 <Image
                   src="/logo-left.png"
                   alt="Gelila Manufacturing PLC"
                   width={100}
                   height={80}
-                  className="h-8 sm:h-10 md:h-12 lg:h-14 w-auto shrink-0"
+                  className="h-8 sm:h-10 md:h-10 lg:h-12 w-auto shrink-0"
                 />
                 <Image
                   src="/logo-right.png"
                   alt="Gelila Manufacturing PLC"
                   width={100}
                   height={80}
-                  className="hidden sm:block h-8 sm:h-10 md:h-12 lg:h-14 w-auto shrink-0"
+                  className="hidden sm:block h-8 sm:h-10 md:h-10 lg:h-12 w-auto shrink-0"
                 />
               </div>
             </div>
             <p className="text-sm text-gray-300 leading-relaxed">
               {footerData.company.description}
             </p>
+          </div>
 
-            {/* Contact Info */}
-            <div className="flex flex-col gap-3 mt-2">
+          {/* Company Links */}
+          <div>
+            <h4 className="font-semibold text-white mb-4 text-base">Company</h4>
+            <ul className="flex flex-col gap-3">
+              {companyLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-300 hover:text-primary transition-colors inline-block"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Subsidiary Companies */}
+          <div>
+            <h4 className="font-semibold text-white mb-4 text-base">
+              Subsidiaries
+            </h4>
+            <ul className="flex flex-col gap-3">
+              {subsidiaryLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-300 hover:text-primary transition-colors inline-block"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Legal Links */}
+          <div>
+            <h4 className="font-semibold text-white mb-4 text-base">Legal</h4>
+            <ul className="flex flex-col gap-3">
+              {legalLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-300 hover:text-primary transition-colors inline-block"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Us */}
+          <div>
+            <h4 className="font-semibold text-white mb-4 text-base">Contact Us</h4>
+            <div className="flex flex-col gap-3">
               <div className="flex items-start gap-3">
                 <MapPin className="size-4 text-primary mt-1 shrink-0" />
                 <p className="text-sm text-gray-300">
@@ -127,62 +183,6 @@ export default function Footer() {
               </div>
             </div>
           </div>
-
-          {/* Company Links */}
-          <div>
-            <h4 className="font-semibold text-white mb-4 text-base">Company</h4>
-            <ul className="flex flex-col gap-3">
-              {companyLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-gray-300 hover:text-primary transition-colors inline-block"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Subsidiaries & Legal Links */}
-          <div className="flex flex-col gap-6">
-            {/* Subsidiary Companies */}
-            <div>
-              <h4 className="font-semibold text-white mb-4 text-base">
-                Subsidiaries
-              </h4>
-              <ul className="flex flex-col gap-3">
-                {subsidiaryLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-gray-300 hover:text-primary transition-colors inline-block"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Legal Links */}
-            <div>
-              <h4 className="font-semibold text-white mb-4 text-base">Legal</h4>
-              <ul className="flex flex-col gap-3">
-                {legalLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-gray-300 hover:text-primary transition-colors inline-block"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
         </div>
 
         {/* Divider */}
@@ -204,7 +204,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Social Links */}
+          {/* Social Media Buttons */}
           {isLoading ? (
             <div className="flex items-center gap-4">
               {Array.from({ length: 5 }).map((_, i) => (
