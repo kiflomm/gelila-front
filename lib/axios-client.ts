@@ -134,16 +134,14 @@ axiosProtectedClient.interceptors.response.use(
         })
         .catch((err) => {
           // Refresh failed - logout user and clear state
+          // NOTE: We intentionally do NOT redirect here.
+          // Route-level guards (e.g. ProtectedRoute) are responsible
+          // for redirecting users away from protected pages when
+          // authentication state changes.
           processQueue(err, null);
-          
+
           const { logout } = useAuthStore.getState();
           logout();
-
-          // Only redirect to login if we're not already on the login page
-          // This prevents infinite redirect loops
-          if (typeof window !== 'undefined' && !window.location.pathname.includes('/login')) {
-            window.location.href = '/login';
-          }
 
           reject(err);
         })

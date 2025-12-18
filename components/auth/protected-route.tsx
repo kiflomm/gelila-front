@@ -18,7 +18,9 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
     if (isRehydrated && !isAuthenticated) {
       // Only redirect if we're not already on the login page
       if (pathname !== "/login") {
-        router.push("/login");
+        // Redirect to login with a reason parameter so we can show
+        // a friendly \"session expired\" message.
+        router.push("/login?reason=session-expired");
       }
     }
   }, [isAuthenticated, isRehydrated, router, pathname]);
