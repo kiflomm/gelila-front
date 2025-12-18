@@ -8,6 +8,10 @@ import type {
   ForgotPasswordResponse,
   ResetPasswordRequest,
   ResetPasswordResponse,
+  UpdateProfileRequest,
+  UpdateProfileResponse,
+  ChangePasswordRequest,
+  ChangePasswordResponse,
 } from '../index';
 
 // Refresh token API function
@@ -24,6 +28,14 @@ export const logoutUser = async (): Promise<void> => {
 // Get user profile API function
 export const getUserProfile = async (): Promise<ProfileResponse> => {
     const response = await axiosProtectedClient.get('/auth/profile');
+  return response.data;
+};
+
+// Update user profile API function
+export const updateUserProfile = async (
+  data: UpdateProfileRequest,
+): Promise<UpdateProfileResponse> => {
+  const response = await axiosProtectedClient.patch('/auth/profile', data);
   return response.data;
 };
 
@@ -46,5 +58,13 @@ export const completePasswordReset = async (
 // Login API function
 export const loginUser = async (credentials: LoginRequest): Promise<LoginResponse> => {
   const response = await axiosPublicClient.post('/auth/login', credentials);
+  return response.data;
+};
+
+// Change password API function (authenticated)
+export const changePassword = async (
+  data: ChangePasswordRequest,
+): Promise<ChangePasswordResponse> => {
+  const response = await axiosProtectedClient.post('/auth/change-password', data);
   return response.data;
 };

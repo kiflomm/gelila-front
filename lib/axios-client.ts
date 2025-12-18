@@ -70,11 +70,17 @@ axiosProtectedClient.interceptors.response.use(
       url?: string;
     };
     
-    // Don't retry if it's not a 401, if we've already retried this request, or if this is the refresh endpoint
+    // Don't retry if:
+    // - it's not a 401
+    // - we've already retried this request
+    // - this is the refresh endpoint
+    // - this is the change-password endpoint (401 here usually means wrong current password,
+    //   not an expired token, so we should surface the error directly)
     if (
       error.response?.status !== 401 || 
       originalRequest._retry || 
-      originalRequest.url?.includes('/auth/refresh')
+      originalRequest.url?.includes('/auth/refresh') ||
+      originalRequest.url?.includes('/auth/change-password')
     ) {
       return Promise.reject(error);
     }

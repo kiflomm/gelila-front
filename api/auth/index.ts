@@ -67,6 +67,18 @@ export interface ProfileResponse {
   timestamp: string;
 }
 
+export interface UpdateProfileRequest {
+  firstName?: string;
+  lastName?: string;
+}
+
+export interface UpdateProfileResponse {
+  success: boolean;
+  message: string;
+  data: User;
+  timestamp: string;
+}
+
 /**
  * Request payload for forgot password
  */
@@ -96,6 +108,18 @@ export interface ResetPasswordRequest {
  * Response structure for reset password
  */
 export interface ResetPasswordResponse {
+  success: boolean;
+  message: string;
+  data?: any;
+  timestamp: string;
+}
+
+export interface ChangePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface ChangePasswordResponse {
   success: boolean;
   message: string;
   data?: any;
@@ -138,4 +162,6 @@ export {
   requestPasswordReset,
   completePasswordReset,
   loginUser,
+  updateUserProfile,
+  changePassword,
 } from './auth';
