@@ -10,13 +10,15 @@ export function getNavLinkClasses(
   isActive: boolean,
   hasTransparentNav: boolean
 ): string {
+  const baseClasses = "nav-item-underline px-3 py-2 text-sm font-medium leading-normal whitespace-nowrap transition-colors";
+  
   if (isActive) {
-    return "text-primary text-sm font-bold leading-normal whitespace-nowrap";
+    return `${baseClasses} text-primary active`;
   }
   if (hasTransparentNav) {
-    return "text-white/90 hover:text-white text-sm font-medium leading-normal transition-colors whitespace-nowrap";
+    return `${baseClasses} text-white/90 hover:text-white dark:text-gray-300 dark:hover:text-primary`;
   }
-  return "text-[#181411] dark:text-white/80 hover:text-primary text-sm font-medium leading-normal transition-colors whitespace-nowrap";
+  return `${baseClasses} text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary`;
 }
 
 // Shared navigation hover state classes for dropdown triggers (without font-bold on active)
@@ -24,11 +26,13 @@ export function getNavDropdownTriggerClasses(
   isActive: boolean,
   hasTransparentNav: boolean
 ): string {
+  const baseClasses = "nav-item-underline";
+  
   if (isActive) {
-    return "text-primary font-bold";
+    return `${baseClasses} text-primary active`;
   }
   if (hasTransparentNav) {
-    return "text-white/90 hover:text-white";
+    return `${baseClasses} text-white/90 hover:text-white dark:text-gray-300 dark:hover:text-primary`;
   }
-  return "text-[#181411] dark:text-white/80 hover:text-primary";
+  return `${baseClasses} text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary`;
 }

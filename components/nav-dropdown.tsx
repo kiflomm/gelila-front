@@ -132,7 +132,7 @@ export function NavDropdown({
 
   // Shared hover states matching header navigation
   const triggerClassName = cn(
-    "text-sm font-medium leading-normal whitespace-nowrap transition-colors relative",
+    "px-3 py-2 text-sm font-medium leading-normal whitespace-nowrap transition-colors relative",
     getNavDropdownTriggerClasses(isActive || hasActiveItem, isTransparent)
   );
 
@@ -157,33 +157,11 @@ export function NavDropdown({
           {/* Arrow Indicator */}
           <span
             className={cn(
-              "inline-block transition-all duration-150",
-              isOpen
-                ? "rotate-180 opacity-100"
-                : "rotate-0 opacity-70 group-hover:opacity-100"
+              "material-icons-round text-sm transition-transform",
+              isOpen ? "rotate-180" : "group-hover:rotate-180"
             )}
           >
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className={cn(
-                isTransparent
-                  ? "text-white/90"
-                  : "text-[#181411] dark:text-white/80",
-                isOpen && "text-primary"
-              )}
-            >
-              <path
-                d="M3 4.5L6 7.5L9 4.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            expand_more
           </span>
         </Link>
       </div>
