@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -46,7 +47,6 @@ export default function Footer() {
     { href: "/privacy", label: "Privacy Policy" },
     { href: "/terms", label: "Terms of Service" },
     { href: "/cookies", label: "Cookie Policy" },
-    { href: "/site-map", label: "Sitemap" },
   ];
 
   const socialLinks = socialMediaLinks
@@ -59,11 +59,11 @@ export default function Footer() {
 
   return (
     <footer className="bg-gray-800 dark:bg-gray-900 border-t border-gray-700 dark:border-gray-800">
-      <div className="px-4 sm:px-10 lg:px-20 xl:px-40 py-16 max-w-[1280px] mx-auto">
+      <div className="px-4 sm:px-4 lg:px-8 xl:px-16 py-16 max-w-[1280px] mx-auto">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 lg:gap-6 xl:gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 lg:gap-3 xl:gap-4 mb-12">
           {/* Company Info */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 md:col-span-2 lg:col-span-2 lg:mr-16 xl:mr-20">
             <div className="flex items-start gap-3 mb-2">
               <div className="flex flex-col items-start gap-0 shrink-0 bg-white px-2 py-1 rounded">
                 <Image
@@ -88,7 +88,7 @@ export default function Footer() {
           </div>
 
           {/* Company Links */}
-          <div>
+          <div className="lg:ml-4 xl:ml-6">
             <h4 className="font-semibold text-white mb-4 text-base">Company</h4>
             <ul className="flex flex-col gap-3">
               {companyLinks.map((link) => (
@@ -105,29 +105,12 @@ export default function Footer() {
           </div>
 
           {/* Subsidiary Companies */}
-          <div>
+          <div className="lg:-ml-2 xl:-ml-2">
             <h4 className="font-semibold text-white mb-4 text-base">
               Subsidiaries
             </h4>
             <ul className="flex flex-col gap-3">
               {subsidiaryLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-gray-300 hover:text-primary transition-colors inline-block"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal Links */}
-          <div>
-            <h4 className="font-semibold text-white mb-4 text-base">Legal</h4>
-            <ul className="flex flex-col gap-3">
-              {legalLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -190,18 +173,40 @@ export default function Footer() {
 
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-center md:text-left">
-            <p className="text-sm text-gray-300">
-              © {currentYear} {footerData.company.name}. All Rights Reserved.{" "}
-              <Link
-                href="https://memitrading.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-primary transition-colors"
-              >
-                Powered by MeMi Trading PLC
-              </Link>
-            </p>
+          <div className="flex flex-col items-center flex-1">
+            {/* Copyright */}
+            <div className="text-center">
+              <p className="text-sm text-gray-300">
+                © {currentYear} {footerData.company.name}. All Rights Reserved.{" "}
+                <Link
+                  href="https://memitrading.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                >
+                  Powered by MeMi Trading PLC
+                </Link>
+              </p>
+            </div>
+
+            {/* Legal Links */}
+            <div className="flex flex-wrap justify-center items-center gap-x-4 md:gap-x-6 gap-y-2">
+              {legalLinks.map((link, index) => (
+                <React.Fragment key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-300 hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                  {index < legalLinks.length - 1 && (
+                    <span className="text-gray-600 dark:text-gray-500">
+                      |
+                    </span>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
           </div>
 
           {/* Social Media Buttons */}
@@ -216,11 +221,11 @@ export default function Footer() {
             </div>
           ) : (
             <div className="flex items-center gap-4">
-              {socialLinks.map((social) => {
+              {socialLinks.map((social, index) => {
                 const Icon = social.icon;
                 return (
                   <Link
-                    key={social.href}
+                    key={`${social.href}-${index}`}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"

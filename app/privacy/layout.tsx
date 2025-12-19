@@ -51,7 +51,7 @@ export default function PrivacyLayout({
     <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
       <div className="layout-container flex h-full grow flex-col">
         <Header />
-        <main className="px-4 sm:px-10 lg:px-20 pt-20 sm:pt-20 pb-10 lg:pb-16 flex flex-1 justify-center">
+        <main className="px-4 sm:px-10 lg:px-20 pt-28 sm:pt-32 lg:pt-36 pb-10 lg:pb-16 flex flex-1 justify-center">
           <div className="layout-content-container flex flex-col w-full max-w-6xl">
             {children}
           </div>

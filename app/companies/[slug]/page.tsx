@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import Header from "@/components/header";
-import Footer from "@/components/footer";
 import companiesData from "@/data/companies/companies.json";
 import PageHeadingSection from "./(sections)/page-heading-section";
 import ProfileSection from "./(sections)/profile-section";
@@ -35,7 +34,6 @@ export default async function CompanyPage({ params }: CompanyPageProps) {
           </div>
           <ProfileSection company={company} />
         </main>
-        <Footer />
       </div>
     </div>
   );
