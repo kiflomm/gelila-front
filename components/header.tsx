@@ -187,7 +187,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
             {/* Contact Us Button - Desktop */}
             <Link
               href="/contact"
-              className={`ml-4 inline-flex items-center justify-center px-5 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primary hover:bg-[#d97706] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all hover:shadow-lg dark:focus:ring-offset-gray-900 ${
+              className={`ml-4 inline-flex items-center justify-center px-5 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primary hover:bg-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all hover:shadow-lg dark:focus:ring-offset-gray-900 ${
                 hasTransparentNav ? "" : ""
               }`}
             >
@@ -200,7 +200,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
             isScrolled ? "max-h-0 h-0 overflow-hidden opacity-0" : "max-h-16 opacity-100"
           }`}>
             {/* Logo */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0 max-w-fit mr-4">
               <Link
                 href="/"
                 className={`flex items-center cursor-pointer ${
@@ -209,13 +209,13 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                     : "text-[#181411] dark:text-white"
                 }`}
               >
-                <div className="flex items-center gap-0 bg-white px-2 py-1 rounded">
+                <div className="flex items-center gap-0 bg-white px-2 py-1 rounded max-w-fit">
                   <Image
                     src="/logo-left.png"
                     alt="Gelila Manufacturing PLC"
                     width={100}
                     height={80}
-                    className="w-auto h-10 shrink-0"
+                    className="w-auto h-8 lg:h-12 shrink-0"
                     priority
                   />
                   <Image
@@ -223,7 +223,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                     alt="Gelila Manufacturing PLC"
                     width={100}
                     height={80}
-                    className="hidden sm:block w-auto h-10 shrink-0"
+                    className="w-auto h-8 lg:h-12 shrink-0"
                     priority
                   />
                 </div>
@@ -231,7 +231,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
             </div>
 
             {/* Mobile/Tablet Hamburger Button */}
-            <div className="lg:hidden flex items-center">
+            <div className="lg:hidden flex items-center ml-auto">
               <button
                 onClick={(e) => {
                   e.preventDefault();
