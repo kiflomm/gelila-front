@@ -1,8 +1,32 @@
+"use client";
+
+import { useEffect } from "react";
 import HeroSection from "./(sections)/hero-section";
 import ContactFormSection from "./(sections)/contact-form-section";
 import ContactInfoSection from "./(sections)/contact-info-section";
 
 export default function ContactPage() {
+  useEffect(() => {
+    // Check if URL has hash fragment
+    const hash = window.location.hash;
+    if (hash === "#contact-form") {
+      // Wait for content to render, then scroll
+      setTimeout(() => {
+        const element = document.getElementById("contact-form");
+        if (element) {
+          const headerHeight = 88; // Approximate header height
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      }, 100);
+    }
+  }, []);
+
   return (
     <>
       <HeroSection />

@@ -47,8 +47,8 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
     { href: "/imports", label: "Imports" },
     { href: "/exports", label: "Exports" },
     { href: "/companies", label: "Subsidiaries" },
-    { href: "/news", label: "News & Updates" },
-    { href: "/careers", label: "Careers" },
+    { href: "/news#news-section", label: "News & Updates" },
+    { href: "/careers#careers-section", label: "Careers" },
   ];
 
   // Close mobile menu and all dropdowns on route change
@@ -190,7 +190,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
             
             {/* Contact Us Button - Desktop */}
             <Link
-              href="/contact"
+              href="/contact#contact-form"
               className={`ml-4 inline-flex items-center justify-center px-5 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primary hover:bg-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all hover:shadow-lg dark:focus:ring-offset-gray-900 ${
                 hasTransparentNav ? "" : ""
               }`}
@@ -358,7 +358,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
           <Link
             onClick={close}
             className="mt-2 inline-flex items-center justify-center px-5 py-3 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primary hover:bg-[#d97706] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all hover:shadow-lg"
-            href="/contact"
+            href="/contact#contact-form"
           >
             Contact Us
           </Link>

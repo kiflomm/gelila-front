@@ -1,4 +1,6 @@
-import { Suspense } from "react";
+"use client";
+
+import { Suspense, useEffect } from "react";
 import HeroSection from "./(sections)/hero-section";
 import FilterableNewsSection from "./(sections)/filterable-news-section";
 
@@ -31,14 +33,37 @@ function FilterableNewsSectionSkeleton() {
 }
 
 export default function NewsPage() {
+  useEffect(() => {
+    // Check if URL has hash fragment
+    const hash = window.location.hash;
+    if (hash === "#news-section") {
+      // Wait for content to render, then scroll
+      setTimeout(() => {
+        const element = document.getElementById("news-section");
+        if (element) {
+          const headerHeight = 88; // Approximate header height
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      }, 100);
+    }
+  }, []);
+
   return (
     <>
       <HeroSection />
       <div className="px-4 sm:px-10 lg:px-20 py-10 lg:py-16 flex flex-1 justify-center">
         <div className="layout-content-container flex flex-col w-full max-w-7xl">
-          <Suspense fallback={<FilterableNewsSectionSkeleton />}>
-            <FilterableNewsSection />
-          </Suspense>
+          <div id="news-section" className="scroll-mt-24">
+            <Suspense fallback={<FilterableNewsSectionSkeleton />}>
+              <FilterableNewsSection />
+            </Suspense>
+          </div>
         </div>
       </div>
     </>

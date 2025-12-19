@@ -97,11 +97,11 @@
           "items": [
             {
               "label": "Engineering",
-              "href": "/careers?department=Engineering"
+              "href": "/careers?department=Engineering#careers-section"
             },
             {
               "label": "Operations",
-              "href": "/careers?department=Operations"
+              "href": "/careers?department=Operations#careers-section"
             }
           ]
         },
@@ -110,15 +110,15 @@
           "items": [
             {
               "label": "Finance",
-              "href": "/careers?department=Finance"
+              "href": "/careers?department=Finance#careers-section"
             },
             {
               "label": "Human Resources",
-              "href": "/careers?department=Human Resources"
+              "href": "/careers?department=Human Resources#careers-section"
             },
             {
               "label": "Marketing",
-              "href": "/careers?department=Marketing"
+              "href": "/careers?department=Marketing#careers-section"
             }
           ]
         },
@@ -127,11 +127,11 @@
           "items": [
             {
               "label": "View All Jobs",
-              "href": "/careers"
+              "href": "/careers#careers-section"
             },
             {
               "label": "Internships",
-              "href": "/careers?type=Internship"
+              "href": "/careers?type=Internship#careers-section"
             }
           ]
         }

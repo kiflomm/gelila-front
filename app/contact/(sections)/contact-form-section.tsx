@@ -90,7 +90,7 @@ export default function ContactFormSection() {
   const remainingFields = formData.fields.slice(2);
 
   return (
-    <section className="py-2 sm:py-3">
+    <section id="contact-form" className="py-2 sm:py-3 scroll-mt-24">
       <div className="p-4 sm:p-5 bg-white dark:bg-black/20 border border-primary/20 rounded-xl">
         <h2 className="text-[#181411] dark:text-white text-lg sm:text-xl font-bold mb-3 sm:mb-4">
           {formData.title}
