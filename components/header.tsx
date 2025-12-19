@@ -25,7 +25,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
   const isImports = pathname === "/imports" || pathname.startsWith("/imports/");
   const isSectors = pathname === "/sectors" || pathname.startsWith("/sectors/");
   const isCareers = pathname === "/careers";
-  const isCompanies = pathname.startsWith("/companies/");
+  const isCompanies = pathname === "/companies" || pathname.startsWith("/companies/");
   const hasTransparentNav =
     forceTransparent ||
     isHome ||
@@ -42,7 +42,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
     { href: "/sectors", label: "Sectors" },
     { href: "/imports", label: "Imports" },
     { href: "/exports", label: "Exports" },
-    { href: "/companies/gelila-shoe", label: "Subsidiaries" },
+    { href: "/companies", label: "Subsidiaries" },
     { href: "/news", label: "News & Updates" },
     { href: "/careers", label: "Careers" },
   ];
@@ -158,13 +158,13 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
               }
 
               if (isCompanies && navigationData.dropdowns.companies) {
-                const isCompaniesPage = pathname.startsWith("/companies/");
+                const isCompaniesPage = pathname === "/companies" || pathname.startsWith("/companies/");
                 return (
                   <NavDropdown
                     key={link.href}
                     id="companies"
                     label={link.label}
-                    href="/about"
+                    href="/companies"
                     sections={navigationData.dropdowns.companies.sections}
                     isTransparent={hasTransparentNav}
                     isActive={isCompaniesPage}
@@ -292,7 +292,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             const isCompanies = link.href.startsWith("/companies");
-            const isCompaniesPage = pathname.startsWith("/companies/");
+            const isCompaniesPage = pathname === "/companies" || pathname.startsWith("/companies/");
 
             // Check if this link has a dropdown in mobile
             if (isCompanies && navigationData.dropdowns.companies) {
@@ -305,7 +305,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                         ? "text-primary text-base sm:text-lg font-bold leading-normal py-3 sm:py-3.5 px-2 rounded-lg bg-primary/10 dark:bg-primary/20 touch-manipulation"
                         : "text-[#181411] dark:text-gray-300 text-base sm:text-lg font-medium leading-normal hover:text-primary transition-colors py-3 sm:py-3.5 px-2 rounded-lg hover:bg-primary/5 dark:hover:bg-primary/10 touch-manipulation"
                     }
-                    href="/about"
+                    href="/companies"
                   >
                     {link.label}
                   </Link>
