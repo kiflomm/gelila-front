@@ -26,6 +26,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
   const isSectors = pathname === "/sectors" || pathname.startsWith("/sectors/");
   const isCareers = pathname === "/careers";
   const isCompanies = pathname === "/companies" || pathname.startsWith("/companies/");
+  const isNews = pathname === "/news" || pathname.startsWith("/news/");
   const hasTransparentNav =
     forceTransparent ||
     isHome ||
@@ -34,7 +35,8 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
     isImports ||
     isSectors ||
     isCareers ||
-    isCompanies;
+    isCompanies ||
+    isNews;
 
   const navLinks = [
     { href: "/", label: "Home" },
