@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import PageHeadingSection from "./(sections)/page-heading-section";
+import HeroSection from "./(sections)/hero-section";
 import FilterableNewsSection from "./(sections)/filterable-news-section";
 
 function FilterableNewsSectionSkeleton() {
@@ -33,10 +33,14 @@ function FilterableNewsSectionSkeleton() {
 export default function NewsPage() {
   return (
     <>
-      <PageHeadingSection />
-      <Suspense fallback={<FilterableNewsSectionSkeleton />}>
-        <FilterableNewsSection />
-      </Suspense>
+      <HeroSection />
+      <div className="px-4 sm:px-10 lg:px-20 py-10 lg:py-16 flex flex-1 justify-center">
+        <div className="layout-content-container flex flex-col w-full max-w-7xl">
+          <Suspense fallback={<FilterableNewsSectionSkeleton />}>
+            <FilterableNewsSection />
+          </Suspense>
+        </div>
+      </div>
     </>
   );
 }
