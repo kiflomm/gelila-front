@@ -163,8 +163,7 @@
   transition: width 0.3s ease-in-out;
 }
 
-.nav-item-underline:hover::after,
-.nav-item-underline.active::after {
+.nav-item-underline:hover::after {
   width: 100%;
 }
 
