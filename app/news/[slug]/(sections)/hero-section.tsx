@@ -24,11 +24,6 @@ export default function HeroSection({ newsItem }: HeroSectionProps) {
         Back to News
       </Link>
 
-      {/* Title */}
-      <h1 className="text-zinc-900 dark:text-zinc-100 text-2xl md:text-3xl lg:text-4xl font-black leading-tight tracking-tight">
-        {newsItem.title}
-      </h1>
-
       {/* Featured Image */}
       <div className="w-full aspect-3/2 rounded-lg overflow-hidden relative">
         <Image
@@ -40,6 +35,11 @@ export default function HeroSection({ newsItem }: HeroSectionProps) {
           unoptimized
         />
       </div>
+
+      {/* Title */}
+      <h1 className="text-zinc-900 dark:text-zinc-100 text-2xl md:text-3xl lg:text-4xl font-black leading-tight tracking-tight">
+        {newsItem.title}
+      </h1>
 
       {/* Category, Date, Author, and Read Time - Below Image */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
