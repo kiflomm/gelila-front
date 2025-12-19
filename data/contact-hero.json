@@ -1,0 +1,13 @@
+{
+  "title": "Get In Touch",
+  "subtitle": "Have questions or want to learn more? We're here to help. Reach out to us and we'll get back to you as soon as possible.",
+  "image": {
+    "src": "https://images.unsplash.com/photo-1423666639041-f56000c27a9a?q=80&w=2074&auto=format&fit=crop",
+    "alt": "Professional business handshake and communication in modern office setting"
+  },
+  "button": {
+    "text": "Send Us a Message",
+    "href": "#contact-form"
+  }
+}
+
