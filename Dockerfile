@@ -24,8 +24,9 @@ RUN pnpm build
 # Stage 2: Production stage
 FROM node:20-alpine AS production
 
-# Install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Install pnpm and curl for healthcheck
+RUN corepack enable && corepack prepare pnpm@latest --activate && \
+    apk add --no-cache curl
 
 # Create app directory
 WORKDIR /app
@@ -61,9 +62,9 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3000', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+# Health check - using curl for reliability
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD curl -f http://localhost:3000 || exit 1
 
 # Start the application using Next.js production server
 CMD ["pnpm", "start"]
