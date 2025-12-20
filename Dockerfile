@@ -18,7 +18,8 @@
   # ----------------------------
   FROM node:20-alpine AS production
   
-  RUN apk add --no-cache curl
+  # Install pnpm for running the production server
+  RUN corepack enable && corepack prepare pnpm@latest --activate
   
   WORKDIR /app
   
@@ -43,9 +44,6 @@
   ENV HOSTNAME=0.0.0.0
   
   EXPOSE 3000
-  
-  HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost:3000 || exit 1
   
   CMD ["pnpm", "start"]
   
