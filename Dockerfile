@@ -1,71 +1,51 @@
-# Multi-stage build for production Next.js frontend
+# ----------------------------
+# Stage 1: Builder
+# ----------------------------
+  FROM node:20-alpine AS builder
 
-# Stage 1: Build stage
-FROM node:20-alpine AS builder
-
-# Install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
-# Set working directory
-WORKDIR /app
-
-# Copy package files
-COPY package.json pnpm-lock.yaml ./
-
-# Install dependencies (including devDependencies for build)
-RUN pnpm install --frozen-lockfile
-
-# Copy source code
-COPY . .
-
-# Build the application
-RUN pnpm build
-
-# Stage 2: Production stage
-FROM node:20-alpine AS production
-
-# Install pnpm and curl for healthcheck
-RUN corepack enable && corepack prepare pnpm@latest --activate && \
-    apk add --no-cache curl
-
-# Create app directory
-WORKDIR /app
-
-# Create non-root user for security
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nextjs -u 1001
-
-# Copy package files
-COPY package.json pnpm-lock.yaml ./
-
-# Install only production dependencies
-RUN pnpm install --prod --frozen-lockfile && \
-    pnpm store prune
-
-# Copy built application from builder stage
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/next.config.ts ./
-COPY --from=builder /app/package.json ./package.json
-
-# Change ownership to non-root user
-RUN chown -R nextjs:nodejs /app
-
-# Switch to non-root user
-USER nextjs
-
-# Expose port (default 3000, can be overridden via env)
-EXPOSE 3000
-
-# Set environment variable for Next.js
-ENV NODE_ENV=production
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
-
-# Health check - using curl for reliability
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-  CMD curl -f http://localhost:3000 || exit 1
-
-# Start the application using Next.js production server
-CMD ["pnpm", "start"]
-
+  RUN corepack enable && corepack prepare pnpm@latest --activate
+  
+  WORKDIR /app
+  
+  COPY package.json pnpm-lock.yaml ./
+  RUN pnpm install --frozen-lockfile
+  
+  COPY . .
+  RUN pnpm build
+  
+  # ----------------------------
+  # Stage 2: Production
+  # ----------------------------
+  FROM node:20-alpine AS production
+  
+  RUN apk add --no-cache curl
+  
+  WORKDIR /app
+  
+  # Create non-root user
+  RUN addgroup -g 1001 -S nodejs && \
+      adduser -S nextjs -u 1001
+  
+  # Copy EVERYTHING needed from builder
+  COPY --from=builder /app/package.json ./
+  COPY --from=builder /app/pnpm-lock.yaml ./
+  COPY --from=builder /app/node_modules ./node_modules
+  COPY --from=builder /app/.next ./.next
+  COPY --from=builder /app/public ./public
+  COPY --from=builder /app/next.config.ts ./next.config.ts
+  
+  # Ownership
+  RUN chown -R nextjs:nodejs /app
+  USER nextjs
+  
+  ENV NODE_ENV=production
+  ENV PORT=3000
+  ENV HOSTNAME=0.0.0.0
+  
+  EXPOSE 3000
+  
+  HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:3000 || exit 1
+  
+  CMD ["pnpm", "start"]
+  
