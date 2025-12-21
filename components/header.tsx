@@ -112,7 +112,6 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
               const isSectors = link.href === "/sectors";
               const isExports = link.href === "/exports";
               const isImports = link.href === "/imports";
-              const isCareers = link.href.startsWith("/careers");
               const isCompanies = link.href.startsWith("/companies");
 
               if (isSectors && navigationData.dropdowns.sectors) {
@@ -151,20 +150,6 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                     label={link.label}
                     href={link.href}
                     sections={navigationData.dropdowns.exports.sections}
-                    isTransparent={hasTransparentNav}
-                    isActive={isActive}
-                  />
-                );
-              }
-
-              if (isCareers && navigationData.dropdowns.careers) {
-                return (
-                  <NavDropdown
-                    key={link.href}
-                    id="careers"
-                    label={link.label}
-                    href={link.href}
-                    sections={navigationData.dropdowns.careers.sections}
                     isTransparent={hasTransparentNav}
                     isActive={isActive}
                   />
@@ -372,7 +357,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
           {/* Contact Us Button - Mobile */}
           <Link
             onClick={close}
-            className="mt-2 inline-flex items-center justify-center px-5 py-3 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primary hover:bg-[#d97706] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all hover:shadow-lg"
+            className="mt-2 inline-flex items-center justify-center px-5 py-3 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all hover:shadow-lg"
             href="/contact#contact-form"
           >
             Contact Us
