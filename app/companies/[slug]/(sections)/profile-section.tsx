@@ -59,7 +59,7 @@ export default function ProfileSection({ company }: ProfileSectionProps) {
       {/* Background gradient */}
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-background-light/30 dark:via-black/10 to-transparent -z-10"></div>
 
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+      <div className="w-full max-w-5xl mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
         {/* Header Section */}
         <div className="mb-12 sm:mb-16 lg:mb-20">
           <div className="flex flex-col gap-6">
