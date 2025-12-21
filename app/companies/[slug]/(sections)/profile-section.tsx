@@ -147,183 +147,180 @@ export default function ProfileSection({ company }: ProfileSectionProps) {
         {/* Routes Section */}
         {company.routes && company.routes.length > 0 && (
           <div className="mt-16 sm:mt-20 lg:mt-24">
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-black text-[#181411] dark:text-white mb-8 sm:mb-10">
+            <h3 className="text-2xl md:text-3xl lg:text-4xl font-black text-[#181411] dark:text-white mb-6 sm:mb-8">
               Operating Routes
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-5 lg:gap-6">
               {company.routes.map((route, index) => {
                 const [origin, destination] = route.split(" → ");
                 return (
                   <div
                     key={index}
-                    className="group relative p-6 sm:p-8 rounded-2xl bg-linear-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-900/50 border border-gray-200 dark:border-gray-800 hover:border-primary/50 dark:hover:border-primary/50 hover:shadow-xl transition-all duration-300 overflow-hidden"
+                    className="group relative w-full sm:w-[calc(50%-0.625rem)] lg:w-[calc(25%-1.125rem)] max-w-[320px] sm:max-w-none p-4 sm:p-5 rounded-2xl bg-linear-to-br from-white via-white to-gray-50/50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800/50 border border-gray-200/80 dark:border-gray-700/50 hover:border-primary/60 dark:hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-primary/10 transition-all duration-300 overflow-hidden"
                   >
-                    {/* Background decorative SVG */}
-                    <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity">
-                      <svg
-                        className="w-full h-full"
-                        viewBox="0 0 200 200"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M50 100 L150 100 M100 50 L100 150"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          className="text-primary"
-                        />
-                        <circle
-                          cx="50"
-                          cy="100"
-                          r="8"
-                          fill="currentColor"
-                          className="text-primary"
-                        />
-                        <circle
-                          cx="150"
-                          cy="100"
-                          r="8"
-                          fill="currentColor"
-                          className="text-primary"
-                        />
-                      </svg>
-                    </div>
-
+                    {/* Subtle background gradient on hover */}
+                    <div className="absolute inset-0 bg-linear-to-br from-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:to-transparent transition-all duration-300 pointer-events-none"></div>
+                    
                     {/* Route Content */}
                     <div className="relative z-10">
-                      {/* Bus Icon */}
-                      <div className="mb-6 flex items-center justify-center">
+                      {/* Modern Bus Icon */}
+                      <div className="mb-4 sm:mb-5 flex items-center justify-center">
                         <div className="relative">
+                          <div className="absolute inset-0 bg-primary/10 rounded-full blur-md group-hover:bg-primary/20 transition-colors duration-300"></div>
                           <svg
-                            width="64"
-                            height="64"
-                            viewBox="0 0 64 64"
+                            width="36"
+                            height="36"
+                            viewBox="0 0 36 36"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
-                            className="text-primary group-hover:scale-110 transition-transform duration-300"
+                            className="relative text-primary group-hover:scale-110 group-hover:rotate-1 transition-all duration-300"
                           >
-                            {/* Bus body */}
+                            {/* Bus body with gradient effect */}
                             <rect
-                              x="8"
-                              y="20"
-                              width="48"
-                              height="24"
+                              x="5"
+                              y="11"
+                              width="26"
+                              height="14"
                               rx="2"
-                              fill="currentColor"
-                              className="opacity-20"
+                              fill={`url(#busGradient-${index})`}
+                              className="opacity-90"
                             />
                             <rect
-                              x="8"
-                              y="20"
-                              width="48"
-                              height="24"
+                              x="5"
+                              y="11"
+                              width="26"
+                              height="14"
                               rx="2"
                               stroke="currentColor"
-                              strokeWidth="2"
+                              strokeWidth="1.5"
+                              className="opacity-80"
                             />
-                            {/* Windows */}
+                            {/* Windows with shine effect */}
                             <rect
-                              x="14"
-                              y="26"
-                              width="10"
-                              height="8"
-                              rx="1"
+                              x="8"
+                              y="14"
+                              width="6"
+                              height="5"
+                              rx="0.75"
                               fill="currentColor"
-                            />
-                            <rect
-                              x="26"
-                              y="26"
-                              width="10"
-                              height="8"
-                              rx="1"
-                              fill="currentColor"
+                              className="opacity-90"
                             />
                             <rect
-                              x="38"
-                              y="26"
-                              width="10"
-                              height="8"
-                              rx="1"
+                              x="15"
+                              y="14"
+                              width="6"
+                              height="5"
+                              rx="0.75"
                               fill="currentColor"
+                              className="opacity-90"
                             />
-                            {/* Wheels */}
+                            <rect
+                              x="22"
+                              y="14"
+                              width="6"
+                              height="5"
+                              rx="0.75"
+                              fill="currentColor"
+                              className="opacity-90"
+                            />
+                            {/* Wheels with depth */}
                             <circle
-                              cx="18"
-                              cy="48"
-                              r="4"
+                              cx="10"
+                              cy="27"
+                              r="2.5"
+                              fill="currentColor"
+                              className="opacity-40"
+                            />
+                            <circle
+                              cx="10"
+                              cy="27"
+                              r="1.5"
                               fill="currentColor"
                               className="opacity-60"
                             />
                             <circle
-                              cx="46"
-                              cy="48"
-                              r="4"
+                              cx="26"
+                              cy="27"
+                              r="2.5"
+                              fill="currentColor"
+                              className="opacity-40"
+                            />
+                            <circle
+                              cx="26"
+                              cy="27"
+                              r="1.5"
                               fill="currentColor"
                               className="opacity-60"
                             />
-                            {/* Route line animation */}
-                            <path
-                              d="M4 34 L60 34"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeDasharray="4 4"
-                              className="opacity-40 animate-pulse"
-                            />
+                            {/* Gradient definition */}
+                            <defs>
+                              <linearGradient id={`busGradient-${index}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="currentColor" stopOpacity="0.15" />
+                                <stop offset="100%" stopColor="currentColor" stopOpacity="0.05" />
+                              </linearGradient>
+                            </defs>
                           </svg>
                         </div>
                       </div>
 
                       {/* Origin */}
-                      <div className="mb-4">
-                        <div className="flex items-center gap-3 mb-2">
-                          <div className="shrink-0 size-3 rounded-full bg-primary ring-4 ring-primary/20"></div>
-                          <span className="text-sm font-semibold text-primary uppercase tracking-wide">
+                      <div className="mb-3">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="shrink-0 size-2.5 rounded-full bg-primary ring-2 ring-primary/30 shadow-sm"></div>
+                          <span className="text-[10px] sm:text-xs font-semibold text-primary uppercase tracking-wider">
                             From
                           </span>
                         </div>
-                        <p className="text-lg md:text-xl font-bold text-[#181411] dark:text-white pl-6">
+                        <p className="text-sm sm:text-base font-bold text-[#181411] dark:text-white leading-tight pl-5">
                           {origin}
                         </p>
                       </div>
 
-                      {/* Route Arrow */}
-                      <div className="flex items-center justify-center my-4">
+                      {/* Modern Route Arrow */}
+                      <div className="flex items-center justify-center my-3 sm:my-4">
                         <svg
-                          width="40"
-                          height="24"
-                          viewBox="0 0 40 24"
+                          width="32"
+                          height="20"
+                          viewBox="0 0 32 20"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
-                          className="text-primary"
+                          className="text-primary/70 group-hover:text-primary transition-colors duration-300"
                         >
                           <path
-                            d="M0 12 L32 12 M24 6 L32 12 L24 18"
+                            d="M2 10 L24 10"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            className="opacity-60"
+                          />
+                          <path
+                            d="M20 6 L26 10 L20 14"
                             stroke="currentColor"
                             strokeWidth="2.5"
                             strokeLinecap="round"
                             strokeLinejoin="round"
+                            fill="currentColor"
                             className="group-hover:translate-x-1 transition-transform duration-300"
                           />
                           <circle
-                            cx="36"
-                            cy="12"
-                            r="2"
+                            cx="28"
+                            cy="10"
+                            r="1.5"
                             fill="currentColor"
-                            className="animate-pulse"
+                            className="opacity-50 group-hover:opacity-80 transition-opacity duration-300"
                           />
                         </svg>
                       </div>
 
                       {/* Destination */}
                       <div>
-                        <div className="flex items-center gap-3 mb-2">
-                          <div className="shrink-0 size-3 rounded-full bg-green-500 ring-4 ring-green-500/20"></div>
-                          <span className="text-sm font-semibold text-green-600 dark:text-green-400 uppercase tracking-wide">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="shrink-0 size-2.5 rounded-full bg-emerald-500 ring-2 ring-emerald-500/30 shadow-sm"></div>
+                          <span className="text-[10px] sm:text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
                             To
                           </span>
                         </div>
-                        <p className="text-lg md:text-xl font-bold text-[#181411] dark:text-white pl-6">
+                        <p className="text-sm sm:text-base font-bold text-[#181411] dark:text-white leading-tight pl-5">
                           {destination}
                         </p>
                       </div>
