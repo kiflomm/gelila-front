@@ -54,8 +54,9 @@ export default function Footer() {
     .map((link) => ({
       href: link.href,
       label: link.label,
-      icon: iconMap[link.icon],
-    }));
+      icon: iconMap[link.icon] || iconMap[link.icon.replace(/\s+/g, '')] || Facebook, // Fallback to Facebook if icon not found
+    }))
+    .filter((link) => link.icon); // Filter out any links without valid icons
 
   return (
     <footer className="bg-gray-800 dark:bg-gray-900 border-t border-gray-700 dark:border-gray-800">
@@ -96,6 +97,10 @@ export default function Footer() {
               <div className="flex items-center gap-4">
                 {socialLinks.map((social, index) => {
                   const Icon = social.icon;
+                  // Skip rendering if icon is not found
+                  if (!Icon) {
+                    return null;
+                  }
                   return (
                     <Link
                       key={`${social.href}-${index}`}
