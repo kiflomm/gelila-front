@@ -9,6 +9,7 @@ import { NavDropdown } from "@/components/nav-dropdown";
 import navigationData from "@/data/navigation.json";
 import { getNavLinkClasses } from "@/lib/utils";
 import { useNavDropdownStore } from "@/stores/use-nav-dropdown-store";
+import { useScrollSpy } from "@/hooks/use-scroll-spy";
 
 interface HeaderProps {
   forceTransparent?: boolean;
@@ -19,6 +20,10 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
   const { closeAll: closeAllDropdowns } = useNavDropdownStore();
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
+  
+  // Track active section for scroll spy
+  const activeSection = useScrollSpy(["careers-section", "news-section", "contact-form"]);
+  
   const isHome = pathname === "/";
   const isAbout = pathname === "/about";
   const isExports = pathname === "/exports" || pathname.startsWith("/exports/");
@@ -97,13 +102,17 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
             isScrolled ? "max-h-0 py-0 overflow-hidden opacity-0" : "max-h-20 opacity-100"
           }`}>
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              // Enhanced active state logic - considers pathname and hash
+              const linkPath = link.href.split('#')[0];
+              const linkHash = link.href.includes('#') ? link.href.split('#')[1] : null;
+              const isOnPage = pathname === linkPath || pathname === link.href;
+              const isActive = isOnPage && (!linkHash || activeSection === linkHash);
 
               // Check if this link should have a dropdown
               const isSectors = link.href === "/sectors";
               const isExports = link.href === "/exports";
               const isImports = link.href === "/imports";
-              const isCareers = link.href === "/careers";
+              const isCareers = link.href.startsWith("/careers");
               const isCompanies = link.href.startsWith("/companies");
 
               if (isSectors && navigationData.dropdowns.sectors) {
@@ -295,7 +304,12 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
       >
         <nav className="px-4 sm:px-6 py-4 sm:py-6 flex flex-col gap-1 max-h-[calc(100vh-88px)] overflow-y-auto">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            // Enhanced active state logic - considers pathname and hash
+            const linkPath = link.href.split('#')[0];
+            const linkHash = link.href.includes('#') ? link.href.split('#')[1] : null;
+            const isOnPage = pathname === linkPath || pathname === link.href;
+            const isActive = isOnPage && (!linkHash || activeSection === linkHash);
+            
             const isCompanies = link.href.startsWith("/companies");
             const isCompaniesPage = pathname === "/companies" || pathname.startsWith("/companies/");
 
