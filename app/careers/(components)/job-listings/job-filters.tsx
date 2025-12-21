@@ -82,7 +82,7 @@ export function JobFilters({
               className="flex h-12 w-full sm:w-auto shrink-0 items-center justify-between gap-x-2 rounded-lg bg-[#F8F9FA] dark:bg-background-dark border border-[#F8F9FA] dark:border-white/10 px-4 hover:bg-[#F8F9FA]/80 dark:hover:bg-background-dark/80"
             >
               <span className="text-[#6C757D] dark:text-[#F8F9FA]/80 text-sm font-medium leading-normal">
-                {selectedLocation}
+                {selectedLocation === "All" ? "All Locations" : `Location: ${selectedLocation}`}
               </span>
               <ChevronDown className="size-4 text-[#6C757D] dark:text-[#F8F9FA]/80" />
             </Button>
@@ -109,7 +109,7 @@ export function JobFilters({
               className="flex h-12 w-full sm:w-auto shrink-0 items-center justify-between gap-x-2 rounded-lg bg-[#F8F9FA] dark:bg-background-dark border border-[#F8F9FA] dark:border-white/10 px-4 hover:bg-[#F8F9FA]/80 dark:hover:bg-background-dark/80"
             >
               <span className="text-[#6C757D] dark:text-[#F8F9FA]/80 text-sm font-medium leading-normal">
-                {selectedDepartment}
+                {selectedDepartment === "All" ? "All Departments" : `Department: ${selectedDepartment}`}
               </span>
               <ChevronDown className="size-4 text-[#6C757D] dark:text-[#F8F9FA]/80" />
             </Button>
@@ -136,7 +136,7 @@ export function JobFilters({
               className="flex h-12 w-full sm:w-auto shrink-0 items-center justify-between gap-x-2 rounded-lg bg-[#F8F9FA] dark:bg-background-dark border border-[#F8F9FA] dark:border-white/10 px-4 hover:bg-[#F8F9FA]/80 dark:hover:bg-background-dark/80"
             >
               <span className="text-[#6C757D] dark:text-[#F8F9FA]/80 text-sm font-medium leading-normal">
-                {selectedJobType}
+                {selectedJobType === "All" ? "All Job Types" : `Job Type: ${selectedJobType}`}
               </span>
               <ChevronDown className="size-4 text-[#6C757D] dark:text-[#F8F9FA]/80" />
             </Button>
