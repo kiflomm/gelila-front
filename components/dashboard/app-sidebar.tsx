@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 import {
   LayoutDashboard,
   Package,
@@ -33,6 +34,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { useAdminImports } from "@/hooks/use-imports";
 import { useAdminSectors } from "@/hooks/use-sectors";
@@ -91,9 +93,17 @@ const getExportIcon = (title: string) => {
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { isMobile, setOpenMobile } = useSidebar();
   const { data: sectors = [], isLoading: sectorsLoading } = useAdminSectors();
   const { data: imports = [], isLoading: importsLoading } = useAdminImports();
   const { data: exports = [], isLoading: exportsLoading } = useAdminExports();
+
+  // Close sidebar on mobile when route changes
+  useEffect(() => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  }, [pathname, isMobile, setOpenMobile]);
 
   // Build sectors menu items dynamically
   const sectorsItems = sectors.map((sector) => ({
@@ -197,7 +207,10 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild size="sm">
-              <Link href="/" className="flex items-center justify-center w-full">
+              <Link 
+                href="/" 
+                className="flex items-center justify-center w-full"
+              >
                 <div className="flex items-center gap-0 bg-white px-2 py-1 rounded max-w-fit">
                   <Image
                     src="/logo-left.png"
