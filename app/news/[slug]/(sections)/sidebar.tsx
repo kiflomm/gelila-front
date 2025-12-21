@@ -38,7 +38,8 @@ export default function Sidebar({
       name: link.name,
       icon: iconMap[link.icon],
       href: link.href,
-    }));
+    }))
+    .filter((link) => link.icon !== undefined);
 
   // Get latest published posts (excluding current article)
   const latestPosts = useMemo(() => {
