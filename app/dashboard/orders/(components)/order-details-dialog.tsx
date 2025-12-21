@@ -1,5 +1,8 @@
 "use client";
 
+import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -8,9 +11,17 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { Mail, Phone, Calendar, ShoppingCart, Building2, Package, FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Mail, Phone, Calendar, ShoppingCart, Building2, Package, FileText, RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { QuoteRequest } from "@/api/orders";
+import { ordersApi, type QuoteRequest } from "@/api/orders";
 
 interface OrderDetailsDialogProps {
   order: QuoteRequest | null;
@@ -23,6 +34,36 @@ export function OrderDetailsDialog({
   open,
   onOpenChange,
 }: OrderDetailsDialogProps) {
+  const queryClient = useQueryClient();
+  const [selectedStatus, setSelectedStatus] = useState<QuoteRequest["status"] | "">("");
+
+  // Reset selected status when dialog opens/order changes
+  if (order && selectedStatus === "") {
+    setSelectedStatus(order.status);
+  }
+
+  // Update status mutation
+  const updateStatusMutation = useMutation({
+    mutationFn: ({ id, status }: { id: number; status: QuoteRequest["status"] }) =>
+      ordersApi.updateQuoteRequestStatus(id, status),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      toast.success("Order status updated successfully!", {
+        description: "An email notification has been sent to the customer.",
+      });
+    },
+    onError: (error: any) => {
+      toast.error("Failed to update order status", {
+        description: error.response?.data?.message || error.message,
+      });
+    },
+  });
+
+  const handleUpdateStatus = () => {
+    if (!order || !selectedStatus || selectedStatus === order.status) return;
+    updateStatusMutation.mutate({ id: order.id, status: selectedStatus });
+  };
+
   if (!order) return null;
 
   const formatDate = (dateString: string) => {
@@ -52,6 +93,8 @@ export function OrderDetailsDialog({
     }
   };
 
+  const isStatusChanged = selectedStatus !== order.status;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -68,6 +111,50 @@ export function OrderDetailsDialog({
         </DialogHeader>
 
         <div className="space-y-6 py-4">
+          {/* Status Update Section */}
+          <div className="space-y-3 p-4 rounded-lg border border-border bg-muted/20">
+            <div className="flex items-center gap-2">
+              <RefreshCw className="size-4 text-muted-foreground" />
+              <h3 className="text-sm font-semibold">Update Order Status</h3>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Select
+                value={selectedStatus}
+                onValueChange={(value) => setSelectedStatus(value as QuoteRequest["status"])}
+              >
+                <SelectTrigger className="flex-1">
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="reviewing">Reviewing</SelectItem>
+                  <SelectItem value="quoted">Quoted</SelectItem>
+                  <SelectItem value="rejected">Rejected</SelectItem>
+                  <SelectItem value="completed">Completed</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button
+                onClick={handleUpdateStatus}
+                disabled={!isStatusChanged || updateStatusMutation.isPending}
+                className="sm:w-auto"
+              >
+                {updateStatusMutation.isPending ? (
+                  <>
+                    <RefreshCw className="size-4 mr-2 animate-spin" />
+                    Updating...
+                  </>
+                ) : (
+                  "Update Status"
+                )}
+              </Button>
+            </div>
+            {isStatusChanged && (
+              <p className="text-xs text-muted-foreground">
+                An email notification will be sent to the customer upon status update.
+              </p>
+            )}
+          </div>
+
           {/* Contact Information */}
           <div className="space-y-3">
             <h3 className="text-sm font-semibold">Contact Information</h3>

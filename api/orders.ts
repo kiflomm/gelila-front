@@ -57,6 +57,16 @@ export const ordersApi = {
     return response.data;
   },
 
+  updateQuoteRequestStatus: async (
+    id: number,
+    status: QuoteRequest["status"]
+  ): Promise<QuoteRequest> => {
+    const response = await axiosProtectedClient.patch(`/orders/${id}/status`, {
+      status,
+    });
+    return response.data;
+  },
+
   deleteQuoteRequest: async (id: number): Promise<{ message: string }> => {
     const response = await axiosProtectedClient.delete(`/orders/${id}`);
     return response.data;
