@@ -63,11 +63,11 @@ export default function Footer() {
       {/* Decorative gradient overlay */}
       <div className="absolute inset-0 bg-linear-to-r from-primary/5 via-transparent to-primary/5 pointer-events-none" />
       
-      <div className="relative px-4 sm:px-6 lg:px-8 xl:px-16 py-12 sm:py-16 lg:py-20 max-w-[1280px] mx-auto">
+      <div className="relative px-4 sm:px-6 lg:px-8 xl:px-16 py-4 sm:py-5 lg:py-6 max-w-[1280px] mx-auto">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6 mb-4">
           {/* Company Info & Logo */}
-          <div className="flex flex-col gap-6 md:col-span-2 lg:col-span-1">
+          <div className="flex flex-col gap-3 md:col-span-2 lg:col-span-1">
             <Link href="/" className="group">
             <div className="flex flex-col items-start gap-0 shrink-0 bg-white px-2 py-1 rounded">
                 <Image
@@ -75,7 +75,7 @@ export default function Footer() {
                   alt="Gelila Manufacturing PLC"
                   width={100}
                   height={80}
-                  className="h-8 sm:h-10 md:h-10 lg:h-12 w-auto shrink-0"
+                  className="h-6 sm:h-7 md:h-7 lg:h-8 w-auto shrink-0"
                 />
                 <Image
                   src="/logo-right.png"
@@ -87,7 +87,7 @@ export default function Footer() {
               </div>
             </Link>
             
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
               <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Follow Us
               </span>
@@ -96,7 +96,7 @@ export default function Footer() {
                   {Array.from({ length: 5 }).map((_, i) => (
                     <div
                       key={i}
-                      className="size-11 rounded-xl bg-gray-700/50 dark:bg-gray-800/50 animate-pulse"
+                      className="size-9 rounded-xl bg-gray-700/50 dark:bg-gray-800/50 animate-pulse"
                     />
                   ))}
                 </div>
@@ -111,7 +111,7 @@ export default function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={social.label}
-                        className="group relative size-11 flex items-center justify-center rounded-xl bg-gray-800/50 dark:bg-gray-900/50 backdrop-blur-sm text-gray-400 hover:text-white hover:bg-primary/20 border border-gray-700/50 dark:border-gray-800/50 hover:border-primary/50 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-primary/20"
+                        className="group relative size-9 flex items-center justify-center rounded-xl bg-gray-800/50 dark:bg-gray-900/50 backdrop-blur-sm text-gray-400 hover:text-white hover:bg-primary/20 border border-gray-700/50 dark:border-gray-800/50 hover:border-primary/50 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-primary/20"
                       >
                         <Icon className="size-5 transition-transform duration-300 group-hover:scale-110" />
                       </Link>
@@ -123,12 +123,12 @@ export default function Footer() {
           </div>
 
           {/* Company Links */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-3">
             <h4 className="text-base font-bold text-white mb-1 relative inline-block">
               Company
               <span className="absolute -bottom-1 left-0 w-8 h-0.5 bg-linear-to-r from-primary to-primary/50 rounded-full" />
             </h4>
-            <ul className="flex flex-col gap-3.5">
+            <ul className="flex flex-col gap-2">
               {companyLinks.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -146,12 +146,12 @@ export default function Footer() {
           </div>
 
           {/* Subsidiary Companies */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-3">
             <h4 className="text-base font-bold text-white mb-1 relative inline-block">
               Subsidiaries
               <span className="absolute -bottom-1 left-0 w-8 h-0.5 bg-linear-to-r from-primary to-primary/50 rounded-full" />
             </h4>
-            <ul className="flex flex-col gap-3.5">
+            <ul className="flex flex-col gap-2">
               {subsidiaryLinks.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -169,14 +169,14 @@ export default function Footer() {
           </div>
 
           {/* Contact Us */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-3">
             <h4 className="text-base font-bold text-white mb-1 relative inline-block">
               Contact Us
               <span className="absolute -bottom-1 left-0 w-8 h-0.5 bg-linear-to-r from-primary to-primary/50 rounded-full" />
             </h4>
-            <div className="flex flex-col gap-4">
-              <div className="group flex items-start gap-3 p-3 rounded-lg bg-gray-800/30 dark:bg-gray-900/30 hover:bg-gray-800/50 dark:hover:bg-gray-900/50 transition-all duration-200">
-                <div className="mt-0.5 p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-200">
+            <div className="flex flex-col gap-2">
+              <div className="group flex items-start gap-3 p-2 rounded-lg bg-gray-800/30 dark:bg-gray-900/30 hover:bg-gray-800/50 dark:hover:bg-gray-900/50 transition-all duration-200">
+                <div className="mt-0.5 p-1.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-200">
                   <MapPin className="size-4 text-primary shrink-0" />
                 </div>
                 <div className="flex-1">
@@ -194,8 +194,8 @@ export default function Footer() {
                 </div>
               </div>
               
-              <div className="group flex items-start gap-3 p-3 rounded-lg bg-gray-800/30 dark:bg-gray-900/30 hover:bg-gray-800/50 dark:hover:bg-gray-900/50 transition-all duration-200">
-                <div className="mt-0.5 p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-200">
+              <div className="group flex items-start gap-3 p-2 rounded-lg bg-gray-800/30 dark:bg-gray-900/30 hover:bg-gray-800/50 dark:hover:bg-gray-900/50 transition-all duration-200">
+                <div className="mt-0.5 p-1.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-200">
                   <Phone className="size-4 text-primary shrink-0" />
                 </div>
                 <div className="flex flex-col gap-2 flex-1">
@@ -211,8 +211,8 @@ export default function Footer() {
                 </div>
               </div>
               
-              <div className="group flex items-start gap-3 p-3 rounded-lg bg-gray-800/30 dark:bg-gray-900/30 hover:bg-gray-800/50 dark:hover:bg-gray-900/50 transition-all duration-200">
-                <div className="mt-0.5 p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-200">
+              <div className="group flex items-start gap-3 p-2 rounded-lg bg-gray-800/30 dark:bg-gray-900/30 hover:bg-gray-800/50 dark:hover:bg-gray-900/50 transition-all duration-200">
+                <div className="mt-0.5 p-1.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-200">
                   <Mail className="size-4 text-primary shrink-0" />
                 </div>
                 <Link
@@ -227,7 +227,7 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="relative my-10">
+        <div className="relative my-4">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-gray-700/50 dark:border-gray-800/50" />
           </div>
@@ -239,7 +239,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-3">
           {/* Copyright */}
           <div className="text-center md:text-left">
             <p className="text-sm text-gray-400">
