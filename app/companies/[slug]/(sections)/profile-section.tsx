@@ -175,87 +175,154 @@ export default function ProfileSection({ company }: ProfileSectionProps) {
                             xmlns="http://www.w3.org/2000/svg"
                             className="relative text-primary group-hover:scale-110 group-hover:rotate-1 transition-all duration-300"
                           >
-                            {/* Bus body with gradient effect */}
-                            <rect
-                              x="5"
-                              y="11"
-                              width="26"
-                              height="14"
-                              rx="2"
-                              fill={`url(#busGradient-${index})`}
-                              className="opacity-90"
-                            />
-                            <rect
-                              x="5"
-                              y="11"
-                              width="26"
-                              height="14"
-                              rx="2"
+                            {/* Route line behind bus */}
+                            <path
+                              d="M2 18 L34 18"
                               stroke="currentColor"
                               strokeWidth="1.5"
-                              className="opacity-80"
+                              strokeDasharray="2 2"
+                              className="opacity-20"
                             />
-                            {/* Windows with shine effect */}
+                            
+                            {/* Bus body with gradient effect */}
                             <rect
-                              x="8"
-                              y="14"
-                              width="6"
+                              x="6"
+                              y="10"
+                              width="24"
+                              height="15"
+                              rx="2.5"
+                              fill={`url(#busGradient-${index})`}
+                              className="opacity-95"
+                            />
+                            <rect
+                              x="6"
+                              y="10"
+                              width="24"
+                              height="15"
+                              rx="2.5"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              className="opacity-90"
+                            />
+                            
+                            {/* Front windshield */}
+                            <rect
+                              x="7"
+                              y="12"
+                              width="5"
+                              height="4"
+                              rx="0.8"
+                              fill="currentColor"
+                              className="opacity-85"
+                            />
+                            
+                            {/* Side windows with frames */}
+                            <rect
+                              x="13"
+                              y="12"
+                              width="5.5"
                               height="5"
-                              rx="0.75"
+                              rx="0.8"
                               fill="currentColor"
                               className="opacity-90"
                             />
                             <rect
-                              x="15"
-                              y="14"
-                              width="6"
-                              height="5"
-                              rx="0.75"
-                              fill="currentColor"
-                              className="opacity-90"
-                            />
-                            <rect
-                              x="22"
-                              y="14"
-                              width="6"
-                              height="5"
-                              rx="0.75"
-                              fill="currentColor"
-                              className="opacity-90"
-                            />
-                            {/* Wheels with depth */}
-                            <circle
-                              cx="10"
-                              cy="27"
-                              r="2.5"
-                              fill="currentColor"
-                              className="opacity-40"
-                            />
-                            <circle
-                              cx="10"
-                              cy="27"
-                              r="1.5"
+                              x="13.5"
+                              y="12.5"
+                              width="4.5"
+                              height="4"
+                              rx="0.5"
                               fill="currentColor"
                               className="opacity-60"
                             />
-                            <circle
-                              cx="26"
-                              cy="27"
-                              r="2.5"
+                            
+                            <rect
+                              x="19.5"
+                              y="12"
+                              width="5.5"
+                              height="5"
+                              rx="0.8"
                               fill="currentColor"
-                              className="opacity-40"
+                              className="opacity-90"
                             />
-                            <circle
-                              cx="26"
-                              cy="27"
-                              r="1.5"
+                            <rect
+                              x="20"
+                              y="12.5"
+                              width="4.5"
+                              height="4"
+                              rx="0.5"
                               fill="currentColor"
                               className="opacity-60"
                             />
+                            
+                            {/* Door line */}
+                            <line
+                              x1="25.5"
+                              y1="10"
+                              x2="25.5"
+                              y2="25"
+                              stroke="currentColor"
+                              strokeWidth="1.2"
+                              className="opacity-50"
+                            />
+                            
+                            {/* Wheels with rim detail */}
+                            <circle
+                              cx="11"
+                              cy="27"
+                              r="3"
+                              fill="currentColor"
+                              className="opacity-30"
+                            />
+                            <circle
+                              cx="11"
+                              cy="27"
+                              r="2"
+                              fill="currentColor"
+                              className="opacity-50"
+                            />
+                            <circle
+                              cx="11"
+                              cy="27"
+                              r="1"
+                              fill="currentColor"
+                              className="opacity-70"
+                            />
+                            
+                            <circle
+                              cx="25"
+                              cy="27"
+                              r="3"
+                              fill="currentColor"
+                              className="opacity-30"
+                            />
+                            <circle
+                              cx="25"
+                              cy="27"
+                              r="2"
+                              fill="currentColor"
+                              className="opacity-50"
+                            />
+                            <circle
+                              cx="25"
+                              cy="27"
+                              r="1"
+                              fill="currentColor"
+                              className="opacity-70"
+                            />
+                            
+                            {/* Route destination indicator (small flag) */}
+                            <path
+                              d="M28 8 L28 12 L30 10 Z"
+                              fill="currentColor"
+                              className="opacity-60"
+                            />
+                            
                             {/* Gradient definition */}
                             <defs>
                               <linearGradient id={`busGradient-${index}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stopColor="currentColor" stopOpacity="0.15" />
+                                <stop offset="0%" stopColor="currentColor" stopOpacity="0.2" />
+                                <stop offset="50%" stopColor="currentColor" stopOpacity="0.1" />
                                 <stop offset="100%" stopColor="currentColor" stopOpacity="0.05" />
                               </linearGradient>
                             </defs>
@@ -286,28 +353,65 @@ export default function ProfileSection({ company }: ProfileSectionProps) {
                           xmlns="http://www.w3.org/2000/svg"
                           className="text-primary/70 group-hover:text-primary transition-colors duration-300"
                         >
+                          {/* Route path with dashed line */}
                           <path
-                            d="M2 10 L24 10"
+                            d="M1 10 L22 10"
                             stroke="currentColor"
                             strokeWidth="2"
                             strokeLinecap="round"
-                            className="opacity-60"
+                            strokeDasharray="3 2"
+                            className="opacity-40"
                           />
+                          
+                          {/* Solid route line */}
                           <path
-                            d="M20 6 L26 10 L20 14"
+                            d="M1 10 L22 10"
                             stroke="currentColor"
-                            strokeWidth="2.5"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            className="opacity-70"
+                          />
+                          
+                          {/* Arrow head with filled design */}
+                          <path
+                            d="M20 5 L26 10 L20 15"
+                            stroke="currentColor"
+                            strokeWidth="2.2"
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             fill="currentColor"
-                            className="group-hover:translate-x-1 transition-transform duration-300"
+                            className="group-hover:translate-x-0.5 transition-transform duration-300"
+                          />
+                          
+                          {/* Inner arrow highlight */}
+                          <path
+                            d="M21 7 L24 10 L21 13"
+                            fill="currentColor"
+                            className="opacity-30"
+                          />
+                                                  {/* Destination point */}
+                          <circle
+                            cx="28"
+                            cy="10"
+                            r="2"
+                            fill="currentColor"
+                            className="opacity-60 group-hover:opacity-90 transition-opacity duration-300"
                           />
                           <circle
                             cx="28"
                             cy="10"
+                            r="1"
+                            fill="currentColor"
+                            className="opacity-90"
+                          />
+                          
+                          {/* Origin point */}
+                          <circle
+                            cx="1"
+                            cy="10"
                             r="1.5"
                             fill="currentColor"
-                            className="opacity-50 group-hover:opacity-80 transition-opacity duration-300"
+                            className="opacity-50"
                           />
                         </svg>
                       </div>
