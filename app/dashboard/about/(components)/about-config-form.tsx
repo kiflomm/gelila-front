@@ -32,12 +32,6 @@ export function AboutConfigForm({
   const [pageHeadingDescription, setPageHeadingDescription] = useState(
     aboutConfig?.pageHeadingDescription || ""
   );
-  const [pageHeadingImageUrl, setPageHeadingImageUrl] = useState(
-    aboutConfig?.pageHeadingImageUrl || ""
-  );
-  const [pageHeadingImageAlt, setPageHeadingImageAlt] = useState(
-    aboutConfig?.pageHeadingImageAlt || ""
-  );
   const [pageHeadingImage, setPageHeadingImage] = useState<File | null>(null);
 
   // Story state
@@ -45,12 +39,6 @@ export function AboutConfigForm({
   const [storyTitle, setStoryTitle] = useState(aboutConfig?.storyTitle || "");
   const [storyContent, setStoryContent] = useState(
     aboutConfig?.storyContent || ""
-  );
-  const [storyImageUrl, setStoryImageUrl] = useState(
-    aboutConfig?.storyImageUrl || ""
-  );
-  const [storyImageAlt, setStoryImageAlt] = useState(
-    aboutConfig?.storyImageAlt || ""
   );
   const [storyImage, setStoryImage] = useState<File | null>(null);
 
@@ -80,13 +68,9 @@ export function AboutConfigForm({
     const data: UpdateAboutConfigData = {
       pageHeadingTitle,
       pageHeadingDescription,
-      pageHeadingImageUrl,
-      pageHeadingImageAlt,
       storyBadge,
       storyTitle,
       storyContent,
-      storyImageUrl,
-      storyImageAlt,
       statSectorsValue,
       statSectorsLabel,
       statEmployeesValue,
@@ -136,10 +120,6 @@ export function AboutConfigForm({
         </div>
 
         <PageHeadingImageUpload
-          imageUrl={pageHeadingImageUrl}
-          setImageUrl={setPageHeadingImageUrl}
-          imageAlt={pageHeadingImageAlt}
-          setImageAlt={setPageHeadingImageAlt}
           image={pageHeadingImage}
           setImage={setPageHeadingImage}
           currentImageUrl={aboutConfig?.pageHeadingImageUrl}
@@ -192,10 +172,6 @@ export function AboutConfigForm({
         </div>
 
         <StoryImageUpload
-          imageUrl={storyImageUrl}
-          setImageUrl={setStoryImageUrl}
-          imageAlt={storyImageAlt}
-          setImageAlt={setStoryImageAlt}
           image={storyImage}
           setImage={setStoryImage}
           currentImageUrl={aboutConfig?.storyImageUrl}

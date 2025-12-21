@@ -2,25 +2,16 @@
 
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Upload, X } from "lucide-react";
 
 interface StoryImageUploadProps {
-  imageUrl: string;
-  setImageUrl: (url: string) => void;
-  imageAlt: string;
-  setImageAlt: (alt: string) => void;
   image: File | null;
   setImage: (file: File | null) => void;
   currentImageUrl?: string | null;
 }
 
 export function StoryImageUpload({
-  imageUrl,
-  setImageUrl,
-  imageAlt,
-  setImageAlt,
   image,
   setImage,
   currentImageUrl,
@@ -68,7 +59,7 @@ export function StoryImageUpload({
       <div className="space-y-2">
         <Label>Story Image</Label>
         <p className="text-sm text-muted-foreground">
-          Upload a new image or provide an external URL
+          Upload a new image for the story section
         </p>
       </div>
 
@@ -104,29 +95,6 @@ export function StoryImageUpload({
         )}
       </div>
 
-      {/* Or External URL */}
-      <div className="space-y-2">
-        <Label htmlFor="storyImageUrl">Or use external URL</Label>
-        <Input
-          id="storyImageUrl"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-          placeholder="https://example.com/image.jpg"
-          type="url"
-        />
-      </div>
-
-      {/* Alt Text */}
-      <div className="space-y-2">
-        <Label htmlFor="storyImageAlt">Image Alt Text</Label>
-        <Input
-          id="storyImageAlt"
-          value={imageAlt}
-          onChange={(e) => setImageAlt(e.target.value)}
-          placeholder="Description of the image for accessibility"
-        />
-      </div>
-
       {/* Image Preview */}
       {displayImageUrl && (
         <div className="space-y-2">
@@ -134,7 +102,7 @@ export function StoryImageUpload({
           <div className="relative rounded-md overflow-hidden border max-w-2xl">
             <img
               src={displayImageUrl}
-              alt={imageAlt || "Story preview"}
+              alt="Story preview"
               className="w-full h-48 object-cover"
             />
           </div>

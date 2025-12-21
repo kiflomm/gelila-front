@@ -29,15 +29,11 @@ export interface UpdateAboutConfigData {
   // Page Heading
   pageHeadingTitle?: string;
   pageHeadingDescription?: string;
-  pageHeadingImageUrl?: string;
-  pageHeadingImageAlt?: string;
   pageHeadingImage?: File;
   // Story
   storyBadge?: string;
   storyTitle?: string;
   storyContent?: string;
-  storyImageUrl?: string;
-  storyImageAlt?: string;
   storyImage?: File;
   // Stats
   statSectorsValue?: string;
@@ -72,12 +68,6 @@ export const aboutApi = {
     if (data.pageHeadingDescription !== undefined) {
       formData.append("pageHeadingDescription", data.pageHeadingDescription);
     }
-    if (data.pageHeadingImageUrl !== undefined) {
-      formData.append("pageHeadingImageUrl", data.pageHeadingImageUrl);
-    }
-    if (data.pageHeadingImageAlt !== undefined) {
-      formData.append("pageHeadingImageAlt", data.pageHeadingImageAlt);
-    }
     if (data.pageHeadingImage) {
       formData.append("pageHeadingImage", data.pageHeadingImage);
     }
@@ -91,12 +81,6 @@ export const aboutApi = {
     }
     if (data.storyContent !== undefined) {
       formData.append("storyContent", data.storyContent);
-    }
-    if (data.storyImageUrl !== undefined) {
-      formData.append("storyImageUrl", data.storyImageUrl);
-    }
-    if (data.storyImageAlt !== undefined) {
-      formData.append("storyImageAlt", data.storyImageAlt);
     }
     if (data.storyImage) {
       formData.append("storyImage", data.storyImage);
