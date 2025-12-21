@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -196,15 +197,24 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild size="sm">
-              <Link href="/">
-                <div className="flex aspect-square size-6 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <Home className="size-3.5" />
-                </div>
-                <div className="grid flex-1 text-left text-xs leading-tight">
-                  <span className="truncate font-semibold">Gelila</span>
-                  <span className="truncate text-[10px] text-muted-foreground">
-                    Dashboard
-                  </span>
+              <Link href="/" className="flex items-center justify-center w-full">
+                <div className="flex items-center gap-0 bg-white px-2 py-1 rounded max-w-fit">
+                  <Image
+                    src="/logo-left.png"
+                    alt="Gelila Manufacturing PLC"
+                    width={100}
+                    height={80}
+                    className="w-auto h-6 shrink-0"
+                    priority
+                  />
+                  <Image
+                    src="/logo-right.png"
+                    alt="Gelila Manufacturing PLC"
+                    width={100}
+                    height={80}
+                    className="w-auto h-6 shrink-0"
+                    priority
+                  />
                 </div>
               </Link>
             </SidebarMenuButton>
