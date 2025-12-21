@@ -337,18 +337,18 @@ export default function ProfileSection({ company }: ProfileSectionProps) {
 
         {/* Amenities Section */}
         {company.amenities && company.amenities.length > 0 && (
-          <div className="mt-16 sm:mt-20 lg:mt-24">
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-black text-[#181411] dark:text-white mb-8 sm:mb-10">
+          <div className="mt-12 sm:mt-16">
+            <h3 className="text-xl md:text-2xl font-bold text-[#181411] dark:text-white mb-4">
               Onboard Amenities
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 gap-2">
               {company.amenities.map((amenity, index) => (
                 <div
                   key={index}
-                  className="flex items-start gap-3 p-4 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:shadow-md transition-shadow"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800"
                 >
                   <svg
-                    className="size-5 text-primary shrink-0 mt-0.5"
+                    className="size-3.5 text-primary shrink-0"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -360,7 +360,7 @@ export default function ProfileSection({ company }: ProfileSectionProps) {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="text-sm md:text-base text-[#495057] dark:text-white/80">
+                  <span className="text-xs md:text-sm text-[#495057] dark:text-white/80">
                     {amenity}
                   </span>
                 </div>
