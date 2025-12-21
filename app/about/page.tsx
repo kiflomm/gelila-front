@@ -2,7 +2,6 @@ import Header from "@/components/header";
 import PageHeadingSection from "./(sections)/page-heading-section";
 import StorySection from "./(sections)/story-section";
 import LeadershipSection from "@/app/(sections)/leadership-section";
-import StatsSection from "./(sections)/stats-section";
 
 export default function AboutPage() {
   return (
@@ -15,7 +14,6 @@ export default function AboutPage() {
         <div className="layout-content-container flex flex-col w-full max-w-6xl mx-auto">
           <StorySection />
           <LeadershipSection />
-          <StatsSection />
         </div>
       </div>
     </>
