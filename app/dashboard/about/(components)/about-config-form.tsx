@@ -1,14 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
+import * as z from "zod";
+import type { AboutConfig, UpdateAboutConfigData } from "@/api/about";
 import { PageHeadingImageUpload } from "./page-heading-image-upload";
 import { StoryImageUpload } from "./story-image-upload";
-import type { AboutConfig, UpdateAboutConfigData } from "@/api/about";
+
+const aboutConfigSchema = z.object({
+  pageHeadingTitle: z.string().min(3).max(200),
+  pageHeadingDescription: z.string().min(10).max(1000),
+  pageHeadingImage: z.instanceof(File).optional(),
+  storyBadge: z.string().min(2).max(50),
+  storyTitle: z.string().min(3).max(200),
+  storyContent: z.string().min(50),
+  storyImage: z.instanceof(File).optional(),
+  statSectorsValue: z.string().min(1).max(20),
+  statSectorsLabel: z.string().min(1).max(50),
+  statEmployeesValue: z.string().min(1).max(20),
+  statEmployeesLabel: z.string().min(1).max(50),
+  statYearsValue: z.string().min(1).max(20),
+  statYearsLabel: z.string().min(1).max(50),
+});
+
+type AboutConfigFormData = z.infer<typeof aboutConfigSchema>;
 
 interface AboutConfigFormProps {
   aboutConfig: AboutConfig | null;
@@ -25,104 +45,91 @@ export function AboutConfigForm({
   onCancel,
   isSubmitting,
 }: AboutConfigFormProps) {
-  // Page Heading state
-  const [pageHeadingTitle, setPageHeadingTitle] = useState(
-    aboutConfig?.pageHeadingTitle || ""
-  );
-  const [pageHeadingDescription, setPageHeadingDescription] = useState(
-    aboutConfig?.pageHeadingDescription || ""
-  );
-  const [pageHeadingImage, setPageHeadingImage] = useState<File | null>(null);
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { errors },
+  } = useForm<AboutConfigFormData>({
+    resolver: zodResolver(aboutConfigSchema),
+    defaultValues: aboutConfig
+      ? {
+          pageHeadingTitle: aboutConfig.pageHeadingTitle,
+          pageHeadingDescription: aboutConfig.pageHeadingDescription,
+          storyBadge: aboutConfig.storyBadge,
+          storyTitle: aboutConfig.storyTitle,
+          storyContent: aboutConfig.storyContent,
+          statSectorsValue: aboutConfig.statSectorsValue,
+          statSectorsLabel: aboutConfig.statSectorsLabel,
+          statEmployeesValue: aboutConfig.statEmployeesValue,
+          statEmployeesLabel: aboutConfig.statEmployeesLabel,
+          statYearsValue: aboutConfig.statYearsValue,
+          statYearsLabel: aboutConfig.statYearsLabel,
+        }
+      : {
+          pageHeadingTitle: "",
+          pageHeadingDescription: "",
+          storyBadge: "",
+          storyTitle: "",
+          storyContent: "",
+          statSectorsValue: "",
+          statSectorsLabel: "",
+          statEmployeesValue: "",
+          statEmployeesLabel: "",
+          statYearsValue: "",
+          statYearsLabel: "",
+        },
+  });
 
-  // Story state
-  const [storyBadge, setStoryBadge] = useState(aboutConfig?.storyBadge || "");
-  const [storyTitle, setStoryTitle] = useState(aboutConfig?.storyTitle || "");
-  const [storyContent, setStoryContent] = useState(
-    aboutConfig?.storyContent || ""
-  );
-  const [storyImage, setStoryImage] = useState<File | null>(null);
-
-  // Stats state
-  const [statSectorsValue, setStatSectorsValue] = useState(
-    aboutConfig?.statSectorsValue || ""
-  );
-  const [statSectorsLabel, setStatSectorsLabel] = useState(
-    aboutConfig?.statSectorsLabel || ""
-  );
-  const [statEmployeesValue, setStatEmployeesValue] = useState(
-    aboutConfig?.statEmployeesValue || ""
-  );
-  const [statEmployeesLabel, setStatEmployeesLabel] = useState(
-    aboutConfig?.statEmployeesLabel || ""
-  );
-  const [statYearsValue, setStatYearsValue] = useState(
-    aboutConfig?.statYearsValue || ""
-  );
-  const [statYearsLabel, setStatYearsLabel] = useState(
-    aboutConfig?.statYearsLabel || ""
-  );
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const data: UpdateAboutConfigData = {
-      pageHeadingTitle,
-      pageHeadingDescription,
-      storyBadge,
-      storyTitle,
-      storyContent,
-      statSectorsValue,
-      statSectorsLabel,
-      statEmployeesValue,
-      statEmployeesLabel,
-      statYearsValue,
-      statYearsLabel,
-    };
-
-    if (pageHeadingImage) {
-      data.pageHeadingImage = pageHeadingImage;
-    }
-
-    if (storyImage) {
-      data.storyImage = storyImage;
-    }
-
+  const onSubmitHandler = async (data: AboutConfigFormData) => {
     await onSubmit(data);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit(onSubmitHandler)} className="space-y-8">
       {/* Page Heading Section */}
       <div className="space-y-4">
         <h3 className="text-lg font-semibold">Page Heading Section</h3>
 
         <div className="space-y-2">
-          <Label htmlFor="pageHeadingTitle">Title *</Label>
+          <Label htmlFor="pageHeadingTitle">
+            Title <span className="text-destructive">*</span>
+          </Label>
           <Input
             id="pageHeadingTitle"
-            value={pageHeadingTitle}
-            onChange={(e) => setPageHeadingTitle(e.target.value)}
+            {...register("pageHeadingTitle")}
             placeholder="About Gelila Manufacturing"
-            required
+            className={errors.pageHeadingTitle ? "border-destructive" : ""}
           />
+          {errors.pageHeadingTitle && (
+            <p className="text-xs text-destructive">
+              {errors.pageHeadingTitle.message}
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="pageHeadingDescription">Description *</Label>
+          <Label htmlFor="pageHeadingDescription">
+            Description <span className="text-destructive">*</span>
+          </Label>
           <Textarea
             id="pageHeadingDescription"
-            value={pageHeadingDescription}
-            onChange={(e) => setPageHeadingDescription(e.target.value)}
+            {...register("pageHeadingDescription")}
             placeholder="A diversified Ethiopian industrial and service company..."
             rows={4}
-            required
+            className={errors.pageHeadingDescription ? "border-destructive" : ""}
           />
+          {errors.pageHeadingDescription && (
+            <p className="text-xs text-destructive">
+              {errors.pageHeadingDescription.message}
+            </p>
+          )}
         </div>
 
         <PageHeadingImageUpload
-          image={pageHeadingImage}
-          setImage={setPageHeadingImage}
+          control={control}
           currentImageUrl={aboutConfig?.pageHeadingImageUrl}
+          currentImageAlt={aboutConfig?.pageHeadingImageAlt}
         />
       </div>
 
@@ -132,39 +139,56 @@ export function AboutConfigForm({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="storyBadge">Badge *</Label>
+            <Label htmlFor="storyBadge">
+              Badge <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="storyBadge"
-              value={storyBadge}
-              onChange={(e) => setStoryBadge(e.target.value)}
+              {...register("storyBadge")}
               placeholder="Our Journey"
-              required
+              className={errors.storyBadge ? "border-destructive" : ""}
             />
+            {errors.storyBadge && (
+              <p className="text-xs text-destructive">
+                {errors.storyBadge.message}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="storyTitle">Title *</Label>
+            <Label htmlFor="storyTitle">
+              Title <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="storyTitle"
-              value={storyTitle}
-              onChange={(e) => setStoryTitle(e.target.value)}
+              {...register("storyTitle")}
               placeholder="Building Ethiopia's Industrial Legacy"
-              required
+              className={errors.storyTitle ? "border-destructive" : ""}
             />
+            {errors.storyTitle && (
+              <p className="text-xs text-destructive">
+                {errors.storyTitle.message}
+              </p>
+            )}
           </div>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="storyContent">Content *</Label>
+          <Label htmlFor="storyContent">
+            Content <span className="text-destructive">*</span>
+          </Label>
           <Textarea
             id="storyContent"
-            value={storyContent}
-            onChange={(e) => setStoryContent(e.target.value)}
+            {...register("storyContent")}
             placeholder="Enter story content. Use double line breaks to separate paragraphs..."
             rows={12}
-            required
-            className="font-mono text-sm"
+            className={errors.storyContent ? "border-destructive font-mono text-sm" : "font-mono text-sm"}
           />
+          {errors.storyContent && (
+            <p className="text-xs text-destructive">
+              {errors.storyContent.message}
+            </p>
+          )}
           <p className="text-xs text-muted-foreground">
             Tip: Use double line breaks (press Enter twice) to create separate
             paragraphs
@@ -172,9 +196,9 @@ export function AboutConfigForm({
         </div>
 
         <StoryImageUpload
-          image={storyImage}
-          setImage={setStoryImage}
+          control={control}
           currentImageUrl={aboutConfig?.storyImageUrl}
+          currentImageAlt={aboutConfig?.storyImageAlt}
         />
       </div>
 
@@ -185,62 +209,98 @@ export function AboutConfigForm({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Sectors Stat */}
           <div className="space-y-2">
-            <Label htmlFor="statSectorsValue">Sectors Value *</Label>
+            <Label htmlFor="statSectorsValue">
+              Sectors Value <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="statSectorsValue"
-              value={statSectorsValue}
-              onChange={(e) => setStatSectorsValue(e.target.value)}
+              {...register("statSectorsValue")}
               placeholder="5+"
-              required
+              className={errors.statSectorsValue ? "border-destructive" : ""}
             />
-            <Label htmlFor="statSectorsLabel">Sectors Label *</Label>
+            {errors.statSectorsValue && (
+              <p className="text-xs text-destructive">
+                {errors.statSectorsValue.message}
+              </p>
+            )}
+            <Label htmlFor="statSectorsLabel">
+              Sectors Label <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="statSectorsLabel"
-              value={statSectorsLabel}
-              onChange={(e) => setStatSectorsLabel(e.target.value)}
+              {...register("statSectorsLabel")}
               placeholder="Sectors"
-              required
+              className={errors.statSectorsLabel ? "border-destructive" : ""}
             />
+            {errors.statSectorsLabel && (
+              <p className="text-xs text-destructive">
+                {errors.statSectorsLabel.message}
+              </p>
+            )}
           </div>
 
           {/* Employees Stat */}
           <div className="space-y-2">
-            <Label htmlFor="statEmployeesValue">Employees Value *</Label>
+            <Label htmlFor="statEmployeesValue">
+              Employees Value <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="statEmployeesValue"
-              value={statEmployeesValue}
-              onChange={(e) => setStatEmployeesValue(e.target.value)}
+              {...register("statEmployeesValue")}
               placeholder="500+"
-              required
+              className={errors.statEmployeesValue ? "border-destructive" : ""}
             />
-            <Label htmlFor="statEmployeesLabel">Employees Label *</Label>
+            {errors.statEmployeesValue && (
+              <p className="text-xs text-destructive">
+                {errors.statEmployeesValue.message}
+              </p>
+            )}
+            <Label htmlFor="statEmployeesLabel">
+              Employees Label <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="statEmployeesLabel"
-              value={statEmployeesLabel}
-              onChange={(e) => setStatEmployeesLabel(e.target.value)}
+              {...register("statEmployeesLabel")}
               placeholder="Employees"
-              required
+              className={errors.statEmployeesLabel ? "border-destructive" : ""}
             />
+            {errors.statEmployeesLabel && (
+              <p className="text-xs text-destructive">
+                {errors.statEmployeesLabel.message}
+              </p>
+            )}
           </div>
 
           {/* Years Stat */}
           <div className="space-y-2">
-            <Label htmlFor="statYearsValue">Years Value *</Label>
+            <Label htmlFor="statYearsValue">
+              Years Value <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="statYearsValue"
-              value={statYearsValue}
-              onChange={(e) => setStatYearsValue(e.target.value)}
+              {...register("statYearsValue")}
               placeholder="20+"
-              required
+              className={errors.statYearsValue ? "border-destructive" : ""}
             />
-            <Label htmlFor="statYearsLabel">Years Label *</Label>
+            {errors.statYearsValue && (
+              <p className="text-xs text-destructive">
+                {errors.statYearsValue.message}
+              </p>
+            )}
+            <Label htmlFor="statYearsLabel">
+              Years Label <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="statYearsLabel"
-              value={statYearsLabel}
-              onChange={(e) => setStatYearsLabel(e.target.value)}
+              {...register("statYearsLabel")}
               placeholder="Years"
-              required
+              className={errors.statYearsLabel ? "border-destructive" : ""}
             />
+            {errors.statYearsLabel && (
+              <p className="text-xs text-destructive">
+                {errors.statYearsLabel.message}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -258,4 +318,3 @@ export function AboutConfigForm({
     </form>
   );
 }
-
