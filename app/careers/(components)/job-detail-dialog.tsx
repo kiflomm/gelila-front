@@ -28,7 +28,7 @@ export function JobDetailDialog({
       <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-3xl md:max-w-4xl lg:max-w-5xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl">{job.title}</DialogTitle>
-          <DialogDescription>
+          <DialogDescription asChild>
             <div className="flex flex-wrap gap-2 mt-2">
               <span className="text-xs font-medium bg-primary/20 text-primary py-1 px-2 rounded-full">
                 {job.department}
