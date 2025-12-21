@@ -87,43 +87,6 @@ export default function Footer() {
               </div>
             </Link>
             
-            <div></div>
-
-            {/* Social Media Buttons */}
-<<<<<<< HEAD
-            {isLoading ? (
-              <div className="flex items-center gap-4">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="size-10 rounded-lg bg-gray-700 dark:bg-gray-800 animate-pulse"
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="flex items-center gap-4">
-                {socialLinks.map((social, index) => {
-                  const Icon = social.icon;
-                  // Skip rendering if icon is not found
-                  if (!Icon) {
-                    return null;
-                  }
-                  return (
-                    <Link
-                      key={`${social.href}-${index}`}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.label}
-                      className="size-10 flex items-center justify-center rounded-lg bg-gray-700 dark:bg-gray-800 text-gray-300 hover:text-primary hover:bg-gray-600 dark:hover:bg-gray-700 transition-all duration-200"
-                    >
-                      <Icon className="size-5" />
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
-=======
             <div className="flex flex-col gap-3">
               <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Follow Us
@@ -157,7 +120,6 @@ export default function Footer() {
                 </div>
               )}
             </div>
->>>>>>> 82cc5b6 (refactor: enhance Footer component with improved styling and layout)
           </div>
 
           {/* Company Links */}
