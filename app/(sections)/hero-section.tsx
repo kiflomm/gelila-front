@@ -81,17 +81,6 @@ export default async function HeroSection() {
                 </Button>
               }
             />
-            <Button
-              asChild
-              variant="outline"
-              className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-transparent! border border-white! text-white! text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:bg-white/10! transition-colors"
-            >
-              <Link href={secondaryButtonHref}>
-                <span className="truncate">
-                  {secondaryButtonText}
-                </span>
-              </Link>
-            </Button>
           </div>
         </div>
       </div>

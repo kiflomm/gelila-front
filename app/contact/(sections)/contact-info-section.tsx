@@ -131,13 +131,7 @@ export default function ContactInfoSection() {
           })}
         </div>
 
-        {/* Additional Info */}
-        <div className="mt-5 pt-4 border-t border-primary/10">
-          <p className="text-[#495057] dark:text-white/80 text-xs sm:text-sm leading-relaxed">
-            {contactInfoData.additionalInfo}
-          </p>
-        </div>
-      </div>
+              </div>
     </section>
   );
 }
