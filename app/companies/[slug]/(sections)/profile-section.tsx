@@ -709,34 +709,91 @@ export default function ProfileSection({ company }: ProfileSectionProps) {
 
         {/* Contact Information Section */}
         {company.contactInfo && (
-          <div className="mt-16 sm:mt-20 lg:mt-24">
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-black text-[#181411] dark:text-white mb-8 sm:mb-10">
-              Contact Information
-            </h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10">
+          <div className="mt-12 sm:mt-16">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
+                <svg
+                  className="size-5 text-primary"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-[#181411] dark:text-white">
+                Contact Information
+              </h3>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
               {/* Ticket Offices */}
               {company.contactInfo.ticketOffices &&
                 company.contactInfo.ticketOffices.length > 0 && (
-                  <div>
-                    <h4 className="text-xl md:text-2xl font-bold text-[#181411] dark:text-white mb-6">
+                  <div className="space-y-3">
+                    <h4 className="text-base md:text-lg font-semibold text-[#181411] dark:text-white mb-3">
                       Ticket Offices
                     </h4>
-                    <div className="flex flex-col gap-4">
+                    
+                    <div className="space-y-2">
                       {company.contactInfo.ticketOffices.map(
                         (office, index) => (
                           <div
                             key={index}
-                            className="p-5 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800"
+                            className="group relative p-3 sm:p-4 rounded-xl bg-linear-to-br from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-800/50 border border-gray-200/60 dark:border-gray-700/50 hover:border-primary/40 dark:hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
                           >
-                            <p className="text-base md:text-lg font-semibold text-[#181411] dark:text-white mb-2">
-                              {office.location}
-                            </p>
-                            <a
-                              href={`tel:${office.phone.replace(/\s/g, "")}`}
-                              className="text-primary hover:text-primary/80 font-medium text-base md:text-lg transition-colors"
-                            >
-                              {office.phone}
-                            </a>
+                            <div className="flex items-start gap-3">
+                              <div className="shrink-0 mt-0.5 p-1.5 rounded-lg bg-primary/10 dark:bg-primary/20">
+                                <svg
+                                  className="size-4 text-primary"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                  />
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                  />
+                                </svg>
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-[#181411] dark:text-white mb-2 leading-tight">
+                                  {office.location}
+                                </p>
+                                <a
+                                  href={`tel:${office.phone.replace(/\s/g, "")}`}
+                                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-semibold text-sm transition-colors group"
+                                >
+                                  <svg
+                                    className="size-4 shrink-0"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                                    />
+                                  </svg>
+                                  <span className="group-hover:underline">{office.phone}</span>
+                                </a>
+                              </div>
+                            </div>
                           </div>
                         )
                       )}
@@ -746,28 +803,81 @@ export default function ProfileSection({ company }: ProfileSectionProps) {
 
               {/* Head Office */}
               {company.contactInfo.headOffice && (
-                <div>
-                  <h4 className="text-xl md:text-2xl font-bold text-[#181411] dark:text-white mb-6">
+                <div className="space-y-3">
+                  <h4 className="text-base md:text-lg font-semibold text-[#181411] dark:text-white mb-3">
                     Head Office
                   </h4>
-                  <div className="p-5 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800">
-                    <p className="text-base md:text-lg font-semibold text-[#181411] dark:text-white mb-2">
-                      {company.contactInfo.headOffice.name}
-                    </p>
-                    <p className="text-base text-[#495057] dark:text-white/80 mb-4">
-                      {company.contactInfo.headOffice.address}
-                      <br />
-                      {company.contactInfo.headOffice.city}
-                    </p>
-                    <div className="flex flex-col gap-2">
+                  
+                  <div className="group relative p-3 sm:p-4 rounded-xl bg-linear-to-br from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-800/50 border border-gray-200/60 dark:border-gray-700/50 hover:border-primary/40 dark:hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="shrink-0 mt-0.5 p-1.5 rounded-lg bg-primary/10 dark:bg-primary/20">
+                        <svg
+                          className="size-4 text-primary"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                          />
+                        </svg>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-[#181411] dark:text-white mb-2">
+                          {company.contactInfo.headOffice.name}
+                        </p>
+                        <div className="flex items-start gap-2 text-xs text-[#495057] dark:text-white/70">
+                          <svg
+                            className="size-3.5 shrink-0 mt-0.5 text-gray-400 dark:text-gray-500"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                            />
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                          </svg>
+                          <span className="leading-relaxed">
+                            {company.contactInfo.headOffice.address}, {company.contactInfo.headOffice.city}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-2 pt-2 border-t border-gray-200/50 dark:border-gray-700/50">
                       {company.contactInfo.headOffice.phones.map(
                         (phone, index) => (
                           <a
                             key={index}
                             href={`tel:${phone.replace(/\s/g, "")}`}
-                            className="text-primary hover:text-primary/80 font-medium text-base md:text-lg transition-colors"
+                            className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-semibold text-sm transition-colors group"
                           >
-                            {phone}
+                            <svg
+                              className="size-3.5 shrink-0"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                              />
+                            </svg>
+                            <span className="group-hover:underline">{phone}</span>
                           </a>
                         )
                       )}
