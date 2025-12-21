@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { RequestQuoteDialog } from "@/components/request-quote-dialog";
 
@@ -58,17 +57,6 @@ export default function HeroSection({ pageConfig }: HeroSectionProps) {
                 </Button>
               }
             />
-            <Button
-              asChild
-              variant="outline"
-              className="flex! min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 sm:h-12 sm:px-5 bg-transparent! border border-white! text-white! text-sm font-bold leading-normal tracking-[0.015em] sm:text-base hover:bg-white/10! transition-colors"
-            >
-              <Link href="/sectors">
-                <span className="truncate">
-                  View Our Products
-                </span>
-              </Link>
-            </Button>
           </div>
         </div>
       </div>
