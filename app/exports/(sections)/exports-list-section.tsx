@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { RequestQuoteDialog } from "@/components/request-quote-dialog";
+import { Button } from "@/components/ui/button";
 
 interface ExportItem {
   id: string;
@@ -43,6 +45,12 @@ function ProductGrid({
   if (!products || products.length === 0) {
     return null;
   }
+
+  // Prepare products list for RequestQuoteDialog
+  const productsList = products.map((p) => ({
+    id: p.id,
+    name: p.name,
+  }));
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
@@ -94,11 +102,20 @@ function ProductGrid({
               {product.description}
             </p>
 
-            {/* Decorative Element */}
-            <div className="mt-auto pt-2 sm:pt-3 md:pt-4 border-t border-primary/10 dark:border-primary/20">
-              <span className="text-[10px] sm:text-xs font-medium text-primary/60 dark:text-primary/40 uppercase tracking-wider">
-                Inquiry
-              </span>
+            {/* Request Quote Button */}
+            <div className="mt-auto pt-2 sm:pt-3 md:pt-4 border-t border-primary/10 dark:border-primary/20" onClick={(e) => e.stopPropagation()}>
+              <RequestQuoteDialog
+                products={productsList}
+                defaultProductId={product.id}
+                trigger={
+                  <Button
+                    variant="outline"
+                    className="w-full text-[10px] sm:text-xs font-medium text-primary/60 dark:text-primary/40 hover:text-primary dark:hover:text-primary hover:bg-primary/5 border-primary/20"
+                  >
+                    Request Quote
+                  </Button>
+                }
+              />
             </div>
           </div>
 
