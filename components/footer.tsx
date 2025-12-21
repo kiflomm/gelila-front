@@ -82,9 +82,35 @@ export default function Footer() {
                 />
               </div>
             </div>
-            <p className="text-sm text-gray-300 leading-relaxed">
-              {footerData.company.description}
-            </p>
+            {/* Social Media Buttons */}
+            {isLoading ? (
+              <div className="flex items-center gap-4">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="size-10 rounded-lg bg-gray-700 dark:bg-gray-800 animate-pulse"
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex items-center gap-4">
+                {socialLinks.map((social, index) => {
+                  const Icon = social.icon;
+                  return (
+                    <Link
+                      key={`${social.href}-${index}`}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      className="size-10 flex items-center justify-center rounded-lg bg-gray-700 dark:bg-gray-800 text-gray-300 hover:text-primary hover:bg-gray-600 dark:hover:bg-gray-700 transition-all duration-200"
+                    >
+                      <Icon className="size-5" />
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Company Links */}
@@ -172,8 +198,8 @@ export default function Footer() {
         <div className="border-t border-gray-700 dark:border-gray-800 mb-8"></div>
 
         {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex flex-col items-center flex-1">
+        <div className="flex flex-col items-center gap-6">
+          <div className="flex flex-col items-center">
             {/* Copyright */}
             <div className="text-center">
               <p className="text-sm text-gray-300">
@@ -208,36 +234,6 @@ export default function Footer() {
               ))}
             </div>
           </div>
-
-          {/* Social Media Buttons */}
-          {isLoading ? (
-            <div className="flex items-center gap-4">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="size-10 rounded-lg bg-gray-700 dark:bg-gray-800 animate-pulse"
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="flex items-center gap-4">
-              {socialLinks.map((social, index) => {
-                const Icon = social.icon;
-                return (
-                  <Link
-                    key={`${social.href}-${index}`}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.label}
-                    className="size-10 flex items-center justify-center rounded-lg bg-gray-700 dark:bg-gray-800 text-gray-300 hover:text-primary hover:bg-gray-600 dark:hover:bg-gray-700 transition-all duration-200"
-                  >
-                    <Icon className="size-5" />
-                  </Link>
-                );
-              })}
-            </div>
-          )}
         </div>
       </div>
     </footer>
