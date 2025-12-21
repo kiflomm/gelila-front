@@ -177,6 +177,11 @@ export function AppSidebar() {
       title: "Settings",
       items: [
         {
+          title: "Homepage",
+          url: "/dashboard/homepage",
+          icon: Home,
+        },
+        {
           title: "Social Media",
           url: "/dashboard/settings/social-media",
           icon: Settings,
