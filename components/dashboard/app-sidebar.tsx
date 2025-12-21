@@ -23,6 +23,7 @@ import {
   Shirt,
   Building2,
   Settings,
+  Info,
 } from "lucide-react";
 import {
   Sidebar,
@@ -191,6 +192,11 @@ export function AppSidebar() {
           title: "Homepage",
           url: "/dashboard/homepage",
           icon: Home,
+        },
+        {
+          title: "About",
+          url: "/dashboard/about",
+          icon: Info,
         },
         {
           title: "Social Media",
