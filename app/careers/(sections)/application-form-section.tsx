@@ -126,7 +126,7 @@ export default function ApplicationFormSection({
   };
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="pt-28 md:pt-32 pb-16 md:pb-24">
       <div className="px-4 sm:px-10 lg:px-20">
         <div className="max-w-3xl mx-auto">
           <div className="flex flex-col gap-8 items-center">
