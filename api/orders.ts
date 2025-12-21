@@ -9,7 +9,7 @@ export interface QuoteRequest {
   productServiceInterest: string;
   estimatedQuantity: string | null;
   additionalDetails: string;
-  status: "pending" | "reviewing" | "quoted" | "rejected" | "completed";
+  status: "pending" | "reviewing" | "quoted" | "rejected";
   createdAt: string;
   updatedAt: string;
 }

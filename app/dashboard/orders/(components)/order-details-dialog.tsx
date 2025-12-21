@@ -130,7 +130,6 @@ export function OrderDetailsDialog({
                   <SelectItem value="reviewing">Reviewing</SelectItem>
                   <SelectItem value="quoted">Quoted</SelectItem>
                   <SelectItem value="rejected">Rejected</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
                 </SelectContent>
               </Select>
               <Button

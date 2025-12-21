@@ -6,8 +6,8 @@ interface OrdersStatsProps {
   stats: {
     total: number;
     pending: number;
+    reviewing: number;
     quoted: number;
-    completed: number;
   } | null;
   isLoading: boolean;
 }
@@ -54,17 +54,17 @@ export function OrdersStats({ stats, isLoading }: OrdersStatsProps) {
 
       <div className="rounded-lg bg-muted/30 p-3 sm:p-4 backdrop-blur-sm">
         <div className="space-y-1.5">
-          <p className="text-xs sm:text-sm font-medium text-muted-foreground">Quoted</p>
-          <p className="text-2xl sm:text-3xl font-bold">{stats.quoted}</p>
-          <p className="text-[10px] sm:text-xs text-muted-foreground">Quotes sent</p>
+          <p className="text-xs sm:text-sm font-medium text-muted-foreground">Reviewing</p>
+          <p className="text-2xl sm:text-3xl font-bold">{stats.reviewing}</p>
+          <p className="text-[10px] sm:text-xs text-muted-foreground">Under review</p>
         </div>
       </div>
 
       <div className="rounded-lg bg-muted/30 p-3 sm:p-4 backdrop-blur-sm">
         <div className="space-y-1.5">
-          <p className="text-xs sm:text-sm font-medium text-muted-foreground">Completed</p>
-          <p className="text-2xl sm:text-3xl font-bold">{stats.completed}</p>
-          <p className="text-[10px] sm:text-xs text-muted-foreground">Orders completed</p>
+          <p className="text-xs sm:text-sm font-medium text-muted-foreground">Quoted</p>
+          <p className="text-2xl sm:text-3xl font-bold">{stats.quoted}</p>
+          <p className="text-[10px] sm:text-xs text-muted-foreground">Quotes provided</p>
         </div>
       </div>
     </div>

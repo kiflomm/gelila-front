@@ -60,14 +60,14 @@ export default function OrdersPage() {
     const requests = ordersData.requests;
     const total = requests.length;
     const pending = requests.filter((r) => r.status === "pending").length;
+    const reviewing = requests.filter((r) => r.status === "reviewing").length;
     const quoted = requests.filter((r) => r.status === "quoted").length;
-    const completed = requests.filter((r) => r.status === "completed").length;
 
     return {
       total,
       pending,
+      reviewing,
       quoted,
-      completed,
     };
   }, [ordersData]);
 
