@@ -7,7 +7,7 @@
   },
   "button": {
     "text": "View Latest News",
-    "href": "#news-grid"
+    "href": "#news-section"
   }
 }
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Search, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useDebounce } from "@/hooks/use-debounce";
 import type { JobsData } from "@/api/jobs";
 
 interface JobFiltersProps {
@@ -36,6 +38,25 @@ export function JobFilters({
   onJobTypeChange,
   onReset,
 }: JobFiltersProps) {
+  // Local state for immediate UI feedback
+  const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery);
+  
+  // Debounce the search query
+  const debouncedSearchQuery = useDebounce(localSearchQuery, 300);
+
+  // Sync local state with prop when it changes externally (e.g., from URL)
+  useEffect(() => {
+    setLocalSearchQuery(searchQuery);
+  }, [searchQuery]);
+
+  // Call onSearchChange when debounced value changes (only if different from current)
+  useEffect(() => {
+    if (debouncedSearchQuery !== searchQuery) {
+      onSearchChange(debouncedSearchQuery);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearchQuery]);
+
   return (
     <div className="border rounded-xl p-4 sm:p-5 md:p-6 bg-white dark:bg-[#212529]/30 border-[#F8F9FA] dark:border-white/10 flex flex-col md:flex-row gap-4 items-center">
       {/* Search Input */}
@@ -45,8 +66,8 @@ export function JobFilters({
           <Input
             type="text"
             placeholder="Search by keyword, role..."
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
+            value={localSearchQuery}
+            onChange={(e) => setLocalSearchQuery(e.target.value)}
             className="w-full rounded-lg border-[#F8F9FA] dark:border-white/10 bg-[#F8F9FA] dark:bg-background-dark text-[#212529] dark:text-white placeholder:text-[#6C757D] h-12 pl-10 focus:ring-primary focus:border-primary"
           />
         </div>
