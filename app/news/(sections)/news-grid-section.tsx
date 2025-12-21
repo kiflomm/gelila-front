@@ -51,7 +51,7 @@ function NewsCardSkeleton() {
   );
 }
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 5;
 
 export default function NewsGridSection({
   activeCategory,
@@ -67,7 +67,7 @@ export default function NewsGridSection({
   if (isLoading || isFetching || !newsData) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 px-2 sm:px-4 md:px-6 animate-in fade-in duration-300">
-        {Array.from({ length: 6 }).map((_, index) => (
+        {Array.from({ length: 5 }).map((_, index) => (
           <NewsCardSkeleton key={index} />
         ))}
       </div>

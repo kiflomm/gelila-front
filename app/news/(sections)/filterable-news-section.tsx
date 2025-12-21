@@ -73,7 +73,7 @@ export default function FilterableNewsSection() {
   const { data: newsData } = useNews({
     category: activeCategory === "all" ? undefined : activeCategory,
     page: currentPage,
-    limit: 12,
+    limit: 5,
   });
 
   const totalPages = newsData?.pagination?.totalPages || 1;
