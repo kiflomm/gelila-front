@@ -90,7 +90,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col">
           {/* Top Row - Desktop Navigation */}
-          <nav className={`hidden lg:flex items-center justify-center space-x-4 py-2 border-b border-gray-200/50 dark:border-white/10 transition-all duration-300 ${isScrolled ? "max-h-0 py-0 overflow-hidden opacity-0" : "max-h-20 opacity-100"
+          <nav className={`notranslate hidden lg:flex items-center justify-center space-x-4 py-2 border-b border-gray-200/50 dark:border-white/10 transition-all duration-300 ${isScrolled ? "max-h-0 py-0 overflow-hidden opacity-0" : "max-h-20 opacity-100"
             }`}>
             {navLinks.map((link) => {
               // Enhanced active state logic - considers pathname and hash
@@ -156,11 +156,16 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
             {/* Contact Us Button - Desktop */}
             <Link
               href="/contact#contact-form"
-              className={`ml-4 inline-flex items-center justify-center px-5 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primary hover:bg-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all hover:shadow-lg dark:focus:ring-offset-gray-900 ${hasTransparentNav ? "" : ""
+              className={`notranslate ml-4 inline-flex items-center justify-center px-5 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primary hover:bg-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all hover:shadow-lg dark:focus:ring-offset-gray-900 ${hasTransparentNav ? "" : ""
                 }`}
             >
               Contact Us
             </Link>
+
+            {/* Language Selector - Desktop */}
+            <div className="ml-4">
+              <LanguageSelector />
+            </div>
           </nav>
 
           {/* Bottom Row - Logo and Contact/Mobile Menu */}
@@ -250,7 +255,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
           e.stopPropagation();
         }}
       >
-        <nav className="px-4 sm:px-6 py-4 sm:py-6 flex flex-col gap-1 max-h-[calc(100vh-88px)] overflow-y-auto">
+        <nav className="notranslate px-4 sm:px-6 py-4 sm:py-6 flex flex-col gap-1 max-h-[calc(100vh-88px)] overflow-y-auto">
           {navLinks.map((link) => {
             // Enhanced active state logic - considers pathname and hash
             const linkPath = link.href.split('#')[0];
