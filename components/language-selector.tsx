@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const languages = ["en", "ti", "am","or"];
+const languages = ["en", "ti", "am", "om"];
 
 interface LanguageSelectorProps {
   isTransparent?: boolean;

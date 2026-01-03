@@ -84,7 +84,7 @@ export function TranslationWidget({ onWidgetReady }: TranslationWidgetProps) {
         overflow: "hidden",
       }}
     >
-      <GoogleTranslate pageLanguage="en" includedLanguages="en,am,ti,or" />
+      <GoogleTranslate pageLanguage="en" includedLanguages="en,am,ti,om" />
     </div>
   );
 }
