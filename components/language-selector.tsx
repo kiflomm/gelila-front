@@ -12,11 +12,15 @@ import {
 
 const languages = ["en", "ti", "am"];
 
-export function LanguageSelector() {
+interface LanguageSelectorProps {
+  isTransparent?: boolean;
+}
+
+export function LanguageSelector({ isTransparent = false }: LanguageSelectorProps) {
   const pathname = usePathname();
   const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
   const [isGoogleTranslateReady, setIsGoogleTranslateReady] = useState(false);
-  
+
   // Check if we're on a news detail page (need black text instead of white)
   const isNewsDetail = pathname.startsWith("/news/") && pathname !== "/news";
 
@@ -27,20 +31,20 @@ export function LanguageSelector() {
       const googtransCookie = cookies.find((cookie) =>
         cookie.trim().startsWith("googtrans=")
       );
-      
+
       if (googtransCookie) {
         // Cookie format: googtrans=/SOURCE/TARGET (e.g., /en/ti means translate from English to Tigrinya)
         // Since our pageLanguage is "en", format will be /en/TARGET
         const cookieValue = googtransCookie.split("=")[1]?.trim();
-        
+
         if (cookieValue) {
           // Match /SOURCE/TARGET format (e.g., /en/ti, /en/am)
           const langMatch = cookieValue.match(/\/(\w+)\/(\w+)/);
-          
+
           if (langMatch) {
             const sourceLang = langMatch[1]; // First part is source (should be "en")
             const targetLang = langMatch[2]; // Second part is target
-            
+
             // If source equals target (e.g., /en/en), it means original language (English)
             if (sourceLang === targetLang) {
               setSelectedLanguage("en");
@@ -102,7 +106,7 @@ export function LanguageSelector() {
       // For English: /en/en (source and target are the same = original language)
       // For other languages: /en/TARGET (e.g., /en/ti, /en/am)
       const cookieValue = value === "en" ? "/en/en" : `/en/${value}`;
-      
+
       // Set the new cookie (overwrites any existing one)
       document.cookie = `googtrans=${cookieValue}; path=/; max-age=31536000; SameSite=Lax`;
 
@@ -110,7 +114,7 @@ export function LanguageSelector() {
       const selectElement = document.querySelector<HTMLSelectElement>(
         ".goog-te-combo"
       );
-      
+
       if (selectElement && isGoogleTranslateReady) {
         try {
           // Find the option that matches our value
@@ -159,9 +163,9 @@ export function LanguageSelector() {
     }
   };
 
-  // Conditional styling based on page type
-  const textColorClass = isNewsDetail 
-    ? "text-[#181411] border-gray-300 hover:border-gray-400 [&_svg]:text-[#181411]" 
+  // Conditional styling based on page type and header transparency
+  const textColorClass = (isNewsDetail || !isTransparent)
+    ? "text-[#181411] border-gray-300 hover:border-gray-400 [&_svg]:text-[#181411]"
     : "text-white border-white/30 hover:border-white/50 [&_svg]:text-white";
 
   return (
