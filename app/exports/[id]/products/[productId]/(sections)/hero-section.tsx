@@ -37,7 +37,6 @@ export default function HeroSection({
             fill
             className="object-cover brightness-75"
             priority
-            unoptimized={product.image?.startsWith('http') || product.image?.startsWith('/uploads') || product.image?.includes('localhost')}
           />
         )}
         <div className="absolute inset-0 bg-linear-to-b from-black/50 to-black/80" />

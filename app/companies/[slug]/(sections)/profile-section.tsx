@@ -110,7 +110,6 @@ export default function ProfileSection({ company }: ProfileSectionProps) {
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               priority
-              unoptimized={company.image.src.includes("unsplash.com")}
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent"></div>
             <div className="absolute inset-0 bg-linear-to-r from-primary/5 via-transparent to-transparent"></div>

@@ -98,7 +98,6 @@ export default function LatestNewsSection() {
                   alt={item.imageAlt || item.title}
                   fill
                   className="object-cover"
-                  unoptimized
                 />
               </div>
               <div className="flex flex-col gap-2 p-4 sm:p-5">

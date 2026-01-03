@@ -13,7 +13,6 @@ export default function HeroSection() {
           fill
           className="object-cover brightness-75"
           priority
-          unoptimized={importsExportsHeroData.image.src.startsWith('http') || importsExportsHeroData.image.src.startsWith('/uploads')}
         />
         <div className="absolute inset-0 bg-linear-to-b from-black/50 to-black/80" />
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-6 sm:gap-8">

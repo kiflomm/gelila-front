@@ -32,7 +32,6 @@ export default function HeroSection({ newsItem }: HeroSectionProps) {
           fill
           className="object-cover"
           priority
-          unoptimized
         />
       </div>
 
@@ -64,7 +63,6 @@ export default function HeroSection({ newsItem }: HeroSectionProps) {
                 width={32}
                 height={32}
                 className="rounded-full"
-                unoptimized
               />
             ) : (
               <div className="size-8 rounded-full bg-primary/20 flex items-center justify-center">

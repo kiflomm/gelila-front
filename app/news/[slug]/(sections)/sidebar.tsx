@@ -109,7 +109,6 @@ export default function Sidebar({
                     alt={post.imageAlt}
                     fill
                     className="object-cover"
-                    unoptimized
                   />
                 </div>
                 <div className="flex flex-col gap-1 flex-1 min-w-0">

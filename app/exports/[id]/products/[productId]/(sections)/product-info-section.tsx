@@ -40,7 +40,6 @@ export default function ProductInfoSection({
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority
-              unoptimized={product.image?.startsWith('http') || product.image?.startsWith('/uploads') || product.image?.includes('localhost')}
             />
           </div>
         </div>

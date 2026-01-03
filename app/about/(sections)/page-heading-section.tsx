@@ -55,9 +55,7 @@ export default async function PageHeadingSection() {
           fill
           className="object-cover brightness-75"
           priority
-          unoptimized={
-            imageUrl.startsWith("http") || imageUrl.startsWith("/uploads")
-          }
+        
         />
         <div className="absolute inset-0 bg-linear-to-r from-black/60 to-black/40" />
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-4 text-left">

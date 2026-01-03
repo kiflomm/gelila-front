@@ -123,7 +123,6 @@ export function ExportsTable({
                           alt={exportItem.imageAlt || exportItem.title}
                           fill
                           className="object-cover"
-                          unoptimized={exportItem.imageUrl.startsWith('http') || exportItem.imageUrl.startsWith('/uploads')}
                         />
                       </div>
                     ) : (

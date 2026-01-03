@@ -123,7 +123,6 @@ export function ImportsTable({
                           alt={importItem.imageAlt || importItem.title}
                           fill
                           className="object-cover"
-                          unoptimized={importItem.imageUrl.startsWith('http') || importItem.imageUrl.startsWith('/uploads')}
                         />
                       </div>
                     ) : (
