@@ -24,6 +24,7 @@ import {
   Building2,
   Settings,
   Info,
+  Users,
 } from "lucide-react";
 import {
   Sidebar,
@@ -182,6 +183,11 @@ export function AppSidebar() {
           title: "Contact Messages",
           url: "/dashboard/contact",
           icon: MessageSquare,
+        },
+        {
+          title: "Leadership",
+          url: "/dashboard/leadership",
+          icon: Users,
         },
       ],
     },
