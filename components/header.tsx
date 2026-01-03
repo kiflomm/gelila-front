@@ -94,8 +94,8 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
             <Link
               href="/"
               className={`flex items-center cursor-pointer ${hasTransparentNav
-                  ? "text-white"
-                  : "text-[#181411] dark:text-white"
+                ? "text-white"
+                : "text-[#181411] dark:text-white"
                 }`}
             >
               <div className="flex items-center gap-0 bg-white px-2 py-1 rounded max-w-fit">
@@ -182,14 +182,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
 
           {/* Right side - Contact Button + Language + Mobile Toggle */}
           <div className="flex items-center gap-4">
-            {/* Contact Us Button - Desktop */}
-            <Link
-              href="/contact#contact-form"
-              className={`notranslate hidden lg:inline-flex items-center justify-center px-5 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primary hover:bg-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all hover:shadow-lg dark:focus:ring-offset-gray-900 ${hasTransparentNav ? "" : ""
-                }`}
-            >
-              Contact Us
-            </Link>
+
 
             {/* Language Selector - Desktop */}
             <div className="hidden lg:block">
