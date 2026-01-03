@@ -4,12 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useMobileMenuStore } from "@/stores/use-mobile-menu-store";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { NavDropdown } from "@/components/nav-dropdown";
 import navigationData from "@/data/navigation.json";
 import { getNavLinkClasses } from "@/lib/utils";
 import { useNavDropdownStore } from "@/stores/use-nav-dropdown-store";
 import { useScrollSpy } from "@/hooks/use-scroll-spy";
+import { useScrollPosition } from "@/hooks/use-scroll-position";
 import { LanguageSelector } from "@/components/language-selector";
 
 interface HeaderProps {
@@ -20,11 +21,13 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
   const { isOpen, toggle, close } = useMobileMenuStore();
   const { closeAll: closeAllDropdowns } = useNavDropdownStore();
   const pathname = usePathname();
-  const [isScrolled, setIsScrolled] = useState(false);
-  
+
   // Track active section for scroll spy
   const activeSection = useScrollSpy(["careers-section", "news-section", "contact-form"]);
-  
+
+  // Track scroll position
+  const isScrolled = useScrollPosition(50);
+
   const isHome = pathname === "/";
   const isAbout = pathname === "/about";
   const isExports = pathname === "/exports" || pathname.startsWith("/exports/");
@@ -77,31 +80,47 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
     };
   }, [isOpen]);
 
-  // Handle scroll to hide/show navigation bar
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY || document.documentElement.scrollTop;
-      setIsScrolled(scrollPosition > 10);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
-        hasTransparentNav
-          ? "bg-linear-to-b from-black/30 via-black/15 to-transparent"
-          : "bg-white/90 dark:bg-black/40 backdrop-blur-md border-b border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${hasTransparentNav && !isScrolled
+        ? "bg-gradient-to-b from-black/30 via-black/15 to-transparent"
+        : "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none"
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col">
-          {/* Top Row - Desktop Navigation */}
-          <nav className={`notranslate hidden lg:flex items-center justify-center space-x-4 py-2 border-b border-gray-200/50 dark:border-white/10 transition-all duration-300 ${
-            isScrolled ? "max-h-0 py-0 overflow-hidden opacity-0" : "max-h-20 opacity-100"
-          }`}>
+        <div className="flex items-center justify-between h-16 lg:h-20">
+          {/* Logo */}
+          <div className="shrink-0 max-w-fit mr-4">
+            <Link
+              href="/"
+              className={`flex items-center cursor-pointer ${hasTransparentNav
+                ? "text-white"
+                : "text-[#181411] dark:text-white"
+                }`}
+            >
+              <div className="flex items-center gap-0 bg-white px-2 py-1 rounded max-w-fit">
+                <Image
+                  src="/logo-left.png"
+                  alt="Gelila Manufacturing PLC"
+                  width={100}
+                  height={80}
+                  className="w-auto h-8 lg:h-12 shrink-0"
+                  priority
+                />
+                <Image
+                  src="/logo-right.png"
+                  alt="Gelila Manufacturing PLC"
+                  width={100}
+                  height={80}
+                  className="w-auto h-8 lg:h-12 shrink-0"
+                  priority
+                />
+              </div>
+            </Link>
+          </div>
+
+          {/* Desktop Navigation - Center */}
+          <nav className="notranslate hidden lg:flex items-center justify-center flex-1 space-x-4">
             {navLinks.map((link) => {
               // Enhanced active state logic - considers pathname and hash
               const linkPath = link.href.split('#')[0];
@@ -127,7 +146,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                     label={link.label}
                     href="/imports-exports"
                     sections={navigationData.dropdowns.trade.sections}
-                    isTransparent={hasTransparentNav}
+                    isTransparent={hasTransparentNav && !isScrolled}
                     isActive={isTradeActive}
                   />
                 );
@@ -142,7 +161,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                     label={link.label}
                     href="/companies"
                     sections={navigationData.dropdowns.companies.sections}
-                    isTransparent={hasTransparentNav}
+                    isTransparent={hasTransparentNav && !isScrolled}
                     isActive={isCompaniesPage}
                   />
                 );
@@ -152,89 +171,46 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
               return (
                 <Link
                   key={link.href}
-                  className={getNavLinkClasses(isActive, hasTransparentNav)}
+                  className={getNavLinkClasses(isActive, hasTransparentNav && !isScrolled)}
                   href={link.href}
                 >
                   {link.label}
                 </Link>
               );
             })}
-            
-            {/* Contact Us Button - Desktop */}
-            <Link
-              href="/contact#contact-form"
-              className={`notranslate ml-4 inline-flex items-center justify-center px-5 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primary hover:bg-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all hover:shadow-lg dark:focus:ring-offset-gray-900 ${
-                hasTransparentNav ? "" : ""
-              }`}
-            >
-              Contact Us
-            </Link>
-            
-            {/* Language Selector - Desktop */}
-            <div className="ml-4">
-              <LanguageSelector />
-            </div>
+
           </nav>
 
-          {/* Bottom Row - Logo and Contact/Mobile Menu */}
-          <div className={`flex items-center justify-between h-16 transition-all duration-300 ${
-            isScrolled ? "max-h-0 h-0 overflow-hidden opacity-0" : "max-h-16 opacity-100"
-          }`}>
-            {/* Logo */}
-            <div className="shrink-0 max-w-fit mr-4">
-              <Link
-                href="/"
-                className={`flex items-center cursor-pointer ${
-                  hasTransparentNav
-                    ? "text-white"
-                    : "text-[#181411] dark:text-white"
-                }`}
-              >
-                <div className="flex items-center gap-0 bg-white px-2 py-1 rounded max-w-fit">
-                  <Image
-                    src="/logo-left.png"
-                    alt="Gelila Manufacturing PLC"
-                    width={100}
-                    height={80}
-                    className="w-auto h-8 lg:h-12 shrink-0"
-                    priority
-                  />
-                  <Image
-                    src="/logo-right.png"
-                    alt="Gelila Manufacturing PLC"
-                    width={100}
-                    height={80}
-                    className="w-auto h-8 lg:h-12 shrink-0"
-                    priority
-                  />
-                </div>
-              </Link>
+          {/* Right side - Contact Button + Language + Mobile Toggle */}
+          <div className="flex items-center gap-4">
+
+
+            {/* Language Selector - Desktop */}
+            <div className="hidden lg:block">
+              <LanguageSelector isTransparent={hasTransparentNav && !isScrolled} />
             </div>
 
             {/* Mobile/Tablet Hamburger Button */}
-            <div className="lg:hidden flex items-center ml-auto">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  toggle();
-                }}
-                type="button"
-                aria-controls="mobile-menu"
-                aria-expanded={isOpen}
-                className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white ${
-                  hasTransparentNav
-                    ? "text-white hover:bg-white/10"
-                    : "text-gray-400 hover:text-white hover:bg-gray-700 dark:text-gray-300 dark:hover:text-white"
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggle();
+              }}
+              type="button"
+              aria-controls="mobile-menu"
+              aria-expanded={isOpen}
+              className={`lg:hidden inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white ${hasTransparentNav && !isScrolled
+                ? "text-white hover:bg-white/10"
+                : "text-gray-400 hover:text-white hover:bg-gray-700 dark:text-gray-300 dark:hover:text-white"
                 }`}
-                aria-label="Toggle menu"
-              >
-                <span className="sr-only">Open main menu</span>
-                <span className="material-icons-round text-3xl">
-                  {isOpen ? "close" : "menu"}
-                </span>
-              </button>
-            </div>
+              aria-label="Toggle menu"
+            >
+              <span className="sr-only">Open main menu</span>
+              <span className="material-icons-round text-3xl">
+                {isOpen ? "close" : "menu"}
+              </span>
+            </button>
           </div>
         </div>
       </div>
@@ -242,7 +218,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
       {/* Mobile Menu Overlay */}
       {isOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 top-[88px] animate-in fade-in duration-200"
+          className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 top-16 animate-in fade-in duration-200"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -259,11 +235,10 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden fixed top-[88px] left-0 right-0 z-40 bg-background-light/98 dark:bg-background-dark/98 backdrop-blur-md border-b border-border shadow-lg transition-transform duration-300 ease-in-out ${
-          isOpen
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-full opacity-0 pointer-events-none"
-        }`}
+        className={`lg:hidden fixed top-16 left-0 right-0 z-40 bg-background-light/98 dark:bg-background-dark/98 backdrop-blur-md border-b border-border shadow-lg transition-transform duration-300 ease-in-out ${isOpen
+          ? "translate-y-0 opacity-100"
+          : "-translate-y-full opacity-0 pointer-events-none"
+          }`}
         onClick={(e) => {
           // Prevent clicks inside menu from closing it
           e.stopPropagation();
@@ -276,7 +251,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
             const linkHash = link.href.includes('#') ? link.href.split('#')[1] : null;
             const isOnPage = pathname === linkPath || pathname === link.href;
             const isActive = isOnPage && (!linkHash || activeSection === linkHash);
-            
+
             const isTrade = link.href === "/imports-exports";
             const isCompanies = link.href.startsWith("/companies");
             const isCompaniesPage = pathname === "/companies" || pathname.startsWith("/companies/");
@@ -384,7 +359,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
               </Link>
             );
           })}
-          
+
           {/* Contact Us Button - Mobile */}
           <Link
             onClick={close}
@@ -393,10 +368,10 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
           >
             Contact Us
           </Link>
-          
+
           {/* Language Selector - Mobile */}
           <div className="mt-3">
-            <LanguageSelector />
+            <LanguageSelector isTransparent={false} />
           </div>
         </nav>
       </div>

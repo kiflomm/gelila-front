@@ -47,8 +47,8 @@ export function NavDropdown({
   const normalizedSections: DropdownSection[] = sections
     ? sections
     : items
-    ? [{ items }]
-    : [];
+      ? [{ items }]
+      : [];
 
   // Check if any dropdown item is active
   const hasActiveItem = normalizedSections.some((section) =>
@@ -132,7 +132,7 @@ export function NavDropdown({
 
   // Shared hover states matching header navigation
   const triggerClassName = cn(
-    "px-3 py-2 text-sm font-medium leading-normal whitespace-nowrap transition-colors relative",
+    "px-2 py-2 text-sm font-medium leading-normal whitespace-nowrap transition-colors relative",
     getNavDropdownTriggerClasses(isActive || hasActiveItem, isTransparent)
   );
 
@@ -191,8 +191,8 @@ export function NavDropdown({
               normalizedSections.length === 2
                 ? "grid-cols-2"
                 : normalizedSections.length === 3
-                ? "grid-cols-3"
-                : "grid-cols-1"
+                  ? "grid-cols-3"
+                  : "grid-cols-1"
             )}
           >
             {normalizedSections.map((section, sectionIndex) => (
