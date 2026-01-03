@@ -386,3 +386,41 @@ html.dark [data-sonner-toast] [style*="color: transparent"] {
   color: white !important;
   opacity: 1 !important;
 }
+
+/* Google Translate Widget - Hide default UI */
+#google_translate_element {
+  position: absolute !important;
+  left: -9999px !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.goog-te-banner-frame,
+.goog-te-menu-frame,
+.goog-te-ftab,
+.skiptranslate,
+.goog-te-gadget,
+.goog-te-gadget-simple {
+  position: absolute !important;
+  left: -9999px !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+/* Hide Google Translate select combo box */
+.goog-te-combo {
+  position: absolute !important;
+  left: -9999px !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

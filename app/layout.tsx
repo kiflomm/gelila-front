@@ -5,6 +5,7 @@ import { ReactQueryProvider } from "@/lib/react-query-provider";
 import { siteConfig, getOrganizationSchema, getWebSiteSchema } from "@/lib/seo";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/components/auth/auth-provider";
+import { TranslationWidget } from "@/components/translation-widget";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -134,6 +135,7 @@ export default function RootLayout({
         className={`${inter.variable} font-display antialiased bg-background-light dark:bg-background-dark text-[#212121] dark:text-gray-200`}
         suppressHydrationWarning
       >
+        <TranslationWidget />
         <ReactQueryProvider>
           <AuthProvider>{children}</AuthProvider>
         </ReactQueryProvider>
