@@ -10,8 +10,8 @@ export function getNavLinkClasses(
   isActive: boolean,
   hasTransparentNav: boolean
 ): string {
-  const baseClasses = "nav-item-underline px-3 py-2 text-sm font-medium leading-normal whitespace-nowrap transition-colors";
-  
+  const baseClasses = "nav-item-underline px-2 py-2 text-sm font-medium leading-normal whitespace-nowrap transition-colors";
+
   if (isActive) {
     return `${baseClasses} text-primary active`;
   }
@@ -27,7 +27,7 @@ export function getNavDropdownTriggerClasses(
   hasTransparentNav: boolean
 ): string {
   const baseClasses = "nav-item-underline";
-  
+
   if (isActive) {
     return `${baseClasses} text-primary active`;
   }
