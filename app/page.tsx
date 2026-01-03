@@ -63,7 +63,7 @@ export default function HomePage() {
             <div className="layout-content-container flex flex-col w-full max-w-7xl">
               <PortfolioSection />
               <AchievementsSection />
-              <LeadershipSection />
+              <LeadershipSection showMissionVision={false} />
               <LatestNewsSection />
             </div>
           </div>
