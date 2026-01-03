@@ -247,7 +247,7 @@ export default function Footer() {
             </p>
             <p className="text-xs text-gray-500 mt-1">
               <Link
-                href="https://memitrading.com"
+                href="https://memiplc.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-primary transition-colors duration-200"
