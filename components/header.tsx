@@ -49,7 +49,6 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About Us" },
-    { href: "/sectors", label: "Sectors" },
     { href: "/imports", label: "Imports" },
     { href: "/exports", label: "Exports" },
     { href: "/companies", label: "Subsidiaries" },
@@ -109,24 +108,9 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
               const isActive = isOnPage && (!linkHash || activeSection === linkHash);
 
               // Check if this link should have a dropdown
-              const isSectors = link.href === "/sectors";
               const isExports = link.href === "/exports";
               const isImports = link.href === "/imports";
               const isCompanies = link.href.startsWith("/companies");
-
-              if (isSectors && navigationData.dropdowns.sectors) {
-                return (
-                  <NavDropdown
-                    key={link.href}
-                    id="sectors"
-                    label={link.label}
-                    href={link.href}
-                    sections={navigationData.dropdowns.sectors.sections}
-                    isTransparent={hasTransparentNav}
-                    isActive={isActive}
-                  />
-                );
-              }
 
               if (isImports && navigationData.dropdowns.imports) {
                 return (
