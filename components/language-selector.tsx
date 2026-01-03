@@ -10,10 +10,57 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const languages = ["en", "ti", "am"];
+const languages = ["en", "ti", "am","or"];
 
 interface LanguageSelectorProps {
   isTransparent?: boolean;
+}
+
+// Helper function to read language from cookie
+function getLanguageFromCookie(): string {
+  if (typeof window === "undefined") {
+    return "en";
+  }
+
+  const cookies = document.cookie.split(";");
+  const googtransCookie = cookies.find((cookie) =>
+    cookie.trim().startsWith("googtrans=")
+  );
+
+  if (!googtransCookie) {
+    return "en";
+  }
+
+  const cookieValue = googtransCookie.split("=")[1]?.trim();
+
+  if (!cookieValue) {
+    return "en";
+  }
+
+  // Match /SOURCE/TARGET format (e.g., /en/ti, /en/am)
+  const langMatch = cookieValue.match(/\/(\w+)\/(\w+)/);
+
+  if (langMatch) {
+    const sourceLang = langMatch[1]; // First part is source (should be "en")
+    const targetLang = langMatch[2]; // Second part is target
+    // If source equals target (e.g., /en/en), it means original language (English)
+    if (sourceLang === targetLang) {
+      return "en";
+    } else if (languages.includes(targetLang)) {
+      // Use the target language if it's one we support
+      return targetLang;
+    } else {
+      return "en";
+    }
+  }
+
+  // Try /auto/LANG format as fallback
+  const autoMatch = cookieValue.match(/\/auto\/(\w+)/);
+  if (autoMatch && languages.includes(autoMatch[1])) {
+    return autoMatch[1];
+  }
+
+  return "en";
 }
 
 export function LanguageSelector({ isTransparent = false }: LanguageSelectorProps) {
@@ -26,52 +73,17 @@ export function LanguageSelector({ isTransparent = false }: LanguageSelectorProp
 
   useEffect(() => {
     // Get current language from Google Translate cookie on mount
-    if (typeof window !== "undefined") {
-      const cookies = document.cookie.split(";");
-      const googtransCookie = cookies.find((cookie) =>
-        cookie.trim().startsWith("googtrans=")
-      );
+    // Use a small delay to ensure cookie is available after page reload
+    const readCookie = () => {
+      const lang = getLanguageFromCookie();
+      setSelectedLanguage(lang);
+    };
 
+    // Read immediately
+    readCookie();
 
-      if (googtransCookie) {
-        // Cookie format: googtrans=/SOURCE/TARGET (e.g., /en/ti means translate from English to Tigrinya)
-        // Since our pageLanguage is "en", format will be /en/TARGET
-        const cookieValue = googtransCookie.split("=")[1]?.trim();
-
-        if (cookieValue) {
-          // Match /SOURCE/TARGET format (e.g., /en/ti, /en/am)
-          const langMatch = cookieValue.match(/\/(\w+)\/(\w+)/);
-
-          if (langMatch) {
-            const sourceLang = langMatch[1]; // First part is source (should be "en")
-            const targetLang = langMatch[2]; // Second part is target
-            // If source equals target (e.g., /en/en), it means original language (English)
-            if (sourceLang === targetLang) {
-              setSelectedLanguage("en");
-            } else if (languages.includes(targetLang)) {
-              // Use the target language if it's one we support
-              setSelectedLanguage(targetLang);
-            } else {
-              setSelectedLanguage("en");
-            }
-          } else {
-            // Try /auto/LANG format as fallback
-            const autoMatch = cookieValue.match(/\/auto\/(\w+)/);
-            if (autoMatch && languages.includes(autoMatch[1])) {
-              setSelectedLanguage(autoMatch[1]);
-            } else {
-              setSelectedLanguage("en");
-            }
-          }
-        } else {
-          // Empty cookie value means English (default)
-          setSelectedLanguage("en");
-        }
-      } else {
-        // No cookie found, default to English
-        setSelectedLanguage("en");
-      }
-    }
+    // Also read after a short delay to handle timing issues after reload
+    const timeoutId = setTimeout(readCookie, 100);
 
     // Check if Google Translate is loaded
     const checkGoogleTranslate = () => {
@@ -87,15 +99,21 @@ export function LanguageSelector({ isTransparent = false }: LanguageSelectorProp
     };
 
     checkGoogleTranslate();
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const handleLanguageChange = (value: string) => {
-    // Don't do anything if selecting the same language
-    if (value === selectedLanguage) {
+    if (typeof window === "undefined") {
       return;
     }
 
-    if (typeof window === "undefined") {
+    // Read current language from cookie directly instead of relying on state
+    // This ensures we can detect changes even if state is out of sync
+    const currentLangFromCookie = getLanguageFromCookie();
+
+    // Don't do anything if selecting the same language (check both state and cookie)
+    if (value === selectedLanguage && value === currentLangFromCookie) {
       return;
     }
 
@@ -107,15 +125,16 @@ export function LanguageSelector({ isTransparent = false }: LanguageSelectorProp
       // For other languages: /en/TARGET (e.g., /en/ti, /en/am)
       const cookieValue = value === "en" ? "/en/en" : `/en/${value}`;
 
-
       // Set the new cookie (overwrites any existing one)
       document.cookie = `googtrans=${cookieValue}; path=/; max-age=31536000; SameSite=Lax`;
+
+      // Update state immediately for better UX
+      setSelectedLanguage(value);
 
       // Try to trigger the Google Translate select element if it exists
       const selectElement = document.querySelector<HTMLSelectElement>(
         ".goog-te-combo"
       );
-
 
       if (selectElement && isGoogleTranslateReady) {
         try {
@@ -173,7 +192,7 @@ export function LanguageSelector({ isTransparent = false }: LanguageSelectorProp
   return (
     <div className="notranslate">
       <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
-        <SelectTrigger className={`w-[70px] h-9 text-sm uppercase font-medium ${textColorClass}`}>
+        <SelectTrigger className={`w-full md:w-[70px] h-9 text-sm uppercase font-medium text-center md:text-left justify-center md:justify-between ${textColorClass}`}>
           <SelectValue />
         </SelectTrigger>
         <SelectContent className="notranslate">
