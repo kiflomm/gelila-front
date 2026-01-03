@@ -200,7 +200,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
               type="button"
               aria-controls="mobile-menu"
               aria-expanded={isOpen}
-              className={`lg:hidden inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white ${hasTransparentNav && !isScrolled
+              className={`notranslate lg:hidden inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white ${hasTransparentNav && !isScrolled
                 ? "text-white hover:bg-white/10"
                 : "text-gray-400 hover:text-white hover:bg-gray-700 dark:text-gray-300 dark:hover:text-white"
                 }`}
