@@ -50,7 +50,7 @@ export default function NewsLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+    <div className="notranslate relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
       <div className="layout-container flex h-full grow flex-col">
         <main className="flex flex-1 flex-col">
           <div className="relative">

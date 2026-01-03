@@ -139,7 +139,7 @@ export function NavDropdown({
   return (
     <div
       ref={containerRef}
-      className="relative"
+      className="relative notranslate"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -151,7 +151,7 @@ export function NavDropdown({
       >
         <Link
           href={href}
-          className={cn(triggerClassName, "flex items-center gap-1.5")}
+          className={cn(triggerClassName, "flex items-center gap-1.5 notranslate")}
         >
           {label}
           {/* Arrow Indicator */}
@@ -181,7 +181,7 @@ export function NavDropdown({
         <div
           ref={dropdownRef}
           data-dropdown-menu
-          className="fixed top-20 left-1/2 -translate-x-1/2 z-50 w-[50vw] max-w-[600px] min-w-[300px] bg-white dark:bg-background-dark border border-gray-200/80 dark:border-gray-800 rounded-xl shadow-lg py-4"
+          className="notranslate fixed top-20 left-1/2 -translate-x-1/2 z-50 w-[50vw] max-w-[600px] min-w-[300px] bg-white dark:bg-background-dark border border-gray-200/80 dark:border-gray-800 rounded-xl shadow-lg py-4"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
@@ -198,7 +198,7 @@ export function NavDropdown({
             {normalizedSections.map((section, sectionIndex) => (
               <div key={sectionIndex} className="flex flex-col">
                 {section.title && (
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2 px-2">
+                  <h3 className="notranslate text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2 px-2">
                     {section.title}
                   </h3>
                 )}
@@ -210,7 +210,7 @@ export function NavDropdown({
                         key={itemIndex}
                         href={item.href}
                         className={cn(
-                          "block px-2 py-2.5 text-sm font-medium leading-normal transition-colors rounded-md",
+                          "notranslate block px-2 py-2.5 text-sm font-medium leading-normal transition-colors rounded-md",
                           isItemActive
                             ? "text-primary bg-primary/5 dark:bg-primary/10"
                             : "text-[#181411] dark:text-white/90 hover:bg-gray-50/80 dark:hover:bg-gray-800/50 hover:text-primary"

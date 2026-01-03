@@ -133,12 +133,12 @@ export default async function NewsDetailLayout({
   });
 
   return (
-    <>
+    <div className="notranslate">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       {children}
-    </>
+    </div>
   );
 }
