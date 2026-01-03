@@ -32,7 +32,7 @@ export default function Footer() {
 
   const companyLinks = [
     { href: "/about", label: "About Us" },
-    { href: "/products", label: "Products" },
+    // { href: "/products", label: "Products" },
     { href: "/exports", label: "Exports" },
     { href: "/careers", label: "Careers" },
     { href: "/news", label: "Blog" },
