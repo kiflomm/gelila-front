@@ -23,17 +23,29 @@ function getLanguageFromCookie(): string {
   }
 
   const cookies = document.cookie.split(";");
-  const googtransCookie = cookies.find((cookie) =>
+  // Get all googtrans cookies (in case there are multiple)
+  const googtransCookies = cookies.filter((cookie) =>
     cookie.trim().startsWith("googtrans=")
   );
 
-  if (!googtransCookie) {
+  if (googtransCookies.length === 0) {
     return "en";
   }
 
-  // Handle cookie value that might contain "=" by splitting only on first "="
-  const equalIndex = googtransCookie.indexOf("=");
-  let cookieValue = equalIndex !== -1 ? googtransCookie.substring(equalIndex + 1).trim() : "";
+  // Use the first matching cookie (browser typically returns the most specific one first)
+  // If there are multiple, we'll use the first non-empty one
+  let cookieValue = "";
+  for (const cookie of googtransCookies) {
+    // Handle cookie value that might contain "=" by splitting only on first "="
+    const equalIndex = cookie.indexOf("=");
+    const value = equalIndex !== -1 ? cookie.substring(equalIndex + 1).trim() : "";
+    if (value && value !== "/en/en") {
+      cookieValue = value;
+      break; // Use the first non-default value
+    } else if (value) {
+      cookieValue = value; // Fallback to default if no other found
+    }
+  }
 
   if (!cookieValue) {
     return "en";
@@ -134,10 +146,20 @@ export function LanguageSelector({ isTransparent = false }: LanguageSelectorProp
       // For other languages: /en/TARGET (e.g., /en/ti, /en/am)
       const cookieValue = value === "en" ? "/en/en" : `/en/${value}`;
 
+      // Clear any existing googtrans cookies first to avoid conflicts
+      // Clear cookie without domain (current domain)
+      document.cookie = `googtrans=; path=/; max-age=0; SameSite=Lax`;
+      // Clear cookie with domain (for subdomain compatibility)
+      const hostname = window.location.hostname;
+      const domain = hostname.startsWith("www.") ? hostname.substring(4) : hostname;
+      document.cookie = `googtrans=; path=/; domain=${domain}; max-age=0; SameSite=Lax`;
+      document.cookie = `googtrans=; path=/; domain=.${domain}; max-age=0; SameSite=Lax`;
+
       // Set the new cookie (overwrites any existing one)
       // In production (HTTPS), add Secure flag for cookie to work properly
       const isSecure = window.location.protocol === "https:";
       const secureFlag = isSecure ? "; Secure" : "";
+      // Set cookie without explicit domain to use current domain only
       document.cookie = `googtrans=${cookieValue}; path=/; max-age=31536000; SameSite=Lax${secureFlag}`;
 
       // Update state immediately for better UX
