@@ -28,6 +28,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
   const isAbout = pathname === "/about";
   const isExports = pathname === "/exports" || pathname.startsWith("/exports/");
   const isImports = pathname === "/imports" || pathname.startsWith("/imports/");
+  const isImportsExports = pathname === "/imports-exports";
   const isSectors = pathname === "/sectors" || pathname.startsWith("/sectors/");
   const isCareers = pathname === "/careers";
   const isCompanies = pathname === "/companies" || pathname.startsWith("/companies/");
@@ -40,6 +41,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
     isAbout ||
     isExports ||
     isImports ||
+    isImportsExports ||
     isSectors ||
     isCareers ||
     isCompanies ||
@@ -49,9 +51,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About Us" },
-    { href: "/sectors", label: "Sectors" },
-    { href: "/imports", label: "Imports" },
-    { href: "/exports", label: "Exports" },
+    { href: "/imports-exports", label: "Import / Export" },
     { href: "/companies", label: "Subsidiaries" },
     { href: "/news#news-section", label: "News & Updates" },
     { href: "/careers#careers-section", label: "Careers" },
@@ -109,49 +109,25 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
               const isActive = isOnPage && (!linkHash || activeSection === linkHash);
 
               // Check if this link should have a dropdown
-              const isSectors = link.href === "/sectors";
-              const isExports = link.href === "/exports";
-              const isImports = link.href === "/imports";
+              const isTrade = link.href === "/imports-exports";
               const isCompanies = link.href.startsWith("/companies");
 
-              if (isSectors && navigationData.dropdowns.sectors) {
-                return (
-                  <NavDropdown
-                    key={link.href}
-                    id="sectors"
-                    label={link.label}
-                    href={link.href}
-                    sections={navigationData.dropdowns.sectors.sections}
-                    isTransparent={hasTransparentNav}
-                    isActive={isActive}
-                  />
-                );
-              }
+              // Check if we're on imports or exports pages for active state
+              const isImportsPage = pathname === "/imports" || pathname.startsWith("/imports/");
+              const isExportsPage = pathname === "/exports" || pathname.startsWith("/exports/");
+              const isImportsExportsPage = pathname === "/imports-exports";
+              const isTradeActive = isImportsPage || isExportsPage || isImportsExportsPage;
 
-              if (isImports && navigationData.dropdowns.imports) {
+              if (isTrade && navigationData.dropdowns.trade) {
                 return (
                   <NavDropdown
                     key={link.href}
-                    id="imports"
+                    id="trade"
                     label={link.label}
-                    href={link.href}
-                    sections={navigationData.dropdowns.imports.sections}
+                    href="/imports-exports"
+                    sections={navigationData.dropdowns.trade.sections}
                     isTransparent={hasTransparentNav}
-                    isActive={isActive}
-                  />
-                );
-              }
-
-              if (isExports && navigationData.dropdowns.exports) {
-                return (
-                  <NavDropdown
-                    key={link.href}
-                    id="exports"
-                    label={link.label}
-                    href={link.href}
-                    sections={navigationData.dropdowns.exports.sections}
-                    isTransparent={hasTransparentNav}
-                    isActive={isActive}
+                    isActive={isTradeActive}
                   />
                 );
               }
@@ -295,10 +271,59 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
             const isOnPage = pathname === linkPath || pathname === link.href;
             const isActive = isOnPage && (!linkHash || activeSection === linkHash);
             
+            const isTrade = link.href === "/imports-exports";
             const isCompanies = link.href.startsWith("/companies");
             const isCompaniesPage = pathname === "/companies" || pathname.startsWith("/companies/");
+            const isImportsPage = pathname === "/imports" || pathname.startsWith("/imports/");
+            const isExportsPage = pathname === "/exports" || pathname.startsWith("/exports/");
+            const isImportsExportsPage = pathname === "/imports-exports";
+            const isTradePage = isImportsPage || isExportsPage || isImportsExportsPage;
 
             // Check if this link has a dropdown in mobile
+            if (isTrade && navigationData.dropdowns.trade) {
+              return (
+                <div key={link.href} className="flex flex-col">
+                  <Link
+                    onClick={close}
+                    className={
+                      isTradePage
+                        ? "text-primary text-base sm:text-lg font-bold leading-normal py-3 sm:py-3.5 px-2 rounded-lg bg-primary/10 dark:bg-primary/20 touch-manipulation"
+                        : "text-[#181411] dark:text-gray-300 text-base sm:text-lg font-medium leading-normal hover:text-primary transition-colors py-3 sm:py-3.5 px-2 rounded-lg hover:bg-primary/5 dark:hover:bg-primary/10 touch-manipulation"
+                    }
+                    href="/imports-exports"
+                  >
+                    {link.label}
+                  </Link>
+                  <div className="pl-4 pt-1 pb-2 flex flex-col gap-1">
+                    {navigationData.dropdowns.trade.sections.map((section) => (
+                      <div key={section.title} className="flex flex-col gap-1">
+                        <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 px-2 pt-2 pb-1">
+                          {section.title}
+                        </div>
+                        {section.items.map((item) => {
+                          const isItemActive = pathname === item.href;
+                          return (
+                            <Link
+                              key={item.href}
+                              onClick={close}
+                              className={
+                                isItemActive
+                                  ? "text-primary text-sm font-semibold leading-normal py-2 px-2 rounded-lg bg-primary/5 dark:bg-primary/10 touch-manipulation"
+                                  : "text-[#181411] dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary transition-colors py-2 px-2 rounded-lg hover:bg-primary/5 dark:hover:bg-primary/10 touch-manipulation"
+                              }
+                              href={item.href}
+                            >
+                              {item.label}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+
             if (isCompanies && navigationData.dropdowns.companies) {
               return (
                 <div key={link.href} className="flex flex-col">
