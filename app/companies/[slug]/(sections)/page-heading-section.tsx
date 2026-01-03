@@ -59,12 +59,12 @@ export default function PageHeadingSection({
         <div className="absolute inset-0 bg-linear-to-r from-black/60 to-black/40" />
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-6 text-left">
           <div className="flex flex-col gap-4">
-            <h1 className="text-white text-4xl font-black leading-tight tracking-tight sm:text-5xl md:text-6xl max-w-3xl">
-              {company.title}
-            </h1>
-            <p className="text-white/90 text-base font-normal leading-normal sm:text-lg max-w-2xl">
-              {company.description}
-            </p>
+          <h1 className="text-white text-4xl font-black leading-tight tracking-tight sm:text-5xl md:text-6xl max-w-3xl">
+            {company.title}
+          </h1>
+          <p className="text-white/90 text-base font-normal leading-normal sm:text-lg max-w-2xl">
+            {company.description}
+          </p>
           </div>
           
           {/* Sectors Menu Grid - Only Related Sectors */}

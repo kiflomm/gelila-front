@@ -90,6 +90,48 @@
         }
       ]
     },
+    "trade": {
+      "sections": [
+        {
+          "title": "Imports",
+          "items": [
+            {
+              "label": "Industrial Machinery",
+              "href": "/imports/industrial-machinery"
+            },
+            {
+              "label": "Electronics & Components",
+              "href": "/imports/electronics-components"
+            },
+            {
+              "label": "Packaged Consumer Goods",
+              "href": "/imports/packaged-consumer-goods"
+            },
+            {
+              "label": "Textiles and Garments",
+              "href": "/imports/textiles-garments"
+            },
+            {
+              "label": "Agricultural Products",
+              "href": "/imports/agricultural-products"
+            },
+            {
+              "label": "Building Materials",
+              "href": "/imports/building-materials"
+            }
+          ]
+        },
+        {
+          "title": "Exports",
+          "items": [
+            {
+              "label": "Shoes & Sole",
+              "href": "/exports/footwear"
+            }
+          ]
+        }
+      ]
+    },
     "careers": {
       "sections": [
         {
