@@ -17,7 +17,13 @@ const iconMap: Record<string, typeof Award> = {
   Users: Users,
 };
 
-export default function LeadershipSection() {
+interface LeadershipSectionProps {
+  showMissionVision?: boolean;
+}
+
+export default function LeadershipSection({
+  showMissionVision = true,
+}: LeadershipSectionProps) {
   return (
     <section className="py-16 sm:py-24 lg:py-32 relative">
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-background-light/50 dark:via-black/20 to-transparent -z-10"></div>
@@ -61,47 +67,49 @@ export default function LeadershipSection() {
         </div>
 
         {/* Vision and Mission Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Vision Card */}
-          <div className="rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex items-center justify-center size-10 rounded-full bg-primary">
-                <Eye className="size-5 text-white" />
+        {showMissionVision && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Vision Card */}
+            <div className="rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center justify-center size-10 rounded-full bg-primary">
+                  <Eye className="size-5 text-white" />
+                </div>
+                <h3 className="text-[#181411] dark:text-white text-xl font-bold">
+                  {leadershipData.vision.title}
+                </h3>
               </div>
-              <h3 className="text-[#181411] dark:text-white text-xl font-bold">
-                {leadershipData.vision.title}
-              </h3>
-            </div>
-            {leadershipData.vision.statements.map((statement, index) => (
-              <p
-                key={index}
-                className="text-[#495057] dark:text-white/80 text-base leading-relaxed"
-              >
-                {statement}
-              </p>
-            ))}
-          </div>
-
-          {/* Mission Card */}
-          <div className="rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex items-center justify-center size-10 rounded-full bg-primary">
-                <Rocket className="size-5 text-white" />
-              </div>
-              <h3 className="text-[#181411] dark:text-white text-xl font-bold">
-                {leadershipData.mission.title}
-              </h3>
-            </div>
-            <ul className="space-y-2 text-[#495057] dark:text-white/80 text-base leading-relaxed">
-              {leadershipData.mission.statements.map((statement, index) => (
-                <li key={index} className="flex items-start gap-2">
-                  <span className="text-primary shrink-0 mt-1">•</span>
-                  <span>{statement}</span>
-                </li>
+              {leadershipData.vision.statements.map((statement, index) => (
+                <p
+                  key={index}
+                  className="text-[#495057] dark:text-white/80 text-base leading-relaxed"
+                >
+                  {statement}
+                </p>
               ))}
-            </ul>
+            </div>
+
+            {/* Mission Card */}
+            <div className="rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center justify-center size-10 rounded-full bg-primary">
+                  <Rocket className="size-5 text-white" />
+                </div>
+                <h3 className="text-[#181411] dark:text-white text-xl font-bold">
+                  {leadershipData.mission.title}
+                </h3>
+              </div>
+              <ul className="space-y-2 text-[#495057] dark:text-white/80 text-base leading-relaxed">
+                {leadershipData.mission.statements.map((statement, index) => (
+                  <li key={index} className="flex items-start gap-2">
+                    <span className="text-primary shrink-0 mt-1">•</span>
+                    <span>{statement}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Core Values Section */}
         <div className="flex flex-col gap-6">
