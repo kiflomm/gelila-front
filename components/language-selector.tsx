@@ -31,10 +31,19 @@ function getLanguageFromCookie(): string {
     return "en";
   }
 
-  const cookieValue = googtransCookie.split("=")[1]?.trim();
+  // Handle cookie value that might contain "=" by splitting only on first "="
+  const equalIndex = googtransCookie.indexOf("=");
+  let cookieValue = equalIndex !== -1 ? googtransCookie.substring(equalIndex + 1).trim() : "";
 
   if (!cookieValue) {
     return "en";
+  }
+
+  // Decode URL-encoded cookie value (handles cases where cookie might be encoded)
+  try {
+    cookieValue = decodeURIComponent(cookieValue);
+  } catch {
+    // If decoding fails, use original value
   }
 
   // Match /SOURCE/TARGET format (e.g., /en/ti, /en/am)
@@ -126,7 +135,10 @@ export function LanguageSelector({ isTransparent = false }: LanguageSelectorProp
       const cookieValue = value === "en" ? "/en/en" : `/en/${value}`;
 
       // Set the new cookie (overwrites any existing one)
-      document.cookie = `googtrans=${cookieValue}; path=/; max-age=31536000; SameSite=Lax`;
+      // In production (HTTPS), add Secure flag for cookie to work properly
+      const isSecure = window.location.protocol === "https:";
+      const secureFlag = isSecure ? "; Secure" : "";
+      document.cookie = `googtrans=${cookieValue}; path=/; max-age=31536000; SameSite=Lax${secureFlag}`;
 
       // Update state immediately for better UX
       setSelectedLanguage(value);
