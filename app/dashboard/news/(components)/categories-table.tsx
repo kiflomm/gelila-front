@@ -57,9 +57,6 @@ export function CategoriesTable({
                   <TableHead className="font-semibold text-muted-foreground h-12 bg-muted/30 w-[25%]">
                     <span className="text-xs">Name</span>
                   </TableHead>
-                  <TableHead className="font-semibold text-muted-foreground h-12 bg-muted/30 w-[20%]">
-                    <span className="text-xs">Slug</span>
-                  </TableHead>
                   <TableHead className="font-semibold text-muted-foreground h-12 bg-muted/30 w-[40%]">
                     <span className="text-xs">Description</span>
                   </TableHead>
@@ -70,7 +67,7 @@ export function CategoriesTable({
               </TableHeader>
               <TableBody>
                 <TableRow className="border-0 hover:bg-transparent">
-                  <TableCell colSpan={4} className="text-center py-16 border-0">
+                  <TableCell colSpan={3} className="text-center py-16 border-0">
                     <p className="text-muted-foreground">
                       No categories found. Create your first category!
                     </p>
@@ -100,9 +97,6 @@ export function CategoriesTable({
                     {category.name}
                   </Badge>
                 </div>
-                <p className="text-xs text-muted-foreground font-mono mb-2">
-                  {category.slug}
-                </p>
                 {category.description && (
                   <p className="text-sm text-muted-foreground line-clamp-2">
                     {category.description}
@@ -144,9 +138,6 @@ export function CategoriesTable({
                 <TableHead className="font-semibold text-muted-foreground h-12 bg-muted/30 w-[25%]">
                   <span className="text-xs">Name</span>
                 </TableHead>
-                <TableHead className="font-semibold text-muted-foreground h-12 bg-muted/30 w-[20%]">
-                  <span className="text-xs">Slug</span>
-                </TableHead>
                 <TableHead className="font-semibold text-muted-foreground h-12 bg-muted/30 w-[40%]">
                   <span className="text-xs">Description</span>
                 </TableHead>
@@ -165,9 +156,6 @@ export function CategoriesTable({
                     <Badge variant="secondary" className="text-xs">
                       {category.name}
                     </Badge>
-                  </TableCell>
-                  <TableCell className="text-xs text-muted-foreground font-mono py-3 overflow-hidden">
-                    <span className="truncate block">{category.slug}</span>
                   </TableCell>
                   <TableCell className="text-xs text-muted-foreground py-3 overflow-hidden">
                     <span className="truncate block">

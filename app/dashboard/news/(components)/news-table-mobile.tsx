@@ -2,8 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Edit, Trash2, Search, CheckCircle2, XCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Edit, Trash2, Search } from "lucide-react";
 import type { NewsItem } from "@/api/news";
 import { formatDate } from "@/app/news/[slug]/utils";
 
@@ -56,27 +55,6 @@ export function NewsTableMobile({
               <div className="flex flex-wrap gap-2 mb-3">
                 <Badge variant="secondary" className="text-xs">
                   {item.category?.name || "Uncategorized"}
-                </Badge>
-                <Badge
-                  variant={item.isPublished ? "default" : "secondary"}
-                  className={cn(
-                    "gap-1.5 font-medium border-0 text-xs",
-                    item.isPublished
-                      ? "bg-green-500/10 text-green-700 dark:text-green-400"
-                      : "bg-muted text-muted-foreground"
-                  )}
-                >
-                  {item.isPublished ? (
-                    <>
-                      <CheckCircle2 className="size-3" />
-                      Published
-                    </>
-                  ) : (
-                    <>
-                      <XCircle className="size-3" />
-                      Draft
-                    </>
-                  )}
                 </Badge>
               </div>
             </div>
