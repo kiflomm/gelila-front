@@ -16,8 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Edit, Trash2, Search, CheckCircle2, XCircle, MoreHorizontal } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Edit, Trash2, Search, MoreHorizontal } from "lucide-react";
 import type { NewsItem } from "@/api/news";
 import { formatDate } from "@/app/news/[slug]/utils";
 
@@ -51,9 +50,6 @@ export function NewsTableDesktop({
                 <TableHead className="font-semibold text-muted-foreground h-12 bg-muted/30 w-[15%] hidden md:table-cell">
                   <span className="text-xs">Published</span>
                 </TableHead>
-                <TableHead className="font-semibold text-muted-foreground h-12 bg-muted/30 w-[15%] sm:w-[10%]">
-                  <span className="text-xs">Status</span>
-                </TableHead>
                 <TableHead className="text-right font-semibold text-muted-foreground h-12 bg-muted/30 w-[20%] sm:w-[15%]">
                   <span className="text-xs">Actions</span>
                 </TableHead>
@@ -61,7 +57,7 @@ export function NewsTableDesktop({
             </TableHeader>
             <TableBody>
               <TableRow className="border-0 hover:bg-transparent">
-                <TableCell colSpan={6} className="text-center py-16 border-0">
+                <TableCell colSpan={5} className="text-center py-16 border-0">
                   <div className="flex flex-col items-center gap-3">
                     <div className="w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center">
                       <Search className="size-6 text-muted-foreground/50" />
@@ -95,14 +91,11 @@ export function NewsTableDesktop({
                 <span className="text-xs">Author</span>
               </TableHead>
               <TableHead className="font-semibold text-muted-foreground h-12 bg-muted/30 w-[15%] hidden md:table-cell">
-                <span className="text-xs">Published</span>
-              </TableHead>
-              <TableHead className="font-semibold text-muted-foreground h-12 bg-muted/30 w-[15%] sm:w-[10%]">
-                <span className="text-xs">Status</span>
-              </TableHead>
-              <TableHead className="text-right font-semibold text-muted-foreground h-12 bg-muted/30 w-[20%] sm:w-[15%]">
-                <span className="text-xs">Actions</span>
-              </TableHead>
+                  <span className="text-xs">Published</span>
+                </TableHead>
+                <TableHead className="text-right font-semibold text-muted-foreground h-12 bg-muted/30 w-[20%] sm:w-[15%]">
+                  <span className="text-xs">Actions</span>
+                </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -137,29 +130,6 @@ export function NewsTableDesktop({
                   <span className="truncate block">
                     {formatDate(item.publishedAt || item.createdAt || "")}
                   </span>
-                </TableCell>
-                <TableCell className="py-3">
-                  <Badge
-                    variant={item.isPublished ? "default" : "secondary"}
-                    className={cn(
-                      "gap-1 font-medium border-0 text-[10px] px-1.5 py-0.5",
-                      item.isPublished
-                        ? "bg-green-500/10 text-green-700 dark:text-green-400"
-                        : "bg-muted text-muted-foreground"
-                    )}
-                  >
-                    {item.isPublished ? (
-                      <>
-                        <CheckCircle2 className="size-2.5" />
-                        <span className="hidden sm:inline">Published</span>
-                      </>
-                    ) : (
-                      <>
-                        <XCircle className="size-2.5" />
-                        <span className="hidden sm:inline">Draft</span>
-                      </>
-                    )}
-                  </Badge>
                 </TableCell>
                 <TableCell className="text-right py-3">
                   <div className="hidden md:flex justify-end">

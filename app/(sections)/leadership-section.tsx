@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Eye,
   Rocket,
@@ -6,8 +8,20 @@ import {
   Lightbulb,
   CheckCircle,
   Star,
+  User,
 } from "lucide-react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { leadershipApi, type LeadershipItem } from "@/api/leadership";
 import leadershipData from "@/data/leadership.json";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 // Icon mapping for core values
 const iconMap: Record<string, typeof Award> = {
@@ -21,9 +35,28 @@ interface LeadershipSectionProps {
   showMissionVision?: boolean;
 }
 
+function getImageUrl(photoUrl: string | null | undefined): string {
+  if (!photoUrl) return '';
+  if (photoUrl.startsWith('http://') || photoUrl.startsWith('https://')) {
+    return photoUrl;
+  }
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || '';
+  if (photoUrl.startsWith('/uploads')) {
+    return `${apiBaseUrl.replace('/api/v1', '')}${photoUrl}`;
+  }
+  return photoUrl.startsWith('/') ? `${apiBaseUrl}${photoUrl}` : `${apiBaseUrl}/${photoUrl}`;
+}
+
 export default function LeadershipSection({
   showMissionVision = true,
 }: LeadershipSectionProps) {
+  const { data: leadership = [], isLoading } = useQuery({
+    queryKey: ["leadership", "public"],
+    queryFn: () => leadershipApi.getLeadership(),
+  });
+  const [api, setApi] = useState<CarouselApi>();
+  const showArrows = leadership.length > 3;
+
   return (
     <section className="py-16 sm:py-24 lg:py-32 relative">
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-background-light/50 dark:via-black/20 to-transparent -z-10"></div>
@@ -44,27 +77,100 @@ export default function LeadershipSection({
           </p>
         </div>
 
-        {/* Founder Card */}
-        <div className="rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 p-6">
-          <h3 className="text-[#181411] dark:text-white text-xl font-bold mb-4">
-            Founder & CEO
-          </h3>
-          <p className="text-[#495057] dark:text-white/80 text-base leading-relaxed">
-            {
-              leadershipData.leadership.founder.description.split(
-                leadershipData.leadership.founder.name
-              )[0]
-            }
-            <strong className="text-[#181411] dark:text-white font-semibold">
-              {leadershipData.leadership.founder.name}
-            </strong>
-            {
-              leadershipData.leadership.founder.description.split(
-                leadershipData.leadership.founder.name
-              )[1]
-            }
-          </p>
-        </div>
+        {/* Leadership Cards */}
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="rounded-xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 p-4 animate-pulse"
+              >
+                <div className="w-[150px] h-[150px] rounded-full bg-muted mb-3 mx-auto"></div>
+                <div className="h-5 bg-muted rounded mb-2"></div>
+                <div className="h-3 bg-muted rounded mb-3 w-3/4 mx-auto"></div>
+                <div className="h-3 bg-muted rounded"></div>
+              </div>
+            ))}
+          </div>
+        ) : leadership.length > 0 ? (
+          <div className="relative">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: false,
+              }}
+              setApi={setApi}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {leadership.map((person: LeadershipItem) => (
+                  <CarouselItem key={person.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3">
+                    <div className="rounded-xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 p-4 flex flex-col items-center text-center">
+                      <div className="relative w-[150px] h-[150px] rounded-full overflow-hidden bg-muted mb-3 flex items-center justify-center shrink-0">
+                        {person.photoUrl ? (
+                          <img
+                            src={getImageUrl(person.photoUrl)}
+                            alt={person.photoAlt || person.fullName}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                              const parent = e.currentTarget.parentElement;
+                              if (parent) {
+                                const fallback = parent.querySelector('.photo-fallback');
+                                if (fallback) {
+                                  (fallback as HTMLElement).style.display = 'flex';
+                                }
+                              }
+                            }}
+                          />
+                        ) : null}
+                        <div className={`photo-fallback absolute inset-0 flex items-center justify-center ${person.photoUrl ? 'hidden' : ''}`}>
+                          <User className="size-16 text-muted-foreground" />
+                        </div>
+                      </div>
+                      <h3 className="text-[#181411] dark:text-white text-lg font-bold mb-1">
+                        {person.fullName}
+                      </h3>
+                      <p className="text-primary text-xs font-semibold mb-2">
+                        {person.officialTitle}
+                      </p>
+                      <p className="text-[#495057] dark:text-white/80 text-xs leading-relaxed">
+                        {person.bio}
+                      </p>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              {showArrows && (
+                <>
+                  <CarouselPrevious className="left-2 md:-left-14 h-10 w-10 bg-white/90 dark:bg-gray-900/90 hover:bg-white dark:hover:bg-gray-800 border-2 border-primary/30 hover:border-primary shadow-lg" />
+                  <CarouselNext className="right-2 md:-right-14 h-10 w-10 bg-white/90 dark:bg-gray-900/90 hover:bg-white dark:hover:bg-gray-800 border-2 border-primary/30 hover:border-primary shadow-lg" />
+                </>
+              )}
+            </Carousel>
+          </div>
+        ) : (
+          <div className="rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 p-6">
+            <h3 className="text-[#181411] dark:text-white text-xl font-bold mb-4">
+              Founder & CEO
+            </h3>
+            <p className="text-[#495057] dark:text-white/80 text-base leading-relaxed">
+              {
+                leadershipData.leadership.founder.description.split(
+                  leadershipData.leadership.founder.name
+                )[0]
+              }
+              <strong className="text-[#181411] dark:text-white font-semibold">
+                {leadershipData.leadership.founder.name}
+              </strong>
+              {
+                leadershipData.leadership.founder.description.split(
+                  leadershipData.leadership.founder.name
+                )[1]
+              }
+            </p>
+          </div>
+        )}
 
         {/* Vision and Mission Cards */}
         {showMissionVision && (

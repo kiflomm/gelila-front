@@ -60,14 +60,6 @@ export function CategoryForm({
         )}
       </div>
       <div className="space-y-2">
-        <Label htmlFor={`${formId}-slug`}>Slug (optional)</Label>
-        <Input
-          id={`${formId}-slug`}
-          {...register("slug")}
-          placeholder="Auto-generated from name if not provided"
-        />
-      </div>
-      <div className="space-y-2">
         <Label htmlFor={`${formId}-description`}>Description (optional)</Label>
         <Textarea
           id={`${formId}-description`}

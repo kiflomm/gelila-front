@@ -26,46 +26,25 @@ export function NewsFormFields({ control, errors, news }: NewsFormFieldsProps) {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="title">
-            Title <span className="text-destructive">*</span>
-          </Label>
-          <Controller
-            name="title"
-            control={control}
-            render={({ field }) => (
-              <Input
-                id="title"
-                {...field}
-                placeholder="e.g., Gelila Manufacturing Announces Q3 Production Milestones"
-                aria-invalid={errors.title ? "true" : "false"}
-              />
-            )}
-          />
-          {errors.title && (
-            <p className="text-sm text-destructive">{errors.title.message}</p>
+      <div className="space-y-2">
+        <Label htmlFor="title">
+          Title <span className="text-destructive">*</span>
+        </Label>
+        <Controller
+          name="title"
+          control={control}
+          render={({ field }) => (
+            <Input
+              id="title"
+              {...field}
+              placeholder="e.g., Gelila Manufacturing Announces Q3 Production Milestones"
+              aria-invalid={errors.title ? "true" : "false"}
+            />
           )}
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="slug">Slug (optional)</Label>
-          <Controller
-            name="slug"
-            control={control}
-            render={({ field }) => (
-              <Input
-                id="slug"
-                {...field}
-                placeholder="Auto-generated from title if not provided"
-                aria-invalid={errors.slug ? "true" : "false"}
-              />
-            )}
-          />
-          {errors.slug && (
-            <p className="text-sm text-destructive">{errors.slug.message}</p>
-          )}
-        </div>
+        />
+        {errors.title && (
+          <p className="text-sm text-destructive">{errors.title.message}</p>
+        )}
       </div>
 
       <div className="space-y-2">
