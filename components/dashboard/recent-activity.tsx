@@ -171,10 +171,12 @@ export function RecentActivity() {
                   <TableCell className="text-xs font-medium py-2">
                     {activity.title}
                   </TableCell>
-                  <TableCell className="text-xs py-2">
-                    {activity.description.length > 50
-                      ? `${activity.description.substring(0, 50)}...`
-                      : activity.description}
+                  <TableCell className="text-xs py-2 max-w-[120px] overflow-hidden">
+                    <span className="truncate block">
+                      {activity.description.length > 10
+                        ? `${activity.description.substring(0, 10)}...`
+                        : activity.description}
+                    </span>
                   </TableCell>
                   <TableCell className="text-xs py-2">
                     {formatDate(activity.createdAt)}
