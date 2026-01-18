@@ -86,10 +86,10 @@ export interface UpdateProductData {
   image?: File;
 }
 
-export interface HeroImage {
-  url: string;
-  alt: string;
-}
+import type { HeroImage } from "./types";
+
+// Re-export for backward compatibility
+export type { HeroImage };
 
 export interface SectorsPageConfig {
   id: number;

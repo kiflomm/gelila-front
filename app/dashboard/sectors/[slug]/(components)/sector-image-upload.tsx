@@ -292,7 +292,7 @@ export function SectorImageUpload({
                 control={control}
                 render={({ field: { onChange } }) => {
                   imageUrlsOnChangeRef.current = onChange;
-                  return null;
+                  return <></>;
                 }}
               />
               <Controller
@@ -300,7 +300,7 @@ export function SectorImageUpload({
                 control={control}
                 render={({ field: { onChange } }) => {
                   imageAltsOnChangeRef.current = onChange;
-                  return null;
+                  return <></>;
                 }}
               />
             </div>

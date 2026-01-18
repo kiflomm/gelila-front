@@ -174,7 +174,7 @@ export function HeroImageUpload({
         control={control}
         render={({ field: { onChange } }) => {
           onChangeRef.current = onChange;
-          return null;
+          return <></>;
         }}
       />
       <Controller
@@ -182,7 +182,7 @@ export function HeroImageUpload({
         control={control}
         render={({ field: { onChange } }) => {
           onAltsChangeRef.current = onChange;
-          return null;
+          return <></>;
         }}
       />
 

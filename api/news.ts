@@ -81,10 +81,10 @@ export interface UpdateCategoryData {
   description?: string;
 }
 
-export interface HeroImage {
-  url: string;
-  alt: string;
-}
+import type { HeroImage } from "./types";
+
+// Re-export for backward compatibility
+export type { HeroImage };
 
 export interface NewsPageConfig {
   id: number;

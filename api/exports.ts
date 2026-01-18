@@ -78,10 +78,10 @@ export interface UpdateExportProductData {
   image?: File;
 }
 
-export interface HeroImage {
-  url: string;
-  alt: string;
-}
+import type { HeroImage } from "./types";
+
+// Re-export for backward compatibility
+export type { HeroImage };
 
 export interface ExportsPageConfig {
   id: number;
@@ -137,11 +137,23 @@ export const exportsApi = {
     if (data.imageAlt !== undefined) {
       formData.append("imageAlt", data.imageAlt);
     }
+    if (data.imageUrls && data.imageUrls.length > 0) {
+      data.imageUrls.forEach((url, index) => {
+        formData.append(`imageUrls[${index}]`, url);
+      });
+    }
+    if (data.imageAlts && data.imageAlts.length > 0) {
+      data.imageAlts.forEach((alt, index) => {
+        formData.append(`imageAlts[${index}]`, alt);
+      });
+    }
     if (data.orderIndex !== undefined) {
       formData.append("orderIndex", data.orderIndex.toString());
     }
-    if (data.image) {
-      formData.append("image", data.image);
+    if (data.images && data.images.length > 0) {
+      data.images.forEach((file) => {
+        formData.append("images", file);
+      });
     }
 
     const response = await axiosProtectedClient.post("/exports", formData, {

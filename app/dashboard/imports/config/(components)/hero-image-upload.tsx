@@ -308,7 +308,7 @@ export function HeroImageUpload({
                 render={({ field: { onChange } }) => {
                   const alts = images.map((img) => img.alt);
                   onChange(alts);
-                  return null;
+                  return <></>;
                 }}
               />
             </div>

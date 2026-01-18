@@ -1,9 +1,9 @@
 import { axiosPublicClient, axiosProtectedClient } from "@/lib/axios-client";
 
-export interface HeroImage {
-  url: string;
-  alt: string;
-}
+import type { HeroImage } from "./types";
+
+// Re-export for backward compatibility
+export type { HeroImage };
 
 export interface HomepageConfig {
   id: number;

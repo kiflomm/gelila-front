@@ -11,10 +11,10 @@ export interface ImportCommitment {
   updatedAt?: string;
 }
 
-export interface HeroImage {
-  url: string;
-  alt: string;
-}
+import type { HeroImage } from "./types";
+
+// Re-export for backward compatibility
+export type { HeroImage };
 
 export interface ImportPageConfig {
   id: number;

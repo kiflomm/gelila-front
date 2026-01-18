@@ -138,7 +138,7 @@ export function PageHeadingImageUpload({
         control={control}
         render={({ field: { onChange } }) => {
           onChangeImagesRef.current = onChange;
-          return null;
+          return <></>;
         }}
       />
       <Controller
@@ -146,7 +146,7 @@ export function PageHeadingImageUpload({
         control={control}
         render={({ field: { onChange } }) => {
           onChangeUrlsRef.current = onChange;
-          return null;
+          return <></>;
         }}
       />
       <Controller
@@ -154,7 +154,7 @@ export function PageHeadingImageUpload({
         control={control}
         render={({ field: { onChange } }) => {
           onChangeAltsRef.current = onChange;
-          return null;
+          return <></>;
         }}
       />
       <div

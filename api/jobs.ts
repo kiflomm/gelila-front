@@ -50,10 +50,10 @@ export interface UpdateJobData {
   isActive?: boolean;
 }
 
-export interface HeroImage {
-  url: string;
-  alt: string;
-}
+import type { HeroImage } from "./types";
+
+// Re-export for backward compatibility
+export type { HeroImage };
 
 export interface CareersPageConfig {
   id: number;

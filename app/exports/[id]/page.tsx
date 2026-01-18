@@ -189,7 +189,7 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
 
   // Get export images - prefer multiple images, fallback to single image, then product images
   const exportImages = exportItem.imageUrls && exportItem.imageUrls.length > 0
-    ? exportItem.imageUrls.map((url, index) => ({
+    ? exportItem.imageUrls.map((url: string, index: number) => ({
         url: getImageUrl(url),
         alt: exportItem.imageAlts?.[index] || exportItem.title,
       }))

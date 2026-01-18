@@ -182,7 +182,7 @@ export function ImportImageUpload({
         control={control}
         render={({ field: { onChange } }) => {
           onChangeRef.current = onChange;
-          return null;
+          return <></>;
         }}
       />
       <Controller
@@ -190,7 +190,7 @@ export function ImportImageUpload({
         control={control}
         render={({ field: { onChange } }) => {
           onUrlsChangeRef.current = onChange;
-          return null;
+          return <></>;
         }}
       />
       <Controller
@@ -198,7 +198,7 @@ export function ImportImageUpload({
         control={control}
         render={({ field: { onChange } }) => {
           onAltsChangeRef.current = onChange;
-          return null;
+          return <></>;
         }}
       />
 

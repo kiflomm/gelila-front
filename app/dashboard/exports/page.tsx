@@ -41,8 +41,10 @@ export default function ExportsPage() {
       status: data.status ?? "operational",
       imageUrl: data.imageUrl,
       imageAlt: data.imageAlt,
+      imageUrls: data.imageUrls,
+      imageAlts: data.imageAlts,
       orderIndex: data.orderIndex,
-      image: data.image,
+      images: data.images,
     };
     await createMutation.mutateAsync(payload, {
       onSuccess: () => {

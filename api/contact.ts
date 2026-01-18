@@ -29,10 +29,10 @@ export interface SubmitContactMessageData {
   message: string;
 }
 
-export interface HeroImage {
-  url: string;
-  alt: string;
-}
+import type { HeroImage } from "./types";
+
+// Re-export for backward compatibility
+export type { HeroImage };
 
 export interface ContactPageConfig {
   id: number;
