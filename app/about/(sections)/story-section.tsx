@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { aboutApi } from "@/api/about";
 import storyDataFallback from "@/data/about-story.json";
+import { HeroSlider } from "@/components/hero-slider";
 
 /**
  * Get image URL - handles both external URLs and uploaded files
@@ -38,10 +39,19 @@ export default async function StorySection() {
   const badge = aboutConfig?.storyBadge || storyDataFallback.badge;
   const title = aboutConfig?.storyTitle || storyDataFallback.title;
   const content = aboutConfig?.storyContent || storyDataFallback.paragraphs.map(p => p.content).join("\n\n");
-  const imageUrl = aboutConfig?.storyImageUrl
-    ? getImageUrl(aboutConfig.storyImageUrl)
-    : storyDataFallback.image.src;
-  const imageAlt = aboutConfig?.storyImageAlt || storyDataFallback.image.alt;
+  
+  // Get story images - prefer multiple images, fallback to single image, then fallback to static data
+  const storyImages = aboutConfig?.storyImageUrls && aboutConfig.storyImageUrls.length > 0
+    ? aboutConfig.storyImageUrls.map((url, index) => ({
+        url: getImageUrl(url),
+        alt: aboutConfig.storyImageAlts?.[index] || title || storyDataFallback.image.alt,
+      }))
+    : aboutConfig?.storyImageUrl
+    ? [{ url: getImageUrl(aboutConfig.storyImageUrl), alt: aboutConfig.storyImageAlt || title || storyDataFallback.image.alt }]
+    : [{ url: storyDataFallback.image.src, alt: storyDataFallback.image.alt }];
+  
+  const imageUrl = storyImages[0]?.url || storyDataFallback.image.src;
+  const imageAlt = storyImages[0]?.alt || storyDataFallback.image.alt;
 
   // Unoptimize for API images (both localhost and production API) to avoid upstream 404 errors
   const shouldUnoptimize = imageUrl.includes('localhost') || imageUrl.includes('api.gelilamanufacturingplc.com');
@@ -86,7 +96,9 @@ export default async function StorySection() {
         {/* Image */}
         <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-900 shadow-2xl border border-primary/10 dark:border-primary/20 hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-primary/10 p-1">
           <div className="relative w-full h-full rounded-xl overflow-hidden">
-            {imageUrl && (
+            {storyImages.length > 1 ? (
+              <HeroSlider images={storyImages} autoPlayInterval={3000} />
+            ) : imageUrl ? (
               <Image
                 src={imageUrl}
                 alt={imageAlt}
@@ -94,8 +106,8 @@ export default async function StorySection() {
                 className="object-cover transition-transform duration-700 hover:scale-110"
                 unoptimized={shouldUnoptimize}
               />
-            )}
-            <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
+            ) : null}
+            <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent z-[1]" style={{ pointerEvents: 'none' }}></div>
           </div>
         </div>
 

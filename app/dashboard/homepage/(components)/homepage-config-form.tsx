@@ -8,14 +8,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import * as z from "zod";
 import { type HomepageConfig, type UpdateHomepageConfigData } from "@/api/homepage";
-import { HeroImageUpload } from "./hero-image-upload";
+import { HeroImageUpload } from "../config/(components)/hero-image-upload";
 
 const homepageConfigSchema = z.object({
   heroTitle: z.string().min(3).max(200).optional(),
   heroSubtitle: z.string().min(10).max(500).optional(),
-  heroImageUrl: z.string().optional(),
-  heroImageAlt: z.string().optional(),
-  heroImage: z.instanceof(File).optional(),
+  heroImages: z.array(z.instanceof(File)).optional(),
+  heroImageAlts: z.array(z.string()).optional(),
 });
 
 type HomepageConfigFormData = z.infer<typeof homepageConfigSchema>;
@@ -48,19 +47,19 @@ export function HomepageConfigForm({
       ? {
           heroTitle: homepageConfig.heroTitle,
           heroSubtitle: homepageConfig.heroSubtitle,
-          heroImageUrl: homepageConfig.heroImageUrl || undefined,
-          heroImageAlt: homepageConfig.heroImageAlt || undefined,
+          heroImageAlts: homepageConfig.heroImages?.map((img) => img.alt) || [],
         }
-      : {},
+      : {
+          heroImageAlts: [],
+        },
   });
 
   const onSubmitForm = async (data: HomepageConfigFormData) => {
     const submitData: UpdateHomepageConfigData = {
-      ...data,
-      heroImage: data.heroImage instanceof File ? data.heroImage : undefined,
-      ...(!(data.heroImage instanceof File) && homepageConfig ? {
-        heroImageUrl: homepageConfig.heroImageUrl || undefined,
-      } : {}),
+      heroTitle: data.heroTitle,
+      heroSubtitle: data.heroSubtitle,
+      heroImages: data.heroImages,
+      heroImageAlts: data.heroImageAlts,
     };
     await onSubmit(submitData);
   };
@@ -80,17 +79,6 @@ export function HomepageConfigForm({
           )}
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="heroImageAlt">Hero Image Alt Text</Label>
-          <Input
-            id="heroImageAlt"
-            {...register("heroImageAlt")}
-            placeholder="Descriptive alt text for accessibility"
-          />
-          {errors.heroImageAlt && (
-            <p className="text-sm text-destructive">{errors.heroImageAlt.message}</p>
-          )}
-        </div>
       </div>
 
       <div className="space-y-2">
@@ -109,8 +97,7 @@ export function HomepageConfigForm({
       <div className="space-y-2">
         <HeroImageUpload
           control={control}
-          currentImageUrl={homepageConfig?.heroImageUrl}
-          currentImageAlt={homepageConfig?.heroImageAlt}
+          currentImages={homepageConfig?.heroImages || null}
         />
       </div>
 

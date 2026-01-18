@@ -85,9 +85,13 @@ export default function AboutConfigPage() {
                 </p>
               </div>
               <div>
-                <span className="font-medium">Image:</span>
+                <span className="font-medium">Page Heading Images:</span>
                 <p className="text-muted-foreground mt-1">
-                  {aboutConfig?.pageHeadingImageUrl ? "Set" : "Not set"}
+                  {aboutConfig?.pageHeadingImageUrls && aboutConfig.pageHeadingImageUrls.length > 0
+                    ? `${aboutConfig.pageHeadingImageUrls.length} image(s)`
+                    : aboutConfig?.pageHeadingImageUrl
+                    ? "1 image (legacy)"
+                    : "Not set"}
                 </p>
               </div>
             </div>
@@ -97,22 +101,43 @@ export default function AboutConfigPage() {
                 {aboutConfig?.pageHeadingDescription || "Not set"}
               </p>
             </div>
-            {aboutConfig?.pageHeadingImageUrl && (
+            {(aboutConfig?.pageHeadingImageUrls && aboutConfig.pageHeadingImageUrls.length > 0) || aboutConfig?.pageHeadingImageUrl ? (
               <div className="mt-4">
-                <span className="font-medium">Image Preview:</span>
-                <div className="mt-2 rounded-md overflow-hidden max-w-2xl">
-                  <img
-                    src={
-                      aboutConfig.pageHeadingImageUrl.startsWith("http")
-                        ? aboutConfig.pageHeadingImageUrl
-                        : `${process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "")}${aboutConfig.pageHeadingImageUrl}`
-                    }
-                    alt={aboutConfig.pageHeadingImageAlt || "Page heading image"}
-                    className="w-full h-64 object-cover"
-                  />
+                <span className="font-medium">Page Heading Images Preview:</span>
+                <p className="text-xs text-muted-foreground mt-1 mb-2">
+                  {aboutConfig.pageHeadingImageUrls && aboutConfig.pageHeadingImageUrls.length > 0
+                    ? `${aboutConfig.pageHeadingImageUrls.length} image(s) uploaded`
+                    : "1 legacy image"}
+                </p>
+                <div className="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2 max-w-2xl">
+                  {(aboutConfig.pageHeadingImageUrls && aboutConfig.pageHeadingImageUrls.length > 0
+                    ? aboutConfig.pageHeadingImageUrls.map((url, index) => ({
+                        url,
+                        alt: aboutConfig.pageHeadingImageAlts?.[index] || aboutConfig.pageHeadingTitle || "Page heading image",
+                      }))
+                    : aboutConfig.pageHeadingImageUrl
+                    ? [{ url: aboutConfig.pageHeadingImageUrl, alt: aboutConfig.pageHeadingImageAlt || aboutConfig.pageHeadingTitle || "Page heading image" }]
+                    : []
+                  ).map((img, index) => {
+                    const imageUrl = img.url.startsWith("http")
+                      ? img.url
+                      : `${process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "")}${img.url}`;
+                    return (
+                      <div key={index} className="relative rounded-md overflow-hidden border border-border">
+                        <img
+                          src={imageUrl}
+                          alt={img.alt || `Page heading image ${index + 1}`}
+                          className="w-full h-32 object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center">
+                          {index + 1}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            )}
+            ) : null}
           </div>
 
           {/* Story Section */}
@@ -131,6 +156,16 @@ export default function AboutConfigPage() {
                   {aboutConfig?.storyTitle || "Not set"}
                 </p>
               </div>
+              <div>
+                <span className="font-medium">Story Images:</span>
+                <p className="text-muted-foreground mt-1">
+                  {aboutConfig?.storyImageUrls && aboutConfig.storyImageUrls.length > 0
+                    ? `${aboutConfig.storyImageUrls.length} image(s)`
+                    : aboutConfig?.storyImageUrl
+                    ? "1 image (legacy)"
+                    : "Not set"}
+                </p>
+              </div>
             </div>
             <div className="mt-4">
               <span className="font-medium">Content:</span>
@@ -138,22 +173,43 @@ export default function AboutConfigPage() {
                 {aboutConfig?.storyContent || "Not set"}
               </p>
             </div>
-            {aboutConfig?.storyImageUrl && (
+            {(aboutConfig?.storyImageUrls && aboutConfig.storyImageUrls.length > 0) || aboutConfig?.storyImageUrl ? (
               <div className="mt-4">
-                <span className="font-medium">Image Preview:</span>
-                <div className="mt-2 rounded-md overflow-hidden max-w-2xl">
-                  <img
-                    src={
-                      aboutConfig.storyImageUrl.startsWith("http")
-                        ? aboutConfig.storyImageUrl
-                        : `${process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "")}${aboutConfig.storyImageUrl}`
-                    }
-                    alt={aboutConfig.storyImageAlt || "Story image"}
-                    className="w-full h-64 object-cover"
-                  />
+                <span className="font-medium">Story Images Preview:</span>
+                <p className="text-xs text-muted-foreground mt-1 mb-2">
+                  {aboutConfig.storyImageUrls && aboutConfig.storyImageUrls.length > 0
+                    ? `${aboutConfig.storyImageUrls.length} image(s) uploaded`
+                    : "1 legacy image"}
+                </p>
+                <div className="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2 max-w-2xl">
+                  {(aboutConfig.storyImageUrls && aboutConfig.storyImageUrls.length > 0
+                    ? aboutConfig.storyImageUrls.map((url, index) => ({
+                        url,
+                        alt: aboutConfig.storyImageAlts?.[index] || aboutConfig.storyTitle || "Story image",
+                      }))
+                    : aboutConfig.storyImageUrl
+                    ? [{ url: aboutConfig.storyImageUrl, alt: aboutConfig.storyImageAlt || aboutConfig.storyTitle || "Story image" }]
+                    : []
+                  ).map((img, index) => {
+                    const imageUrl = img.url.startsWith("http")
+                      ? img.url
+                      : `${process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "")}${img.url}`;
+                    return (
+                      <div key={index} className="relative rounded-md overflow-hidden border border-border">
+                        <img
+                          src={imageUrl}
+                          alt={img.alt || `Story image ${index + 1}`}
+                          className="w-full h-32 object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center">
+                          {index + 1}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            )}
+            ) : null}
           </div>
 
           {/* Stats Section */}

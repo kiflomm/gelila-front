@@ -15,11 +15,15 @@ import { StoryImageUpload } from "./story-image-upload";
 const aboutConfigSchema = z.object({
   pageHeadingTitle: z.string().min(3).max(200),
   pageHeadingDescription: z.string().min(10).max(1000),
-  pageHeadingImage: z.instanceof(File).optional(),
+  pageHeadingImages: z.array(z.instanceof(File)).optional(),
+  pageHeadingImageUrls: z.array(z.string()).optional(),
+  pageHeadingImageAlts: z.array(z.string()).optional(),
   storyBadge: z.string().min(2).max(50),
   storyTitle: z.string().min(3).max(200),
   storyContent: z.string().min(50),
-  storyImage: z.instanceof(File).optional(),
+  storyImages: z.array(z.instanceof(File)).optional(),
+  storyImageUrls: z.array(z.string()).optional(),
+  storyImageAlts: z.array(z.string()).optional(),
   statSectorsValue: z.string().min(1).max(20),
   statSectorsLabel: z.string().min(1).max(50),
   statEmployeesValue: z.string().min(1).max(20),
@@ -82,7 +86,25 @@ export function AboutConfigForm({
   });
 
   const onSubmitHandler = async (data: AboutConfigFormData) => {
-    await onSubmit(data);
+    // Ensure pageHeadingImageUrls and pageHeadingImageAlts are sent if images exist
+    const pageHeadingImages = data.pageHeadingImages || [];
+    const pageHeadingImageUrls = data.pageHeadingImageUrls || [];
+    const pageHeadingImageAlts = data.pageHeadingImageAlts || [];
+    
+    // Ensure storyImageUrls and storyImageAlts are sent if images exist
+    const storyImages = data.storyImages || [];
+    const storyImageUrls = data.storyImageUrls || [];
+    const storyImageAlts = data.storyImageAlts || [];
+    
+    await onSubmit({
+      ...data,
+      pageHeadingImages: pageHeadingImages.length > 0 ? pageHeadingImages : undefined,
+      pageHeadingImageUrls: pageHeadingImageUrls.length > 0 ? pageHeadingImageUrls : undefined,
+      pageHeadingImageAlts: pageHeadingImageAlts.length > 0 ? pageHeadingImageAlts : undefined,
+      storyImages: storyImages.length > 0 ? storyImages : undefined,
+      storyImageUrls: storyImageUrls.length > 0 ? storyImageUrls : undefined,
+      storyImageAlts: storyImageAlts.length > 0 ? storyImageAlts : undefined,
+    });
   };
 
   return (
@@ -128,8 +150,16 @@ export function AboutConfigForm({
 
         <PageHeadingImageUpload
           control={control}
-          currentImageUrl={aboutConfig?.pageHeadingImageUrl}
-          currentImageAlt={aboutConfig?.pageHeadingImageAlt}
+          currentImages={
+            aboutConfig?.pageHeadingImageUrls && aboutConfig.pageHeadingImageUrls.length > 0
+              ? aboutConfig.pageHeadingImageUrls.map((url, index) => ({
+                  url,
+                  alt: aboutConfig.pageHeadingImageAlts?.[index] || aboutConfig.pageHeadingTitle || 'Page heading image',
+                }))
+              : aboutConfig?.pageHeadingImageUrl
+              ? [{ url: aboutConfig.pageHeadingImageUrl, alt: aboutConfig.pageHeadingImageAlt || aboutConfig.pageHeadingTitle || 'Page heading image' }]
+              : null
+          }
         />
       </div>
 
@@ -197,8 +227,16 @@ export function AboutConfigForm({
 
         <StoryImageUpload
           control={control}
-          currentImageUrl={aboutConfig?.storyImageUrl}
-          currentImageAlt={aboutConfig?.storyImageAlt}
+          currentImages={
+            aboutConfig?.storyImageUrls && aboutConfig.storyImageUrls.length > 0
+              ? aboutConfig.storyImageUrls.map((url, index) => ({
+                  url,
+                  alt: aboutConfig.storyImageAlts?.[index] || aboutConfig.storyTitle || 'Story image',
+                }))
+              : aboutConfig?.storyImageUrl
+              ? [{ url: aboutConfig.storyImageUrl, alt: aboutConfig.storyImageAlt || aboutConfig.storyTitle || 'Story image' }]
+              : null
+          }
         />
       </div>
 

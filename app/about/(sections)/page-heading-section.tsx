@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { aboutApi } from "@/api/about";
 import pageHeadingDataFallback from "@/data/about-page-heading.json";
+import { HeroSlider } from "@/components/hero-slider";
 
 /**
  * Get image URL - handles both external URLs and uploaded files
@@ -40,11 +41,19 @@ export default async function PageHeadingSection() {
   const description =
     aboutConfig?.pageHeadingDescription ||
     pageHeadingDataFallback.description;
-  const imageUrl = aboutConfig?.pageHeadingImageUrl
-    ? getImageUrl(aboutConfig.pageHeadingImageUrl)
-    : pageHeadingDataFallback.image.src;
-  const imageAlt =
-    aboutConfig?.pageHeadingImageAlt || pageHeadingDataFallback.image.alt;
+  
+  // Get page heading images - prefer multiple images, fallback to single image, then fallback to static data
+  const pageHeadingImages = aboutConfig?.pageHeadingImageUrls && aboutConfig.pageHeadingImageUrls.length > 0
+    ? aboutConfig.pageHeadingImageUrls.map((url, index) => ({
+        url: getImageUrl(url),
+        alt: aboutConfig.pageHeadingImageAlts?.[index] || title || pageHeadingDataFallback.image.alt,
+      }))
+    : aboutConfig?.pageHeadingImageUrl
+    ? [{ url: getImageUrl(aboutConfig.pageHeadingImageUrl), alt: aboutConfig.pageHeadingImageAlt || title || pageHeadingDataFallback.image.alt }]
+    : [{ url: pageHeadingDataFallback.image.src, alt: pageHeadingDataFallback.image.alt }];
+  
+  const imageUrl = pageHeadingImages[0]?.url || pageHeadingDataFallback.image.src;
+  const imageAlt = pageHeadingImages[0]?.alt || pageHeadingDataFallback.image.alt;
 
   // Unoptimize for API images (both localhost and production API) to avoid upstream 404 errors
   const shouldUnoptimize = imageUrl.includes('localhost') || imageUrl.includes('api.gelilamanufacturingplc.com');
@@ -52,7 +61,9 @@ export default async function PageHeadingSection() {
   return (
     <section className="w-full">
       <div className="relative flex min-h-[500px] lg:min-h-[600px] w-full flex-col gap-6 bg-cover bg-center bg-no-repeat items-start justify-center px-4 sm:px-6 lg:px-10 xl:px-20 py-16 sm:py-20 lg:py-24 overflow-hidden">
-        {imageUrl && (
+        {pageHeadingImages.length > 1 ? (
+          <HeroSlider images={pageHeadingImages} autoPlayInterval={3000} />
+        ) : imageUrl ? (
           <Image
             src={imageUrl}
             alt={imageAlt}
@@ -61,8 +72,8 @@ export default async function PageHeadingSection() {
             priority
             unoptimized={shouldUnoptimize}
           />
-        )}
-        <div className="absolute inset-0 bg-linear-to-r from-black/60 to-black/40" />
+        ) : null}
+        <div className="absolute inset-0 bg-linear-to-r from-black/60 to-black/40 z-[1]" style={{ pointerEvents: 'none' }} />
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-4 text-left">
           <h1 className="text-white text-4xl font-black leading-tight tracking-tight sm:text-5xl md:text-6xl max-w-3xl">
             {title}

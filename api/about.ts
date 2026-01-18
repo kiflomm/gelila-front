@@ -5,14 +5,18 @@ export interface AboutConfig {
   // Page Heading
   pageHeadingTitle: string;
   pageHeadingDescription: string;
-  pageHeadingImageUrl: string | null;
-  pageHeadingImageAlt: string | null;
+  pageHeadingImageUrl: string | null; // Kept for backward compatibility
+  pageHeadingImageAlt: string | null; // Kept for backward compatibility
+  pageHeadingImageUrls: string[] | null; // New field for multiple image URLs
+  pageHeadingImageAlts: string[] | null; // New field for multiple image alt texts
   // Story
   storyBadge: string;
   storyTitle: string;
   storyContent: string;
-  storyImageUrl: string | null;
-  storyImageAlt: string | null;
+  storyImageUrl: string | null; // Kept for backward compatibility
+  storyImageAlt: string | null; // Kept for backward compatibility
+  storyImageUrls: string[] | null; // New field for multiple image URLs
+  storyImageAlts: string[] | null; // New field for multiple image alt texts
   // Stats
   statSectorsValue: string;
   statSectorsLabel: string;
@@ -29,12 +33,16 @@ export interface UpdateAboutConfigData {
   // Page Heading
   pageHeadingTitle?: string;
   pageHeadingDescription?: string;
-  pageHeadingImage?: File;
+  pageHeadingImages?: File[];
+  pageHeadingImageUrls?: string[];
+  pageHeadingImageAlts?: string[];
   // Story
   storyBadge?: string;
   storyTitle?: string;
   storyContent?: string;
-  storyImage?: File;
+  storyImages?: File[];
+  storyImageUrls?: string[];
+  storyImageAlts?: string[];
   // Stats
   statSectorsValue?: string;
   statSectorsLabel?: string;
@@ -68,8 +76,20 @@ export const aboutApi = {
     if (data.pageHeadingDescription !== undefined) {
       formData.append("pageHeadingDescription", data.pageHeadingDescription);
     }
-    if (data.pageHeadingImage) {
-      formData.append("pageHeadingImage", data.pageHeadingImage);
+    if (data.pageHeadingImages && data.pageHeadingImages.length > 0) {
+      data.pageHeadingImages.forEach((file) => {
+        formData.append("pageHeadingImages", file);
+      });
+    }
+    if (data.pageHeadingImageUrls && data.pageHeadingImageUrls.length > 0) {
+      data.pageHeadingImageUrls.forEach((url, index) => {
+        formData.append(`pageHeadingImageUrls[${index}]`, url);
+      });
+    }
+    if (data.pageHeadingImageAlts && data.pageHeadingImageAlts.length > 0) {
+      data.pageHeadingImageAlts.forEach((alt, index) => {
+        formData.append(`pageHeadingImageAlts[${index}]`, alt);
+      });
     }
 
     // Story fields
@@ -82,8 +102,20 @@ export const aboutApi = {
     if (data.storyContent !== undefined) {
       formData.append("storyContent", data.storyContent);
     }
-    if (data.storyImage) {
-      formData.append("storyImage", data.storyImage);
+    if (data.storyImages && data.storyImages.length > 0) {
+      data.storyImages.forEach((file) => {
+        formData.append("storyImages", file);
+      });
+    }
+    if (data.storyImageUrls && data.storyImageUrls.length > 0) {
+      data.storyImageUrls.forEach((url, index) => {
+        formData.append(`storyImageUrls[${index}]`, url);
+      });
+    }
+    if (data.storyImageAlts && data.storyImageAlts.length > 0) {
+      data.storyImageAlts.forEach((alt, index) => {
+        formData.append(`storyImageAlts[${index}]`, alt);
+      });
     }
 
     // Stats fields
