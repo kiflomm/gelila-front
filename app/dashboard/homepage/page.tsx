@@ -82,9 +82,11 @@ export default function HomepageConfigPage() {
                 <p className="text-muted-foreground mt-1">{homepageConfig?.heroTitle || "Not set"}</p>
               </div>
               <div>
-                <span className="font-medium">Hero Image:</span>
+                <span className="font-medium">Hero Images:</span>
                 <p className="text-muted-foreground mt-1">
-                  {homepageConfig?.heroImageUrl ? "Set" : "Not set"}
+                  {homepageConfig?.heroImages && homepageConfig.heroImages.length > 0
+                    ? `${homepageConfig.heroImages.length} image(s)`
+                    : "Not set"}
                 </p>
               </div>
             </div>
@@ -92,25 +94,28 @@ export default function HomepageConfigPage() {
               <span className="font-medium">Hero Subtitle:</span>
               <p className="text-muted-foreground mt-1">{homepageConfig?.heroSubtitle || "Not set"}</p>
             </div>
-            {homepageConfig?.heroImageUrl && (
+            {homepageConfig?.heroImages && homepageConfig.heroImages.length > 0 && (
               <div className="mt-4">
-                <span className="font-medium">Hero Image Preview:</span>
-                <div className="mt-2 rounded-md overflow-hidden max-w-2xl">
-                  <img
-                    src={
-                      homepageConfig.heroImageUrl.startsWith('http')
-                        ? homepageConfig.heroImageUrl
-                        : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '')}${homepageConfig.heroImageUrl}`
-                    }
-                    alt={homepageConfig.heroImageAlt || "Hero image"}
-                    className="w-full h-64 object-cover"
-                  />
+                <span className="font-medium">Hero Images Preview:</span>
+                <div className="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2 max-w-2xl">
+                  {homepageConfig.heroImages.map((img, index) => {
+                    const imageUrl = img.url.startsWith('http')
+                      ? img.url
+                      : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '')}${img.url}`;
+                    return (
+                      <div key={index} className="relative rounded-md overflow-hidden">
+                        <img
+                          src={imageUrl}
+                          alt={img.alt || `Hero image ${index + 1}`}
+                          className="w-full h-32 object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center">
+                          {index + 1}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-                {homepageConfig.heroImageAlt && (
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Alt text: {homepageConfig.heroImageAlt}
-                  </p>
-                )}
               </div>
             )}
           </div>

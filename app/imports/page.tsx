@@ -59,10 +59,12 @@ export default async function ImportsPage() {
   const transformedPageConfig = pageConfig ? {
     heroTitle: pageConfig.heroTitle,
     heroSubtitle: pageConfig.heroSubtitle,
-    heroImage: {
-      src: getImageUrl(pageConfig.heroImageUrl),
-      alt: pageConfig.heroImageAlt || pageConfig.heroTitle,
-    },
+    heroImages: pageConfig.heroImages
+      ? pageConfig.heroImages.map((img: any) => ({
+          url: getImageUrl(img.url),
+          alt: img.alt || pageConfig.heroTitle,
+        }))
+      : [],
     commitmentTitle: pageConfig.commitmentTitle,
     commitmentDescription: pageConfig.commitmentDescription,
     commitments: pageConfig.commitments || [],

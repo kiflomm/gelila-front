@@ -14,9 +14,8 @@ import { Edit2 } from "lucide-react";
 const homepageConfigSchema = z.object({
   heroTitle: z.string().min(3).max(200).optional(),
   heroSubtitle: z.string().min(10).max(500).optional(),
-  heroImageUrl: z.string().optional(),
-  heroImageAlt: z.string().optional(),
-  heroImage: z.instanceof(File).optional(),
+  heroImages: z.array(z.instanceof(File)).optional(),
+  heroImageAlts: z.array(z.string()).optional(),
 });
 
 type HomepageConfigFormData = z.infer<typeof homepageConfigSchema>;
@@ -49,19 +48,19 @@ export function HomepageConfigForm({
       ? {
           heroTitle: homepageConfig.heroTitle,
           heroSubtitle: homepageConfig.heroSubtitle,
-          heroImageUrl: homepageConfig.heroImageUrl || undefined,
-          heroImageAlt: homepageConfig.heroImageAlt || undefined,
+          heroImageAlts: homepageConfig.heroImages?.map((img) => img.alt) || [],
         }
-      : {},
+      : {
+          heroImageAlts: [],
+        },
   });
 
   const onSubmitForm = async (data: HomepageConfigFormData) => {
     const submitData: UpdateHomepageConfigData = {
-      ...data,
-      heroImage: data.heroImage instanceof File ? data.heroImage : undefined,
-      ...(!(data.heroImage instanceof File) && homepageConfig ? {
-        heroImageUrl: homepageConfig.heroImageUrl || undefined,
-      } : {}),
+      heroTitle: data.heroTitle,
+      heroSubtitle: data.heroSubtitle,
+      heroImages: data.heroImages,
+      heroImageAlts: data.heroImageAlts,
     };
     await onSubmit(submitData);
   };
@@ -85,19 +84,27 @@ export function HomepageConfigForm({
             <Label className="text-muted-foreground">Hero Subtitle</Label>
             <p className="text-muted-foreground">{homepageConfig?.heroSubtitle || "Not set"}</p>
           </div>
-          {homepageConfig?.heroImageUrl && (
+          {homepageConfig?.heroImages && homepageConfig.heroImages.length > 0 && (
             <div>
-              <Label className="text-muted-foreground">Hero Image</Label>
-              <div className="mt-2 rounded-md overflow-hidden max-w-md">
-                <img
-                  src={
-                    homepageConfig.heroImageUrl.startsWith('http')
-                      ? homepageConfig.heroImageUrl
-                      : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '')}${homepageConfig.heroImageUrl}`
-                  }
-                  alt={homepageConfig.heroImageAlt || "Hero image"}
-                  className="w-full h-48 object-cover"
+              <Label className="text-muted-foreground">Hero Images ({homepageConfig.heroImages.length})</Label>
+              <div className="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2 max-w-2xl">
+                {homepageConfig.heroImages.map((img, index) => {
+                  const imageUrl = img.url.startsWith('http')
+                    ? img.url
+                    : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '')}${img.url}`;
+                  return (
+                    <div key={index} className="relative rounded-md overflow-hidden">
+                      <img
+                        src={imageUrl}
+                        alt={img.alt || `Hero image ${index + 1}`}
+                        className="w-full h-32 object-cover"
                 />
+                      <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center">
+                        {index + 1}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -138,8 +145,7 @@ export function HomepageConfigForm({
 
         <HeroImageUpload
           control={control}
-          currentImageUrl={homepageConfig?.heroImageUrl}
-          currentImageAlt={homepageConfig?.heroImageAlt}
+          currentImages={homepageConfig?.heroImages || null}
         />
       </div>
 

@@ -61,6 +61,21 @@ export default async function SectorPage({ params }: SectorPageProps) {
   };
 
   // Transform API data to match the format expected by sections
+  // Handle multiple images (imageUrls) or fallback to single image (imageUrl)
+  const sectorImages = sector.imageUrls && Array.isArray(sector.imageUrls) && sector.imageUrls.length > 0
+    ? sector.imageUrls
+        .filter((url: string) => url && url.trim() !== '') // Filter out empty URLs
+        .map((url: string, index: number) => ({
+          url: getImageUrl(url),
+          alt: sector.imageAlts?.[index] || sector.imageAlt || sector.title,
+        }))
+    : sector.imageUrl
+    ? [{
+        url: getImageUrl(sector.imageUrl),
+        alt: sector.imageAlt || sector.title,
+      }]
+    : [];
+
   const transformedSector = {
     id: sector.slug,
     name: sector.name,
@@ -69,8 +84,9 @@ export default async function SectorPage({ params }: SectorPageProps) {
     location: sector.location,
     heroDescription: sector.heroDescription,
     description: sector.description,
-    image: getImageUrl(sector.imageUrl),
-    imageAlt: sector.imageAlt,
+    image: sectorImages.length > 0 ? sectorImages[0].url : undefined,
+    imageAlt: sectorImages.length > 0 ? sectorImages[0].alt : sector.imageAlt,
+    images: sectorImages,
     products: sector.products.map((product: any) => ({
       id: product.id,
       name: product.name,

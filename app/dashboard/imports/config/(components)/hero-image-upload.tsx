@@ -4,21 +4,39 @@ import { useState, useRef } from "react";
 import { Controller, Control } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { X, Upload, Image as ImageIcon } from "lucide-react";
+import { X, Upload, GripVertical, ArrowUp, ArrowDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { HeroImage } from "@/api/imports";
+
+interface ImageItem {
+  id: string;
+  file?: File;
+  url?: string;
+  alt: string;
+  isExisting?: boolean;
+}
 
 interface HeroImageUploadProps {
   control: Control<any>;
-  currentImageUrl?: string | null;
-  currentImageAlt?: string | null;
+  currentImages?: HeroImage[] | null;
 }
 
 export function HeroImageUpload({
   control,
-  currentImageUrl,
-  currentImageAlt,
+  currentImages,
 }: HeroImageUploadProps) {
-  const [preview, setPreview] = useState<string | null>(null);
+  const [images, setImages] = useState<ImageItem[]>(() => {
+    if (currentImages && currentImages.length > 0) {
+      return currentImages.map((img, index) => ({
+        id: `existing-${index}`,
+        url: img.url,
+        alt: img.alt,
+        isExisting: true,
+      }));
+    }
+    return [];
+  });
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -33,17 +51,28 @@ export function HeroImageUpload({
     return `${baseUrl}${cleanImageUrl}`;
   };
 
-  const handleFileChange = (file: File | undefined, onChange: (file: File | undefined) => void) => {
-    if (file) {
-      onChange(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result as string);
+  const handleFiles = (files: FileList | null) => {
+    if (!files) return;
+
+    const newImages: ImageItem[] = [];
+    Array.from(files).forEach((file) => {
+      if (file.type.startsWith("image/")) {
+        const id = `new-${Date.now()}-${Math.random()}`;
+        newImages.push({
+          id,
+          file,
+          alt: "",
+        });
+      }
+    });
+
+    setImages((prev) => [...prev, ...newImages]);
       };
-      reader.readAsDataURL(file);
-    } else {
-      onChange(undefined);
-      setPreview(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleFiles(e.target.files);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
@@ -59,155 +88,233 @@ export function HeroImageUpload({
     setIsDragging(false);
   };
 
-  const handleDrop = (
-    e: React.DragEvent,
-    onChange: (file: File | undefined) => void
-  ) => {
+  const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
-
-    const file = e.dataTransfer.files?.[0];
-    if (file && file.type.startsWith("image/")) {
-      handleFileChange(file, onChange);
-    }
+    handleFiles(e.dataTransfer.files);
   };
 
-  const handleRemoveImage = (onChange: (file: File | undefined) => void) => {
-    handleFileChange(undefined, onChange);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+  const handleRemoveImage = (id: string) => {
+    setImages((prev) => prev.filter((img) => img.id !== id));
   };
 
-  const imagePreviewUrl = preview || (currentImageUrl ? getImageUrl(currentImageUrl) : null);
+  const handleAltChange = (id: string, alt: string) => {
+    setImages((prev) =>
+      prev.map((img) => (img.id === id ? { ...img, alt } : img))
+    );
+  };
+
+  const handleMoveUp = (index: number) => {
+    if (index === 0) return;
+    setImages((prev) => {
+      const newImages = [...prev];
+      [newImages[index - 1], newImages[index]] = [newImages[index], newImages[index - 1]];
+      return newImages;
+    });
+  };
+
+  const handleMoveDown = (index: number) => {
+    if (index === images.length - 1) return;
+    setImages((prev) => {
+      const newImages = [...prev];
+      [newImages[index], newImages[index + 1]] = [newImages[index + 1], newImages[index]];
+      return newImages;
+    });
+  };
+
+  const handleDragStart = (index: number) => {
+    setDraggedIndex(index);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedIndex(null);
+  };
+
+  const handleDragOverItem = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
+
+    setImages((prev) => {
+      const newImages = [...prev];
+      const draggedItem = newImages[draggedIndex];
+      newImages.splice(draggedIndex, 1);
+      newImages.splice(index, 0, draggedItem);
+      return newImages;
+    });
+    setDraggedIndex(index);
+  };
 
   return (
-    <div className="space-y-2">
-      <Label>Hero Image</Label>
+    <div className="space-y-4">
+      <Label>Hero Images</Label>
       <Controller
-        name="heroImage"
+        name="heroImages"
         control={control}
-        render={({ field: { onChange, value, ...field } }) => (
-          <div className="space-y-2">
+        render={({ field: { onChange } }) => {
+          // Sync images to form
+          const files = images.filter((img) => img.file).map((img) => img.file!);
+          
+          // Update form when images change
+          if (files.length > 0 || images.some((img) => img.isExisting)) {
+            onChange(files);
+          }
+
+          return (
+            <div className="space-y-4">
+              {/* Upload area */}
             <div
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
-              onDrop={(e) => handleDrop(e, onChange)}
+                onDrop={handleDrop}
               className={cn(
                 "relative border-2 border-dashed rounded-lg transition-colors",
                 isDragging
                   ? "border-primary bg-primary/5"
-                  : "border-border hover:border-primary/50 bg-muted/30",
-                imagePreviewUrl && "border-primary"
+                    : "border-border hover:border-primary/50 bg-muted/30"
               )}
             >
-              {imagePreviewUrl ? (
-                <div className="relative p-4">
-                  <div className="relative w-full h-48 rounded-md overflow-hidden bg-muted group">
-                    <img
-                      src={imagePreviewUrl}
-                      alt={currentImageAlt || "Hero preview"}
-                      className="w-full h-full object-cover"
-                      onError={() => {
-                        setPreview(null);
-                        if (fileInputRef.current) {
-                          fileInputRef.current.value = "";
-                        }
-                        onChange(undefined);
-                      }}
-                    />
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleRemoveImage(onChange);
-                      }}
-                      className="absolute top-2 right-2 p-1.5 rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors shadow-lg z-20"
-                      aria-label="Remove image"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                    {/* Click overlay to upload new image */}
-                    <label
-                      htmlFor="hero-image-upload"
-                      className="absolute inset-0 cursor-pointer opacity-0 hover:opacity-100 transition-opacity bg-black/50 flex items-center justify-center z-10"
-                      onClick={(e) => {
-                        // Don't trigger parent handlers
-                        e.stopPropagation();
-                      }}
-                    >
-                      <div className="text-white text-sm font-medium bg-primary/80 px-4 py-2 rounded">
-                        Click to change image
-                      </div>
-                    </label>
-                  </div>
-                  {value instanceof File && (
-                    <p className="mt-2 text-sm text-muted-foreground text-center">
-                      New image: {value.name}
-                    </p>
-                  )}
-                  {currentImageUrl && !value && (
-                    <p className="mt-2 text-xs text-muted-foreground text-center">
-                      Current image (click image above or upload button to replace)
-                    </p>
-                  )}
-                </div>
-              ) : (
                 <label
-                  htmlFor="hero-image-upload"
+                  htmlFor="imports-hero-images-upload"
                   className={cn(
-                    "flex flex-col items-center justify-center w-full h-48 cursor-pointer transition-colors",
+                    "flex flex-col items-center justify-center w-full h-32 cursor-pointer transition-colors",
                     isDragging && "bg-primary/5"
                   )}
                 >
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6 px-4">
-                    <div className="mb-4 p-3 rounded-full bg-muted">
-                      <Upload className="h-6 w-6 text-muted-foreground" />
+                  <div className="flex flex-col items-center justify-center pt-4 pb-4 px-4">
+                    <div className="mb-2 p-2 rounded-full bg-muted">
+                      <Upload className="h-5 w-5 text-muted-foreground" />
                     </div>
-                    <p className="mb-2 text-sm font-medium text-foreground">
+                    <p className="mb-1 text-sm font-medium text-foreground">
                       <span className="text-primary">Click to upload</span> or drag and drop
                     </p>
                     <p className="text-xs text-muted-foreground text-center">
-                      PNG, JPG, GIF, WEBP (MAX. 10MB)
+                      PNG, JPG, GIF, WEBP (MAX. 10MB each, up to 10 images)
                     </p>
                   </div>
                 </label>
-              )}
               <input
-                {...field}
-                id="hero-image-upload"
+                  id="imports-hero-images-upload"
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
+                  multiple
                 className="hidden"
-                value={undefined}
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    handleFileChange(file, onChange);
-                  }
+                  onChange={handleFileChange}
+                />
+              </div>
+
+              {/* Images grid */}
+              {images.length > 0 && (
+                <div className="space-y-3">
+                  {images.map((image, index) => {
+                    const previewUrl = image.file
+                      ? URL.createObjectURL(image.file)
+                      : image.url
+                      ? getImageUrl(image.url)
+                      : null;
+
+                    return (
+                      <div
+                        key={image.id}
+                        draggable
+                        onDragStart={() => handleDragStart(index)}
+                        onDragEnd={handleDragEnd}
+                        onDragOver={(e) => handleDragOverItem(e, index)}
+                        className={cn(
+                          "relative border rounded-lg p-3 bg-muted/30 group",
+                          draggedIndex === index && "opacity-50"
+                        )}
+                      >
+                        <div className="flex gap-3">
+                          {/* Drag handle and move buttons */}
+                          <div className="flex flex-col items-center gap-1 pt-2">
+                            <GripVertical className="h-5 w-5 text-muted-foreground cursor-move" />
+                            <button
+                              type="button"
+                              onClick={() => handleMoveUp(index)}
+                              disabled={index === 0}
+                              className="p-1 rounded hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed"
+                              aria-label="Move up"
+                            >
+                              <ArrowUp className="h-4 w-4" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleMoveDown(index)}
+                              disabled={index === images.length - 1}
+                              className="p-1 rounded hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed"
+                              aria-label="Move down"
+                            >
+                              <ArrowDown className="h-4 w-4" />
+                            </button>
+                          </div>
+
+                          {/* Image preview */}
+                          {previewUrl && (
+                            <div className="relative w-32 h-24 rounded-md overflow-hidden bg-muted flex-shrink-0">
+                              <img
+                                src={previewUrl}
+                                alt={image.alt || "Preview"}
+                                className="w-full h-full object-cover"
+                                onError={() => {
+                                  // Handle error
+                                }}
+                              />
+                            </div>
+                          )}
+
+                          {/* Alt text input */}
+                          <div className="flex-1 space-y-1">
+                            <Label className="text-xs">Alt Text</Label>
+                            <Input
+                              value={image.alt}
+                              onChange={(e) => handleAltChange(image.id, e.target.value)}
+                              placeholder="Descriptive alt text for this image"
+                              className="text-sm"
+                            />
+                            {image.isExisting && (
+                              <p className="text-xs text-muted-foreground">
+                                Existing image
+                              </p>
+                            )}
+                            {image.file && (
+                              <p className="text-xs text-muted-foreground">
+                                New: {image.file.name}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Remove button */}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveImage(image.id)}
+                            className="p-2 rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors self-start"
+                            aria-label="Remove image"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Hidden input to store alt texts */}
+              <Controller
+                name="heroImageAlts"
+                control={control}
+                render={({ field: { onChange } }) => {
+                  const alts = images.map((img) => img.alt);
+                  onChange(alts);
+                  return null;
                 }}
               />
             </div>
-          </div>
-        )}
-      />
-      <Controller
-        name="heroImageAlt"
-        control={control}
-        render={({ field }) => (
-          <div className="space-y-2">
-            <Label htmlFor="heroImageAlt">Hero Image Alt Text</Label>
-            <Input
-              id="heroImageAlt"
-              {...field}
-              placeholder="Descriptive alt text for the hero image"
-            />
-          </div>
-        )}
+          );
+        }}
       />
     </div>
   );
 }
-

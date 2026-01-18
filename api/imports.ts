@@ -11,12 +11,16 @@ export interface ImportCommitment {
   updatedAt?: string;
 }
 
+export interface HeroImage {
+  url: string;
+  alt: string;
+}
+
 export interface ImportPageConfig {
   id: number;
   heroTitle: string;
   heroSubtitle: string;
-  heroImageUrl: string | null;
-  heroImageAlt: string | null;
+  heroImages: HeroImage[] | null;
   commitmentTitle: string;
   commitmentDescription: string;
   commitments: ImportCommitment[];
@@ -28,8 +32,7 @@ export interface ImportsExportsPageConfig {
   id: number;
   heroTitle: string;
   heroSubtitle: string;
-  heroImageUrl: string | null;
-  heroImageAlt: string | null;
+  heroImages: HeroImage[] | null;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -91,11 +94,10 @@ export interface UpdateImportData {
 export interface UpdatePageConfigData {
   heroTitle?: string;
   heroSubtitle?: string;
-  heroImageUrl?: string;
-  heroImageAlt?: string;
+  heroImageAlts?: string[];
   commitmentTitle?: string;
   commitmentDescription?: string;
-  heroImage?: File;
+  heroImages?: File[];
 }
 
 export interface CreateCommitmentData {
@@ -252,11 +254,10 @@ export const importsApi = {
     if (data.heroSubtitle !== undefined) {
       formData.append("heroSubtitle", data.heroSubtitle);
     }
-    if (data.heroImageUrl !== undefined) {
-      formData.append("heroImageUrl", data.heroImageUrl);
-    }
-    if (data.heroImageAlt !== undefined) {
-      formData.append("heroImageAlt", data.heroImageAlt);
+    if (data.heroImageAlts !== undefined) {
+      data.heroImageAlts.forEach((alt, index) => {
+        formData.append(`heroImageAlts[${index}]`, alt);
+      });
     }
     if (data.commitmentTitle !== undefined) {
       formData.append("commitmentTitle", data.commitmentTitle);
@@ -264,8 +265,10 @@ export const importsApi = {
     if (data.commitmentDescription !== undefined) {
       formData.append("commitmentDescription", data.commitmentDescription);
     }
-    if (data.heroImage) {
-      formData.append("heroImage", data.heroImage);
+    if (data.heroImages && data.heroImages.length > 0) {
+      data.heroImages.forEach((file) => {
+        formData.append("heroImages", file);
+      });
     }
 
     const response = await axiosProtectedClient.patch("/imports/admin/page/config", formData, {

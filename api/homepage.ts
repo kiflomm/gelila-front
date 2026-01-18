@@ -1,11 +1,15 @@
 import { axiosPublicClient, axiosProtectedClient } from "@/lib/axios-client";
 
+export interface HeroImage {
+  url: string;
+  alt: string;
+}
+
 export interface HomepageConfig {
   id: number;
   heroTitle: string;
   heroSubtitle: string;
-  heroImageUrl: string | null;
-  heroImageAlt: string | null;
+  heroImages: HeroImage[] | null;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -13,9 +17,8 @@ export interface HomepageConfig {
 export interface UpdateHomepageConfigData {
   heroTitle?: string;
   heroSubtitle?: string;
-  heroImageUrl?: string;
-  heroImageAlt?: string;
-  heroImage?: File;
+  heroImageAlts?: string[];
+  heroImages?: File[];
 }
 
 export const homepageApi = {
@@ -40,14 +43,15 @@ export const homepageApi = {
     if (data.heroSubtitle !== undefined) {
       formData.append("heroSubtitle", data.heroSubtitle);
     }
-    if (data.heroImageUrl !== undefined) {
-      formData.append("heroImageUrl", data.heroImageUrl);
+    if (data.heroImageAlts !== undefined) {
+      data.heroImageAlts.forEach((alt, index) => {
+        formData.append(`heroImageAlts[${index}]`, alt);
+      });
     }
-    if (data.heroImageAlt !== undefined) {
-      formData.append("heroImageAlt", data.heroImageAlt);
-    }
-    if (data.heroImage) {
-      formData.append("heroImage", data.heroImage);
+    if (data.heroImages && data.heroImages.length > 0) {
+      data.heroImages.forEach((file) => {
+        formData.append("heroImages", file);
+      });
     }
 
     const response = await axiosProtectedClient.patch("/homepage/admin/config", formData, {

@@ -32,6 +32,8 @@ export interface Sector {
   description: string;
   imageUrl: string | null;
   imageAlt: string | null;
+  imageUrls?: string[] | null;
+  imageAlts?: string[] | null;
   products: Product[];
   createdAt?: string;
   updatedAt?: string;
@@ -61,6 +63,9 @@ export interface UpdateSectorData {
   imageUrl?: string;
   imageAlt?: string;
   image?: File;
+  imageUrls?: string[];
+  imageAlts?: string[];
+  images?: File[];
 }
 
 export interface CreateProductData {
@@ -81,12 +86,16 @@ export interface UpdateProductData {
   image?: File;
 }
 
+export interface HeroImage {
+  url: string;
+  alt: string;
+}
+
 export interface SectorsPageConfig {
   id: number;
   heroTitle: string;
   heroSubtitle: string;
-  heroImageUrl: string | null;
-  heroImageAlt: string | null;
+  heroImages: HeroImage[] | null;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -184,6 +193,22 @@ export const sectorsApi = {
     }
     if (data.image) {
       formData.append("image", data.image);
+    }
+    // Multiple images support
+    if (data.images && data.images.length > 0) {
+      data.images.forEach((image) => {
+        formData.append("images", image);
+      });
+    }
+    if (data.imageUrls && data.imageUrls.length > 0) {
+      data.imageUrls.forEach((url, index) => {
+        formData.append(`imageUrls[${index}]`, url);
+      });
+    }
+    if (data.imageAlts && data.imageAlts.length > 0) {
+      data.imageAlts.forEach((alt, index) => {
+        formData.append(`imageAlts[${index}]`, alt);
+      });
     }
 
     const response = await axiosProtectedClient.patch(`/sectors/${id}`, formData, {

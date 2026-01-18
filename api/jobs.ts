@@ -50,12 +50,16 @@ export interface UpdateJobData {
   isActive?: boolean;
 }
 
+export interface HeroImage {
+  url: string;
+  alt: string;
+}
+
 export interface CareersPageConfig {
   id: number;
   heroTitle: string;
   heroSubtitle: string;
-  heroImageUrl: string | null;
-  heroImageAlt: string | null;
+  heroImages: HeroImage[] | null;
   buttonText?: string;
   buttonHref?: string;
   createdAt?: string;

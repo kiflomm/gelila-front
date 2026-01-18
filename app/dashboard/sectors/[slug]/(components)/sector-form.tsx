@@ -29,6 +29,9 @@ const updateSectorSchema = z.object({
   imageUrl: z.string().optional(),
   imageAlt: z.string().optional(),
   image: z.instanceof(File).optional(),
+  imageUrls: z.array(z.string()).optional(),
+  imageAlts: z.array(z.string()).optional(),
+  images: z.array(z.instanceof(File)).optional(),
 });
 
 type SectorFormData = z.infer<typeof updateSectorSchema>;
@@ -63,10 +66,20 @@ export function SectorForm({ sector, onSubmit, onCancel, isSubmitting = false }:
   const onSubmitForm = async (data: SectorFormData) => {
     const submitData: UpdateSectorData = {
       ...data,
-      // Only include image if it's a new File upload
+      // Only include image if it's a new File upload (legacy single image)
       image: data.image instanceof File ? data.image : undefined,
-      // Always preserve the existing imageUrl if no new image is uploaded
-      // This ensures the backend doesn't clear the image
+      // Only include images if there are new File uploads
+      images: data.images && data.images.length > 0 ? data.images : undefined,
+      // Always send imageUrls and imageAlts from form data (set by component)
+      // This includes existing images that should be preserved
+      // If not set in form data, fall back to sector's existing values
+      imageUrls: data.imageUrls !== undefined 
+        ? data.imageUrls 
+        : sector.imageUrls || undefined,
+      imageAlts: data.imageAlts !== undefined 
+        ? data.imageAlts 
+        : sector.imageAlts || undefined,
+      // Always preserve the existing imageUrl if no new image is uploaded (legacy)
       ...(!(data.image instanceof File) ? {
         imageUrl: sector.imageUrl || undefined,
       } : {}),

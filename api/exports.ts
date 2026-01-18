@@ -72,12 +72,16 @@ export interface UpdateExportProductData {
   image?: File;
 }
 
+export interface HeroImage {
+  url: string;
+  alt: string;
+}
+
 export interface ExportsPageConfig {
   id: number;
   heroTitle: string;
   heroSubtitle: string;
-  heroImageUrl: string | null;
-  heroImageAlt: string | null;
+  heroImages: HeroImage[] | null;
   createdAt?: string;
   updatedAt?: string;
 }

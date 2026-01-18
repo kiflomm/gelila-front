@@ -81,12 +81,16 @@ export interface UpdateCategoryData {
   description?: string;
 }
 
+export interface HeroImage {
+  url: string;
+  alt: string;
+}
+
 export interface NewsPageConfig {
   id: number;
   heroTitle: string;
   heroSubtitle: string;
-  heroImageUrl: string | null;
-  heroImageAlt: string | null;
+  heroImages: HeroImage[] | null;
   buttonText?: string;
   buttonHref?: string;
   createdAt?: string;

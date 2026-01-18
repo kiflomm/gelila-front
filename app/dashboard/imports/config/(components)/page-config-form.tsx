@@ -14,11 +14,10 @@ import { Edit2 } from "lucide-react";
 const pageConfigSchema = z.object({
   heroTitle: z.string().min(3).max(200).optional(),
   heroSubtitle: z.string().min(10).max(500).optional(),
-  heroImageUrl: z.string().optional(),
-  heroImageAlt: z.string().optional(),
+  heroImages: z.array(z.instanceof(File)).optional(),
+  heroImageAlts: z.array(z.string()).optional(),
   commitmentTitle: z.string().min(3).max(200).optional(),
   commitmentDescription: z.string().min(50).max(2000).optional(),
-  heroImage: z.instanceof(File).optional(),
 });
 
 type PageConfigFormData = z.infer<typeof pageConfigSchema>;
@@ -51,21 +50,23 @@ export function PageConfigForm({
       ? {
           heroTitle: pageConfig.heroTitle,
           heroSubtitle: pageConfig.heroSubtitle,
-          heroImageUrl: pageConfig.heroImageUrl || undefined,
-          heroImageAlt: pageConfig.heroImageAlt || undefined,
+          heroImageAlts: pageConfig.heroImages?.map((img) => img.alt) || [],
           commitmentTitle: pageConfig.commitmentTitle,
           commitmentDescription: pageConfig.commitmentDescription,
         }
-      : {},
+      : {
+          heroImageAlts: [],
+        },
   });
 
   const onSubmitForm = async (data: PageConfigFormData) => {
     const submitData: UpdatePageConfigData = {
-      ...data,
-      heroImage: data.heroImage instanceof File ? data.heroImage : undefined,
-      ...(!(data.heroImage instanceof File) && pageConfig ? {
-        heroImageUrl: pageConfig.heroImageUrl || undefined,
-      } : {}),
+      heroTitle: data.heroTitle,
+      heroSubtitle: data.heroSubtitle,
+      heroImages: data.heroImages,
+      heroImageAlts: data.heroImageAlts,
+      commitmentTitle: data.commitmentTitle,
+      commitmentDescription: data.commitmentDescription,
     };
     await onSubmit(submitData);
   };
@@ -89,6 +90,30 @@ export function PageConfigForm({
             <Label className="text-muted-foreground">Hero Subtitle</Label>
             <p className="text-muted-foreground">{pageConfig?.heroSubtitle || "Not set"}</p>
           </div>
+          {pageConfig?.heroImages && pageConfig.heroImages.length > 0 && (
+            <div>
+              <Label className="text-muted-foreground">Hero Images ({pageConfig.heroImages.length})</Label>
+              <div className="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2 max-w-2xl">
+                {pageConfig.heroImages.map((img, index) => {
+                  const imageUrl = img.url.startsWith('http')
+                    ? img.url
+                    : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '')}${img.url}`;
+                  return (
+                    <div key={index} className="relative rounded-md overflow-hidden">
+                      <img
+                        src={imageUrl}
+                        alt={img.alt || `Hero image ${index + 1}`}
+                        className="w-full h-32 object-cover"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center">
+                        {index + 1}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
         <div className="pt-4 border-t">
           <h3 className="text-xl font-semibold mb-4">Commitment Section</h3>
@@ -139,8 +164,7 @@ export function PageConfigForm({
 
         <HeroImageUpload
           control={control}
-          currentImageUrl={pageConfig?.heroImageUrl}
-          currentImageAlt={pageConfig?.heroImageAlt}
+          currentImages={pageConfig?.heroImages || null}
         />
       </div>
 

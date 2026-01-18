@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { RequestQuoteDialog } from "@/components/request-quote-dialog";
 import { sectorsApi } from "@/api/sectors";
+import { HeroSlider } from "@/components/hero-slider";
 
 /**
  * Get image URL - handles both external URLs and uploaded files
@@ -35,26 +35,19 @@ export default async function HeroSection() {
 
   const heroTitle = pageConfig.heroTitle;
   const heroSubtitle = pageConfig.heroSubtitle;
-  const heroImageUrl = pageConfig.heroImageUrl
-    ? getImageUrl(pageConfig.heroImageUrl)
-    : "";
-  const heroImageAlt = pageConfig.heroImageAlt || heroTitle;
-
-  const shouldUnoptimize = heroImageUrl.includes('localhost') || heroImageUrl.includes('api.gelilamanufacturingplc.com');
+  
+  // Convert heroImages to format expected by HeroSlider
+  const heroImages = pageConfig.heroImages
+    ? pageConfig.heroImages.map((img) => ({
+        url: getImageUrl(img.url),
+        alt: img.alt || heroTitle,
+      }))
+    : [];
 
   return (
     <section className="w-full">
       <div className="relative flex min-h-[500px] sm:min-h-[600px] md:min-h-[650px] lg:min-h-[700px] w-screen flex-col gap-4 sm:gap-6 bg-cover bg-center bg-no-repeat items-start justify-center px-4 sm:px-6 md:px-8 lg:px-10 xl:px-20 py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
-        {heroImageUrl && (
-          <Image
-            src={heroImageUrl}
-            alt={heroImageAlt}
-            fill
-            className="object-cover brightness-75"
-            priority
-            unoptimized={shouldUnoptimize}
-          />
-        )}
+        {heroImages.length > 0 && <HeroSlider images={heroImages} />}
         <div className="absolute inset-0 bg-linear-to-b from-black/50 to-black/80" />
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-4 sm:gap-6 md:gap-8">
           <div className="flex flex-col gap-3 sm:gap-4 text-left max-w-3xl">
