@@ -24,7 +24,19 @@ function getImageUrl(imageUrl: string | null | undefined): string {
 }
 
 export default async function HeroSection() {
-  const pageConfig = await jobsApi.getPageConfig();
+  let pageConfig;
+  try {
+    pageConfig = await jobsApi.getPageConfig();
+  } catch (error) {
+    // API endpoint may not exist yet, use fallback values
+    console.error('Failed to fetch careers page config:', error);
+    pageConfig = null;
+  }
+
+  // Use API data if available, otherwise return null (page will handle gracefully)
+  if (!pageConfig) {
+    return null;
+  }
 
   const heroTitle = pageConfig.heroTitle;
   const heroSubtitle = pageConfig.heroSubtitle;

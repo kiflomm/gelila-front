@@ -24,7 +24,14 @@ function getImageUrl(imageUrl: string | null | undefined): string {
 }
 
 export default async function HeroSection() {
-  const pageConfig = await importsApi.getImportsExportsPageConfig();
+  let pageConfig;
+  try {
+    pageConfig = await importsApi.getImportsExportsPageConfig();
+  } catch (error) {
+    // API endpoint may not exist yet
+    console.error('Failed to fetch imports-exports page config:', error);
+    return null;
+  }
 
   const heroTitle = pageConfig.heroTitle;
   const heroSubtitle = pageConfig.heroSubtitle;
