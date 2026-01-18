@@ -25,6 +25,7 @@ import {
   Settings,
   Info,
   Users,
+  Trophy,
 } from "lucide-react";
 import {
   Sidebar,
@@ -188,6 +189,11 @@ export function AppSidebar() {
           title: "Leadership",
           url: "/dashboard/leadership",
           icon: Users,
+        },
+        {
+          title: "Milestones",
+          url: "/dashboard/milestones",
+          icon: Trophy,
         },
       ],
     },
