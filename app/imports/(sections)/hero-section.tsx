@@ -16,15 +16,11 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ pageConfig }: HeroSectionProps) {
-  // Fallback to default data if pageConfig is not available
-  const heroData = pageConfig || {
-    heroTitle: "Global Sourcing, Guaranteed Quality",
-    heroSubtitle: "Your trusted partner in importing premium goods worldwide. We are committed to excellence, from sourcing to delivery.",
-    heroImage: {
-      src: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=2070&auto=format&fit=crop",
-      alt: "Global import and sourcing operations",
-    },
-  };
+  if (!pageConfig) {
+    return null;
+  }
+
+  const heroData = pageConfig;
 
   return (
     <section className="w-full">

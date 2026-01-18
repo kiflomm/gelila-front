@@ -72,6 +72,16 @@ export interface UpdateProductData {
   image?: File;
 }
 
+export interface SectorsPageConfig {
+  id: number;
+  heroTitle: string;
+  heroSubtitle: string;
+  heroImageUrl: string | null;
+  heroImageAlt: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export const sectorsApi = {
   getAllSectors: async (): Promise<Sector[]> => {
     const response = await axiosPublicClient.get("/sectors");
@@ -80,6 +90,11 @@ export const sectorsApi = {
 
   getSectorBySlug: async (slug: string): Promise<Sector> => {
     const response = await axiosPublicClient.get(`/sectors/${slug}`);
+    return response.data;
+  },
+
+  getPageConfig: async (): Promise<SectorsPageConfig> => {
+    const response = await axiosPublicClient.get("/sectors/page/config");
     return response.data;
   },
 

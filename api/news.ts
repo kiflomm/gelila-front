@@ -81,6 +81,18 @@ export interface UpdateCategoryData {
   description?: string;
 }
 
+export interface NewsPageConfig {
+  id: number;
+  heroTitle: string;
+  heroSubtitle: string;
+  heroImageUrl: string | null;
+  heroImageAlt: string | null;
+  buttonText?: string;
+  buttonHref?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export const newsApi = {
   getNews: async (params?: {
     search?: string;
@@ -100,6 +112,11 @@ export const newsApi = {
 
   getCategories: async (): Promise<NewsCategory[]> => {
     const response = await axiosPublicClient.get("/news/categories");
+    return response.data;
+  },
+
+  getPageConfig: async (): Promise<NewsPageConfig> => {
+    const response = await axiosPublicClient.get("/news/page/config");
     return response.data;
   },
 

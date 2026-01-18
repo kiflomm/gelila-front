@@ -24,15 +24,14 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ sector }: HeroSectionProps) {
-  // Use sector's own image as hero background, fallback to first product image, then default
+  // Use sector's own image as hero background, fallback to first product image
   const heroImage =
     sector.image ||
-    (sector.products.length > 0 ? sector.products[0].image : undefined) ||
-    "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=2070&auto=format&fit=crop";
+    (sector.products.length > 0 ? sector.products[0].image : undefined);
   const heroAlt =
     sector.imageAlt ||
     (sector.products.length > 0 ? sector.products[0].alt : undefined) ||
-    "Modern industrial manufacturing facility";
+    sector.title;
 
   // Service-based sectors that should show "Contact Us" instead of "Request Quote"
   const serviceBasedSectors = ["bus-transport"];

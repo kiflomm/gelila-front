@@ -60,7 +60,7 @@ export default async function ImportsPage() {
     heroTitle: pageConfig.heroTitle,
     heroSubtitle: pageConfig.heroSubtitle,
     heroImage: {
-      src: getImageUrl(pageConfig.heroImageUrl) || "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=2070&auto=format&fit=crop",
+      src: getImageUrl(pageConfig.heroImageUrl),
       alt: pageConfig.heroImageAlt || pageConfig.heroTitle,
     },
     commitmentTitle: pageConfig.commitmentTitle,

@@ -25,15 +25,14 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ importItem }: HeroSectionProps) {
-  // Use import's own image as hero background, fallback to first product image, then default
+  // Use import's own image as hero background, fallback to first product image
   const heroImage =
     importItem.image ||
-    (importItem.products.length > 0 ? importItem.products[0].image : undefined) ||
-    "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=2070&auto=format&fit=crop";
+    (importItem.products.length > 0 ? importItem.products[0].image : undefined);
   const heroAlt =
     importItem.imageAlt ||
     (importItem.products.length > 0 ? importItem.products[0].alt : undefined) ||
-    "Import product";
+    importItem.title;
 
   return (
     <section className="w-full">

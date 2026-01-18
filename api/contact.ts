@@ -29,7 +29,24 @@ export interface SubmitContactMessageData {
   message: string;
 }
 
+export interface ContactPageConfig {
+  id: number;
+  heroTitle: string;
+  heroSubtitle: string;
+  heroImageUrl: string | null;
+  heroImageAlt: string | null;
+  buttonText?: string;
+  buttonHref?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export const contactApi = {
+  getPageConfig: async (): Promise<ContactPageConfig> => {
+    const response = await axiosPublicClient.get("/contact/page/config");
+    return response.data;
+  },
+
   submitMessage: async (
     data: SubmitContactMessageData
   ): Promise<{ id: number; message: string }> => {

@@ -50,6 +50,18 @@ export interface UpdateJobData {
   isActive?: boolean;
 }
 
+export interface CareersPageConfig {
+  id: number;
+  heroTitle: string;
+  heroSubtitle: string;
+  heroImageUrl: string | null;
+  heroImageAlt: string | null;
+  buttonText?: string;
+  buttonHref?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export const jobsApi = {
   getJobs: async (params?: {
     search?: string;
@@ -74,6 +86,11 @@ export const jobsApi = {
     jobTypes: string[];
   }> => {
     const response = await axiosPublicClient.get("/jobs/filters");
+    return response.data;
+  },
+
+  getPageConfig: async (): Promise<CareersPageConfig> => {
+    const response = await axiosPublicClient.get("/jobs/page/config");
     return response.data;
   },
 

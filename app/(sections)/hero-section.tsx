@@ -1,15 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { homepageApi } from "@/api/homepage";
-import heroDataFallback from "@/data/hero.json";
 
 /**
  * Get image URL - handles both external URLs and uploaded files
  */
 function getImageUrl(imageUrl: string | null | undefined): string {
   if (!imageUrl) {
-    // Fallback to default image from hero.json
-    return heroDataFallback.image.src;
+    return "";
   }
 
   // If it's already a full URL, return as is
@@ -26,22 +24,14 @@ function getImageUrl(imageUrl: string | null | undefined): string {
 
 export default async function HeroSection() {
   // Fetch homepage config from API
-  let homepageConfig;
-  try {
-    homepageConfig = await homepageApi.getHomepageConfig();
-  } catch (error) {
-    // Fallback to static data if API fails
-    console.error('Failed to fetch homepage config:', error);
-    homepageConfig = null;
-  }
+  const homepageConfig = await homepageApi.getHomepageConfig();
 
-  // Use API data if available, otherwise fallback to static JSON
-  const heroTitle = homepageConfig?.heroTitle || heroDataFallback.title;
-  const heroSubtitle = homepageConfig?.heroSubtitle || heroDataFallback.subtitle;
-  const heroImageUrl = homepageConfig?.heroImageUrl
+  const heroTitle = homepageConfig.heroTitle;
+  const heroSubtitle = homepageConfig.heroSubtitle;
+  const heroImageUrl = homepageConfig.heroImageUrl
     ? getImageUrl(homepageConfig.heroImageUrl)
-    : heroDataFallback.image.src;
-  const heroImageAlt = homepageConfig?.heroImageAlt || heroDataFallback.image.alt;
+    : "";
+  const heroImageAlt = homepageConfig.heroImageAlt || heroTitle;
 
   // Unoptimize for API images (both localhost and production API) to avoid upstream 404 errors
   // This bypasses Next.js Image optimization and loads images directly from the API

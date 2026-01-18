@@ -24,6 +24,16 @@ export interface ImportPageConfig {
   updatedAt?: string;
 }
 
+export interface ImportsExportsPageConfig {
+  id: number;
+  heroTitle: string;
+  heroSubtitle: string;
+  heroImageUrl: string | null;
+  heroImageAlt: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface Import {
   id: number;
   slug: string;
@@ -133,6 +143,11 @@ export const importsApi = {
 
   getPageConfig: async (): Promise<ImportPageConfig> => {
     const response = await axiosPublicClient.get("/imports/page/config");
+    return response.data;
+  },
+
+  getImportsExportsPageConfig: async (): Promise<ImportsExportsPageConfig> => {
+    const response = await axiosPublicClient.get("/imports-exports/page/config");
     return response.data;
   },
 

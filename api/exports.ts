@@ -72,6 +72,16 @@ export interface UpdateExportProductData {
   image?: File;
 }
 
+export interface ExportsPageConfig {
+  id: number;
+  heroTitle: string;
+  heroSubtitle: string;
+  heroImageUrl: string | null;
+  heroImageAlt: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export const exportsApi = {
   getAllExports: async (): Promise<Export[]> => {
     const response = await axiosPublicClient.get("/exports");
@@ -80,6 +90,11 @@ export const exportsApi = {
 
   getExportBySlug: async (slug: string): Promise<Export> => {
     const response = await axiosPublicClient.get(`/exports/${slug}`);
+    return response.data;
+  },
+
+  getPageConfig: async (): Promise<ExportsPageConfig> => {
+    const response = await axiosPublicClient.get("/exports/page/config");
     return response.data;
   },
 
