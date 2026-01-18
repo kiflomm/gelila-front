@@ -8,8 +8,10 @@ export interface Export {
   description: string;
   destinationRegion: string;
   status: 'operational' | 'planned' | 'project';
-  imageUrl: string | null;
-  imageAlt: string | null;
+  imageUrl: string | null; // Kept for backward compatibility
+  imageAlt: string | null; // Kept for backward compatibility
+  imageUrls?: string[] | null; // New field for multiple image URLs
+  imageAlts?: string[] | null; // New field for multiple image alt texts
   orderIndex: number;
   products?: ExportProduct[];
   createdAt?: string;
@@ -37,8 +39,10 @@ export interface CreateExportData {
   status: 'operational' | 'planned' | 'project';
   imageUrl?: string;
   imageAlt?: string;
+  imageUrls?: string[];
+  imageAlts?: string[];
   orderIndex?: number;
-  image?: File;
+  images?: File[];
 }
 
 export interface UpdateExportData {
@@ -50,8 +54,10 @@ export interface UpdateExportData {
   status?: 'operational' | 'planned' | 'project';
   imageUrl?: string;
   imageAlt?: string;
+  imageUrls?: string[];
+  imageAlts?: string[];
   orderIndex?: number;
-  image?: File;
+  images?: File[];
 }
 
 export interface CreateExportProductData {
@@ -84,6 +90,13 @@ export interface ExportsPageConfig {
   heroImages: HeroImage[] | null;
   createdAt?: string;
   updatedAt?: string;
+}
+
+export interface UpdatePageConfigData {
+  heroTitle?: string;
+  heroSubtitle?: string;
+  heroImageAlts?: string[];
+  heroImages?: File[];
 }
 
 export const exportsApi = {
@@ -168,11 +181,23 @@ export const exportsApi = {
     if (data.imageAlt !== undefined) {
       formData.append("imageAlt", data.imageAlt);
     }
+    if (data.imageUrls && data.imageUrls.length > 0) {
+      data.imageUrls.forEach((url, index) => {
+        formData.append(`imageUrls[${index}]`, url);
+      });
+    }
+    if (data.imageAlts && data.imageAlts.length > 0) {
+      data.imageAlts.forEach((alt, index) => {
+        formData.append(`imageAlts[${index}]`, alt);
+      });
+    }
     if (data.orderIndex !== undefined) {
       formData.append("orderIndex", data.orderIndex.toString());
     }
-    if (data.image) {
-      formData.append("image", data.image);
+    if (data.images && data.images.length > 0) {
+      data.images.forEach((file) => {
+        formData.append("images", file);
+      });
     }
 
     const response = await axiosProtectedClient.patch(`/exports/${id}`, formData, {
@@ -254,6 +279,39 @@ export const exportsApi = {
     productId: number
   ): Promise<{ message: string }> => {
     const response = await axiosProtectedClient.delete(`/exports/${exportId}/products/${productId}`);
+    return response.data;
+  },
+
+  // Page config API functions
+  getPageConfigForAdmin: async (): Promise<ExportsPageConfig> => {
+    const response = await axiosProtectedClient.get("/exports/admin/page/config");
+    return response.data;
+  },
+
+  updatePageConfig: async (data: UpdatePageConfigData): Promise<ExportsPageConfig> => {
+    const formData = new FormData();
+    if (data.heroTitle !== undefined) {
+      formData.append("heroTitle", data.heroTitle);
+    }
+    if (data.heroSubtitle !== undefined) {
+      formData.append("heroSubtitle", data.heroSubtitle);
+    }
+    if (data.heroImages && data.heroImages.length > 0) {
+      data.heroImages.forEach((file) => {
+        formData.append("heroImages", file);
+      });
+    }
+    if (data.heroImageAlts && data.heroImageAlts.length > 0) {
+      data.heroImageAlts.forEach((alt, index) => {
+        formData.append(`heroImageAlts[${index}]`, alt);
+      });
+    }
+
+    const response = await axiosProtectedClient.patch("/exports/admin/page/config", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
   },
 };

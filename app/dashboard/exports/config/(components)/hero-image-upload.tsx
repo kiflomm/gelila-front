@@ -4,9 +4,9 @@ import { useState, useRef, useEffect } from "react";
 import { Controller, Control } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { X, Upload, GripVertical, ArrowUp, ArrowDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Upload, X, GripVertical, ArrowUp, ArrowDown } from "lucide-react";
-import type { Import } from "@/api/imports";
+import type { HeroImage } from "@/api/exports";
 
 interface ImageItem {
   id: string;
@@ -16,35 +16,21 @@ interface ImageItem {
   isExisting?: boolean;
 }
 
-function getImagePreviewUrl(imageUrl: string | null | undefined): string | null {
-  if (!imageUrl) return null;
-  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
-    return imageUrl;
-  }
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || '';
-  if (imageUrl.startsWith('/uploads')) {
-    return `${apiBaseUrl.replace('/api/v1', '')}${imageUrl}`;
-  }
-  return imageUrl.startsWith('/') ? `${apiBaseUrl}${imageUrl}` : `${apiBaseUrl}/${imageUrl}`;
-}
-
-interface ImportImageUploadProps {
+interface HeroImageUploadProps {
   control: Control<any>;
-  currentImageUrls?: string[] | null;
-  currentImageAlts?: string[] | null;
+  currentImages?: HeroImage[] | null;
 }
 
-export function ImportImageUpload({
+export function HeroImageUpload({
   control,
-  currentImageUrls,
-  currentImageAlts,
-}: ImportImageUploadProps) {
+  currentImages,
+}: HeroImageUploadProps) {
   const [images, setImages] = useState<ImageItem[]>(() => {
-    if (currentImageUrls && currentImageUrls.length > 0) {
-      return currentImageUrls.map((url, index) => ({
+    if (currentImages && currentImages.length > 0) {
+      return currentImages.map((img, index) => ({
         id: `existing-${index}`,
-        url,
-        alt: currentImageAlts?.[index] || "",
+        url: img.url,
+        alt: img.alt,
         isExisting: true,
       }));
     }
@@ -54,9 +40,19 @@ export function ImportImageUpload({
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const onChangeRef = useRef<((files: File[]) => void) | null>(null);
-  const onUrlsChangeRef = useRef<((urls: string[]) => void) | null>(null);
   const onAltsChangeRef = useRef<((alts: string[]) => void) | null>(null);
   const prevImagesKeyRef = useRef<string>("");
+
+  const getImageUrl = (imageUrl: string | null | undefined): string => {
+    if (!imageUrl) return "";
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+      return imageUrl;
+    }
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || '';
+    const baseUrl = apiBaseUrl.replace('/api/v1', '').replace(/\/$/, '');
+    const cleanImageUrl = imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
+    return `${baseUrl}${cleanImageUrl}`;
+  };
 
   const handleFiles = (files: FileList | null) => {
     if (!files) return;
@@ -155,7 +151,6 @@ export function ImportImageUpload({
   // Sync images to form fields
   useEffect(() => {
     const files = images.filter((img) => img.file).map((img) => img.file!);
-    const urls = images.filter((img) => img.isExisting && img.url).map((img) => img.url!);
     const alts = images.map((img) => img.alt);
     const imagesKey = JSON.stringify(images.map((img) => ({ id: img.id, url: img.url, alt: img.alt })));
 
@@ -165,9 +160,6 @@ export function ImportImageUpload({
       if (onChangeRef.current) {
         onChangeRef.current(files);
       }
-      if (onUrlsChangeRef.current) {
-        onUrlsChangeRef.current(urls);
-      }
       if (onAltsChangeRef.current) {
         onAltsChangeRef.current(alts);
       }
@@ -176,9 +168,9 @@ export function ImportImageUpload({
 
   return (
     <div className="space-y-4">
-      <Label>Images</Label>
+      <Label>Hero Images</Label>
       <Controller
-        name="images"
+        name="heroImages"
         control={control}
         render={({ field: { onChange } }) => {
           onChangeRef.current = onChange;
@@ -186,15 +178,7 @@ export function ImportImageUpload({
         }}
       />
       <Controller
-        name="imageUrls"
-        control={control}
-        render={({ field: { onChange } }) => {
-          onUrlsChangeRef.current = onChange;
-          return null;
-        }}
-      />
-      <Controller
-        name="imageAlts"
+        name="heroImageAlts"
         control={control}
         render={({ field: { onChange } }) => {
           onAltsChangeRef.current = onChange;
@@ -215,7 +199,7 @@ export function ImportImageUpload({
         )}
       >
         <label
-          htmlFor="import-images-upload"
+          htmlFor="exports-hero-images-upload"
           className={cn(
             "flex flex-col items-center justify-center w-full h-32 cursor-pointer transition-colors",
             isDragging && "bg-primary/5"
@@ -234,7 +218,7 @@ export function ImportImageUpload({
           </div>
         </label>
         <input
-          id="import-images-upload"
+          id="exports-hero-images-upload"
           ref={fileInputRef}
           type="file"
           accept="image/*"
@@ -251,7 +235,7 @@ export function ImportImageUpload({
             const previewUrl = image.file
               ? URL.createObjectURL(image.file)
               : image.url
-              ? getImagePreviewUrl(image.url)
+              ? getImageUrl(image.url)
               : null;
 
             return (
@@ -343,3 +327,4 @@ export function ImportImageUpload({
     </div>
   );
 }
+

@@ -187,6 +187,18 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
         img !== null
     ); // Remove null entries
 
+  // Get export images - prefer multiple images, fallback to single image, then product images
+  const exportImages = exportItem.imageUrls && exportItem.imageUrls.length > 0
+    ? exportItem.imageUrls.map((url, index) => ({
+        url: getImageUrl(url),
+        alt: exportItem.imageAlts?.[index] || exportItem.title,
+      }))
+    : exportItem.imageUrl
+    ? [{ url: getImageUrl(exportItem.imageUrl), alt: exportItem.imageAlt || exportItem.title }]
+    : productImages.length > 0
+    ? productImages
+    : [];
+
   const transformedExport = {
     id: exportItem.slug,
     title: exportItem.title,
@@ -196,11 +208,7 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
     status: exportItem.status,
     imageUrl: getImageUrl(exportItem.imageUrl),
     imageAlt: exportItem.imageAlt || exportItem.title,
-    images: productImages.length > 0 
-      ? productImages 
-      : exportItem.imageUrl 
-        ? [{ url: getImageUrl(exportItem.imageUrl), alt: exportItem.imageAlt || exportItem.title }]
-        : [],
+    images: exportImages,
     products: (exportItem.products || []).map((product: any) => ({
       id: product.id,
       name: product.name,

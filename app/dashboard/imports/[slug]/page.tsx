@@ -217,18 +217,32 @@ export default function ImportPage() {
               <span className="font-medium">Hero Description:</span>
               <p className="text-muted-foreground mt-1">{importItem.heroDescription}</p>
             </div>
-            {importItem.imageUrl && (
+            {(importItem.imageUrls && importItem.imageUrls.length > 0) || importItem.imageUrl ? (
               <div className="mt-4">
-                <span className="font-medium">Image:</span>
-                <div className="mt-2 relative w-full max-w-md h-64 rounded-lg overflow-hidden border">
-                  <img
-                    src={getImageUrl(importItem.imageUrl)}
-                    alt={importItem.imageAlt || importItem.title}
-                    className="w-full h-full object-cover"
-                  />
+                <span className="font-medium">
+                  Images ({importItem.imageUrls?.length || (importItem.imageUrl ? 1 : 0)}):
+                </span>
+                <div className="mt-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                  {(importItem.imageUrls && importItem.imageUrls.length > 0
+                    ? importItem.imageUrls
+                    : importItem.imageUrl
+                    ? [importItem.imageUrl]
+                    : []
+                  ).map((url: string, index: number) => (
+                    <div key={index} className="relative aspect-video rounded-lg overflow-hidden border bg-muted group">
+                      <img
+                        src={getImageUrl(url)}
+                        alt={importItem.imageAlts?.[index] || importItem.imageAlt || `${importItem.title} - Image ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute top-1 right-1 bg-primary text-primary-foreground text-xs font-bold px-1.5 py-0.5 rounded">
+                        {index + 1}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            )}
+            ) : null}
             <div className="mt-4">
               <span className="font-medium">Description:</span>
               <p className="text-muted-foreground mt-1 whitespace-pre-wrap">{importItem.description}</p>

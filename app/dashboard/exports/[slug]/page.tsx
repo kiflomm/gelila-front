@@ -222,18 +222,36 @@ export default function ExportPage() {
               <span className="font-medium">Hero Description:</span>
               <p className="text-muted-foreground mt-1">{exportItem.heroDescription}</p>
             </div>
-            {exportItem.imageUrl && (
+            {(exportItem.imageUrls && exportItem.imageUrls.length > 0) || exportItem.imageUrl ? (
               <div className="mt-4">
-                <span className="font-medium">Image:</span>
-                <div className="mt-2 relative w-full max-w-md h-64 rounded-lg overflow-hidden border">
-                  <img
-                    src={getImageUrl(exportItem.imageUrl)}
-                    alt={exportItem.imageAlt || exportItem.title}
-                    className="w-full h-full object-cover"
-                  />
+                <span className="font-medium">
+                  {exportItem.imageUrls && exportItem.imageUrls.length > 1
+                    ? `Images (${exportItem.imageUrls.length})`
+                    : exportItem.imageUrls && exportItem.imageUrls.length === 1
+                    ? "Image"
+                    : "Image"}
+                </span>
+                <div className="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2 max-w-2xl">
+                  {(exportItem.imageUrls && exportItem.imageUrls.length > 0
+                    ? exportItem.imageUrls
+                    : exportItem.imageUrl
+                    ? [exportItem.imageUrl]
+                    : []
+                  ).map((url, index) => (
+                    <div key={index} className="relative rounded-md overflow-hidden border">
+                      <img
+                        src={getImageUrl(url)}
+                        alt={exportItem.imageAlts?.[index] || exportItem.imageAlt || exportItem.title}
+                        className="w-full h-32 object-cover"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center">
+                        {index + 1}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            )}
+            ) : null}
             <div className="mt-4">
               <span className="font-medium">Description:</span>
               <p className="text-muted-foreground mt-1 whitespace-pre-wrap">{exportItem.description}</p>

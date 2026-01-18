@@ -40,7 +40,7 @@ export default function HeroSection({
             unoptimized={product.image.includes('localhost') || product.image.includes('api.gelilamanufacturingplc.com')}
           />
         )}
-        <div className="absolute inset-0 bg-linear-to-b from-black/50 to-black/80" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/50 to-black/80 z-[1]" style={{ pointerEvents: 'none' }} />
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-6 sm:gap-8">
           <div className="flex flex-col gap-4 text-left max-w-3xl">
             <h1 className="text-white text-4xl font-black leading-tight tracking-tight sm:text-5xl md:text-6xl">

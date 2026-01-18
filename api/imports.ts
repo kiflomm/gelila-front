@@ -45,8 +45,10 @@ export interface Import {
   description: string;
   sourceRegion: string;
   status: 'operational' | 'planned' | 'project';
-  imageUrl: string | null;
-  imageAlt: string | null;
+  imageUrl: string | null; // Kept for backward compatibility
+  imageAlt: string | null; // Kept for backward compatibility
+  imageUrls?: string[] | null; // New field for multiple image URLs
+  imageAlts?: string[] | null; // New field for multiple image alt texts
   orderIndex: number;
   products?: ImportProduct[];
   createdAt?: string;
@@ -74,8 +76,10 @@ export interface CreateImportData {
   status: 'operational' | 'planned' | 'project';
   imageUrl?: string;
   imageAlt?: string;
+  imageUrls?: string[];
+  imageAlts?: string[];
   orderIndex?: number;
-  image?: File;
+  images?: File[];
 }
 
 export interface UpdateImportData {
@@ -87,8 +91,10 @@ export interface UpdateImportData {
   status?: 'operational' | 'planned' | 'project';
   imageUrl?: string;
   imageAlt?: string;
+  imageUrls?: string[];
+  imageAlts?: string[];
   orderIndex?: number;
-  image?: File;
+  images?: File[];
 }
 
 export interface UpdatePageConfigData {
@@ -175,11 +181,23 @@ export const importsApi = {
     if (data.imageAlt !== undefined) {
       formData.append("imageAlt", data.imageAlt);
     }
+    if (data.imageUrls && data.imageUrls.length > 0) {
+      data.imageUrls.forEach((url, index) => {
+        formData.append(`imageUrls[${index}]`, url);
+      });
+    }
+    if (data.imageAlts && data.imageAlts.length > 0) {
+      data.imageAlts.forEach((alt, index) => {
+        formData.append(`imageAlts[${index}]`, alt);
+      });
+    }
     if (data.orderIndex !== undefined) {
       formData.append("orderIndex", data.orderIndex.toString());
     }
-    if (data.image) {
-      formData.append("image", data.image);
+    if (data.images && data.images.length > 0) {
+      data.images.forEach((file) => {
+        formData.append("images", file);
+      });
     }
 
     const response = await axiosProtectedClient.post("/imports", formData, {
@@ -219,11 +237,23 @@ export const importsApi = {
     if (data.imageAlt !== undefined) {
       formData.append("imageAlt", data.imageAlt);
     }
+    if (data.imageUrls && data.imageUrls.length > 0) {
+      data.imageUrls.forEach((url, index) => {
+        formData.append(`imageUrls[${index}]`, url);
+      });
+    }
+    if (data.imageAlts && data.imageAlts.length > 0) {
+      data.imageAlts.forEach((alt, index) => {
+        formData.append(`imageAlts[${index}]`, alt);
+      });
+    }
     if (data.orderIndex !== undefined) {
       formData.append("orderIndex", data.orderIndex.toString());
     }
-    if (data.image) {
-      formData.append("image", data.image);
+    if (data.images && data.images.length > 0) {
+      data.images.forEach((file) => {
+        formData.append("images", file);
+      });
     }
 
     const response = await axiosProtectedClient.patch(`/imports/${id}`, formData, {

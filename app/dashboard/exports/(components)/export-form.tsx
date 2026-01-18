@@ -27,8 +27,10 @@ const exportSchema = z.object({
   status: z.enum(["operational", "planned", "project"]),
   imageUrl: z.string().optional(),
   imageAlt: z.string().optional(),
+  imageUrls: z.array(z.string()).optional(),
+  imageAlts: z.array(z.string()).optional(),
+  images: z.array(z.instanceof(File)).optional(),
   orderIndex: z.number().min(0).optional(),
-  image: z.instanceof(File).optional(),
 });
 
 type ExportFormData = z.infer<typeof exportSchema>;
@@ -58,6 +60,8 @@ export function ExportForm({ exportItem, onSubmit, onCancel, isSubmitting = fals
           status: exportItem.status || "operational",
           imageUrl: exportItem.imageUrl || undefined,
           imageAlt: exportItem.imageAlt || undefined,
+          imageUrls: exportItem.imageUrls || undefined,
+          imageAlts: exportItem.imageAlts || undefined,
           orderIndex: exportItem.orderIndex,
         }
       : {
@@ -69,9 +73,13 @@ export function ExportForm({ exportItem, onSubmit, onCancel, isSubmitting = fals
   const onSubmitForm = async (data: ExportFormData) => {
     const submitData: CreateExportData | UpdateExportData = {
       ...data,
-      image: data.image instanceof File ? data.image : undefined,
-      ...(!(data.image instanceof File) && exportItem ? {
-        imageUrl: exportItem.imageUrl || undefined,
+      images: data.images,
+      imageUrls: data.imageUrls,
+      imageAlts: data.imageAlts,
+      // Ensure imageUrls and imageAlts are always sent if they exist
+      ...(exportItem && !data.images && !data.imageUrls ? {
+        imageUrls: exportItem.imageUrls || (exportItem.imageUrl ? [exportItem.imageUrl] : undefined),
+        imageAlts: exportItem.imageAlts || (exportItem.imageAlt ? [exportItem.imageAlt] : undefined),
       } : {}),
     };
     await onSubmit(submitData);
@@ -172,8 +180,8 @@ export function ExportForm({ exportItem, onSubmit, onCancel, isSubmitting = fals
 
       <ExportImageUpload
         control={control}
-        currentImageUrl={exportItem?.imageUrl}
-        currentImageAlt={exportItem?.imageAlt}
+        currentImageUrls={exportItem?.imageUrls || (exportItem?.imageUrl ? [exportItem.imageUrl] : null)}
+        currentImageAlts={exportItem?.imageAlts || (exportItem?.imageAlt ? [exportItem.imageAlt] : null)}
       />
 
       <div className="flex justify-end gap-2 pt-4">

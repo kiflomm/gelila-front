@@ -27,8 +27,10 @@ const importSchema = z.object({
   status: z.enum(["operational", "planned", "project"]),
   imageUrl: z.string().optional(),
   imageAlt: z.string().optional(),
+  imageUrls: z.array(z.string()).optional(),
+  imageAlts: z.array(z.string()).optional(),
+  images: z.array(z.instanceof(File)).optional(),
   orderIndex: z.number().min(0).optional(),
-  image: z.instanceof(File).optional(),
 });
 
 type ImportFormData = z.infer<typeof importSchema>;
@@ -58,6 +60,8 @@ export function ImportForm({ importItem, onSubmit, onCancel, isSubmitting = fals
           status: importItem.status || "operational",
           imageUrl: importItem.imageUrl || undefined,
           imageAlt: importItem.imageAlt || undefined,
+          imageUrls: importItem.imageUrls || undefined,
+          imageAlts: importItem.imageAlts || undefined,
           orderIndex: importItem.orderIndex,
         }
       : {
@@ -69,9 +73,13 @@ export function ImportForm({ importItem, onSubmit, onCancel, isSubmitting = fals
   const onSubmitForm = async (data: ImportFormData) => {
     const submitData: CreateImportData = {
       ...data,
-      image: data.image instanceof File ? data.image : undefined,
-      ...(!(data.image instanceof File) && importItem ? {
-        imageUrl: importItem.imageUrl || undefined,
+      images: data.images,
+      imageUrls: data.imageUrls,
+      imageAlts: data.imageAlts,
+      // Ensure imageUrls and imageAlts are always sent if they exist
+      ...(importItem && !data.images && !data.imageUrls ? {
+        imageUrls: importItem.imageUrls || (importItem.imageUrl ? [importItem.imageUrl] : undefined),
+        imageAlts: importItem.imageAlts || (importItem.imageAlt ? [importItem.imageAlt] : undefined),
       } : {}),
     };
     await onSubmit(submitData);
@@ -172,8 +180,8 @@ export function ImportForm({ importItem, onSubmit, onCancel, isSubmitting = fals
 
       <ImportImageUpload
         control={control}
-        currentImageUrl={importItem?.imageUrl}
-        currentImageAlt={importItem?.imageAlt}
+        currentImageUrls={importItem?.imageUrls || (importItem?.imageUrl ? [importItem.imageUrl] : null)}
+        currentImageAlts={importItem?.imageAlts || (importItem?.imageAlt ? [importItem.imageAlt] : null)}
       />
 
       <div className="flex justify-end gap-2 pt-4">

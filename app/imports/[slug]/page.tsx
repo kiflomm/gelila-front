@@ -56,6 +56,16 @@ export default async function ImportPage({ params }: ImportPageProps) {
     return `${baseUrl}${cleanImageUrl}`;
   };
 
+  // Transform imageUrls to images array for HeroSlider
+  const importImages = importItem.imageUrls && importItem.imageUrls.length > 0
+    ? importItem.imageUrls.map((url: string, index: number) => ({
+        url: getImageUrl(url),
+        alt: importItem.imageAlts?.[index] || importItem.imageAlt || importItem.title,
+      }))
+    : importItem.imageUrl
+    ? [{ url: getImageUrl(importItem.imageUrl), alt: importItem.imageAlt || importItem.title }]
+    : [];
+
   // Transform API data to match the format expected by sections
   const transformedImport = {
     id: importItem.slug,
@@ -66,6 +76,7 @@ export default async function ImportPage({ params }: ImportPageProps) {
     status: importItem.status,
     image: getImageUrl(importItem.imageUrl),
     imageAlt: importItem.imageAlt || importItem.title,
+    images: importImages,
     products: (importItem.products || []).map((product: any) => ({
       id: product.id,
       name: product.name,
