@@ -3,6 +3,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import HeroSection from "./(sections)/hero-section";
 import PortfolioSection from "./(sections)/portfolio-section";
+import NewArrivalsSection from "./(sections)/new-arrivals-section";
 import AchievementsSection from "./(sections)/achievements-section";
 import LeadershipSection from "./(sections)/leadership-section";
 import LatestNewsSection from "./(sections)/latest-news-section";
@@ -62,6 +63,7 @@ export default function HomePage() {
           <div className="px-4 sm:px-10 lg:px-20 py-10 lg:py-16 flex flex-1 justify-center">
             <div className="layout-content-container flex flex-col w-full max-w-7xl">
               <PortfolioSection />
+              <NewArrivalsSection />
               <AchievementsSection />
               <LeadershipSection showMissionVision={false} />
               <LatestNewsSection />

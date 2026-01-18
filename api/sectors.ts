@@ -12,6 +12,15 @@ export interface Product {
   updatedAt?: string;
 }
 
+export interface ProductWithSector extends Product {
+  sector: {
+    id: number;
+    slug: string;
+    name: string;
+    title: string;
+  };
+}
+
 export interface Sector {
   id: number;
   slug: string;
@@ -95,6 +104,14 @@ export const sectorsApi = {
 
   getPageConfig: async (): Promise<SectorsPageConfig> => {
     const response = await axiosPublicClient.get("/sectors/page/config");
+    return response.data;
+  },
+
+  getNewestProducts: async (limit?: number): Promise<ProductWithSector[]> => {
+    const params = limit ? { limit } : {};
+    const response = await axiosPublicClient.get("/sectors/products/newest", {
+      params,
+    });
     return response.data;
   },
 

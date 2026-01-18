@@ -416,6 +416,24 @@ body {
   top: 0 !important;
 }
 
+/* New Arrivals Auto-Scroll Animation */
+@keyframes scroll-new-arrivals {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-new-arrivals {
+  animation: scroll-new-arrivals 30s linear infinite;
+}
+
+.animate-scroll-new-arrivals:hover {
+  animation-play-state: paused;
+}
+
 /* Hide Google Translate select combo box */
 .goog-te-combo {
   position: absolute !important;
