@@ -6,9 +6,8 @@ export default function AchievementsSection() {
       <h2 className="text-[#181411] dark:text-white text-3xl font-bold leading-tight tracking-tight pb-8 text-center">
         Industrial Milestones & Achievements
       </h2>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      <div className="max-w-4xl mx-auto">
         {/* Timeline Component */}
-        <div className="lg:col-span-2">
           <div className="relative pl-8 border-l-2 border-primary/30">
             {achievementsData.milestones.map((milestone, index) => (
               <div
@@ -27,31 +26,6 @@ export default function AchievementsSection() {
                 <p className="text-base font-normal text-[#495057] dark:text-white/80">
                   {milestone.description}
                 </p>
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* Investment & Certifications */}
-        <div className="flex flex-col gap-6 bg-white dark:bg-black/20 p-6 rounded-xl border border-primary/20">
-          <h3 className="text-xl font-bold text-[#181411] dark:text-white">
-            Key Highlights
-          </h3>
-          {achievementsData.highlights.map((highlight, index) => (
-            <div key={index} className="flex items-start gap-4">
-              <span
-                className="material-symbols-outlined text-primary text-3xl mt-1"
-                aria-label={highlight.icon}
-              >
-                {highlight.icon}
-              </span>
-              <div>
-                <p className="text-2xl font-bold text-primary">
-                  {highlight.value}
-                </p>
-                <p className="text-sm text-[#495057] dark:text-white/80">
-                  {highlight.label}
-                </p>
-              </div>
             </div>
           ))}
         </div>

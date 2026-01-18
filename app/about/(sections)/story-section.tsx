@@ -49,17 +49,20 @@ export default async function StorySection() {
   // Split content into paragraphs (by double newline)
   const paragraphs = content.split("\n\n").filter(p => p.trim());
 
-  // Stats from API or fallback
-  const stats = [
+  // Key Highlights from API or fallback
+  const highlights = [
     {
+      icon: "insights",
       value: aboutConfig?.statSectorsValue || storyDataFallback.stats[0].value,
       label: aboutConfig?.statSectorsLabel || storyDataFallback.stats[0].label,
     },
     {
+      icon: "groups",
       value: aboutConfig?.statEmployeesValue || storyDataFallback.stats[1].value,
       label: aboutConfig?.statEmployeesLabel || storyDataFallback.stats[1].label,
     },
     {
+      icon: "verified",
       value: aboutConfig?.statYearsValue || storyDataFallback.stats[2].value,
       label: aboutConfig?.statYearsLabel || storyDataFallback.stats[2].label,
     },
@@ -97,15 +100,47 @@ export default async function StorySection() {
         </div>
 
         {/* Content */}
-        <div className="flex flex-col gap-7">
-          {paragraphs.map((paragraph, index) => (
-            <p
-              key={index}
-              className="text-[#495057] dark:text-white/80 text-base md:text-lg leading-relaxed max-w-5xl"
-            >
-              {paragraph}
-            </p>
-          ))}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          {/* Paragraphs */}
+          <div className="lg:col-span-2 flex flex-col gap-7">
+            {paragraphs.map((paragraph, index) => (
+              <p
+                key={index}
+                className="text-[#495057] dark:text-white/80 text-base md:text-lg leading-relaxed"
+              >
+                {paragraph}
+              </p>
+            ))}
+          </div>
+
+          {/* Key Highlights */}
+          <div className="lg:col-span-1">
+            <div className="bg-white dark:bg-gray-900 rounded-xl p-4 sm:p-5 border border-border shadow-sm sticky top-8">
+              <h3 className="text-[#181411] dark:text-white text-lg sm:text-xl font-bold leading-tight tracking-tight mb-4">
+                Key Highlights
+              </h3>
+              <div className="flex flex-col gap-4">
+                {highlights.map((highlight, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <span
+                      className="material-symbols-outlined text-primary text-2xl mt-0.5 shrink-0"
+                      aria-label={highlight.icon}
+                    >
+                      {highlight.icon}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-primary text-2xl sm:text-3xl font-bold mb-0.5">
+                        {highlight.value}
+                      </p>
+                      <p className="text-[#181411] dark:text-white/80 text-xs sm:text-sm font-medium">
+                        {highlight.label}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
