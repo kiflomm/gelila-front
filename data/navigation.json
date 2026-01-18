@@ -182,19 +182,37 @@
     "companies": {
       "sections": [
         {
-          "title": "Subsidiary Companies",
+          "title": "Gelila Shoe & sole factory",
           "items": [
             {
-              "label": "Gelila Shoe & sole factory",
-              "href": "/companies/gelila-shoe"
+              "label": "Shoes & Sole",
+              "href": "/sectors/footwear"
             },
             {
-              "label": "Soloda Special Bus Public Transport",
-              "href": "/companies/soloda-bus"
+              "label": "Textile & Apparel",
+              "href": "/sectors/textile-apparel"
+            }
+          ]
+        },
+        {
+          "title": "Gelila Food Complex",
+          "items": [
+            {
+              "label": "Food Complex",
+              "href": "/sectors/food-processing"
+            }
+          ]
+        },
+        {
+          "title": "Soloda Special Bus Public Transport",
+          "items": [
+            {
+              "label": "Bus Assembly",
+              "href": "/sectors/bus-assembly"
             },
             {
-              "label": "Gelila Food Complex",
-              "href": "/companies/gelila-food"
+              "label": "Public Transport",
+              "href": "/sectors/bus-transport"
             }
           ]
         }
