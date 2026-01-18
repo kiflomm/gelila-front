@@ -161,14 +161,16 @@ export default function SectorPage() {
               >
                 Edit Sector
               </Button>
-              <Button
-                onClick={() => setCreateProductDialogOpen(true)}
-                size="lg"
-                className="shadow-md hover:shadow-lg transition-shadow"
-              >
-                <Plus className="size-4 mr-2" />
-                Add Product
-              </Button>
+              {sector.slug !== 'bus-transport' && (
+                <Button
+                  onClick={() => setCreateProductDialogOpen(true)}
+                  size="lg"
+                  className="shadow-md hover:shadow-lg transition-shadow"
+                >
+                  <Plus className="size-4 mr-2" />
+                  Add Product
+                </Button>
+              )}
             </>
           )}
         </div>
@@ -214,15 +216,17 @@ export default function SectorPage() {
         </div>
       )}
 
-      {/* Products Section */}
-      <div>
-        <h2 className="text-xl font-semibold mb-4">Products</h2>
-        <ProductsTable
-          products={sector.products || []}
-          onEdit={handleEditProduct}
-          onDelete={handleDeleteProduct}
-        />
-      </div>
+      {/* Products Section - Hidden for bus-transport (Soloda Bus) */}
+      {sector.slug !== 'bus-transport' && (
+        <div>
+          <h2 className="text-xl font-semibold mb-4">Products</h2>
+          <ProductsTable
+            products={sector.products || []}
+            onEdit={handleEditProduct}
+            onDelete={handleDeleteProduct}
+          />
+        </div>
+      )}
 
       {/* Create Product Dialog */}
       <CreateProductDialog
