@@ -26,13 +26,16 @@ export default function HeroSection({ newsItem }: HeroSectionProps) {
 
       {/* Featured Image */}
       <div className="w-full aspect-3/2 rounded-lg overflow-hidden relative">
-        <Image
-          src={getImageUrl(newsItem.imageUrl)}
-          alt={newsItem.imageAlt}
-          fill
-          className="object-cover"
-          priority
-        />
+        {newsItem.imageUrl && (
+          <Image
+            src={getImageUrl(newsItem.imageUrl)}
+            alt={newsItem.imageAlt}
+            fill
+            className="object-cover"
+            priority
+            unoptimized={getImageUrl(newsItem.imageUrl).includes('localhost') || getImageUrl(newsItem.imageUrl).includes('api.gelilamanufacturingplc.com')}
+          />
+        )}
       </div>
 
       {/* Title */}
@@ -63,6 +66,7 @@ export default function HeroSection({ newsItem }: HeroSectionProps) {
                 width={32}
                 height={32}
                 className="rounded-full"
+                unoptimized={getImageUrl(newsItem.authorAvatar).includes('localhost') || getImageUrl(newsItem.authorAvatar).includes('api.gelilamanufacturingplc.com')}
               />
             ) : (
               <div className="size-8 rounded-full bg-primary/20 flex items-center justify-center">

@@ -43,6 +43,9 @@ export default async function StorySection() {
     : storyDataFallback.image.src;
   const imageAlt = aboutConfig?.storyImageAlt || storyDataFallback.image.alt;
 
+  // Unoptimize for API images (both localhost and production API) to avoid upstream 404 errors
+  const shouldUnoptimize = imageUrl.includes('localhost') || imageUrl.includes('api.gelilamanufacturingplc.com');
+
   // Split content into paragraphs (by double newline)
   const paragraphs = content.split("\n\n").filter(p => p.trim());
 
@@ -80,13 +83,15 @@ export default async function StorySection() {
         {/* Image */}
         <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-900 shadow-2xl border border-primary/10 dark:border-primary/20 hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-primary/10 p-1">
           <div className="relative w-full h-full rounded-xl overflow-hidden">
-            <Image
-              src={imageUrl}
-              alt={imageAlt}
-              fill
-              className="object-cover transition-transform duration-700 hover:scale-110"
-           
-            />
+            {imageUrl && (
+              <Image
+                src={imageUrl}
+                alt={imageAlt}
+                fill
+                className="object-cover transition-transform duration-700 hover:scale-110"
+                unoptimized={shouldUnoptimize}
+              />
+            )}
             <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
           </div>
         </div>
@@ -103,22 +108,6 @@ export default async function StorySection() {
           ))}
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="flex flex-col gap-2 p-6 rounded-2xl bg-white dark:bg-black/20 border border-primary/10 dark:border-primary/20 hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2"
-            >
-              <p className="text-3xl lg:text-4xl font-black text-[#181411] dark:text-white">
-                {stat.value}
-              </p>
-              <p className="text-sm text-[#495057] dark:text-white/70 font-medium">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );

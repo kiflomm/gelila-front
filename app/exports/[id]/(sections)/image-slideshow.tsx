@@ -65,6 +65,7 @@ export default function ImageSlideshow({ images, title }: ImageSlideshowProps) {
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
           priority
+          unoptimized={shouldUnoptimize(images[0].url) || images[0].url.includes('api.gelilamanufacturingplc.com')}
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
@@ -105,6 +106,7 @@ export default function ImageSlideshow({ images, title }: ImageSlideshowProps) {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     priority={index === 0}
                     sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                    unoptimized={shouldUnoptimize(image.url) || image.url.includes('api.gelilamanufacturingplc.com')}
                   />
                   {/* Modern gradient overlay */}
                   <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

@@ -55,7 +55,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About Us" },
-    { href: "/imports-exports", label: "Import / Export" },
+    { href: "/imports-exports", label: "Import & Export" },
     { href: "/companies", label: "Subsidiaries" },
     { href: "/news#news-section", label: "News & Updates" },
     { href: "/careers#careers-section", label: "Careers" },

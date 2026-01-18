@@ -58,12 +58,15 @@ export default function RelatedPostsSection({
               className="flex flex-col gap-4 group cursor-pointer"
             >
               <div className="w-full aspect-video rounded-xl overflow-hidden transition-all duration-300 group-hover:scale-[1.02] relative shadow-md group-hover:shadow-xl border border-zinc-200 dark:border-zinc-800">
-                <Image
-                  src={getImageUrl(item.imageUrl)}
-                  alt={item.imageAlt || item.title}
-                  fill
-                  className="object-cover"
-                />
+                {item.imageUrl && (
+                  <Image
+                    src={getImageUrl(item.imageUrl)}
+                    alt={item.imageAlt || item.title}
+                    fill
+                    className="object-cover"
+                    unoptimized={getImageUrl(item.imageUrl).includes('localhost') || getImageUrl(item.imageUrl).includes('api.gelilamanufacturingplc.com')}
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
               <div className="flex flex-col gap-3">

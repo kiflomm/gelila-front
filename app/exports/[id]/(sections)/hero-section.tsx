@@ -34,6 +34,7 @@ export default function HeroSection({ portfolio }: HeroSectionProps) {
             fill
             className="object-cover brightness-75"
             priority
+            unoptimized={portfolio.imageUrl.includes('localhost') || portfolio.imageUrl.includes('api.gelilamanufacturingplc.com')}
           />
         )}
         <div className="absolute inset-0 bg-linear-to-b from-black/50 to-black/80" />

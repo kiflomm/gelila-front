@@ -93,12 +93,15 @@ export default function LatestNewsSection() {
               className="flex flex-col gap-4 group cursor-pointer bg-white dark:bg-black/20 rounded-xl border border-primary/10 dark:border-primary/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1"
             >
               <div className="w-full aspect-video rounded-t-xl overflow-hidden transition-transform duration-300 group-hover:scale-105 relative">
-                <Image
-                  src={getImageUrl(item.imageUrl)}
-                  alt={item.imageAlt || item.title}
-                  fill
-                  className="object-cover"
-                />
+                {item.imageUrl && (
+                  <Image
+                    src={getImageUrl(item.imageUrl)}
+                    alt={item.imageAlt || item.title}
+                    fill
+                    className="object-cover"
+                    unoptimized={getImageUrl(item.imageUrl).includes('localhost') || getImageUrl(item.imageUrl).includes('api.gelilamanufacturingplc.com')}
+                  />
+                )}
               </div>
               <div className="flex flex-col gap-2 p-4 sm:p-5">
                 <div className="flex items-center gap-3 text-sm">

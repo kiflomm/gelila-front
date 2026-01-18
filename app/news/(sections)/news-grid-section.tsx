@@ -94,13 +94,15 @@ export default function NewsGridSection({
               className="flex flex-col gap-4 group cursor-pointer min-w-0"
             >
               <div className="w-full aspect-video rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105 relative">
-                <Image
-                  src={getImageUrl(item.imageUrl)}
-                  alt={item.imageAlt}
-                  fill
-                  className="object-cover"
-                  
-                />
+                {item.imageUrl && (
+                  <Image
+                    src={getImageUrl(item.imageUrl)}
+                    alt={item.imageAlt}
+                    fill
+                    className="object-cover"
+                    unoptimized={getImageUrl(item.imageUrl).includes('localhost') || getImageUrl(item.imageUrl).includes('api.gelilamanufacturingplc.com')}
+                  />
+                )}
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-3 text-sm">

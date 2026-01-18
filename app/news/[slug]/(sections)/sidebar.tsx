@@ -104,12 +104,15 @@ export default function Sidebar({
                 className="flex gap-3 group hover:opacity-80 transition-opacity"
               >
                 <div className="w-20 h-20 rounded-lg overflow-hidden relative shrink-0">
-                  <Image
-                    src={getImageUrl(post.imageUrl)}
-                    alt={post.imageAlt}
-                    fill
-                    className="object-cover"
-                  />
+                  {post.imageUrl && (
+                    <Image
+                      src={getImageUrl(post.imageUrl)}
+                      alt={post.imageAlt}
+                      fill
+                      className="object-cover"
+                      unoptimized={getImageUrl(post.imageUrl).includes('localhost') || getImageUrl(post.imageUrl).includes('api.gelilamanufacturingplc.com')}
+                    />
+                  )}
                 </div>
                 <div className="flex flex-col gap-1 flex-1 min-w-0">
                   <h4 className="text-zinc-900 dark:text-zinc-100 text-sm font-semibold line-clamp-2 group-hover:text-primary transition-colors">

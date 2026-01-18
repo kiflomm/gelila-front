@@ -34,13 +34,16 @@ export default function ImportPortfolioSection({ imports }: ImportPortfolioSecti
           >
             {/* Image Container with Overlay */}
             <div className="relative w-full aspect-square overflow-hidden bg-gray-100 dark:bg-gray-900">
-              <Image
-                src={portfolio.imageUrl || "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=2070&auto=format&fit=crop"}
-                alt={portfolio.imageAlt}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              />
+              {portfolio.imageUrl && (
+                <Image
+                  src={portfolio.imageUrl}
+                  alt={portfolio.imageAlt}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  unoptimized={portfolio.imageUrl.includes('localhost') || portfolio.imageUrl.includes('api.gelilamanufacturingplc.com')}
+                />
+              )}
               {/* Gradient Overlay on Hover */}
               <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               {/* Primary Accent Bar */}

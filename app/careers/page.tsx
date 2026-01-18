@@ -4,7 +4,6 @@ import { Suspense } from "react";
 import HeroSection from "./(sections)/hero-section";
 import JobListingsSection from "./(sections)/job-listings-section";
 import JobListingsSkeleton from "./(sections)/job-listings-skeleton";
-import DepartmentsSection from "./(sections)/departments-section";
 import OpportunitiesSection from "./(sections)/opportunities-section";
 
 export default function CareersPage() {
@@ -18,7 +17,6 @@ export default function CareersPage() {
               <JobListingsSection />
             </Suspense>
           </div>
-          <DepartmentsSection />
           <OpportunitiesSection />
         </div>
       </div>

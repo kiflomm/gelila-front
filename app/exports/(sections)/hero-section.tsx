@@ -7,13 +7,15 @@ export default function HeroSection() {
   return (
     <section className="w-full">
       <div className="relative flex min-h-[600px] lg:min-h-[700px] w-screen flex-col gap-6 bg-cover bg-center bg-no-repeat items-start justify-center px-4 sm:px-6 lg:px-10 xl:px-20 py-16 sm:py-20 lg:py-24 overflow-hidden">
-        <Image
-          src={exportsHeroData.image.src}
-          alt={exportsHeroData.image.alt}
-          fill
-          className="object-cover brightness-75"
-          priority
-        />
+        {exportsHeroData.image.src && (
+          <Image
+            src={exportsHeroData.image.src}
+            alt={exportsHeroData.image.alt}
+            fill
+            className="object-cover brightness-75"
+            priority
+          />
+        )}
         <div className="absolute inset-0 bg-linear-to-b from-black/50 to-black/80" />
         <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col gap-6 sm:gap-8">
           <div className="flex flex-col gap-4 text-left max-w-3xl">

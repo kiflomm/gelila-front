@@ -32,11 +32,12 @@ export default function HeroSection({
       <div className="relative flex min-h-[600px] lg:min-h-[700px] w-full flex-col gap-6 bg-cover bg-center bg-no-repeat items-start justify-center px-4 sm:px-6 lg:px-10 xl:px-20 py-16 sm:py-20 lg:py-24 overflow-hidden">
         {product.image && (
           <Image
-            src={product.image || "/logo.png"}
+            src={product.image}
             alt={product.alt}
             fill
             className="object-cover brightness-75"
             priority
+            unoptimized={product.image.includes('localhost') || product.image.includes('api.gelilamanufacturingplc.com')}
           />
         )}
         <div className="absolute inset-0 bg-linear-to-b from-black/50 to-black/80" />

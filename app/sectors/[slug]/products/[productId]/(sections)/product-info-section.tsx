@@ -37,14 +37,17 @@ export default function ProductInfoSection({
         {/* Product Image */}
         <div className="w-full">
           <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-900 border border-primary/10 dark:border-primary/20">
-            <Image
-              src={product.image}
-              alt={product.alt}
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              priority
-            />
+            {product.image && (
+              <Image
+                src={product.image}
+                alt={product.alt}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
+                unoptimized={product.image.includes('localhost') || product.image.includes('api.gelilamanufacturingplc.com')}
+              />
+            )}
           </div>
         </div>
 

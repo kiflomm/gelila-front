@@ -218,32 +218,34 @@ export default function LeadershipSection({
         )}
 
         {/* Core Values Section */}
-        <div className="flex flex-col gap-6">
-          <h3 className="text-[#181411] dark:text-white text-2xl sm:text-3xl font-bold">
-            Core Values
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {leadershipData.coreValues.map((value, index) => {
-              const Icon = iconMap[value.icon] || Award;
-              return (
-                <div
-                  key={index}
-                  className="rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 p-6"
-                >
-                  <div className="flex items-center justify-center size-10 rounded-full bg-primary mb-4">
-                    <Icon className="size-5 text-white" />
+        {showMissionVision && (
+          <div className="flex flex-col gap-6">
+            <h3 className="text-[#181411] dark:text-white text-2xl sm:text-3xl font-bold">
+              Core Values
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {leadershipData.coreValues.map((value, index) => {
+                const Icon = iconMap[value.icon] || Award;
+                return (
+                  <div
+                    key={index}
+                    className="rounded-2xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 p-6"
+                  >
+                    <div className="flex items-center justify-center size-10 rounded-full bg-primary mb-4">
+                      <Icon className="size-5 text-white" />
+                    </div>
+                    <h4 className="text-[#181411] dark:text-white text-lg font-bold mb-2">
+                      {value.title}
+                    </h4>
+                    <p className="text-[#495057] dark:text-white/80 text-sm leading-relaxed">
+                      {value.description}
+                    </p>
                   </div>
-                  <h4 className="text-[#181411] dark:text-white text-lg font-bold mb-2">
-                    {value.title}
-                  </h4>
-                  <p className="text-[#495057] dark:text-white/80 text-sm leading-relaxed">
-                    {value.description}
-                  </p>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

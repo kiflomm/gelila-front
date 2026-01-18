@@ -14,10 +14,17 @@ const nextConfig: NextConfig = {
       {
         protocol: "http",
         hostname: "localhost",
+        port: "3000",
+        pathname: "/uploads/**",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
       },
       {
         protocol: "https",
         hostname: "api.gelilamanufacturingplc.com",
+        pathname: "/uploads/**",
       }
     ],
   },
