@@ -94,19 +94,6 @@ export function ExportForm({ exportItem, onSubmit, onCancel, isSubmitting = fals
             <p className="text-sm text-destructive">{errors.title.message}</p>
           )}
         </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="slug">Slug (auto-generated if empty)</Label>
-          <Input
-            id="slug"
-            {...register("slug")}
-            placeholder="e.g., shoes-sole"
-            aria-invalid={errors.slug ? "true" : "false"}
-          />
-          {errors.slug && (
-            <p className="text-sm text-destructive">{errors.slug.message}</p>
-          )}
-        </div>
       </div>
 
       <div className="space-y-2">

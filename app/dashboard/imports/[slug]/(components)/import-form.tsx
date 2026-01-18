@@ -89,20 +89,6 @@ export function ImportForm({ importItem, onSubmit, onCancel, isSubmitting = fals
             <p className="text-sm text-destructive">{errors.title.message}</p>
           )}
         </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="slug">Slug</Label>
-          <Controller
-            name="slug"
-            control={control}
-            render={({ field }) => (
-              <Input id="slug" {...field} placeholder="import-slug" />
-            )}
-          />
-          {errors.slug && (
-            <p className="text-sm text-destructive">{errors.slug.message}</p>
-          )}
-        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

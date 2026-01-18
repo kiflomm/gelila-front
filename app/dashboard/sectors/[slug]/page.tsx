@@ -200,9 +200,6 @@ export default function SectorPage() {
               <div>
                 <span className="font-medium">Location:</span> {sector.location}
               </div>
-              <div>
-                <span className="font-medium">Slug:</span> {sector.slug}
-              </div>
             </div>
             <div className="mt-4">
               <span className="font-medium">Hero Description:</span>

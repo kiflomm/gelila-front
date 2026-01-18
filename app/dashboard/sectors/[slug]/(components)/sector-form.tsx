@@ -108,20 +108,6 @@ export function SectorForm({ sector, onSubmit, onCancel, isSubmitting = false }:
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="slug">Slug</Label>
-          <Controller
-            name="slug"
-            control={control}
-            render={({ field }) => (
-              <Input id="slug" {...field} placeholder="sector-slug" />
-            )}
-          />
-          {errors.slug && (
-            <p className="text-sm text-destructive">{errors.slug.message}</p>
-          )}
-        </div>
-
-        <div className="space-y-2">
           <Label htmlFor="status">Status</Label>
           <Controller
             name="status"
