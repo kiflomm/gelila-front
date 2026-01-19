@@ -26,6 +26,7 @@ import {
   Info,
   Users,
   Trophy,
+  Mail,
 } from "lucide-react";
 import {
   Sidebar,
@@ -176,6 +177,11 @@ export function AppSidebar() {
           icon: FileText,
         },
         {
+          title: "Email Templates",
+          url: "/dashboard/jobs/applications/email-templates",
+          icon: Mail,
+        },
+        {
           title: "News",
           url: "/dashboard/news",
           icon: Newspaper,
@@ -273,7 +279,8 @@ export function AppSidebar() {
                     const isActive = pathname === item.url || 
                       (group.title === "Sectors" && pathname.startsWith("/dashboard/sectors/") && pathname !== "/dashboard/sectors") ||
                       (group.title === "Imports" && pathname.startsWith("/dashboard/imports/") && pathname !== "/dashboard/imports") ||
-                      (group.title === "Exports" && pathname.startsWith("/dashboard/exports/") && pathname !== "/dashboard/exports");
+                      (group.title === "Exports" && pathname.startsWith("/dashboard/exports/") && pathname !== "/dashboard/exports") ||
+                      (item.url === "/dashboard/jobs/applications/email-templates" && pathname.startsWith("/dashboard/jobs/applications/email-templates"));
                     return (
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton

@@ -1,7 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { jobsApi } from "@/api/jobs";
 import { HeroSlider } from "@/components/hero-slider";
+import { useCareersPageConfig } from "@/hooks/use-jobs";
 
 /**
  * Get image URL - handles both external URLs and uploaded files
@@ -23,18 +25,11 @@ function getImageUrl(imageUrl: string | null | undefined): string {
   return imageUrl.startsWith('/') ? `${baseUrl}${imageUrl}` : `${baseUrl}/${imageUrl}`;
 }
 
-export default async function HeroSection() {
-  let pageConfig;
-  try {
-    pageConfig = await jobsApi.getPageConfig();
-  } catch (error) {
-    // API endpoint may not exist yet, use fallback values
-    console.error('Failed to fetch careers page config:', error);
-    pageConfig = null;
-  }
+export default function HeroSection() {
+  const { data: pageConfig, isLoading } = useCareersPageConfig();
 
-  // Use API data if available, otherwise return null (page will handle gracefully)
-  if (!pageConfig) {
+  // Show nothing while loading or if no config
+  if (isLoading || !pageConfig) {
     return null;
   }
 

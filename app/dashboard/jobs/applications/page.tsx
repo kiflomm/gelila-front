@@ -3,6 +3,9 @@
 import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import Link from "next/link";
+import { Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ApplicationsTable } from "./(components)/applications-table";
 import { UpdateStatusDialog } from "./(components)/update-status-dialog";
@@ -250,6 +253,12 @@ export default function ApplicationsPage() {
               View and manage all job applications
             </p>
           </div>
+          <Link href="/dashboard/jobs/applications/email-templates">
+            <Button variant="outline" size="sm">
+              <Mail className="h-4 w-4 mr-2" />
+              Manage Email Templates
+            </Button>
+          </Link>
         </div>
 
         <ApplicationsTable
