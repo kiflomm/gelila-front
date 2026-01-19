@@ -8,7 +8,7 @@ export const siteConfig = {
   name: "Gelila Manufacturing PLC",
   description:
     "A diversified Ethiopian industrial and service company engaged in footwear manufacturing, food processing, public bus transportation, and the development of new large-scale manufacturing projects.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://gelila.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://gelilamanufacturingplc.com",
   ogImage: "/og-image.jpg",
   links: {
     twitter: "https://twitter.com/gelila",
@@ -33,7 +33,7 @@ export function getOrganizationSchema() {
     name: siteConfig.name,
     description: siteConfig.description,
     url: siteConfig.url,
-    logo: getAbsoluteUrl("/logo.png"),
+    logo: getAbsoluteUrl("/logo-left.png"),
     sameAs: [siteConfig.links.twitter, siteConfig.links.linkedin],
     contactPoint: {
       "@type": "ContactPoint",
@@ -122,7 +122,7 @@ export function getArticleSchema({
       name: siteConfig.name,
       logo: {
         "@type": "ImageObject",
-        url: getAbsoluteUrl("/logo.png"),
+        url: getAbsoluteUrl("/logo-left.png"),
       },
     },
   };

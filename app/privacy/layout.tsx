@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { getAbsoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Privacy Policy - Gelila Manufacturing PLC",
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "/privacy",
+    canonical: getAbsoluteUrl("/privacy"),
   },
 };
 

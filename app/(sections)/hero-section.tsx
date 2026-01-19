@@ -23,8 +23,19 @@ function getImageUrl(imageUrl: string | null | undefined): string {
 }
 
 export default async function HeroSection() {
-  // Fetch homepage config from API
-  const homepageConfig = await homepageApi.getHomepageConfig();
+  // Fetch homepage config from API with fallback
+  let homepageConfig;
+  try {
+    homepageConfig = await homepageApi.getHomepageConfig();
+  } catch (error) {
+    console.error("Failed to fetch homepage config:", error);
+    // Fallback to default values
+    homepageConfig = {
+      heroTitle: "Leading Ethiopian Industrial Group",
+      heroSubtitle: "A diversified industrial and service company engaged in footwear manufacturing, food processing, public bus transportation, and the development of new large-scale manufacturing projects.",
+      heroImages: null,
+    };
+  }
 
   const heroTitle = homepageConfig.heroTitle;
   const heroSubtitle = homepageConfig.heroSubtitle;

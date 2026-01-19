@@ -7,7 +7,7 @@ import NewArrivalsSection from "./(sections)/new-arrivals-section";
 import AchievementsSection from "./(sections)/achievements-section";
 import LeadershipSection from "./(sections)/leadership-section";
 import LatestNewsSection from "./(sections)/latest-news-section";
-import { siteConfig } from "@/lib/seo";
+import { siteConfig, getAbsoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     images: [siteConfig.ogImage],
   },
   alternates: {
-    canonical: "/",
+    canonical: getAbsoluteUrl("/"),
   },
 };
 

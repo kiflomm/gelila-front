@@ -4,7 +4,7 @@ async function getMilestones() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
   try {
     const response = await fetch(`${apiUrl}/milestones`, {
-      cache: "no-store",
+      next: { revalidate: 3600 }, // Revalidate every hour
     });
     if (!response.ok) {
       return null;

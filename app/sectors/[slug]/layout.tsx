@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { sectorsApi } from "@/api/sectors";
 import { getImageUrl } from "@/app/news/[slug]/utils";
+import { getAbsoluteUrl } from "@/lib/seo";
 
 interface SectorLayoutProps {
   children: React.ReactNode;
@@ -83,7 +84,7 @@ export async function generateMetadata({
       },
     },
     alternates: {
-      canonical: `/sectors/${slug}`,
+      canonical: getAbsoluteUrl(`/sectors/${slug}`),
     },
   };
 }

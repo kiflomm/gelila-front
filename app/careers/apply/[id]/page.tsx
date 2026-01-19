@@ -67,7 +67,7 @@ export async function generateMetadata({
         },
       },
       alternates: {
-        canonical: `/careers/apply/${job.id}`,
+        canonical: getAbsoluteUrl(`/careers/apply/${job.id}`),
       },
     };
   } catch (error: any) {

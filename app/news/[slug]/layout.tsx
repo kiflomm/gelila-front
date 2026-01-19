@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { newsApi } from "@/api/news";
 import { notFound } from "next/navigation";
-import { getArticleSchema } from "@/lib/seo";
+import { getArticleSchema, getAbsoluteUrl } from "@/lib/seo";
 
 interface NewsDetailLayoutProps {
   children: React.ReactNode;
@@ -89,7 +89,7 @@ export async function generateMetadata({
       },
     },
     alternates: {
-      canonical: `/news/${slug}`,
+      canonical: getAbsoluteUrl(`/news/${slug}`),
     },
   };
 }

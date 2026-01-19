@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ReactQueryProvider } from "@/lib/react-query-provider";
-import { siteConfig, getOrganizationSchema, getWebSiteSchema } from "@/lib/seo";
+import { siteConfig, getOrganizationSchema, getWebSiteSchema, getAbsoluteUrl } from "@/lib/seo";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/components/auth/auth-provider";
 import { TranslationWidget } from "@/components/translation-widget";
@@ -91,7 +91,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "/",
+    canonical: getAbsoluteUrl("/"),
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,

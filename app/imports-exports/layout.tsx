@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { getAbsoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Gelila Manufacturing PLC - Imports & Exports",
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "/imports-exports",
+    canonical: getAbsoluteUrl("/imports-exports"),
   },
 };
 

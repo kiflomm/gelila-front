@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getAbsoluteUrl } from "@/lib/seo";
 
 // This layout is dynamic because it fetches import data for metadata
 export const dynamic = "force-dynamic";
@@ -94,7 +95,7 @@ export async function generateMetadata({
       },
     },
     alternates: {
-      canonical: `/imports/${slug}`,
+      canonical: getAbsoluteUrl(`/imports/${slug}`),
     },
   };
 }

@@ -4,7 +4,7 @@ import HeroSection from "./(sections)/hero-section";
 import DescriptionSection from "./(sections)/description-section";
 // import PortfolioDetailsSection from "./(sections)/portfolio-details-section";
 import ProductsSection from "./(sections)/products-section";
-import { getProductSchema, getBreadcrumbSchema } from "@/lib/seo";
+import { getProductSchema, getBreadcrumbSchema, getAbsoluteUrl } from "@/lib/seo";
 
 // Force dynamic rendering to ensure updated images appear immediately
 export const dynamic = 'force-dynamic';
@@ -127,7 +127,7 @@ export async function generateMetadata({
       },
     },
     alternates: {
-      canonical: `/exports/${id}`,
+      canonical: getAbsoluteUrl(`/exports/${id}`),
     },
   };
 }

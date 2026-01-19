@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import companiesData from "@/data/companies/companies.json";
+import { getAbsoluteUrl } from "@/lib/seo";
 
 interface CompanyLayoutProps {
   children: React.ReactNode;
@@ -64,7 +65,7 @@ export async function generateMetadata({
       },
     },
     alternates: {
-      canonical: `/companies/${slug}`,
+      canonical: getAbsoluteUrl(`/companies/${slug}`),
     },
   };
 }
