@@ -70,7 +70,7 @@ export default function FilterableNewsSection() {
   };
 
   // Fetch news data once to get pagination info
-  const { data: newsData } = useNews({
+  const { data: newsData, isLoading, isFetching } = useNews({
     category: activeCategory === "all" ? undefined : activeCategory,
     page: currentPage,
     limit: 5,
@@ -87,6 +87,9 @@ export default function FilterableNewsSection() {
       <NewsGridSection 
         activeCategory={activeCategory === "all" ? undefined : activeCategory}
         currentPage={currentPage}
+        newsData={newsData}
+        isLoading={isLoading}
+        isFetching={isFetching}
       />
       {totalPages > 1 && (
         <PaginationSection

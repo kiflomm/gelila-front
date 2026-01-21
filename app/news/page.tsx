@@ -1,5 +1,3 @@
-"use client";
-
 import { Suspense } from "react";
 import HeroSection from "./(sections)/hero-section";
 import FilterableNewsSection from "./(sections)/filterable-news-section";

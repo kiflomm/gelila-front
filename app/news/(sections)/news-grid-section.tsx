@@ -4,12 +4,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useNews } from "@/hooks/use-news";
+import type { NewsData } from "@/api/news";
 import { formatDate, getImageUrl } from "../[slug]/utils";
 
 interface NewsGridSectionProps {
   activeCategory?: string;
   currentPage?: number;
+  newsData?: NewsData;
+  isLoading: boolean;
+  isFetching: boolean;
 }
 
 function NewsCardSkeleton() {
@@ -56,13 +59,10 @@ const ITEMS_PER_PAGE = 5;
 export default function NewsGridSection({
   activeCategory,
   currentPage = 1,
+  newsData,
+  isLoading,
+  isFetching,
 }: NewsGridSectionProps) {
-  const { data: newsData, isLoading, isFetching } = useNews({
-    category: activeCategory,
-    page: currentPage,
-    limit: ITEMS_PER_PAGE,
-  });
-
   // Show loading state if data is loading or fetching
   if (isLoading || isFetching || !newsData) {
     return (
