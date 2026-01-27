@@ -19,6 +19,7 @@ export interface UpdateHomepageConfigData {
   heroSubtitle?: string;
   heroImageAlts?: string[];
   heroImages?: File[];
+  heroImagesMetadata?: string;
 }
 
 export const homepageApi = {
@@ -47,6 +48,9 @@ export const homepageApi = {
       data.heroImageAlts.forEach((alt, index) => {
         formData.append(`heroImageAlts[${index}]`, alt);
       });
+    }
+    if (data.heroImagesMetadata !== undefined) {
+      formData.append("heroImagesMetadata", data.heroImagesMetadata);
     }
     if (data.heroImages && data.heroImages.length > 0) {
       data.heroImages.forEach((file) => {

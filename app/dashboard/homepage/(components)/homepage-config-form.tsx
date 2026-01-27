@@ -15,6 +15,7 @@ const homepageConfigSchema = z.object({
   heroSubtitle: z.string().min(10).max(500).optional(),
   heroImages: z.array(z.instanceof(File)).optional(),
   heroImageAlts: z.array(z.string()).optional(),
+  heroImagesMetadata: z.string().optional(),
 });
 
 type HomepageConfigFormData = z.infer<typeof homepageConfigSchema>;
@@ -40,18 +41,19 @@ export function HomepageConfigForm({
     handleSubmit,
     control,
     register,
+    setValue,
     formState: { errors },
   } = useForm<HomepageConfigFormData>({
     resolver: zodResolver(homepageConfigSchema),
     defaultValues: homepageConfig
       ? {
-          heroTitle: homepageConfig.heroTitle,
-          heroSubtitle: homepageConfig.heroSubtitle,
-          heroImageAlts: homepageConfig.heroImages?.map((img) => img.alt) || [],
-        }
+        heroTitle: homepageConfig.heroTitle,
+        heroSubtitle: homepageConfig.heroSubtitle,
+        heroImageAlts: homepageConfig.heroImages?.map((img) => img.alt) || [],
+      }
       : {
-          heroImageAlts: [],
-        },
+        heroImageAlts: [],
+      },
   });
 
   const onSubmitForm = async (data: HomepageConfigFormData) => {
@@ -60,6 +62,7 @@ export function HomepageConfigForm({
       heroSubtitle: data.heroSubtitle,
       heroImages: data.heroImages,
       heroImageAlts: data.heroImageAlts,
+      heroImagesMetadata: data.heroImagesMetadata,
     };
     await onSubmit(submitData);
   };
@@ -97,6 +100,7 @@ export function HomepageConfigForm({
       <div className="space-y-2">
         <HeroImageUpload
           control={control}
+          setValue={setValue}
           currentImages={homepageConfig?.heroImages || null}
         />
       </div>

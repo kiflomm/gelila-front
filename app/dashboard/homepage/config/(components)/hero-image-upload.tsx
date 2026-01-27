@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Controller, Control } from "react-hook-form";
+import { Controller, Control, UseFormSetValue } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { X, Upload, GripVertical, ArrowUp, ArrowDown } from "lucide-react";
@@ -18,11 +18,13 @@ interface ImageItem {
 
 interface HeroImageUploadProps {
   control: Control<any>;
+  setValue: UseFormSetValue<any>;
   currentImages?: HeroImage[] | null;
 }
 
 export function HeroImageUpload({
   control,
+  setValue,
   currentImages,
 }: HeroImageUploadProps) {
   const [images, setImages] = useState<ImageItem[]>(() => {
@@ -70,7 +72,7 @@ export function HeroImageUpload({
     });
 
     setImages((prev) => [...prev, ...newImages]);
-      };
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleFiles(e.target.files);
@@ -153,19 +155,38 @@ export function HeroImageUpload({
     const newFiles = images.filter((img) => img.file).map((img) => img.file!);
     const newAlts = images.map((img) => img.alt);
 
-    const imagesKey = JSON.stringify({ files: newFiles.length, alts: newAlts });
-    
+    // Generate metadata for backend to understand order and mixed types
+    const metadata = images.map((img) => {
+      if (img.file) {
+        return {
+          type: "new",
+          alt: img.alt,
+        };
+      } else {
+        return {
+          type: "existing",
+          url: img.url,
+          alt: img.alt,
+        };
+      }
+    });
+
+    const imagesKey = JSON.stringify({ files: newFiles.length, alts: newAlts, metadata });
+
     if (imagesKey !== prevImagesKeyRef.current) {
       prevImagesKeyRef.current = imagesKey;
-      
+
       if (onChangeImagesRef.current) {
         onChangeImagesRef.current(newFiles);
       }
       if (onChangeAltsRef.current) {
         onChangeAltsRef.current(newAlts);
       }
+
+      // Update hidden metadata field
+      setValue("heroImagesMetadata", JSON.stringify(metadata), { shouldDirty: true });
     }
-  }, [images]);
+  }, [images, setValue]);
 
   return (
     <div className="space-y-4">
@@ -236,8 +257,8 @@ export function HeroImageUpload({
               const previewUrl = image.file
                 ? URL.createObjectURL(image.file)
                 : image.url
-                ? getImageUrl(image.url)
-                : null;
+                  ? getImageUrl(image.url)
+                  : null;
 
               return (
                 <div
