@@ -82,10 +82,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${hasTransparentNav && !isScrolled
-        ? "bg-gradient-to-b from-black/30 via-black/15 to-transparent"
-        : "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none"
-        }`}
+      className="fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
@@ -146,7 +143,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                     label={link.label}
                     href="/imports-exports"
                     sections={navigationData.dropdowns.trade.sections}
-                    isTransparent={hasTransparentNav && !isScrolled}
+                    isTransparent={false}
                     isActive={isTradeActive}
                   />
                 );
@@ -161,7 +158,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                     label={link.label}
                     href="/companies"
                     sections={navigationData.dropdowns.companies.sections}
-                    isTransparent={hasTransparentNav && !isScrolled}
+                    isTransparent={false}
                     isActive={isCompaniesPage}
                   />
                 );
@@ -171,7 +168,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
               return (
                 <Link
                   key={link.href}
-                  className={getNavLinkClasses(isActive, hasTransparentNav && !isScrolled)}
+                  className={getNavLinkClasses(isActive, false)}
                   href={link.href}
                 >
                   {link.label}
@@ -187,7 +184,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
 
             {/* Language Selector - Desktop */}
             <div className="hidden lg:block">
-              <LanguageSelector isTransparent={hasTransparentNav && !isScrolled} />
+              <LanguageSelector isTransparent={false} />
             </div>
 
             {/* Mobile/Tablet Hamburger Button */}
@@ -200,10 +197,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
               type="button"
               aria-controls="mobile-menu"
               aria-expanded={isOpen}
-              className={`notranslate lg:hidden inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white ${hasTransparentNav && !isScrolled
-                ? "text-white hover:bg-white/10"
-                : "text-gray-400 hover:text-white hover:bg-gray-700 dark:text-gray-300 dark:hover:text-white"
-                }`}
+              className="notranslate lg:hidden inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white text-gray-400 hover:text-white hover:bg-gray-700 dark:text-gray-300 dark:hover:text-white"
               aria-label="Toggle menu"
             >
               <span className="sr-only">Open main menu</span>
