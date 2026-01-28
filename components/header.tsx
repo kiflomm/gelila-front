@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo } from "react";
 import Image from "@/components/ui/image";
 import { usePathname } from "next/navigation";
 import { useMobileMenuStore } from "@/stores/use-mobile-menu-store";
@@ -12,6 +13,8 @@ import { useNavDropdownStore } from "@/stores/use-nav-dropdown-store";
 import { useScrollSpy } from "@/hooks/use-scroll-spy";
 import { useScrollPosition } from "@/hooks/use-scroll-position";
 import { LanguageSelector } from "@/components/language-selector";
+import { useImports } from "@/hooks/use-imports";
+import { useExports } from "@/hooks/use-exports";
 
 interface HeaderProps {
   forceTransparent?: boolean;
@@ -60,6 +63,36 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
     { href: "/news#news-section", label: "News & Updates" },
     { href: "/careers#careers-section", label: "Careers" },
   ];
+
+  const { data: imports = [], isLoading: importsLoading } = useImports();
+  const { data: exports = [], isLoading: exportsLoading } = useExports();
+
+  const filteredTradeSections = useMemo(() => {
+    const rawSections = navigationData.dropdowns.trade?.sections ?? [];
+    if (importsLoading || exportsLoading) {
+      return rawSections;
+    }
+    return rawSections
+      .map((section) => ({
+        ...section,
+        items: section.items.filter((item) => {
+          const importMatch = /^\/imports\/(.+)$/.exec(item.href);
+          const exportMatch = /^\/exports\/(.+)$/.exec(item.href);
+          if (importMatch) {
+            const slug = importMatch[1];
+            const importItem = imports.find((i) => i.slug === slug);
+            return !!importItem && (importItem.products?.length ?? 0) > 0;
+          }
+          if (exportMatch) {
+            const slug = exportMatch[1];
+            const exportItem = exports.find((e) => e.slug === slug);
+            return !!exportItem && (exportItem.products?.length ?? 0) > 0;
+          }
+          return false;
+        }),
+      }))
+      .filter((section) => section.items.length > 0);
+  }, [imports, importsLoading, exports, exportsLoading]);
 
   // Close mobile menu and all dropdowns on route change
   useEffect(() => {
@@ -142,7 +175,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                     id="trade"
                     label={link.label}
                     href="/imports-exports"
-                    sections={navigationData.dropdowns.trade.sections}
+                    sections={filteredTradeSections}
                     isTransparent={false}
                     isActive={isTradeActive}
                   />
@@ -270,7 +303,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                     {link.label}
                   </Link>
                   <div className="pl-4 pt-1 pb-2 flex flex-col gap-1">
-                    {navigationData.dropdowns.trade.sections.map((section) => (
+                    {filteredTradeSections.map((section) => (
                       <div key={section.title} className="flex flex-col gap-1">
                         <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 px-2 pt-2 pb-1">
                           {section.title}
