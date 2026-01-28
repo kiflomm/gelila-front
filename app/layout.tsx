@@ -1,17 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ReactQueryProvider } from "@/lib/react-query-provider";
 import { siteConfig, getOrganizationSchema, getWebSiteSchema, getAbsoluteUrl } from "@/lib/seo";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/components/auth/auth-provider";
 import { TranslationWidget } from "@/components/translation-widget";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "900"],
-});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -132,7 +125,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} font-display antialiased bg-background-light dark:bg-background-dark text-[#212121] dark:text-gray-200`}
+        className="font-display antialiased bg-background-light dark:bg-background-dark text-[#212121] dark:text-gray-200"
         suppressHydrationWarning
       >
         <TranslationWidget />

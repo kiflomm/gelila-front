@@ -41,6 +41,7 @@ export function HomepageConfigForm({
   const {
     handleSubmit,
     control,
+    setValue,
     register,
     formState: { errors },
   } = useForm<HomepageConfigFormData>({
@@ -148,6 +149,7 @@ export function HomepageConfigForm({
 
         <HeroImageUpload
           control={control}
+          setValue={setValue}
           currentImages={homepageConfig?.heroImages || null}
         />
       </div>
