@@ -238,6 +238,17 @@ export default function Footer() {
                   {footerData.contact.email.address}
                 </Link>
               </div>
+
+              {/* Contact Us CTA Button */}
+              <div className="mt-4">
+                <Link
+                  href="/contact#contact-form"
+                  className="notranslate inline-flex items-center justify-center w-full px-5 py-2.5 border border-primary/50 rounded-xl text-sm font-medium text-white hover:bg-primary transition-all duration-300 shadow-sm hover:shadow-primary/20 group"
+                >
+                  Contact Us
+                  <span className="ml-2 group-hover:translate-x-1 transition-transform duration-200">→</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
