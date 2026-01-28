@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Package, Edit, Trash2 } from "lucide-react";
+import { Search, Package, Edit, Trash2, Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -88,7 +88,15 @@ export function ProductsTable({
                 </div>
               )}
             </div>
-            <h3 className="font-semibold mb-2">{product.name}</h3>
+            <div className="flex items-start justify-between gap-2 mb-2">
+              <h3 className="font-semibold">{product.name}</h3>
+              {product.isNewArrival && (
+                <Badge variant="secondary" className="flex items-center gap-1 text-[10px] uppercase tracking-wide">
+                  <Sparkles className="size-3 text-amber-500" />
+                  New Arrival
+                </Badge>
+              )}
+            </div>
             <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
               {product.description}
             </p>

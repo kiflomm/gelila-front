@@ -8,6 +8,7 @@ export interface Product {
   imageUrl: string | null;
   imageAlt: string | null;
   orderIndex: number;
+  isNewArrival: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -75,6 +76,7 @@ export interface CreateProductData {
   imageAlt?: string;
   orderIndex?: number;
   image?: File;
+  isNewArrival?: boolean;
 }
 
 export interface UpdateProductData {
@@ -84,6 +86,7 @@ export interface UpdateProductData {
   imageAlt?: string;
   orderIndex?: number;
   image?: File;
+  isNewArrival?: boolean;
 }
 
 import type { HeroImage } from "./types";
@@ -240,6 +243,9 @@ export const sectorsApi = {
     if (data.orderIndex !== undefined) {
       formData.append("orderIndex", data.orderIndex.toString());
     }
+    if (data.isNewArrival !== undefined) {
+      formData.append("isNewArrival", String(data.isNewArrival));
+    }
     if (data.image) {
       formData.append("image", data.image);
     }
@@ -273,6 +279,9 @@ export const sectorsApi = {
     }
     if (data.orderIndex !== undefined) {
       formData.append("orderIndex", data.orderIndex.toString());
+    }
+    if (data.isNewArrival !== undefined) {
+      formData.append("isNewArrival", String(data.isNewArrival));
     }
     // Only append image if it's a new File upload
     if (data.image) {

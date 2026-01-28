@@ -9,6 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Controller } from "react-hook-form";
 import * as z from "zod";
 import type { Product, CreateProductData, UpdateProductData } from "@/api/sectors";
+import { Switch } from "@/components/ui/switch";
+import { Badge } from "@/components/ui/badge";
 import { ProductImageUpload } from "./product-image-upload";
 
 const createProductSchema = z.object({
@@ -16,6 +18,7 @@ const createProductSchema = z.object({
   description: z.string().min(10).max(1000),
   orderIndex: z.number().min(0).optional(),
   image: z.instanceof(File).optional(),
+  isNewArrival: z.boolean().optional(),
 });
 
 const updateProductSchema = z.object({
@@ -23,6 +26,7 @@ const updateProductSchema = z.object({
   description: z.string().min(10).max(1000).optional(),
   orderIndex: z.number().min(0).optional(),
   image: z.instanceof(File).optional(),
+  isNewArrival: z.boolean().optional(),
 });
 
 type CreateProductFormData = z.infer<typeof createProductSchema>;
@@ -58,9 +62,11 @@ export function ProductForm(props: ProductFormProps) {
           name: product.name,
           description: product.description,
           orderIndex: product.orderIndex,
+          isNewArrival: product.isNewArrival,
         }
       : {
           orderIndex: 0,
+          isNewArrival: false,
         },
   });
 
@@ -151,6 +157,33 @@ export function ProductForm(props: ProductFormProps) {
       ) : (
         <ProductImageUpload control={control} errors={errors} />
       )}
+
+      <div className="flex items-center justify-between rounded-lg border bg-muted/40 px-4 py-3">
+        <div className="space-y-0.5">
+          <Label htmlFor="isNewArrival">Show in New Arrivals</Label>
+          <p className="text-xs text-muted-foreground">
+            Mark this product to appear in the homepage New Arrivals carousel.
+          </p>
+        </div>
+        <Controller
+          name="isNewArrival"
+          control={control}
+          render={({ field }) => (
+            <div className="flex items-center gap-2">
+              {product?.isNewArrival && (
+                <Badge variant="secondary" className="text-[10px] uppercase tracking-wide">
+                  Currently featured
+                </Badge>
+              )}
+              <Switch
+                id="isNewArrival"
+                checked={!!field.value}
+                onCheckedChange={field.onChange}
+              />
+            </div>
+          )}
+        />
+      </div>
 
       <div className="flex justify-end gap-3 pt-4">
         {onCancel && (
