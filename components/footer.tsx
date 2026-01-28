@@ -17,14 +17,16 @@ import {
   MessageCircle,
   Send,
   Globe,
+  Music,
+  Twitch,
+  Share2,
 } from "lucide-react";
 import footerData from "@/data/footer.json";
 import navigationData from "@/data/navigation.json";
-import companiesData from "@/data/companies/companies.json";
 import { useSocialMedia } from "@/hooks/use-social-media";
 
 // Icon mapping for social media
-const iconMap: Record<string, typeof Facebook> = {
+const iconMap: Record<string, any> = {
   Facebook,
   Twitter,
   Linkedin,
@@ -34,10 +36,13 @@ const iconMap: Record<string, typeof Facebook> = {
   Slack,
   MessageCircle,
   Send,
+  Globe,
+  Music,
+  Twitch,
+  Tiktok: Music,
   Telegram: Send,
   WhatsApp: MessageCircle,
   Web: Globe,
-  Globe,
 };
 
 export default function Footer() {

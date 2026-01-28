@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import Link from "next/link";
 import Image from "@/components/ui/image";
-import { Facebook, Twitter, Linkedin, Instagram, Youtube, Github, Slack, MessageCircle, Send, Globe } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Instagram, Youtube, Github, Slack, MessageCircle, Send, Globe, Music, Twitch, Share2, Mail, Phone } from "lucide-react";
 import { SidebarSection } from "./sidebar-section";
 import { useNews, useCategories } from "@/hooks/use-news";
 import { useSocialMedia } from "@/hooks/use-social-media";
@@ -16,7 +16,7 @@ interface SidebarProps {
 }
 
 // Icon mapping for social media
-const iconMap: Record<string, typeof Facebook> = {
+const iconMap: Record<string, any> = {
   Facebook,
   Twitter,
   Linkedin,
@@ -26,10 +26,13 @@ const iconMap: Record<string, typeof Facebook> = {
   Slack,
   MessageCircle,
   Send,
+  Globe,
+  Music,
+  Twitch,
+  Tiktok: Music,
   Telegram: Send,
   WhatsApp: MessageCircle,
   Web: Globe,
-  Globe,
 };
 
 export default function Sidebar({

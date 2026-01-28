@@ -58,10 +58,12 @@ const ICON_OPTIONS = [
   "Instagram",
   "Linkedin",
   "Youtube",
+  "Tiktok",
   "Github",
   "Slack",
   "Telegram",
   "WhatsApp",
+  "Twitch",
   "Web",
   "Globe",
   "Mail",
@@ -154,7 +156,7 @@ export function SocialMediaForm(props: SocialMediaFormProps) {
             <FormItem>
               <FormLabel>Icon</FormLabel>
               <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select an icon" />
                   </SelectTrigger>
