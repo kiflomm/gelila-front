@@ -14,6 +14,7 @@ import {
   Youtube,
 } from "lucide-react";
 import footerData from "@/data/footer.json";
+import navigationData from "@/data/navigation.json";
 import companiesData from "@/data/companies/companies.json";
 import { useSocialMedia } from "@/hooks/use-social-media";
 
@@ -38,10 +39,7 @@ export default function Footer() {
     { href: "/news", label: "Blog" },
   ];
 
-  const subsidiaryLinks = companiesData.companies.map((company) => ({
-    href: `/companies/${company.slug}`,
-    label: company.name,
-  }));
+  const subsidiaryLinks = navigationData.dropdowns.companies.sections[0].items;
 
   const legalLinks = [
     { href: "/privacy", label: "Privacy Policy" },
@@ -62,14 +60,14 @@ export default function Footer() {
     <footer className="relative bg-linear-to-b from-gray-900 via-gray-800 to-gray-900 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 border-t border-gray-700/50 dark:border-gray-800/50">
       {/* Decorative gradient overlay */}
       <div className="absolute inset-0 bg-linear-to-r from-primary/5 via-transparent to-primary/5 pointer-events-none" />
-      
+
       <div className="relative px-4 sm:px-6 lg:px-8 xl:px-16 py-4 sm:py-5 lg:py-6 max-w-[1280px] mx-auto">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6 mb-4">
           {/* Company Info & Logo */}
           <div className="flex flex-col gap-3 md:col-span-2 lg:col-span-1">
             <Link href="/" className="group">
-            <div className="flex flex-col items-start gap-0 shrink-0 bg-white px-2 py-1 rounded">
+              <div className="flex flex-col items-start gap-0 shrink-0 bg-white px-2 py-1 rounded">
                 <Image
                   src="/logo-left.png"
                   alt="Gelila Manufacturing PLC"
@@ -86,7 +84,7 @@ export default function Footer() {
                 />
               </div>
             </Link>
-            
+
             <div className="flex flex-col gap-2">
               <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Follow Us
@@ -193,7 +191,7 @@ export default function Footer() {
                   </p>
                 </div>
               </div>
-              
+
               <div className="group flex items-start gap-3 p-2 rounded-lg bg-gray-800/30 dark:bg-gray-900/30 hover:bg-gray-800/50 dark:hover:bg-gray-900/50 transition-all duration-200">
                 <div className="mt-0.5 p-1.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-200">
                   <Phone className="size-4 text-primary shrink-0" />
@@ -210,7 +208,7 @@ export default function Footer() {
                   ))}
                 </div>
               </div>
-              
+
               <div className="group flex items-start gap-3 p-2 rounded-lg bg-gray-800/30 dark:bg-gray-900/30 hover:bg-gray-800/50 dark:hover:bg-gray-900/50 transition-all duration-200">
                 <div className="mt-0.5 p-1.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-200">
                   <Mail className="size-4 text-primary shrink-0" />
