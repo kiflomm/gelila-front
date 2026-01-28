@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "next/navigation";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Plus, Loader2 } from "lucide-react";
@@ -14,11 +13,13 @@ import { CreateProductDialog } from "./(components)/create-product-dialog";
 import { EditProductDialog } from "./(components)/edit-product-dialog";
 import { DeleteProductDialog } from "./(components)/delete-product-dialog";
 
+const FOOD_PROCESSING_SLUG = "food-processing";
+
 export default function SectorPage() {
   const params = useParams();
   const slug = params?.slug as string;
-  const queryClient = useQueryClient();
-  
+  const isFoodProcessing = slug === FOOD_PROCESSING_SLUG;
+
   const [isEditingSector, setIsEditingSector] = useState(false);
   const [createProductDialogOpen, setCreateProductDialogOpen] = useState(false);
   const [editProductDialogOpen, setEditProductDialogOpen] = useState(false);
@@ -29,7 +30,7 @@ export default function SectorPage() {
   const { data: sectors, isLoading } = useAdminSectors();
   const sector = sectors?.find((s) => s.slug === slug);
 
-  // Update sector mutation
+  // Update sector mutation (only used when not food-processing)
   const updateSectorMutation = useUpdateSector();
 
   // Product mutations
@@ -149,69 +150,68 @@ export default function SectorPage() {
             {sector.title}
           </h1>
           <p className="text-sm text-muted-foreground">
-            Manage sector details and products
+            {isFoodProcessing ? "Add and manage products" : "Manage sector details and products"}
           </p>
         </div>
         <div className="flex gap-2">
-          {!isEditingSector && (
-            <>
-              <Button
-                variant="outline"
-                onClick={() => setIsEditingSector(true)}
-              >
-                Edit Sector
-              </Button>
-              {sector.slug !== 'bus-transport' && (
-                <Button
-                  onClick={() => setCreateProductDialogOpen(true)}
-                  size="lg"
-                  className="shadow-md hover:shadow-lg transition-shadow"
-                >
-                  <Plus className="size-4 mr-2" />
-                  Add Product
-                </Button>
-              )}
-            </>
+          {!isFoodProcessing && !isEditingSector && (
+            <Button
+              variant="outline"
+              onClick={() => setIsEditingSector(true)}
+            >
+              Edit Sector
+            </Button>
+          )}
+          {sector.slug !== "bus-transport" && (
+            <Button
+              onClick={() => setCreateProductDialogOpen(true)}
+              size="lg"
+              className="shadow-md hover:shadow-lg transition-shadow"
+            >
+              <Plus className="size-4 mr-2" />
+              Add Product
+            </Button>
           )}
         </div>
       </div>
 
-      {/* Sector Form or Info */}
-      {isEditingSector ? (
-        <div className="bg-card rounded-lg border p-6">
-          <SectorForm
-            sector={sector}
-            onSubmit={handleUpdateSector}
-            onCancel={() => setIsEditingSector(false)}
-            isSubmitting={updateSectorMutation.isPending}
-          />
-        </div>
-      ) : (
-        <div className="bg-card rounded-lg border p-6 space-y-4">
-          <div>
-            <h2 className="text-lg font-semibold mb-2">Sector Information</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <span className="font-medium">Name:</span> {sector.name}
+      {/* Sector Form or Info - hidden for food-processing */}
+      {!isFoodProcessing &&
+        (isEditingSector ? (
+          <div className="bg-card rounded-lg border p-6">
+            <SectorForm
+              sector={sector}
+              onSubmit={handleUpdateSector}
+              onCancel={() => setIsEditingSector(false)}
+              isSubmitting={updateSectorMutation.isPending}
+            />
+          </div>
+        ) : (
+          <div className="bg-card rounded-lg border p-6 space-y-4">
+            <div>
+              <h2 className="text-lg font-semibold mb-2">Sector Information</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="font-medium">Name:</span> {sector.name}
+                </div>
+                <div>
+                  <span className="font-medium">Status:</span> {sector.status}
+                </div>
+                <div>
+                  <span className="font-medium">Location:</span> {sector.location}
+                </div>
               </div>
-              <div>
-                <span className="font-medium">Status:</span> {sector.status}
+              <div className="mt-4">
+                <span className="font-medium">Hero Description:</span>
+                <p className="text-muted-foreground mt-1">{sector.heroDescription}</p>
               </div>
-              <div>
-                <span className="font-medium">Location:</span> {sector.location}
+              <div className="mt-4">
+                <span className="font-medium">Description:</span>
+                <p className="text-muted-foreground mt-1 whitespace-pre-wrap">{sector.description}</p>
               </div>
-            </div>
-            <div className="mt-4">
-              <span className="font-medium">Hero Description:</span>
-              <p className="text-muted-foreground mt-1">{sector.heroDescription}</p>
-            </div>
-            <div className="mt-4">
-              <span className="font-medium">Description:</span>
-              <p className="text-muted-foreground mt-1 whitespace-pre-wrap">{sector.description}</p>
             </div>
           </div>
-        </div>
-      )}
+        ))}
 
       {/* Products Section - Hidden for bus-transport (Soloda Bus) */}
       {sector.slug !== 'bus-transport' && (

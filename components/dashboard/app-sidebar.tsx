@@ -109,12 +109,14 @@ export function AppSidebar() {
     }
   }, [pathname, isMobile, setOpenMobile]);
 
-  // Build sectors menu items dynamically
-  const sectorsItems = sectors.map((sector) => ({
-    title: sector.title,
-    url: `/dashboard/sectors/${sector.slug}`,
-    icon: getSectorIcon(sector.slug),
-  }));
+  // Build sectors menu items dynamically (exclude public bus transport from sidebar)
+  const sectorsItems = sectors
+    .filter((sector) => sector.slug !== "bus-transport")
+    .map((sector) => ({
+      title: sector.title,
+      url: `/dashboard/sectors/${sector.slug}`,
+      icon: getSectorIcon(sector.slug),
+    }));
 
   // Build imports menu items dynamically
   const importsItems = imports.map((importItem) => ({

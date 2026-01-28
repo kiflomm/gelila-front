@@ -182,7 +182,6 @@
     "companies": {
       "sections": [
         {
-          "title": "Gelila Shoe & sole factory",
           "items": [
             {
               "label": "Shoes & Sole",
@@ -191,28 +190,18 @@
             {
               "label": "Textile & Apparel",
               "href": "/sectors/textile-apparel"
-            }
-          ]
-        },
-        {
-          "title": "Gelila Food Complex",
-          "items": [
+            },
             {
               "label": "Food Complex",
-              "href": "/sectors/food-processing"
-            }
-          ]
-        },
-        {
-          "title": "Soloda Special Bus Public Transport",
-          "items": [
+              "href": "/companies/gelila-food"
+            },
             {
               "label": "Bus Assembly",
               "href": "/sectors/bus-assembly"
             },
             {
               "label": "Public Transport",
-              "href": "/sectors/bus-transport"
+              "href": "/companies/soloda-bus"
             }
           ]
         }
