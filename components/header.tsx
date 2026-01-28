@@ -81,12 +81,12 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
           if (importMatch) {
             const slug = importMatch[1];
             const importItem = imports.find((i) => i.slug === slug);
-            return !!importItem && (importItem.products?.length ?? 0) > 0;
+            return !!importItem;
           }
           if (exportMatch) {
             const slug = exportMatch[1];
             const exportItem = exports.find((e) => e.slug === slug);
-            return !!exportItem && (exportItem.products?.length ?? 0) > 0;
+            return !!exportItem;
           }
           return false;
         }),

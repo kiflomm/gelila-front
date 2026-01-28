@@ -37,28 +37,24 @@
     "imports": {
       "sections": [
         {
-          "title": "Industrial",
+          "title": "Vehicles & Equipment",
           "items": [
             {
-              "label": "Industrial Machinery",
-              "href": "/imports/industrial-machinery"
-            },
-            {
-              "label": "Electronics & Components",
-              "href": "/imports/electronics-components"
+              "label": "Vehicles and Vehicles Spare Parts and Related Equipment",
+              "href": "/imports/vehicles-and-vehicles-spare-parts-and-related-equipment"
             }
           ]
         },
         {
-          "title": "Consumer Goods",
+          "title": "Industrial",
           "items": [
             {
-              "label": "Packaged Consumer Goods",
-              "href": "/imports/packaged-consumer-goods"
+              "label": "Industrial Machineries and Spare Parts",
+              "href": "/imports/industrial-machineries-and-spare-parts"
             },
             {
-              "label": "Textiles and Garments",
-              "href": "/imports/textiles-garments"
+              "label": "Industrial Raw Materials",
+              "href": "/imports/industrial-raw-materials"
             }
           ]
         },
@@ -66,12 +62,12 @@
           "title": "Materials",
           "items": [
             {
-              "label": "Agricultural Products",
-              "href": "/imports/agricultural-products"
+              "label": "Construction Materials",
+              "href": "/imports/construction-materials"
             },
             {
-              "label": "Building Materials",
-              "href": "/imports/building-materials"
+              "label": "Agricultural Products",
+              "href": "/imports/agricultural-products"
             }
           ]
         }
@@ -80,11 +76,19 @@
     "exports": {
       "sections": [
         {
-          "title": "Footwear",
+          "title": "Products",
           "items": [
             {
-              "label": "Shoes & Sole",
-              "href": "/exports/footwear"
+              "label": "Agricultural Products",
+              "href": "/exports/agricultural-products"
+            },
+            {
+              "label": "Leather and Leather Products",
+              "href": "/exports/leather-and-leather-products"
+            },
+            {
+              "label": "Food Products",
+              "href": "/exports/food-products"
             }
           ]
         }
@@ -96,28 +100,24 @@
           "title": "Imports",
           "items": [
             {
-              "label": "Industrial Machinery",
-              "href": "/imports/industrial-machinery"
+              "label": "Vehicles and Vehicles Spare Parts and Related Equipment",
+              "href": "/imports/vehicles-and-vehicles-spare-parts-and-related-equipment"
             },
             {
-              "label": "Electronics & Components",
-              "href": "/imports/electronics-components"
+              "label": "Industrial Machineries and Spare Parts",
+              "href": "/imports/industrial-machineries-and-spare-parts"
             },
             {
-              "label": "Packaged Consumer Goods",
-              "href": "/imports/packaged-consumer-goods"
-            },
-            {
-              "label": "Textiles and Garments",
-              "href": "/imports/textiles-garments"
+              "label": "Construction Materials",
+              "href": "/imports/construction-materials"
             },
             {
               "label": "Agricultural Products",
               "href": "/imports/agricultural-products"
             },
             {
-              "label": "Building Materials",
-              "href": "/imports/building-materials"
+              "label": "Industrial Raw Materials",
+              "href": "/imports/industrial-raw-materials"
             }
           ]
         },
@@ -125,8 +125,16 @@
           "title": "Exports",
           "items": [
             {
-              "label": "Shoes & Sole",
-              "href": "/exports/footwear"
+              "label": "Agricultural Products",
+              "href": "/exports/agricultural-products"
+            },
+            {
+              "label": "Leather and Leather Products",
+              "href": "/exports/leather-and-leather-products"
+            },
+            {
+              "label": "Food Products",
+              "href": "/exports/food-products"
             }
           ]
         }
