@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, type FieldArrayPath } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -103,7 +103,7 @@ export function AboutConfigForm({
     remove: removeVision,
   } = useFieldArray({
     control,
-    name: "visionStatements",
+    name: "visionStatements" as FieldArrayPath<AboutConfigFormData>,
   });
 
   const {
@@ -112,7 +112,7 @@ export function AboutConfigForm({
     remove: removeMission,
   } = useFieldArray({
     control,
-    name: "missionStatements",
+    name: "missionStatements" as FieldArrayPath<AboutConfigFormData>,
   });
 
   const onSubmitHandler = async (data: AboutConfigFormData) => {

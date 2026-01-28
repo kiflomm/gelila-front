@@ -17,7 +17,7 @@ export const createLeadershipSchema = z.object({
     .preprocess(
       (v) => (v === "" || v === undefined || v === null ? undefined : Number(v)),
       z
-        .number({ invalid_type_error: "Order must be a number" })
+        .number()
         .int()
         .min(0, "Order must be at least 0"),
     )
@@ -45,7 +45,7 @@ export const updateLeadershipSchema = z.object({
     .preprocess(
       (v) => (v === "" || v === undefined || v === null ? undefined : Number(v)),
       z
-        .number({ invalid_type_error: "Order must be a number" })
+        .number()
         .int()
         .min(0, "Order must be at least 0"),
     )

@@ -6,11 +6,10 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
 import Image from "@/components/ui/image";
-import type { LeadershipFormData } from "../schemas/leadership-form.schemas";
 
 interface LeadershipImageUploadProps {
-  control: Control<LeadershipFormData>;
-  errors: FieldErrors<LeadershipFormData>;
+  control: Control<any>;
+  errors: FieldErrors<any>;
   leadership?: { photoUrl?: string | null };
   isRequired?: boolean;
 }
@@ -210,7 +209,7 @@ export function LeadershipImageUpload({
             {errors.photo && (
               <p className="text-sm text-destructive flex items-center gap-1.5">
                 <ImageIcon className="h-4 w-4" />
-                {errors.photo.message}
+                {String((errors.photo as any)?.message ?? "")}
               </p>
             )}
             {leadership && !value && !imagePreview && (

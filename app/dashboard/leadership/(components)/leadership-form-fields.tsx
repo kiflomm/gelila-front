@@ -4,11 +4,10 @@ import { Controller, Control, FieldErrors } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import type { LeadershipFormData } from "../schemas/leadership-form.schemas";
 
 interface LeadershipFormFieldsProps {
-  control: Control<LeadershipFormData>;
-  errors: FieldErrors<LeadershipFormData>;
+  control: Control<any>;
+  errors: FieldErrors<any>;
   leadership?: { fullName?: string; officialTitle?: string; bio?: string; orderIndex?: number };
 }
 
@@ -32,7 +31,9 @@ export function LeadershipFormFields({ control, errors, leadership }: Leadership
           )}
         />
         {errors.fullName && (
-          <p className="text-sm text-destructive">{errors.fullName.message}</p>
+          <p className="text-sm text-destructive">
+            {String((errors.fullName as any)?.message ?? "")}
+          </p>
         )}
       </div>
 
@@ -53,7 +54,9 @@ export function LeadershipFormFields({ control, errors, leadership }: Leadership
           )}
         />
         {errors.officialTitle && (
-          <p className="text-sm text-destructive">{errors.officialTitle.message}</p>
+          <p className="text-sm text-destructive">
+            {String((errors.officialTitle as any)?.message ?? "")}
+          </p>
         )}
       </div>
 
@@ -75,7 +78,9 @@ export function LeadershipFormFields({ control, errors, leadership }: Leadership
           )}
         />
         {errors.bio && (
-          <p className="text-sm text-destructive">{errors.bio.message}</p>
+          <p className="text-sm text-destructive">
+            {String((errors.bio as any)?.message ?? "")}
+          </p>
         )}
       </div>
 

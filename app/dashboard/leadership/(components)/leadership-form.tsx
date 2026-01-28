@@ -24,7 +24,7 @@ export function LeadershipForm({ leadership, onSubmit, onCancel, isSubmitting = 
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<LeadershipFormData>({
+  } = useForm({
     resolver: zodResolver(leadership ? updateLeadershipSchema : createLeadershipSchema),
     defaultValues: leadership
       ? {
