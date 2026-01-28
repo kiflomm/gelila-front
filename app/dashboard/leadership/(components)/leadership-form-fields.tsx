@@ -9,7 +9,7 @@ import type { LeadershipFormData } from "../schemas/leadership-form.schemas";
 interface LeadershipFormFieldsProps {
   control: Control<LeadershipFormData>;
   errors: FieldErrors<LeadershipFormData>;
-  leadership?: { fullName?: string; officialTitle?: string; bio?: string };
+  leadership?: { fullName?: string; officialTitle?: string; bio?: string; orderIndex?: number };
 }
 
 export function LeadershipFormFields({ control, errors, leadership }: LeadershipFormFieldsProps) {
@@ -76,6 +76,28 @@ export function LeadershipFormFields({ control, errors, leadership }: Leadership
         />
         {errors.bio && (
           <p className="text-sm text-destructive">{errors.bio.message}</p>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="orderIndex">Display Order</Label>
+        <Controller
+          name="orderIndex"
+          control={control}
+          render={({ field }) => (
+            <Input
+              id="orderIndex"
+              type="number"
+              min={0}
+              {...field}
+              value={field.value ?? leadership?.orderIndex ?? ""}
+              placeholder="0 (top of the list)"
+              aria-invalid={errors.orderIndex ? "true" : "false"}
+            />
+          )}
+        />
+        {errors.orderIndex && (
+          <p className="text-sm text-destructive">{errors.orderIndex.message as string}</p>
         )}
       </div>
     </>

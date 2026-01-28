@@ -26,15 +26,17 @@ interface LeadershipTableDesktopProps {
 }
 
 function getImageUrl(photoUrl: string | null | undefined): string {
-  if (!photoUrl) return '';
-  if (photoUrl.startsWith('http://') || photoUrl.startsWith('https://')) {
+  if (!photoUrl) return "";
+  if (photoUrl.startsWith("http://") || photoUrl.startsWith("https://")) {
     return photoUrl;
   }
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || '';
-  if (photoUrl.startsWith('/uploads')) {
-    return `${apiBaseUrl.replace('/api/v1', '')}${photoUrl}`;
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  if (photoUrl.startsWith("/uploads")) {
+    return `${apiBaseUrl.replace("/api/v1", "")}${photoUrl}`;
   }
-  return photoUrl.startsWith('/') ? `${apiBaseUrl}${photoUrl}` : `${apiBaseUrl}/${photoUrl}`;
+  return photoUrl.startsWith("/")
+    ? `${apiBaseUrl}${photoUrl}`
+    : `${apiBaseUrl}/${photoUrl}`;
 }
 
 export function LeadershipTableDesktop({
@@ -125,7 +127,9 @@ export function LeadershipTableDesktop({
                         className="object-cover"
                         unoptimized={
                           getImageUrl(item.photoUrl).includes("localhost") ||
-                          getImageUrl(item.photoUrl).includes("api.gelilamanufacturingplc.com")
+                          getImageUrl(item.photoUrl).includes(
+                            "api.gelilamanufacturingplc.com",
+                          )
                         }
                         onError={(e) => {
                           const target = e.currentTarget as HTMLImageElement;
@@ -133,12 +137,17 @@ export function LeadershipTableDesktop({
                           const parent = target.parentElement;
                           if (parent) {
                             const fallback = parent.querySelector(".photo-fallback");
-                            if (fallback) (fallback as HTMLElement).style.display = "flex";
+                            if (fallback)
+                              (fallback as HTMLElement).style.display = "flex";
                           }
                         }}
                       />
                     ) : null}
-                    <div className={`photo-fallback absolute inset-0 flex items-center justify-center ${item.photoUrl ? 'hidden' : ''}`}>
+                    <div
+                      className={`photo-fallback absolute inset-0 flex items-center justify-center ${
+                        item.photoUrl ? "hidden" : ""
+                      }`}
+                    >
                       <User className="size-6 text-muted-foreground" />
                     </div>
                   </div>

@@ -31,6 +31,7 @@ export function LeadershipForm({ leadership, onSubmit, onCancel, isSubmitting = 
           fullName: leadership.fullName,
           officialTitle: leadership.officialTitle,
           bio: leadership.bio,
+          orderIndex: leadership.orderIndex,
         }
       : {},
   });
@@ -40,6 +41,7 @@ export function LeadershipForm({ leadership, onSubmit, onCancel, isSubmitting = 
       fullName: data.fullName,
       officialTitle: data.officialTitle,
       bio: data.bio,
+      orderIndex: data.orderIndex,
       // Only include photo if it's a File instance (new upload)
       // For updates, if no new photo is uploaded, don't send photo field
       photo: data.photo instanceof File ? data.photo : undefined,

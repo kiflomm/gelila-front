@@ -12,15 +12,17 @@ interface LeadershipTableMobileProps {
 }
 
 function getImageUrl(photoUrl: string | null | undefined): string {
-  if (!photoUrl) return '';
-  if (photoUrl.startsWith('http://') || photoUrl.startsWith('https://')) {
+  if (!photoUrl) return "";
+  if (photoUrl.startsWith("http://") || photoUrl.startsWith("https://")) {
     return photoUrl;
   }
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || '';
-  if (photoUrl.startsWith('/uploads')) {
-    return `${apiBaseUrl.replace('/api/v1', '')}${photoUrl}`;
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  if (photoUrl.startsWith("/uploads")) {
+    return `${apiBaseUrl.replace("/api/v1", "")}${photoUrl}`;
   }
-  return photoUrl.startsWith('/') ? `${apiBaseUrl}${photoUrl}` : `${apiBaseUrl}/${photoUrl}`;
+  return photoUrl.startsWith("/")
+    ? `${apiBaseUrl}${photoUrl}`
+    : `${apiBaseUrl}/${photoUrl}`;
 }
 
 export function LeadershipTableMobile({

@@ -13,6 +13,15 @@ export const createLeadershipSchema = z.object({
     .string()
     .min(10, "Bio must be at least 10 characters")
     .max(500, "Bio must be less than 500 characters (1-2 sentences)"),
+  orderIndex: z
+    .preprocess(
+      (v) => (v === "" || v === undefined || v === null ? undefined : Number(v)),
+      z
+        .number({ invalid_type_error: "Order must be a number" })
+        .int()
+        .min(0, "Order must be at least 0"),
+    )
+    .optional(),
   photo: z.instanceof(File, { message: "Photo is required" }),
 });
 
@@ -31,6 +40,15 @@ export const updateLeadershipSchema = z.object({
     .string()
     .min(10, "Bio must be at least 10 characters")
     .max(500, "Bio must be less than 500 characters (1-2 sentences)")
+    .optional(),
+  orderIndex: z
+    .preprocess(
+      (v) => (v === "" || v === undefined || v === null ? undefined : Number(v)),
+      z
+        .number({ invalid_type_error: "Order must be a number" })
+        .int()
+        .min(0, "Order must be at least 0"),
+    )
     .optional(),
   photo: z.instanceof(File).optional(),
 });

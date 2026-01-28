@@ -7,6 +7,7 @@ export interface LeadershipItem {
   bio: string;
   photoUrl: string;
   photoAlt?: string | null;
+  orderIndex: number;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -18,6 +19,7 @@ export interface CreateLeadershipData {
   photoUrl?: string;
   photoAlt?: string;
   photo?: File;
+  orderIndex?: number;
 }
 
 export interface UpdateLeadershipData {
@@ -27,6 +29,7 @@ export interface UpdateLeadershipData {
   photoUrl?: string;
   photoAlt?: string;
   photo?: File;
+  orderIndex?: number;
 }
 
 export const leadershipApi = {
@@ -47,6 +50,9 @@ export const leadershipApi = {
     formData.append("fullName", data.fullName);
     formData.append("officialTitle", data.officialTitle);
     formData.append("bio", data.bio);
+    if (data.orderIndex !== undefined) {
+      formData.append("orderIndex", String(data.orderIndex));
+    }
     if (data.photoUrl) {
       formData.append("photoUrl", data.photoUrl);
     }
@@ -79,6 +85,9 @@ export const leadershipApi = {
     if (data.bio !== undefined) {
       formData.append("bio", data.bio);
     }
+    if (data.orderIndex !== undefined) {
+      formData.append("orderIndex", String(data.orderIndex));
+    }
     if (data.photoUrl !== undefined) {
       formData.append("photoUrl", data.photoUrl);
     }
@@ -99,6 +108,15 @@ export const leadershipApi = {
 
   deleteLeadership: async (id: number): Promise<{ message: string }> => {
     const response = await axiosProtectedClient.delete(`/leadership/${id}`);
+    return response.data;
+  },
+
+  reorderLeadership: async (
+    items: { id: number; orderIndex: number }[]
+  ): Promise<{ message: string }> => {
+    const response = await axiosProtectedClient.patch('/leadership/reorder', {
+      items,
+    });
     return response.data;
   },
 };
