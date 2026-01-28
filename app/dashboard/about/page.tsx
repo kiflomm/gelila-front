@@ -217,6 +217,52 @@ export default function AboutConfigPage() {
             ) : null}
           </div>
 
+          {/* Vision Section */}
+          <div className="border-t pt-6">
+            <h2 className="text-lg font-semibold mb-4">Vision Section</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="font-medium">Title:</span>
+                <p className="text-muted-foreground mt-1">
+                  {aboutConfig?.visionTitle || "Not set"}
+                </p>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="font-medium">Statements:</span>
+              <ul className="list-disc list-inside text-muted-foreground mt-1 space-y-1">
+                {aboutConfig?.visionStatements && aboutConfig.visionStatements.length > 0
+                  ? aboutConfig.visionStatements.map((statement, index) => (
+                      <li key={index}>{statement}</li>
+                    ))
+                  : "Not set"}
+              </ul>
+            </div>
+          </div>
+
+          {/* Mission Section */}
+          <div className="border-t pt-6">
+            <h2 className="text-lg font-semibold mb-4">Mission Section</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="font-medium">Title:</span>
+                <p className="text-muted-foreground mt-1">
+                  {aboutConfig?.missionTitle || "Not set"}
+                </p>
+              </div>
+            </div>
+            <div className="mt-4">
+              <span className="font-medium">Statements:</span>
+              <ul className="list-disc list-inside text-muted-foreground mt-1 space-y-1">
+                {aboutConfig?.missionStatements && aboutConfig.missionStatements.length > 0
+                  ? aboutConfig.missionStatements.map((statement, index) => (
+                      <li key={index}>{statement}</li>
+                    ))
+                  : "Not set"}
+              </ul>
+            </div>
+          </div>
+
           {/* Stats Section */}
           <div className="border-t pt-6">
             <h2 className="text-lg font-semibold mb-4">Statistics</h2>

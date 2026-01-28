@@ -24,6 +24,12 @@ export interface AboutConfig {
   statEmployeesLabel: string;
   statYearsValue: string;
   statYearsLabel: string;
+  // Vision
+  visionTitle: string;
+  visionStatements: string[];
+  // Mission
+  missionTitle: string;
+  missionStatements: string[];
   // Timestamps
   createdAt?: string;
   updatedAt?: string;
@@ -50,6 +56,12 @@ export interface UpdateAboutConfigData {
   statEmployeesLabel?: string;
   statYearsValue?: string;
   statYearsLabel?: string;
+  // Vision
+  visionTitle?: string;
+  visionStatements?: string[];
+  // Mission
+  missionTitle?: string;
+  missionStatements?: string[];
 }
 
 export const aboutApi = {
@@ -136,6 +148,26 @@ export const aboutApi = {
     }
     if (data.statYearsLabel !== undefined) {
       formData.append("statYearsLabel", data.statYearsLabel);
+    }
+
+    // Vision fields
+    if (data.visionTitle !== undefined) {
+      formData.append("visionTitle", data.visionTitle);
+    }
+    if (data.visionStatements && data.visionStatements.length > 0) {
+      data.visionStatements.forEach((statement, index) => {
+        formData.append(`visionStatements[${index}]`, statement);
+      });
+    }
+
+    // Mission fields
+    if (data.missionTitle !== undefined) {
+      formData.append("missionTitle", data.missionTitle);
+    }
+    if (data.missionStatements && data.missionStatements.length > 0) {
+      data.missionStatements.forEach((statement, index) => {
+        formData.append(`missionStatements[${index}]`, statement);
+      });
     }
 
     const response = await axiosProtectedClient.patch(
