@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import Image from "@/components/ui/image";
 import { AboutConfigForm } from "./(components)/about-config-form";
 import {
   useAboutConfigForAdmin,
@@ -123,11 +124,13 @@ export default function AboutConfigPage() {
                       ? img.url
                       : `${process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "")}${img.url}`;
                     return (
-                      <div key={index} className="relative rounded-md overflow-hidden border border-border">
-                        <img
+                      <div key={index} className="relative h-32 rounded-md overflow-hidden border border-border">
+                        <Image
                           src={imageUrl}
                           alt={img.alt || `Page heading image ${index + 1}`}
-                          className="w-full h-32 object-cover"
+                          fill
+                          className="object-cover"
+                          unoptimized
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center">
                           {index + 1}
@@ -195,11 +198,13 @@ export default function AboutConfigPage() {
                       ? img.url
                       : `${process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "")}${img.url}`;
                     return (
-                      <div key={index} className="relative rounded-md overflow-hidden border border-border">
-                        <img
+                      <div key={index} className="relative h-32 rounded-md overflow-hidden border border-border">
+                        <Image
                           src={imageUrl}
                           alt={img.alt || `Story image ${index + 1}`}
-                          className="w-full h-32 object-cover"
+                          fill
+                          className="object-cover"
+                          unoptimized
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center">
                           {index + 1}

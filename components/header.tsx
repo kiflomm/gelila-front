@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/ui/image";
 import { usePathname } from "next/navigation";
 import { useMobileMenuStore } from "@/stores/use-mobile-menu-store";
 import { useEffect } from "react";

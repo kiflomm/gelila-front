@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Image from "@/components/ui/image";
 import { Edit, Trash2, Search, User } from "lucide-react";
 import type { LeadershipItem } from "@/api/leadership";
 
@@ -55,18 +56,22 @@ export function LeadershipTableMobile({
           <div className="flex items-start gap-4 mb-4">
             <div className="relative w-16 h-16 rounded-full overflow-hidden bg-muted flex items-center justify-center shrink-0">
               {item.photoUrl ? (
-                <img
+                <Image
                   src={getImageUrl(item.photoUrl)}
                   alt={item.photoAlt || item.fullName}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  unoptimized={
+                    getImageUrl(item.photoUrl).includes("localhost") ||
+                    getImageUrl(item.photoUrl).includes("api.gelilamanufacturingplc.com")
+                  }
                   onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    const parent = e.currentTarget.parentElement;
+                    const target = e.currentTarget as HTMLImageElement;
+                    target.style.display = "none";
+                    const parent = target.parentElement;
                     if (parent) {
-                      const fallback = parent.querySelector('.photo-fallback');
-                      if (fallback) {
-                        (fallback as HTMLElement).style.display = 'flex';
-                      }
+                      const fallback = parent.querySelector(".photo-fallback");
+                      if (fallback) (fallback as HTMLElement).style.display = "flex";
                     }
                   }}
                 />

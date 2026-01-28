@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
+import Image from "@/components/ui/image";
 import * as z from "zod";
 import type { Sector } from "@/api/sectors";
 
@@ -238,13 +239,12 @@ export function SectorImageUpload({
                           {/* Image preview */}
                           {previewUrl && (
                             <div className="relative w-32 h-24 rounded-md overflow-hidden bg-muted flex-shrink-0">
-                              <img
+                              <Image
                                 src={previewUrl}
                                 alt={image.alt || "Preview"}
-                                className="w-full h-full object-cover"
-                                onError={() => {
-                                  // Handle error silently
-                                }}
+                                fill
+                                className="object-cover"
+                                unoptimized
                               />
                             </div>
                           )}

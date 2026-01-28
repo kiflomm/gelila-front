@@ -5,7 +5,8 @@ export function useDashboardStats() {
   return useQuery<DashboardStatistics>({
     queryKey: ["dashboard", "statistics"],
     queryFn: () => dashboardApi.getDashboardStatistics(),
-    staleTime: 60000, // 1 minute
+    staleTime: 0,
+    gcTime: 0,
     refetchOnWindowFocus: false,
   });
 }

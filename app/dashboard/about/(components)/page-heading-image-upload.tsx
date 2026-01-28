@@ -5,6 +5,7 @@ import { Controller, Control } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { X, Upload } from "lucide-react";
+import Image from "@/components/ui/image";
 import { cn } from "@/lib/utils";
 
 interface ImageItem {
@@ -178,18 +179,22 @@ export function PageHeadingImageUpload({
                 >
                   <div className="relative aspect-video">
                     {image.file ? (
-                      <img
+                      <Image
                         src={URL.createObjectURL(image.file)}
                         alt={image.alt || `Page heading image ${index + 1}`}
-                        className="h-full w-full object-cover"
+                        fill
+                        className="object-cover"
+                        unoptimized
                       />
                     ) : image.url ? (
-                      <img
+                      <Image
                         src={getImageUrl(image.url)}
                         alt={image.alt || `Page heading image ${index + 1}`}
-                        className="h-full w-full object-cover"
+                        fill
+                        className="object-cover"
+                        unoptimized
                         onError={(e) => {
-                          const target = e.target as HTMLImageElement;
+                          const target = e.currentTarget as HTMLImageElement;
                           target.style.display = "none";
                         }}
                       />

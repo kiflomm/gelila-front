@@ -6,6 +6,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Plus, Loader2 } from "lucide-react";
+import Image from "@/components/ui/image";
 import { useAdminExports, useUpdateExport, useCreateExportProduct, useUpdateExportProduct, useDeleteExportProduct } from "@/hooks/use-exports";
 import { type Export, type ExportProduct, type UpdateExportData, type CreateExportProductData, type UpdateExportProductData } from "@/api/exports";
 import { ExportForm } from "../(components)/export-form";
@@ -238,11 +239,13 @@ export default function ExportPage() {
                     ? [exportItem.imageUrl]
                     : []
                   ).map((url, index) => (
-                    <div key={index} className="relative rounded-md overflow-hidden border">
-                      <img
+                    <div key={index} className="relative h-32 rounded-md overflow-hidden border">
+                      <Image
                         src={getImageUrl(url)}
                         alt={exportItem.imageAlts?.[index] || exportItem.imageAlt || exportItem.title}
-                        className="w-full h-32 object-cover"
+                        fill
+                        className="object-cover"
+                        unoptimized
                       />
                       <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center">
                         {index + 1}

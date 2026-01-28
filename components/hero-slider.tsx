@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/ui/image";
 import { useState, useEffect, useCallback, useRef } from "react";
 import {
   Carousel,
@@ -151,19 +151,12 @@ export function HeroSlider({
                   className="pl-0 basis-full h-full"
                 >
                   <div className="relative w-full h-full">
-                    <img
+                    <Image
                       src={image.url}
                       alt={image.alt}
-                      className="w-full h-full object-cover brightness-75"
-                      style={{ 
-                        display: 'block',
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover'
-                      }}
-                      onError={(e) => {
-                        // Silently handle image load errors
-                      }}
+                      fill
+                      className="object-cover brightness-75"
+                      unoptimized={shouldUnoptimize(image.url)}
                     />
                   </div>
                 </CarouselItem>

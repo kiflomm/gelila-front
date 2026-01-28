@@ -6,6 +6,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Plus, Loader2 } from "lucide-react";
+import Image from "@/components/ui/image";
 import { useAdminImports, useUpdateImport, useCreateImportProduct, useUpdateImportProduct, useDeleteImportProduct } from "@/hooks/use-imports";
 import { type Import, type ImportProduct, type UpdateImportData, type CreateImportProductData, type UpdateImportProductData } from "@/api/imports";
 import { ImportForm } from "./(components)/import-form";
@@ -230,10 +231,12 @@ export default function ImportPage() {
                     : []
                   ).map((url: string, index: number) => (
                     <div key={index} className="relative aspect-video rounded-lg overflow-hidden border bg-muted group">
-                      <img
+                      <Image
                         src={getImageUrl(url)}
                         alt={importItem.imageAlts?.[index] || importItem.imageAlt || `${importItem.title} - Image ${index + 1}`}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
+                        unoptimized
                       />
                       <div className="absolute top-1 right-1 bg-primary text-primary-foreground text-xs font-bold px-1.5 py-0.5 rounded">
                         {index + 1}

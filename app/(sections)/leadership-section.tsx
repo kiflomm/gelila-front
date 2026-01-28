@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { leadershipApi, type LeadershipItem } from "@/api/leadership";
 import leadershipData from "@/data/leadership.json";
+import Image from "@/components/ui/image";
 import {
   Carousel,
   CarouselContent,
@@ -36,15 +37,13 @@ interface LeadershipSectionProps {
 }
 
 function getImageUrl(photoUrl: string | null | undefined): string {
-  if (!photoUrl) return '';
-  if (photoUrl.startsWith('http://') || photoUrl.startsWith('https://')) {
+  if (!photoUrl) return "";
+  if (photoUrl.startsWith("http://") || photoUrl.startsWith("https://")) {
     return photoUrl;
   }
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || '';
-  if (photoUrl.startsWith('/uploads')) {
-    return `${apiBaseUrl.replace('/api/v1', '')}${photoUrl}`;
-  }
-  return photoUrl.startsWith('/') ? `${apiBaseUrl}${photoUrl}` : `${apiBaseUrl}/${photoUrl}`;
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+  const baseUrl = apiBaseUrl.replace("/api/v1", "").replace(/\/$/, "");
+  return photoUrl.startsWith("/") ? `${baseUrl}${photoUrl}` : `${baseUrl}/${photoUrl}`;
 }
 
 export default function LeadershipSection({
@@ -108,23 +107,30 @@ export default function LeadershipSection({
                     <div className="rounded-xl border border-primary/10 dark:border-primary/20 bg-white dark:bg-black/20 overflow-hidden hover:border-primary/30 dark:hover:border-primary/40 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 p-4 flex flex-col items-center text-center">
                       <div className="relative w-[150px] h-[150px] rounded-full overflow-hidden bg-muted mb-3 flex items-center justify-center shrink-0">
                         {person.photoUrl ? (
-                          <img
+                          <Image
                             src={getImageUrl(person.photoUrl)}
                             alt={person.photoAlt || person.fullName}
-                            className="w-full h-full object-cover"
+                            fill
+                            className="object-cover"
+                            unoptimized={
+                              getImageUrl(person.photoUrl).includes("localhost") ||
+                              getImageUrl(person.photoUrl).includes("api.gelilamanufacturingplc.com")
+                            }
                             onError={(e) => {
-                              e.currentTarget.style.display = 'none';
+                              e.currentTarget.style.display = "none";
                               const parent = e.currentTarget.parentElement;
                               if (parent) {
-                                const fallback = parent.querySelector('.photo-fallback');
+                                const fallback = parent.querySelector(".photo-fallback");
                                 if (fallback) {
-                                  (fallback as HTMLElement).style.display = 'flex';
+                                  (fallback as HTMLElement).style.display = "flex";
                                 }
                               }
                             }}
                           />
                         ) : null}
-                        <div className={`photo-fallback absolute inset-0 flex items-center justify-center ${person.photoUrl ? 'hidden' : ''}`}>
+                        <div
+                          className={`photo-fallback absolute inset-0 flex items-center justify-center ${person.photoUrl ? "hidden" : ""}`}
+                        >
                           <User className="size-16 text-muted-foreground" />
                         </div>
                       </div>

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/ui/image";
 import { aboutApi } from "@/api/about";
 import pageHeadingDataFallback from "@/data/about-page-heading.json";
 import { HeroSlider } from "@/components/hero-slider";

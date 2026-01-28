@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
+import Image from "@/components/ui/image";
 import * as z from "zod";
 import type { ImportProduct } from "@/api/imports";
 
@@ -120,10 +121,12 @@ export function ImportProductImageUpload({
               {imagePreview ? (
                 <div className="relative p-4">
                   <div className="relative w-full h-48 rounded-md overflow-hidden bg-muted group">
-                    <img
+                    <Image
                       src={imagePreview}
                       alt="Preview"
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
+                      unoptimized
                       onError={() => {
                         setImagePreview(null);
                         if (fileInputRef.current) {

@@ -10,6 +10,7 @@ import * as z from "zod";
 import { type ExportsPageConfig, type UpdatePageConfigData } from "@/api/exports";
 import { HeroImageUpload } from "./hero-image-upload";
 import { Edit2 } from "lucide-react";
+import Image from "@/components/ui/image";
 
 const pageConfigSchema = z.object({
   heroTitle: z.string().min(3).max(200).optional(),
@@ -93,11 +94,13 @@ export function PageConfigForm({
                     ? img.url
                     : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '')}${img.url}`;
                   return (
-                    <div key={index} className="relative rounded-md overflow-hidden border">
-                      <img
+                    <div key={index} className="relative h-32 rounded-md overflow-hidden border">
+                      <Image
                         src={imageUrl}
                         alt={img.alt || `Hero image ${index + 1}`}
-                        className="w-full h-32 object-cover"
+                        fill
+                        className="object-cover"
+                        unoptimized
                       />
                       <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center">
                         {index + 1}

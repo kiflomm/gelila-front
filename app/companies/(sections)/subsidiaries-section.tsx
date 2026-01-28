@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/ui/image";
 import companiesData from "@/data/companies/companies.json";
 
 export default function SubsidiariesSection() {

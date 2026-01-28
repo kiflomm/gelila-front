@@ -5,6 +5,7 @@ import { Search, Package, Edit, Trash2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import Image from "@/components/ui/image";
 import { type Product } from "@/api/sectors";
 
 interface ProductsTableProps {
@@ -68,16 +69,18 @@ export function ProductsTable({
             key={product.id}
             className="bg-card rounded-lg border p-4 hover:shadow-md transition-shadow"
           >
-            <div className="aspect-video w-full bg-muted rounded-md mb-4 overflow-hidden">
+            <div className="relative aspect-video w-full bg-muted rounded-md mb-4 overflow-hidden">
               {product.imageUrl ? (
-                <img
+                <Image
                   src={
-                    product.imageUrl.startsWith('http')
+                    product.imageUrl.startsWith("http")
                       ? product.imageUrl
-                      : `${process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '') || ''}${product.imageUrl}`
+                      : `${process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "") || ""}${product.imageUrl}`
                   }
                   alt={product.imageAlt || product.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  unoptimized
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/ui/image";
 import pageHeadingData from "@/data/companies-page-heading.json";
 
 export default function PageHeadingSection() {

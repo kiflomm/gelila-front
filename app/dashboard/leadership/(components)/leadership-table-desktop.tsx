@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Edit, Trash2, Search, MoreHorizontal, User } from "lucide-react";
 import type { LeadershipItem } from "@/api/leadership";
+import Image from "@/components/ui/image";
 
 interface LeadershipTableDesktopProps {
   leadership: LeadershipItem[];
@@ -117,18 +118,22 @@ export function LeadershipTableDesktop({
                 <TableCell className="py-3">
                   <div className="relative w-12 h-12 rounded-full overflow-hidden bg-muted flex items-center justify-center">
                     {item.photoUrl ? (
-                      <img
+                      <Image
                         src={getImageUrl(item.photoUrl)}
                         alt={item.photoAlt || item.fullName}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
+                        unoptimized={
+                          getImageUrl(item.photoUrl).includes("localhost") ||
+                          getImageUrl(item.photoUrl).includes("api.gelilamanufacturingplc.com")
+                        }
                         onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                          const parent = e.currentTarget.parentElement;
+                          const target = e.currentTarget as HTMLImageElement;
+                          target.style.display = "none";
+                          const parent = target.parentElement;
                           if (parent) {
-                            const fallback = parent.querySelector('.photo-fallback');
-                            if (fallback) {
-                              (fallback as HTMLElement).style.display = 'flex';
-                            }
+                            const fallback = parent.querySelector(".photo-fallback");
+                            if (fallback) (fallback as HTMLElement).style.display = "flex";
                           }
                         }}
                       />

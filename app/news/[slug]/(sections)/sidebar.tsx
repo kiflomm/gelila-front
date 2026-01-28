@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "@/components/ui/image";
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import { SidebarSection } from "./sidebar-section";
 import { useNews, useCategories } from "@/hooks/use-news";

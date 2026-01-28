@@ -5,6 +5,7 @@ import { Controller, Control, UseFormSetValue } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { X, Upload, GripVertical, ArrowUp, ArrowDown } from "lucide-react";
+import Image from "@/components/ui/image";
 import { cn } from "@/lib/utils";
 import type { HeroImage } from "@/api/homepage";
 
@@ -299,13 +300,12 @@ export function HeroImageUpload({
                     {/* Image preview */}
                     {previewUrl && (
                       <div className="relative w-32 h-24 rounded-md overflow-hidden bg-muted flex-shrink-0">
-                        <img
+                        <Image
                           src={previewUrl}
                           alt={image.alt || "Preview"}
-                          className="w-full h-full object-cover"
-                          onError={() => {
-                            // Handle error
-                          }}
+                          fill
+                          className="object-cover"
+                          unoptimized
                         />
                       </div>
                     )}

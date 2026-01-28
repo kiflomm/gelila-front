@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Edit, Trash2, Search, Globe } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { type Export } from "@/api/exports";
-import Image from "next/image";
+import Image from "@/components/ui/image";
 
 interface ExportsTableProps {
   exports: Export[];

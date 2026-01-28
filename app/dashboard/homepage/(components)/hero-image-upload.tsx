@@ -5,6 +5,7 @@ import { Controller, Control } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { X, Upload, Image as ImageIcon } from "lucide-react";
+import Image from "@/components/ui/image";
 import { cn } from "@/lib/utils";
 
 interface HeroImageUploadProps {
@@ -126,10 +127,12 @@ export function HeroImageUpload({
               {imagePreviewUrl ? (
                 <div className="relative p-3 sm:p-4">
                   <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-muted group shadow-sm">
-                    <img
+                    <Image
                       src={imagePreviewUrl}
                       alt={currentImageAlt || "Hero preview"}
-                      className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                      fill
+                      className="object-cover transition-transform group-hover:scale-105"
+                      unoptimized
                       onError={() => {
                         setPreview(null);
                         if (fileInputRef.current) {
