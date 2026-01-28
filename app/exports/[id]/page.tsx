@@ -170,8 +170,8 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
       if (!imageUrl || imageUrl.trim() === '') {
         return null;
       }
-      // Add timestamp to bust browser cache for updated images (skip data URLs)
-      const urlWithCacheBuster = imageUrl.startsWith('data:')
+      // Add timestamp to bust browser cache for updated images (skip data/blob URLs)
+      const urlWithCacheBuster = imageUrl.startsWith('data:') || imageUrl.startsWith('blob:')
         ? imageUrl
         : (() => {
             const cacheBuster = product.updatedAt
