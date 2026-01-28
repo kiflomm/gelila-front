@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Footer from "@/components/footer";
 import { getAbsoluteUrl } from "@/lib/seo";
 
+// Disable caching for the entire /about route so key highlights and all API data are always fresh
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "About Us - Gelila Manufacturing PLC",
   description:
