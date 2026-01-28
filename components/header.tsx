@@ -62,6 +62,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
     { href: "/companies", label: "Subsidiaries" },
     { href: "/news#news-section", label: "News & Updates" },
     { href: "/careers#careers-section", label: "Careers" },
+    { href: "/contact#contact-form", label: "Contact Us" },
   ];
 
   const { data: imports = [], isLoading: importsLoading } = useImports();
@@ -118,7 +119,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
       className="fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="flex items-center justify-between h-16 lg:h-16">
           {/* Logo */}
           <div className="shrink-0 max-w-fit mr-4">
             <Link
@@ -134,7 +135,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                   alt="Gelila Manufacturing PLC"
                   width={100}
                   height={80}
-                  className="w-auto h-8 lg:h-12 shrink-0"
+                  className="w-auto h-8 lg:h-9 shrink-0"
                   priority
                 />
                 <Image
@@ -142,7 +143,7 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
                   alt="Gelila Manufacturing PLC"
                   width={100}
                   height={80}
-                  className="w-auto h-8 lg:h-12 shrink-0"
+                  className="w-auto h-8 lg:h-9 shrink-0"
                   priority
                 />
               </div>
@@ -387,14 +388,6 @@ export default function Header({ forceTransparent = false }: HeaderProps) {
             );
           })}
 
-          {/* Contact Us Button - Mobile */}
-          <Link
-            onClick={close}
-            className="notranslate mt-2 inline-flex items-center justify-center px-5 py-3 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all hover:shadow-lg"
-            href="/contact#contact-form"
-          >
-            Contact Us
-          </Link>
 
           {/* Language Selector - Mobile */}
           <div className="mt-3">

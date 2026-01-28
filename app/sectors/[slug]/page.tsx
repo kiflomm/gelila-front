@@ -31,7 +31,7 @@ interface SectorPageProps {
 
 export default async function SectorPage({ params }: SectorPageProps) {
   const { slug } = await params;
-  
+
   let sector;
   try {
     sector = await getSectorBySlug(slug);
@@ -43,7 +43,7 @@ export default async function SectorPage({ params }: SectorPageProps) {
   if (!sector) {
     notFound();
   }
-  
+
   // Helper function to construct full image URL
   const getImageUrl = (imageUrl: string | null | undefined): string => {
     if (!imageUrl) return "";
@@ -64,17 +64,17 @@ export default async function SectorPage({ params }: SectorPageProps) {
   // Handle multiple images (imageUrls) or fallback to single image (imageUrl)
   const sectorImages = sector.imageUrls && Array.isArray(sector.imageUrls) && sector.imageUrls.length > 0
     ? sector.imageUrls
-        .filter((url: string) => url && url.trim() !== '') // Filter out empty URLs
-        .map((url: string, index: number) => ({
-          url: getImageUrl(url),
-          alt: sector.imageAlts?.[index] || sector.imageAlt || sector.title,
-        }))
+      .filter((url: string) => url && url.trim() !== '') // Filter out empty URLs
+      .map((url: string, index: number) => ({
+        url: getImageUrl(url),
+        alt: sector.imageAlts?.[index] || sector.imageAlt || sector.title,
+      }))
     : sector.imageUrl
-    ? [{
+      ? [{
         url: getImageUrl(sector.imageUrl),
         alt: sector.imageAlt || sector.title,
       }]
-    : [];
+      : [];
 
   const transformedSector = {
     id: sector.slug,
@@ -128,7 +128,7 @@ export default async function SectorPage({ params }: SectorPageProps) {
       <div className="px-4 sm:px-10 lg:px-20 py-10 lg:py-16 flex flex-1 justify-center">
         <div className="layout-content-container flex flex-col w-full max-w-7xl">
           <DescriptionSection sector={transformedSector} />
-          <ProductsSection sector={transformedSector} />
+          {slug !== "bus-transport" && <ProductsSection sector={transformedSector} />}
         </div>
       </div>
     </>

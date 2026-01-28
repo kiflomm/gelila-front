@@ -12,18 +12,37 @@ import {
   Linkedin,
   Instagram,
   Youtube,
+  Github,
+  Slack,
+  MessageCircle,
+  Send,
+  Globe,
+  Music,
+  Twitch,
+  Share2,
 } from "lucide-react";
 import footerData from "@/data/footer.json";
-import companiesData from "@/data/companies/companies.json";
+import navigationData from "@/data/navigation.json";
 import { useSocialMedia } from "@/hooks/use-social-media";
 
 // Icon mapping for social media
-const iconMap: Record<string, typeof Facebook> = {
+const iconMap: Record<string, any> = {
   Facebook,
   Twitter,
   Linkedin,
   Instagram,
   Youtube,
+  Github,
+  Slack,
+  MessageCircle,
+  Send,
+  Globe,
+  Music,
+  Twitch,
+  Tiktok: Music,
+  Telegram: Send,
+  WhatsApp: MessageCircle,
+  Web: Globe,
 };
 
 export default function Footer() {
@@ -38,10 +57,7 @@ export default function Footer() {
     { href: "/news", label: "Blog" },
   ];
 
-  const subsidiaryLinks = companiesData.companies.map((company) => ({
-    href: `/companies/${company.slug}`,
-    label: company.name,
-  }));
+  const subsidiaryLinks = navigationData.dropdowns.companies.sections[0].items;
 
   const legalLinks = [
     { href: "/privacy", label: "Privacy Policy" },
@@ -62,14 +78,14 @@ export default function Footer() {
     <footer className="relative bg-linear-to-b from-gray-900 via-gray-800 to-gray-900 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 border-t border-gray-700/50 dark:border-gray-800/50">
       {/* Decorative gradient overlay */}
       <div className="absolute inset-0 bg-linear-to-r from-primary/5 via-transparent to-primary/5 pointer-events-none" />
-      
+
       <div className="relative px-4 sm:px-6 lg:px-8 xl:px-16 py-4 sm:py-5 lg:py-6 max-w-[1280px] mx-auto">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6 mb-4">
           {/* Company Info & Logo */}
           <div className="flex flex-col gap-3 md:col-span-2 lg:col-span-1">
             <Link href="/" className="group">
-            <div className="flex flex-col items-start gap-0 shrink-0 bg-white px-2 py-1 rounded">
+              <div className="flex flex-col items-start gap-0 shrink-0 bg-white px-2 py-1 rounded">
                 <Image
                   src="/logo-left.png"
                   alt="Gelila Manufacturing PLC"
@@ -86,7 +102,7 @@ export default function Footer() {
                 />
               </div>
             </Link>
-            
+
             <div className="flex flex-col gap-2">
               <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Follow Us
@@ -193,7 +209,7 @@ export default function Footer() {
                   </p>
                 </div>
               </div>
-              
+
               <div className="group flex items-start gap-3 p-2 rounded-lg bg-gray-800/30 dark:bg-gray-900/30 hover:bg-gray-800/50 dark:hover:bg-gray-900/50 transition-all duration-200">
                 <div className="mt-0.5 p-1.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-200">
                   <Phone className="size-4 text-primary shrink-0" />
@@ -210,7 +226,7 @@ export default function Footer() {
                   ))}
                 </div>
               </div>
-              
+
               <div className="group flex items-start gap-3 p-2 rounded-lg bg-gray-800/30 dark:bg-gray-900/30 hover:bg-gray-800/50 dark:hover:bg-gray-900/50 transition-all duration-200">
                 <div className="mt-0.5 p-1.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-200">
                   <Mail className="size-4 text-primary shrink-0" />
@@ -220,6 +236,17 @@ export default function Footer() {
                   className="text-sm text-gray-300 hover:text-primary transition-colors duration-200 break-all flex-1"
                 >
                   {footerData.contact.email.address}
+                </Link>
+              </div>
+
+              {/* Contact Us CTA Button */}
+              <div className="mt-4">
+                <Link
+                  href="/contact#contact-form"
+                  className="notranslate inline-flex items-center justify-center w-full px-5 py-2.5 border border-primary/50 rounded-xl text-sm font-medium text-white hover:bg-primary transition-all duration-300 shadow-sm hover:shadow-primary/20 group"
+                >
+                  Contact Us
+                  <span className="ml-2 group-hover:translate-x-1 transition-transform duration-200">→</span>
                 </Link>
               </div>
             </div>

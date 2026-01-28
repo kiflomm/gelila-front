@@ -15,6 +15,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { CreateSocialMediaData, UpdateSocialMediaData } from "@/api/social-media";
 
 const socialMediaSchema = z.object({
@@ -45,7 +52,25 @@ interface EditSocialMediaFormProps extends BaseSocialMediaFormProps {
 
 type SocialMediaFormProps = CreateSocialMediaFormProps | EditSocialMediaFormProps;
 
-const ICON_OPTIONS = ["Facebook", "Twitter", "Linkedin", "Instagram", "Youtube"];
+const ICON_OPTIONS = [
+  "Facebook",
+  "Twitter",
+  "Instagram",
+  "Linkedin",
+  "Youtube",
+  "Tiktok",
+  "Github",
+  "Slack",
+  "Telegram",
+  "WhatsApp",
+  "Twitch",
+  "Web",
+  "Globe",
+  "Mail",
+  "Phone",
+  "MessageCircle",
+  "Send",
+];
 
 export function SocialMediaForm(props: SocialMediaFormProps) {
   const { initialData, onCancel, isSubmitting = false } = props;
@@ -131,17 +156,18 @@ export function SocialMediaForm(props: SocialMediaFormProps) {
             <FormItem>
               <FormLabel>Icon</FormLabel>
               <FormControl>
-                <select
-                  {...field}
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  <option value="">Select an icon</option>
-                  {ICON_OPTIONS.map((icon) => (
-                    <option key={icon} value={icon}>
-                      {icon}
-                    </option>
-                  ))}
-                </select>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select an icon" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ICON_OPTIONS.map((icon) => (
+                      <SelectItem key={icon} value={icon}>
+                        {icon}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormDescription>
                 Icon name matching Lucide React icons
@@ -194,17 +220,17 @@ export function SocialMediaForm(props: SocialMediaFormProps) {
         />
 
         <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 pt-2 sm:pt-4">
-          <Button 
-            type="button" 
-            variant="outline" 
-            onClick={onCancel} 
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onCancel}
             disabled={isSubmitting}
             className="w-full sm:w-auto"
           >
             Cancel
           </Button>
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             disabled={isSubmitting}
             className="w-full sm:w-auto"
           >
