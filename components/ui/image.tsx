@@ -1,6 +1,11 @@
 import NextImage, { type ImageProps } from "next/image";
 
+function isDataUrl(url: string): boolean {
+  return url.startsWith("data:");
+}
+
 function appendCacheBust(url: string, timestamp: number): string {
+  if (isDataUrl(url)) return url;
   const separator = url.includes("?") ? "&" : "?";
   return `${url}${separator}t=${timestamp}`;
 }

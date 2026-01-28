@@ -170,13 +170,17 @@ export default async function PortfolioPage({ params }: PortfolioPageProps) {
       if (!imageUrl || imageUrl.trim() === '') {
         return null;
       }
-      // Add timestamp to bust browser cache for updated images
-      const cacheBuster = product.updatedAt 
-        ? new Date(product.updatedAt).getTime() 
-        : Date.now();
-      const urlWithCacheBuster = imageUrl.includes('?') 
-        ? `${imageUrl}&t=${cacheBuster}` 
-        : `${imageUrl}?t=${cacheBuster}`;
+      // Add timestamp to bust browser cache for updated images (skip data URLs)
+      const urlWithCacheBuster = imageUrl.startsWith('data:')
+        ? imageUrl
+        : (() => {
+            const cacheBuster = product.updatedAt
+              ? new Date(product.updatedAt).getTime()
+              : Date.now();
+            return imageUrl.includes('?')
+              ? `${imageUrl}&t=${cacheBuster}`
+              : `${imageUrl}?t=${cacheBuster}`;
+          })();
       return {
         url: urlWithCacheBuster,
         alt: product.imageAlt || product.name,
