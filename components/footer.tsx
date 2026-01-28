@@ -12,6 +12,11 @@ import {
   Linkedin,
   Instagram,
   Youtube,
+  Github,
+  Slack,
+  MessageCircle,
+  Send,
+  Globe,
 } from "lucide-react";
 import footerData from "@/data/footer.json";
 import navigationData from "@/data/navigation.json";
@@ -25,6 +30,14 @@ const iconMap: Record<string, typeof Facebook> = {
   Linkedin,
   Instagram,
   Youtube,
+  Github,
+  Slack,
+  MessageCircle,
+  Send,
+  Telegram: Send,
+  WhatsApp: MessageCircle,
+  Web: Globe,
+  Globe,
 };
 
 export default function Footer() {

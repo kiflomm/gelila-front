@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import Link from "next/link";
 import Image from "@/components/ui/image";
-import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Instagram, Youtube, Github, Slack, MessageCircle, Send, Globe } from "lucide-react";
 import { SidebarSection } from "./sidebar-section";
 import { useNews, useCategories } from "@/hooks/use-news";
 import { useSocialMedia } from "@/hooks/use-social-media";
@@ -21,6 +21,15 @@ const iconMap: Record<string, typeof Facebook> = {
   Twitter,
   Linkedin,
   Instagram,
+  Youtube,
+  Github,
+  Slack,
+  MessageCircle,
+  Send,
+  Telegram: Send,
+  WhatsApp: MessageCircle,
+  Web: Globe,
+  Globe,
 };
 
 export default function Sidebar({
@@ -33,7 +42,7 @@ export default function Sidebar({
 
   // Filter to only show Facebook, Twitter, LinkedIn, Instagram (exclude YouTube)
   const SOCIAL_LINKS = socialMediaLinks
-    .filter((link) => link.isActive && link.icon !== "Youtube")
+    .filter((link) => link.isActive)
     .map((link) => ({
       name: link.name,
       icon: iconMap[link.icon],
@@ -45,8 +54,8 @@ export default function Sidebar({
   const latestPosts = useMemo(() => {
     if (!newsData?.news) return [];
     return newsData.news
-      .filter((item: NewsItem) => 
-        item.slug !== currentSlug && 
+      .filter((item: NewsItem) =>
+        item.slug !== currentSlug &&
         item.isPublished === true
       )
       .sort((a: NewsItem, b: NewsItem) => {
@@ -61,7 +70,7 @@ export default function Sidebar({
   // Tags are extracted from categories (most used categories become popular tags)
   const popularTags = useMemo(() => {
     if (!newsData?.news) return [];
-    
+
     // Count category usage
     const categoryCounts = new Map<string, number>();
     newsData.news.forEach((item: NewsItem) => {
