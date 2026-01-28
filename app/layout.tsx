@@ -16,6 +16,9 @@ export const viewport: Viewport = {
   ],
 };
 
+// Disable Full Route Cache app-wide so all pages and API data are always fresh
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
